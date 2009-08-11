@@ -1,0 +1,23 @@
+# $Id: naranja.txt,v 1.5 2009-03-20 09:10:37 brian Exp $
+# description: host specific stuff for 'naranja'
+# depends: _base
+# helpcommand: 
+# versioncommand: 
+# examplecommand: 
+#
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# naranja /etc/network
+file /etc/network/interfaces :BUILD_BASE:/builds/naranja/network.interfaces.naranja 0644 0 0
+# naranja /etc/stunnel
+file /etc/stunnel/naranja.antlinux.com.key.nopass /dev/shm/naranja.antlinux.com.key.nopass 0644 0 0
+slink /etc/stunnel/ssl.key /etc/stunnel/naranja.antlinux.com.key.nopass 0644 0 0
+file /etc/stunnel/naranja.antlinux.com.cert.pem /dev/shm/naranja.antlinux.com.cert.pem 0644 0 0
+slink /etc/stunnel/ssl.cert.pem /etc/stunnel/naranja.antlinux.com.cert.pem 0644 0 0
+# naranja /etc/hostname
+file /etc/hostname /dev/shm/hostname.naranja 0644 0 0
+# naranja busybox
+file /bin/busybox /tmp/busybox-1.12.1 0755 0 0
+
+# vi: set sw=4 ts=4 paste:

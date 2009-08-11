@@ -1,0 +1,22 @@
+# $Id: ryba.txt,v 1.6 2009-03-20 09:10:37 brian Exp $
+# description: host specific stuff for 'ryba'
+# depends: _base
+# helpcommand: 
+# versioncommand: 
+# examplecommand: 
+#
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# ryba /etc/network
+file /etc/network/interfaces /home/demo/cvs/antlinux/builds/naranja/network.interfaces.release 0644 0 0
+# ryba /etc/stunnel
+file /etc/stunnel/ryba.key.pem.nopass /dev/shm/ryba.key.pem.nopass 0644 0 0
+slink /etc/stunnel/ssl.key /etc/stunnel/ryba.key.pem.nopass 0644 0 0
+file /etc/stunnel/ryba.cert.pem /dev/shm/ryba.cert.pem 0644 0 0
+slink /etc/stunnel/ssl.cert.pem /etc/stunnel/ryba.cert.pem 0644 0 0
+# ryba /etc/hostname
+file /etc/hostname /dev/shm/hostname.ryba 0644 0 0
+# ryba busybox
+file /bin/busybox /dev/shm/busybox-1.12.1 0755 0 0
+# vi: set sw=4 ts=4 paste:

@@ -1,0 +1,69 @@
+# $Id: udev.lenny.txt,v 1.4 2009-05-13 08:37:50 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+dir /usr/share/initramfs-tools 755 0 0
+dir /usr/share/initramfs-tools/hooks 755 0 0
+file /usr/share/initramfs-tools/hooks/udev /usr/share/initramfs-tools/hooks/udev 755 0 0
+dir /usr/share/initramfs-tools/scripts 755 0 0
+dir /usr/share/initramfs-tools/scripts/init-premount 755 0 0
+file /usr/share/initramfs-tools/scripts/init-premount/udev /usr/share/initramfs-tools/scripts/init-premount/udev 755 0 0
+dir /usr/share/initramfs-tools/scripts/init-bottom 755 0 0
+file /usr/share/initramfs-tools/scripts/init-bottom/udev /usr/share/initramfs-tools/scripts/init-bottom/udev 755 0 0
+dir /usr/lib/hotplug 755 0 0
+dir /usr/lib/hotplug/firmware 755 0 0
+file /sbin/udevd /sbin/udevd 755 0 0
+file /sbin/udevadm /sbin/udevadm 755 0 0
+# /etc/modprobe.d is in _basedirs.txt
+file /etc/modprobe.d/pnp-hotplug /etc/modprobe.d/pnp-hotplug 644 0 0
+file /etc/modprobe.d/display_class /etc/modprobe.d/display_class 644 0 0
+file /etc/modprobe.d/blacklist /etc/modprobe.d/blacklist 644 0 0
+#file /etc/init.d/udev /etc/init.d/udev 755 0 0
+#file /etc/init.d/udev-mtab /etc/init.d/udev-mtab 755 0 0
+dir /etc/udev 755 0 0
+file /etc/udev/udev.conf /etc/udev/udev.conf 644 0 0
+file /etc/udev/links.conf /etc/udev/links.conf 644 0 0
+dir /etc/udev/.dev 755 0 0
+dir /etc/udev/rules.d 755 0 0
+file /etc/udev/rules.d/50-udev.rules /etc/udev/rules.d/50-udev.rules 644 0 0
+file /etc/udev/rules.d/60-persistent-input.rules /etc/udev/rules.d/60-persistent-input.rules 644 0 0
+file /etc/udev/rules.d/75-persistent-net-generator.rules /etc/udev/rules.d/75-persistent-net-generator.rules 644 0 0
+file /etc/udev/rules.d/60-persistent-storage.rules /etc/udev/rules.d/60-persistent-storage.rules 644 0 0
+file /etc/udev/rules.d/60-persistent-v4l.rules /etc/udev/rules.d/60-persistent-v4l.rules 644 0 0
+file /etc/udev/rules.d/91-permissions.rules /etc/udev/rules.d/91-permissions.rules 644 0 0
+file /etc/udev/rules.d/80-drivers.rules /etc/udev/rules.d/80-drivers.rules 644 0 0
+file /etc/udev/rules.d/75-cd-aliases-generator.rules /etc/udev/rules.d/75-cd-aliases-generator.rules 644 0 0
+file /etc/udev/rules.d/95-late.rules /etc/udev/rules.d/95-late.rules 644 0 0
+file /etc/udev/rules.d/60-persistent-storage-tape.rules /etc/udev/rules.d/60-persistent-storage-tape.rules 644 0 0
+file /etc/scsi_id.config /etc/scsi_id.config 644 0 0
+dir /lib/udev 755 0 0
+dir /lib/udev/devices 755 0 0
+file /lib/udev/write_cd_rules /lib/udev/write_cd_rules 755 0 0
+file /lib/udev/scsi-re-add /lib/udev/scsi-re-add 755 0 0
+file /lib/udev/path_id /lib/udev/path_id 755 0 0
+file /lib/udev/collect /lib/udev/collect 755 0 0
+file /lib/udev/usb_id /lib/udev/usb_id 755 0 0
+file /lib/udev/firmware.agent /lib/udev/firmware.agent 755 0 0
+file /lib/udev/cdrom_id /lib/udev/cdrom_id 755 0 0
+file /lib/udev/create_static_nodes /lib/udev/create_static_nodes 755 0 0
+file /lib/udev/vol_id /lib/udev/vol_id 755 0 0
+file /lib/udev/net.agent /lib/udev/net.agent 755 0 0
+file /lib/udev/scsi_id /lib/udev/scsi_id 755 0 0
+file /lib/udev/hotplug.functions /lib/udev/hotplug.functions 644 0 0
+file /lib/udev/write_net_rules /lib/udev/write_net_rules 755 0 0
+file /lib/udev/logger.agent /lib/udev/logger.agent 755 0 0
+file /lib/udev/dsl-modem.agent /lib/udev/dsl-modem.agent 755 0 0
+file /lib/udev/ata_id /lib/udev/ata_id 755 0 0
+file /lib/udev/edd_id /lib/udev/edd_id 755 0 0
+file /lib/udev/fstab_import /lib/udev/fstab_import 755 0 0
+dir /lib/firmware 755 0 0
+slink /sbin/udevsettle /sbin/udevadm 777 0 0
+slink /sbin/vol_id /lib/udev/vol_id 777 0 0
+# vi: set sw=4 ts=4 paste:

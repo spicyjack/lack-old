@@ -1,0 +1,22 @@
+40
+      __                __                 __
+.----|  |--.-----.---.-|  |_.----.-----.--|  .-----.-----.
+|  __|     |  -__|  _  |   _|  __|  _  |  _  |  -__|__ --|
+|____|__|__|_____|___._|____|____|_____|_____|_____|_____|
+
+0f
+
+40WARNING0f: This ISO image will blank the first 20M of a hard drive.  
+
+Listing of cheat codes and what they do:
+
+09hda0f     Blanks /dev/hda, no confirmation
+0ahdb0f     Blanks /dev/hdb, no confirmation
+0bhdc0f     Blanks /dev/hdc, no confirmation
+0chdd0f     Blanks /dev/hdc, no confirmation
+0dsda0f     Blanks /dev/sda, no confirmation
+0esdb0f     Blanks /dev/sdb, no confirmation
+09sdc0f     Blanks /dev/sdc, no confirmation
+0asdd0f     Blanks /dev/sdd, no confirmation
+0bcciss0f   Blanks /dev/cciss/c0d0, no confirmation
+

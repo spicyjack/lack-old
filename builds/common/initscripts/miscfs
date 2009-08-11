@@ -1,0 +1,61 @@
+#! /bin/sh
+
+# $Id: miscfs,v 1.4 2009-06-19 07:57:49 brian Exp $
+# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+
+source $ANT_FUNCTIONS
+PATH=/sbin:/bin  # No remote fs at start
+ACTION=$1
+BINARY=/bin/mount
+[ -x "$BINARY" ] || exit 1
+BASENAME="miscfs"
+DESC="/dev/pts, /proc/bus/usb and /dev/shm filesystems"
+#BINARY_OPTS="sysfs /sys -t sysfs"
+
+case "$ACTION" in
+  vars)
+    echo "${BASENAME}:"
+    exit 0
+  ;;
+  start)
+	colorize $S_TIP "$BASENAME: Mounting /proc/bus/usb (usbfs);"
+    $BINARY usbfs /proc/bus/usb -t usbfs -o rw >> $BOOT_LOG 2>&1
+    cmd_status $? "mount usbfs /proc/bus/usb -t usbfs -o rw"
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	colorize $S_TIP "$BASENAME: Mounting /dev/pts (devpts);"
+    mkdir /dev/pts
+    $BINARY devpts /dev/pts -t devpts -o rw,noexec,nosuid,gid=5,mode=620 \
+        >> $BOOT_LOG 2>&1
+    cmd_status $? "$BINARY devpts /dev/pts -t devpts"
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	colorize $S_TIP "$BASENAME: Mounting /dev/shm (tmpfs);"
+    mkdir /dev/shm
+    $BINARY tmpfs /dev/shm -t tmpfs -o rw,nosuid,nodev >> $BOOT_LOG 2>&1
+    cmd_status $? "mount tmpfs /dev/shm -t tmpfs -o rw,nosuid,nodev"
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	;;
+  stop)
+    colorize $S_TIP "$BASENAME: Unmounting /proc/bus/usb;"
+    /bin/umount /proc/bus/usb
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+    colorize $S_TIP "$BASENAME: Unmounting /dev/pts;"
+    /bin/umount /dev/pts
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+    colorize $S_TIP "$BASENAME: Unmounting /dev/shm;"
+    /bin/umount /dev/shm
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	;;
+  restart|force-reload)
+    $0 stop
+    $0 start
+	;;
+  *)
+	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+	exit 3
+	;;
+esac
+
+:

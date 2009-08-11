@@ -1,0 +1,81 @@
+#! /bin/sh
+
+# $Id: udev,v 1.10 2009-07-16 17:53:20 brian Exp $
+# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+
+source $ANT_FUNCTIONS
+PATH=/sbin:/bin  # No remote fs at start
+ACTION=$1
+BINARY=/sbin/udevd 
+[ -x "$BINARY" ] || exit 1
+BASENAME="udevd"
+DESC="udevd"
+BINARY_OPTS="--daemon"
+
+# script requirements:
+# - mounted /proc
+# - mounted /sys
+# - tmpfs support
+# - kernel version > 2.6.18
+# - hotplug support (/sys/kernel/event_helper)
+# - /dev/pts and /dev/shm need to be unmounted, but can be re-mounted once
+# udevd is run
+
+case "$ACTION" in
+  vars)
+    echo "${BASENAME}:"
+    exit 0
+  ;;
+  start)
+	colorize $S_TIP "$BASENAME: Mounting tmpfs for udev; "
+    echo > /sys/kernel/uevent_helper
+    /bin/mount -n -o size=10M,mode=0755 -t tmpfs tmpfs /dev
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+    # create a basic set of device nodes in the new /dev
+    # /dev/null is needed prior to starting udevd
+	colorize $S_TIP "$BASENAME: Creating static nodes in /dev"
+    # create directories that udev needs in order to run
+    /bin/mkdir -p /dev/.udev/queue/ /dev/.udev/rules.d/ /dev/.udev/db/
+    /lib/udev/create_static_nodes /dev
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+    # start the actual daemon 
+	colorize $S_TIP "$BASENAME: Starting udevd"
+    $BINARY $BINARY_OPTS >> $BOOT_LOG 2>&1
+    cmd_status $?
+    # get_pid sets $CHILD_PID
+    get_pid $BINARY
+    write_child_pid $BASENAME $CHILD_PID
+    # save the newline for later
+    colorize $S_SUCCESS "$SUCCESS"
+    echo " (PID=${CHILD_PID})"
+	colorize $S_TIP "$BASENAME: Running 'udevadm trigger'"
+    /sbin/udevadm trigger >> $BOOT_LOG 2>&1
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+    ;;
+  stop)
+    PATH=/bin:/sbin:/usr/bin:/usr/sbin
+    UDEV_PID=$(cat /var/run/${BASENAME}.pid)
+    colorize $S_TIP "${BASENAME}: Stopping $DESC "
+    echo -n "(PID=${UDEV_PID});"
+    /bin/kill -TERM $UDEV_PID
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	colorize $S_TIP "$BASENAME: Unmounting tmpfs for udev; "
+    /bin/umount -l /dev
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	;;
+  restart|force-reload)
+    $0 stop
+    $0 start
+	;;
+  *)
+	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+	exit 3
+	;;
+esac
+
+:

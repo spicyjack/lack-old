@@ -1,0 +1,28 @@
+# $Id: debootstrap.etch.txt,v 1.1 2008-10-03 22:59:10 brian Exp $
+# debootstrap /usr/sbin
+file /usr/sbin/debootstrap /usr/sbin/debootstrap 0755 0 0
+# debootstrap /usr/lib
+dir /usr/lib/debootstrap 0755 0 0
+# debootstrap uses pkgdetails for something
+# If you're in here looking for this file, it needs to be compiled using
+# 'make pkgdetails' in the unpacked debootstrap source tree; copy it to
+# /tmp once you compile it
+file /usr/lib/debootstrap/pkgdetails /tmp/pkgdetails 0755 0 0
+file /usr/lib/debootstrap/functions /usr/lib/debootstrap/functions 0644 0 0
+file /usr/lib/debootstrap/devices.tar.gz /usr/lib/debootstrap/devices.tar.gz 0644 0 0
+dir /usr/lib/debootstrap/scripts 0755 0 0
+file /usr/lib/debootstrap/scripts/woody.buildd /usr/lib/debootstrap/scripts/woody.buildd 0644 0 0
+file /usr/lib/debootstrap/scripts/breezy /usr/lib/debootstrap/scripts/breezy 0644 0 0
+file /usr/lib/debootstrap/scripts/sarge.fakechroot /usr/lib/debootstrap/scripts/sarge.fakechroot 0644 0 0
+file /usr/lib/debootstrap/scripts/warty /usr/lib/debootstrap/scripts/warty 0644 0 0
+file /usr/lib/debootstrap/scripts/potato /usr/lib/debootstrap/scripts/potato 0644 0 0
+file /usr/lib/debootstrap/scripts/woody /usr/lib/debootstrap/scripts/woody 0644 0 0
+file /usr/lib/debootstrap/scripts/warty.buildd /usr/lib/debootstrap/scripts/warty.buildd 0644 0 0
+file /usr/lib/debootstrap/scripts/hoary.buildd /usr/lib/debootstrap/scripts/hoary.buildd 0644 0 0
+file /usr/lib/debootstrap/scripts/sarge /usr/lib/debootstrap/scripts/sarge 0644 0 0
+file /usr/lib/debootstrap/scripts/sid /usr/lib/debootstrap/scripts/sid 0644 0 0
+file /usr/lib/debootstrap/scripts/hoary /usr/lib/debootstrap/scripts/hoary 0644 0 0
+file /usr/lib/debootstrap/scripts/sarge.buildd /usr/lib/debootstrap/scripts/sarge.buildd 0644 0 0
+file /usr/lib/debootstrap/scripts/etch /usr/lib/debootstrap/scripts/etch 0644 0 0
+file /usr/lib/debootstrap/scripts/lenny /usr/lib/debootstrap/scripts/lenny 0644 0 0
+

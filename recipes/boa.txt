@@ -1,0 +1,21 @@
+# $Id: boa.txt,v 1.2 2007-04-09 04:07:45 brian Exp $
+# depends: _base 
+# helpcommand: /usr/sbin/boa --help
+# versioncommand: 
+# examplecommand: /usr/sbin/boa -f /path/to/config/file/boa.conf
+#
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# boa /etc
+# NOTE: the initramfs script is supposed to provide the boa config file
+file /etc/mime.types /etc/mime.types 0644 0 0
+# boa /usr/lib/boa
+dir /usr/lib/boa 0755 0 0
+file /usr/lib/boa/boa_indexer /usr/lib/boa/boa_indexer 0755 0 0
+# boa /usr/sbin
+file /usr/sbin/boa /usr/sbin/boa 0755 0 0
+# boa /var/www
+dir /var/www 0755 0 0
+# boa /var/log/boa
+dir /var/log/boa 0755 0 0

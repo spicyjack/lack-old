@@ -1,0 +1,24 @@
+# $Id: pigwidgeon.txt,v 1.6 2009-03-20 09:10:37 brian Exp $
+# description: host specific stuff for 'pigwidgeon'
+# depends: _base
+# helpcommand: 
+# versioncommand: 
+# examplecommand: 
+#
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# pigwidgeon /etc/network
+file /etc/network/interfaces :BUILD_BASE:/builds/naranja/network.interfaces.release 0644 0 0
+# pigwidgeon /etc/stunnel
+file /etc/stunnel/pigwidgeon.key.pem.nopass /dev/shm/pigwidgeon.key.pem.nopass 0644 0 0
+slink /etc/stunnel/ssl.key /etc/stunnel/pigwidgeon.key.pem.nopass 0644 0 0
+file /etc/stunnel/pigwidgeon.cert.pem /dev/shm/pigwidgeon.cert.pem 0644 0 0
+slink /etc/stunnel/ssl.cert.pem /etc/stunnel/pigwidgeon.cert.pem 0644 0 0
+# pigwidgeon /etc/hostname
+file /etc/hostname /dev/shm/hostname.pigwidgeon 0644 0 0
+# pigwidgeon busybox inittab
+file /etc/inittab :BUILD_BASE:/builds/naranja/inittab.notty 0644 0 0
+# pigwidgeon busybox
+file /bin/busybox /dev/shm/busybox-1.13.1-x86 0755 0 0
+# vi: set sw=4 ts=4 paste:

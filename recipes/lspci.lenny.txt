@@ -1,0 +1,20 @@
+# $Id: lspci.lenny.txt,v 1.1 2009-03-21 08:02:10 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+dir /usr/share/misc 755 0 0
+file /usr/share/misc/pci.ids /usr/share/misc/pci.ids 644 0 0
+file /usr/bin/lspci /usr/bin/lspci 755 0 0
+file /usr/bin/setpci /usr/bin/setpci 755 0 0
+file /usr/bin/pcimodules /usr/bin/pcimodules 755 0 0
+file /usr/bin/update-pciids /usr/bin/update-pciids 755 0 0
+file /usr/lib/libpci.so.3.0.0 /usr/lib/libpci.so.3.0.0 644 0 0
+slink /usr/lib/libpci.so.3 /usr/lib/libpci.so.3.0.0 777 0 0
+# vi: set sw=4 ts=4 cin paste:

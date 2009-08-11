@@ -1,0 +1,55 @@
+#! /bin/sh
+
+# $Id: shellinaboxd,v 1.2 2009-07-28 23:07:39 brian Exp $
+# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+
+# picks up things like colorize()
+source $ANT_FUNCTIONS
+
+PATH=/sbin:/bin:/usr/bin  # No remote fs at start
+ACTION=$1
+BINARY=/usr/bin/shellinaboxd
+[ -x "$BINARY" ] || exit 1
+BASENAME=$(/usr/bin/basename $BINARY)
+DESC="shellinaboxd"
+if [ "x$SIAB_PID" == "x" ]; then SIAB_PID="/var/run/shellinabox.pid"; fi
+if [ "x$SIAB_PORT" == "x" ]; then SIAB_PORT="4200"; fi
+if [ "x$SIAB_CSS" == "x" ]; then SIAB_CSS="/etc/styles.css"; fi
+BINARY_OPTS="--cert=/etc/ssl/certs --background=$SIAB_PID --port=$SIAB_PORT"
+BINARY_OPTS="${BINARY_OPTS} --static-file=styles.css:$SIAB_CSS"
+
+case "$ACTION" in
+  vars)
+    # echo out what commandline variables are parsed by this script
+    echo "${BASENAME}:"
+    exit 0
+  ;;
+  start)
+	colorize $S_TIP "${BASENAME}: Starting ${DESC}"
+	$BINARY $BINARY_OPTS >> $BOOT_LOG 2>&1
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	;;
+  stop)
+    PATH=/bin:/sbin:/usr/bin:/usr/sbin
+    colorize $S_TIP "${BASENAME}: Stopping ${DESC}"
+    kill -TERM $(cat $SIAB_PID)
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+    colorize $S_TIP "${BASENAME}: Removing PID file" 
+    /bin/rm $SIAB_PID
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+
+	;;
+  restart|force-reload)
+ 	$0 stop
+ 	$0 start
+	;;
+  *)
+	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+	exit 3
+	;;
+esac
+
+:

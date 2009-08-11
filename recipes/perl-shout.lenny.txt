@@ -1,0 +1,25 @@
+# $Id: perl-shout.lenny.txt,v 1.6 2009-08-10 08:38:58 brian Exp $
+# depends: _base perl
+# packages: libshout2 libshout2-dev
+# helpcommand:
+# versioncommand: 
+# examplecommand: 
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# perl-shout /usr/lib
+file /usr/lib/libshout.so.3.2.0 /usr/lib/libshout.so.3.2.0 0644 0 0
+slink /usr/lib/libshout.so.3 /usr/lib/libshout.so.3.2.0 0644 0 0
+slink /usr/lib/libshout.so.3 /usr/lib/libshout.so.3.2.0 0644 0 0
+slink /usr/lib/libshout.so /usr/lib/libshout.so.3.2.0 0644 0 0
+# /usr/lib/perl/5.10.0/auto is provided by perl.lenny
+# perl-shout /usr/lib/perl/5.10.0/auto/Shout
+dir /usr/lib/perl/5.10.0/auto/Shout 0755 0 0
+file /usr/lib/perl/5.10.0/auto/Shout/Shout.so /usr/local/lib/perl/5.10.0/auto/Shout/Shout.so 0555 0 0
+file /usr/lib/perl/5.10.0/auto/Shout/Shout.bs /usr/local/lib/perl/5.10.0/auto/Shout/Shout.bs 0444 0 0
+file /usr/lib/perl/5.10.0/auto/Shout/autosplit.ix /usr/local/lib/perl/5.10.0/auto/Shout/autosplit.ix 0444 0 0
+file /usr/lib/perl/5.10.0/auto/Shout/.packlist /usr/local/lib/perl/5.10.0/auto/Shout/.packlist 0444 0 0
+# perl-shout /usr/lib/perl/5.10.0
+file /usr/lib/perl/5.10.0/Shout.pm /usr/local/lib/perl/5.10.0/Shout.pm 0444 0 0
+# vi: set sw=4 ts=4 paste:

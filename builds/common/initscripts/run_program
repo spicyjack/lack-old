@@ -1,0 +1,75 @@
+#!/bin/sh
+
+# $Id: run_program,v 1.17 2009-07-12 00:42:40 brian Exp $
+# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+
+source $ANT_FUNCTIONS
+ACTION=$1
+BASENAME="run_program"
+DESC="Running special run requests from /proc/cmdline"
+
+case "$ACTION" in
+  vars)
+    echo "${BASENAME}:"
+    echo "cmdline - run; Runs either a shell, init, or the installer"
+    echo "comment - (run=sh, run=init, run=install)"
+    exit 0
+  ;;
+  start)
+	colorize_nl $S_TIP "$BASENAME: $DESC"
+    file_parse "/proc/cmdline" "run" # returns any parsed data as $PARSED
+    RUN_PROG=$PARSED
+    
+    # verify 'run=' was called for; if it wasn't called for, don't try to run
+    # anything below, just skip out of this script and let the scripts past
+    # this one do their thing
+    if [ "x$RUN_PROG" != "x" ]; then
+        case "${RUN_PROG}" in
+            sh) 
+                colorize_nl $S_INFO "$BASENAME: run=sh; running a shell";
+                #exec /bin/sh < dev/console > dev/console 2>&1;;
+                #echo -n "Running a shell; "
+                echo "hit Ctrl-D or type 'exit' to continue booting"
+                exec $BB sh
+                ;;
+            init) 
+                colorize_nl $S_INFO "$BASENAME: run=init; running busybox init";
+                    if [ $$ -eq 1 ]; then
+                    exec $BB init < dev/console > dev/console 2>&1
+                else 
+                    colorize_nl $S_FAILURE \
+                        "$BASENAME: run=init specified but PID != 1";
+                    colorize_nl $S_FAILURE \
+                        "$BASENAME: (i.e. script not exec'ed from /init)";
+                    colorize_nl $S_INFO \
+                        "$BASENAME: exec'ing busybox shell (/bin/sh)";
+                    exec $BB sh < dev/console > dev/console 2>&1 
+                fi # if [ $PPID -eq 1 ]
+                ;;
+            install) 
+                colorize_nl $S_INFO "$BASENAME: run=install; running installer";
+                exec $BB sh /etc/install.sh
+                ;;
+            *)
+                colorize_nl $S_TIP "$BASENAME: unknown 'run': ${RUN_PROG}";
+                colorize_nl $S_TIP "$BASENAME: starting busybox ash shell";
+                exec $BB sh
+                ;;
+        esac # case "${RUN_PROG}" 
+    fi # if [ "x$RUN_PROG" != "x" ]
+	;; # start)
+  stop)
+    # noop
+    :
+	;; # stop)
+  restart|force-reload)
+    # noop
+    :
+	;;
+  *)
+	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+	exit 3
+	;;
+esac
+
+:

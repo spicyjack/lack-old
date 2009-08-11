@@ -1,0 +1,6 @@
+# $Id: debug.txt,v 1.5 2009-06-30 08:23:19 brian Exp $
+# debug /usr/bin
+file /usr/bin/strace /usr/bin/strace 0755 0 0
+# this needs /bin/bash (or a suitable substitute) to run
+file /usr/bin/ldd /usr/bin/ldd 0755 0 0
+file /usr/bin/lsof /usr/bin/lsof 0755 0 0

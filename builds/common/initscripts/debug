@@ -1,0 +1,47 @@
+#! /bin/sh
+
+# $Id: debug,v 1.1 2009-08-02 03:36:18 brian Exp $
+# Copyright (c)2009 Brian Manning <elspicyjack at gmail dot com>
+
+# a debugging script; to be used to dump the environment at a specified time
+
+# picks up things like colorize()
+source $ANT_FUNCTIONS
+
+ACTION=$1
+BASENAME="debugging"
+
+case "$ACTION" in
+  vars)
+    # echo out what commandline variables are parsed by this script
+    echo "${BASENAME}:"
+    exit 0
+  ;;
+  start)
+	colorize $S_INFO "${BASENAME}: Dumping debug info: environment"
+    set
+	colorize $S_INFO "${BASENAME}: Dumping debug info: /proc/cmdline"
+    cat /proc/cmdline
+	colorize $S_INFO "${BASENAME}: Dumping debug info: modules"
+    /sbin/lsmod 
+    colorize $S_INFO "${BASENAME}: Dumping debug info: network"
+    /sbin/ifconfig
+    colorize $S_INFO "${BASENAME}: Dumping debug info: routing"
+    /bin/netstat
+	;;
+  stop)
+	PATH=/bin:/sbin:/usr/bin:/usr/sbin
+	colorize $S_TIP "${BASENAME}: Stopping ${DESC}"
+    :
+	;;
+  restart|force-reload)
+ 	$0 stop
+ 	$0 start
+	;;
+  *)
+	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+	exit 3
+	;;
+esac
+
+:

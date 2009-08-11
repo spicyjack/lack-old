@@ -1,0 +1,3 @@
+# $Id: basedebs.txt,v 1.2 2006-10-14 08:29:09 brian Exp $
+# basedebs /tmp
+file /tmp/basedebs.tar.bz2 /home/brian/basedebs.tar.bz2 0644 0 0

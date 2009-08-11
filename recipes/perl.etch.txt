@@ -1,0 +1,69 @@
+# $Id: perl.etch.txt,v 1.1 2008-10-07 05:22:18 brian Exp $
+# depends: _base 
+# helpcommand: /usr/bin/perl --help
+# versioncommand: /usr/bin/perl -v
+# examplecommand: /usr/bin/perl -e "print qq(Hello world!\n);"
+#
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# perl /usr/bin
+file /usr/bin/perl /usr/bin/perl 0755 0 0
+# perl /usr/lib/perl/5.8.8
+dir /usr/lib/perl 0755 0 0
+dir /usr/lib/perl/5.8.8 0755 0 0
+slink /usr/lib/perl5 /usr/lib/perl/5.8.8 0755 0 0
+
+file /usr/lib/perl/5.8.8/Config.pm /usr/lib/perl/5.8.8/Config.pm 0644 0 0
+file /usr/lib/perl/5.8.8/Cwd.pm /usr/lib/perl/5.8.8/Cwd.pm 0644 0 0
+file /usr/lib/perl/5.8.8/DynaLoader.pm /usr/lib/perl/5.8.8/DynaLoader.pm 0644 0 0
+file /usr/lib/perl/5.8.8/Fcntl.pm /usr/lib/perl/5.8.8/Fcntl.pm 0644 0 0
+file /usr/lib/perl/5.8.8/lib.pm /usr/lib/perl/5.8.8/lib.pm 0644 0 0
+file /usr/lib/perl/5.8.8/XSLoader.pm /usr/lib/perl/5.8.8/XSLoader.pm 0644 0 0
+# perl /usr/lib/perl/5.8.8/auto
+dir /usr/lib/perl/5.8.8/auto 0755 0 0
+# perl /usr/lib/perl/5.8.8/auto/DynaLoader
+dir /usr/lib/perl/5.8.8/auto/DynaLoader 0755 0 0
+file /usr/lib/perl/5.8.8/auto/DynaLoader/dl_findfile.al /usr/lib/perl/5.8.8/auto/DynaLoader/dl_findfile.al 0644 0 0
+file /usr/lib/perl/5.8.8/auto/DynaLoader/dl_expandspec.al /usr/lib/perl/5.8.8/auto/DynaLoader/dl_expandspec.al 0644 0 0
+file /usr/lib/perl/5.8.8/auto/DynaLoader/dl_find_symbol_anywhere.al /usr/lib/perl/5.8.8/auto/DynaLoader/dl_find_symbol_anywhere.al 0644 0 0
+file /usr/lib/perl/5.8.8/auto/DynaLoader/autosplit.ix /usr/lib/perl/5.8.8/auto/DynaLoader/autosplit.ix 0644 0 0
+file /usr/lib/perl/5.8.8/auto/DynaLoader/DynaLoader.a /usr/lib/perl/5.8.8/auto/DynaLoader/DynaLoader.a 0644 0 0
+file /usr/lib/perl/5.8.8/auto/DynaLoader/extralibs.ld /usr/lib/perl/5.8.8/auto/DynaLoader/extralibs.ld 0644 0 0
+# perl /usr/lib/perl/5.8.8/auto/Fcntl
+dir /usr/lib/perl/5.8.8/auto/Fcntl 0755 0 0
+file /usr/lib/perl/5.8.8/auto/Fcntl/Fcntl.so /usr/lib/perl/5.8.8/auto/Fcntl/Fcntl.so 0644 0 0
+file /usr/lib/perl/5.8.8/auto/Fcntl/Fcntl.bs /usr/lib/perl/5.8.8/auto/Fcntl/Fcntl.bs 0644 0 0
+# perl /usr/share/perl/5.8.8
+dir /usr/share 0755 0 0
+dir /usr/share/perl 0755 0 0
+dir /usr/share/perl/5.8.8 0755 0 0
+slink /usr/share/perl/5.8 /usr/share/perl/5.8.8 0755 0 0
+file /usr/share/perl/5.8.8/constant.pm /usr/share/perl/5.8.8/constant.pm 0644 0 0
+file /usr/share/perl/5.8.8/overload.pm /usr/share/perl/5.8.8/overload.pm 0644 0 0
+file /usr/share/perl/5.8.8/strict.pm /usr/share/perl/5.8.8/strict.pm 0644 0 0
+file /usr/share/perl/5.8.8/subs.pm /usr/share/perl/5.8.8/subs.pm 0644 0 0
+file /usr/share/perl/5.8.8/utf8.pm /usr/share/perl/5.8.8/utf8.pm 0644 0 0
+file /usr/share/perl/5.8.8/utf8_heavy.pl /usr/share/perl/5.8.8/utf8_heavy.pl 0644 0 0
+file /usr/share/perl/5.8.8/vars.pm /usr/share/perl/5.8.8/vars.pm 0644 0 0
+file /usr/share/perl/5.8.8/warnings.pm /usr/share/perl/5.8.8/warnings.pm 0644 0 0
+dir /usr/share/perl/5.8.8/warnings 0755 0 0
+file /usr/share/perl/5.8.8/warnings/register.pm /usr/share/perl/5.8.8/warnings/register.pm 0644 0 0
+file /usr/share/perl/5.8.8/AutoLoader.pm /usr/share/perl/5.8.8/AutoLoader.pm 0644 0 0
+file /usr/share/perl/5.8.8/Exporter.pm /usr/share/perl/5.8.8/Exporter.pm 0644 0 0
+file /usr/share/perl/5.8.8/Carp.pm /usr/share/perl/5.8.8/Carp.pm 0644 0 0
+dir /usr/share/perl/5.8.8/Carp 0755 0 0
+file /usr/share/perl/5.8.8/Carp/Heavy.pm /usr/share/perl/5.8.8/Carp/Heavy.pm 0644 0 0
+file /usr/share/perl/5.8.8/Symbol.pm /usr/share/perl/5.8.8/Symbol.pm 0644 0 0
+# perl /usr/share/perl/5.8.8/File
+dir /usr/share/perl/5.8.8/File 0755 0 0
+file /usr/share/perl/5.8.8/File/Find.pm /usr/share/perl/5.8.8/File/Find.pm 0644 0 0
+file /usr/share/perl/5.8.8/File/Basename.pm /usr/share/perl/5.8.8/File/Basename.pm 0644 0 0
+file /usr/share/perl/5.8.8/File/Spec.pm /usr/share/perl/5.8.8/File/Spec.pm 0644 0 0
+# perl /usr/share/perl/5.8.8/File/Spec
+dir /usr/share/perl/5.8.8/File/Spec 0755 0 0
+file /usr/share/perl/5.8.8/File/Spec/Unix.pm /usr/share/perl/5.8.8/File/Spec/Unix.pm 0644 0 0
+# perl /usr/share/perl/5.8.8/unicore
+dir /usr/share/perl/5.8.8/unicore 0755 0 0
+file /usr/share/perl/5.8.8/unicore/Exact.pl /usr/share/perl/5.8.8/unicore/Exact.pl 0644 0 0
+# vim: paste

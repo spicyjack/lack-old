@@ -1,0 +1,74 @@
+#! /bin/sh
+
+# $Id: networking,v 1.19 2009-08-01 00:59:13 brian Exp $
+# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+
+source $ANT_FUNCTIONS
+PATH=/sbin:/bin  # No remote fs at start
+file_parse "/proc/cmdline" "network"
+NETWORK=$PARSED
+if [ "x$NETWORK" == "xno" -o "x$NETWORK" == "xoff" -o "x$NETWORK" == "x
+none" ]; then exit 0; fi
+
+ACTION=$1
+BINARY=/sbin/ifup
+[ -x "$BINARY" ] || exit 0
+BASENAME="networking"
+DESC=$BASENAME
+BINARY_OPTS="-a -i /etc/network/interfaces"
+
+loopback_up () {
+    colorize $S_TIP "$BASENAME: Enabling ethernet interface 'lo'"
+    /bin/ip link set lo up
+    cmd_status $? $BASENAME
+    colorize_nl $S_SUCCESS "$SUCCESS"
+} # loopback_up ()
+
+dhcp_up () {
+	colorize $S_TIP "$BASENAME: Enabling ethernet interface 'eth0'"
+    /bin/ip link set eth0 up
+    cmd_status $? $BASENAME
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	colorize $S_TIP "$BASENAME: Starting $DESC"
+    #$BINARY $BINARY_OPTS >> $BOOT_LOG 2>&1
+    /sbin/udhcpc -i eth0 -p /var/run/udhcpc.eth0.pid >> $BOOT_LOG 2>&1
+    cmd_status $? $BASENAME
+    colorize_nl $S_SUCCESS "$SUCCESS"
+} # dhcp_up ()
+
+dhcp_down () {
+	colorize $S_TIP "$BASENAME: Killing udhcpc process "
+    UDHCPC_PID=$(cat /var/run/udhcpc.eth0.pid)
+    echo -n "(PID = $UDHCPC_PID) "
+    kill -TERM $(cat /var/run/udhcpc.eth0.pid)
+    cmd_status $? $BASENAME
+    colorize_nl $S_SUCCESS "$SUCCESS"
+} # dhcp_up ()
+
+case "$ACTION" in
+  vars)
+    echo "${BASENAME}:"
+    echo "cmdline - network; 'lo' to set up loopback only, or 'no' for no"
+    echo "                      networking whatsoever (script exits)"
+    exit 0
+  ;;
+  start)
+    case "$NETWORK" in
+        lo) loopback_up;;
+        * ) loopback_up; dhcp_up;;
+    esac
+	;;
+  stop)
+        dhcp_down
+	;;
+  restart|force-reload)
+    $0 stop
+    $0 start
+	;;
+  *)
+	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+	exit 3
+	;;
+esac
+
+:

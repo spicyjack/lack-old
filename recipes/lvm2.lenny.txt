@@ -1,0 +1,51 @@
+# $Id: lvm2.lenny.txt,v 1.2 2008-10-10 07:58:03 brian Exp $
+# LVM etc files
+dir /etc/lvm 0755 0 0
+file /etc/lvm/lvm.conf :BUILD_BASE:/builds/common/lvm/lvm.conf 0644 0 0
+file /etc/lvmtab :BUILD_BASE:/builds/common/lvmtab 0644 0 0
+# LVM libraries
+file /lib/libdevmapper.so.1.02.1 /lib/libdevmapper.so.1.02.1 0644 0 0
+# LVM sbin
+file /sbin/lvm /sbin/lvm 0755 0 0
+file /sbin/lvmdump /sbin/lvmdump 0755 0 0
+file /sbin/dmsetup /sbin/dmsetup 0755 0 0
+slink /sbin/lvchange /sbin/lvm 0755 0 0
+slink /sbin/lvcreate /sbin/lvm 0755 0 0
+slink /sbin/lvdisplay /sbin/lvm 0755 0 0
+slink /sbin/lvextend /sbin/lvm 0755 0 0
+slink /sbin/lvmchange /sbin/lvm 0755 0 0
+slink /sbin/lvmdiskscan /sbin/lvm 0755 0 0
+slink /sbin/lvmsadc /sbin/lvm 0755 0 0
+slink /sbin/lvmsar /sbin/lvm 0755 0 0
+slink /sbin/lvreduce /sbin/lvm 0755 0 0
+slink /sbin/lvremove /sbin/lvm 0755 0 0
+slink /sbin/lvrename /sbin/lvm 0755 0 0
+slink /sbin/lvresize /sbin/lvm 0755 0 0
+slink /sbin/lvs /sbin/lvm 0755 0 0
+slink /sbin/lvscan /sbin/lvm 0755 0 0
+slink /sbin/pvchange /sbin/lvm 0755 0 0
+slink /sbin/pvck /sbin/lvm 0755 0 0
+slink /sbin/pvcreate /sbin/lvm 0755 0 0
+slink /sbin/pvdisplay /sbin/lvm 0755 0 0
+slink /sbin/pvmove /sbin/lvm 0755 0 0
+slink /sbin/pvremove /sbin/lvm 0755 0 0
+slink /sbin/pvresize /sbin/lvm 0755 0 0
+slink /sbin/pvs /sbin/lvm 0755 0 0
+slink /sbin/pvscan /sbin/lvm 0755 0 0
+slink /sbin/vgcfgbackup /sbin/lvm 0755 0 0
+slink /sbin/vgcfgrestore /sbin/lvm 0755 0 0
+slink /sbin/vgchange /sbin/lvm 0755 0 0
+slink /sbin/vgck /sbin/lvm 0755 0 0
+slink /sbin/vgconvert /sbin/lvm 0755 0 0
+slink /sbin/vgcreate /sbin/lvm 0755 0 0
+slink /sbin/vgdisplay /sbin/lvm 0755 0 0
+slink /sbin/vgexport /sbin/lvm 0755 0 0
+slink /sbin/vgextend /sbin/lvm 0755 0 0
+slink /sbin/vgimport /sbin/lvm 0755 0 0
+slink /sbin/vgmerge /sbin/lvm 0755 0 0
+slink /sbin/vgmknodes /sbin/lvm 0755 0 0
+slink /sbin/vgreduce /sbin/lvm 0755 0 0
+slink /sbin/vgremove /sbin/lvm 0755 0 0
+slink /sbin/vgs /sbin/lvm 0755 0 0
+slink /sbin/vgscan /sbin/lvm 0755 0 0
+slink /sbin/vgsplit /sbin/lvm 0755 0 0

@@ -1,0 +1,17 @@
+# $Id: perl-cgi.etch.txt,v 1.1 2008-10-03 22:59:11 brian Exp $
+# depends: _base perl
+# helpcommand:
+# versioncommand: 
+# examplecommand: 
+#
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# perl-cgi /usr/share
+file /usr/share/perl/5.8.8/CGI.pm /usr/share/perl/5.8.8/CGI.pm 0644 0 0
+dir /usr/share/perl/5.8.8/CGI 0755 0 0
+file /usr/share/perl/5.8.8/CGI/Carp.pm /usr/share/perl/5.8.8/CGI/Carp.pm 0644 0 0
+file /usr/share/perl/5.8.8/CGI/Cookie.pm /usr/share/perl/5.8.8/CGI/Cookie.pm 0644 0 0
+file /usr/share/perl/5.8.8/CGI/Util.pm /usr/share/perl/5.8.8/CGI/Util.pm 0644 0 0
+dir /usr/share/perl/5.8.8/Config 0755 0 0
+file /usr/share/perl/5.8.8/Config/IniFiles.pm /usr/share/perl5/Config/IniFiles.pm 0644 0 0

@@ -1,0 +1,23 @@
+# $Id: release.txt,v 1.4 2009-03-20 09:10:37 brian Exp $
+# description: host specific stuff for the release version of Project Naranja
+# packages
+# depends: _base
+# helpcommand: 
+# versioncommand: 
+# examplecommand: 
+#
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# release /etc/network
+file /etc/network/interfaces :BUILD_BASE:/builds/naranja/network.interfaces.release 0644 0 0
+# ssl_keys-naranja /etc/stunnel
+file /etc/stunnel/ssl.key /dev/shm/code.google.com.p.naranja.key.pem.nopass 0644 0 0
+file /etc/stunnel/ssl.cert.pem /dev/shm/code.google.com.p.naranja.cert.pem 0644 0 0
+# release /etc/hostname
+file /etc/hostname /dev/shm/hostname.release 0644 0 0
+# release busybox inittab
+file /etc/inittab :BUILD_BASE:/builds/naranja/inittab 0644 0 0
+# release busybox
+file /bin/busybox /dev/shm/busybox-1.12.1 0755 0 0
+# vi: set sw=4 ts=4 paste:

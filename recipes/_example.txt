@@ -1,0 +1,15 @@
+# $Id: _example.txt,v 1.5 2009-03-20 09:10:36 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# somebin /usr/bin
+file /usr/bin/somebin /usr/bin/somebin 0755 0 0
+slink /usr/bin/someotherbin /usr/bin/somebin 0755 0 0
+# vi: set sw=4 ts=4 paste:

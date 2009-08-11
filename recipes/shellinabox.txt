@@ -1,0 +1,23 @@
+# $Id: shellinabox.txt,v 1.7 2009-08-10 08:38:58 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# packages: libssl-dev
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+# build with: ./configure --prefix=/usr/local/stow/shellinabox-2.9 \
+# --disable-runtime-loading --disable-pam; make
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+file /usr/bin/shellinaboxd /usr/local/stow/shellinabox-2.9/bin/shellinaboxd 755 0 0
+# shellinabox needs the xterm terminfo file to work when presenting dialog
+# screens
+dir /lib/terminfo 0755 0 0
+dir /lib/terminfo/x 0755 0 0
+file /lib/terminfo/x/xterm /lib/terminfo/x/xterm 0644 0 0
+dir /usr/share/terminfo 0755 0 0
+dir /usr/share/terminfo/x 0755 0 0
+slink /usr/share/terminfo/x/xterm /usr/share/terminfo/x/xterm 0644 0 0
+# vi: set sw=4 ts=4 paste:

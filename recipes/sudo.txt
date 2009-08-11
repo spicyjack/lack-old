@@ -1,0 +1,23 @@
+# $Id: sudo.txt,v 1.2 2009-03-27 08:23:30 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+#file /etc/init.d/sudo /etc/init.d/sudo 755 0 0
+dir /etc/pam.d 755 0 0
+file /etc/pam.d/sudo /etc/pam.d/sudo 644 0 0
+dir /usr/lib/sudo 755 0 0
+file /usr/lib/sudo/sudo_noexec.so /usr/lib/sudo/sudo_noexec.so 644 0 0
+file /usr/sbin/visudo /usr/sbin/visudo 755 0 0
+#dir /usr/share/lintian 755 0 0
+#dir /usr/share/lintian/overrides 755 0 0
+#file /usr/share/lintian/overrides/sudo /usr/share/lintian/overrides/sudo 644 0 0
+file /usr/bin/sudo /usr/bin/sudo 4755 0 0
+file /usr/bin/sudoedit /usr/bin/sudoedit 4755 0 0
+# vi: set sw=4 ts=4 paste:

@@ -1,0 +1,28 @@
+Credits for Propaganda Streaming Audio System
+
+For support with this project, please visit the Propaganda Google Groups Page at http://code.google.com/p/psas, or you can send an e-mail to the Propaganda mailing list at <psas@groups.google.com>.
+
+Licenses
+
+    * Perl Artistic License
+    * GNU GPL v1
+    * GNU GPL v2
+    * Historical Permission Notice and Disclaimer
+    * GNU LGPL v2.1
+    * Debian Social Contract, v1.1 
+
+Credits
+
+Propaganda Streaming Audio System
+    * Who: Brian Mannning <elspicyjack at gmail dot com>
+    * What: kernel/initramfs creation, build system, text menus, default configuration files, and wild crazy stupid ideas
+    * Where: http://code.google.com/p/psas
+    * License: All code created for the Propaganda Streaming Audio System project is licensed under the GPLv2. 
+
+Debian GNU/Linux
+    * Who: The Debian GNU/Linux Development Team
+    * What: Debian GNU/Linux, which provided most of the precompiled binaries used for this project.
+    * Where: http://www.debian.org
+    * License: Debian Social Contract, plus additional licenses for individual packages. 
+
+# vi: set paste :

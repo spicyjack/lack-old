@@ -1,0 +1,41 @@
+# $Id: propaganda.txt,v 1.7 2009-04-07 08:49:48 brian Exp $
+# description: icecast config files customized for the propaganda release
+# depends: _base icecast2.lenny
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# busybox getopt hides in /bin
+slink /usr/bin/getopt /bin/getopt 0755 0 0
+# trying this to get dialog to work on shellinabox
+dir /lib/terminfo 0755 0 0
+dir /lib/terminfo/x 0755 0 0
+file /lib/terminfo/x/xterm /lib/terminfo/x/xterm 0644 0 0
+dir /usr/share/terminfo 0755 0 0
+dir /usr/share/terminfo/x 0755 0 0
+slink /usr/share/terminfo/x/xterm /usr/share/terminfo/x/xterm 0644 0 0
+# icecast files
+dir /etc/icecast2 0770 108 110
+file /etc/icecast2/icecast.xml :BUILD_BASE:/builds/propaganda/icecast2/icecast.xml 0660 108 110
+# icecast admin web pages
+dir /etc/icecast2/admin 0755 108 110
+file /etc/icecast2/admin/listclients.xsl :BUILD_BASE:/builds/propaganda/icecast2/admin/listclients.xsl 0660 108 110
+file /etc/icecast2/admin/listmounts.xsl :BUILD_BASE:/builds/propaganda/icecast2/admin/listmounts.xsl 0660 108 110
+file /etc/icecast2/admin/moveclients.xsl :BUILD_BASE:/builds/propaganda/icecast2/admin/moveclients.xsl 0660 108 110
+file /etc/icecast2/admin/response.xsl :BUILD_BASE:/builds/propaganda/icecast2/admin/response.xsl 0660 108 110
+file /etc/icecast2/admin/stats.xsl :BUILD_BASE:/builds/propaganda/icecast2/admin/stats.xsl 0660 108 110
+file /etc/icecast2/admin/manageauth.xsl :BUILD_BASE:/builds/propaganda/icecast2/admin/manageauth.xsl 0660 108 110
+file /etc/icecast2/admin/updatemetadata.xsl :BUILD_BASE:/builds/propaganda/icecast2/admin/updatemetadata.xsl 0660 108 110
+# icecast web status pages
+dir /etc/icecast2/web 0755 108 110
+file /etc/icecast2/web/simple.xsl :BUILD_BASE:/builds/propaganda/icecast2/web/simple.xsl 0660 108 110
+file /etc/icecast2/web/status.xsl :BUILD_BASE:/builds/propaganda/icecast2/web/status.xsl 0660 108 110
+file /etc/icecast2/web/status2.xsl :BUILD_BASE:/builds/propaganda/icecast2/web/status2.xsl 0660 108 110
+file /etc/icecast2/web/style.css :BUILD_BASE:/builds/propaganda/icecast2/web/style.css 0660 108 110
+file /etc/icecast2/web/auth.xsl :BUILD_BASE:/builds/propaganda/icecast2/web/auth.xsl 0660 108 110
+file /etc/icecast2/web/server_version.xsl :BUILD_BASE:/builds/propaganda/icecast2/web/server_version.xsl 0660 108 110
+# vi: set sw=4 ts=4 paste:

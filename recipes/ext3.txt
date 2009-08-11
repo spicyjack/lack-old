@@ -1,0 +1,5 @@
+# $Id: ext3.txt,v 1.2 2006-12-21 17:21:20 brian Exp $
+# depends: _base extfs-common
+# ext3 /sbin
+file /sbin/mkfs.ext3 /sbin/mkfs.ext3 0755 0 0
+file /sbin/fsck.ext3 /sbin/fsck.ext3 0755 0 0

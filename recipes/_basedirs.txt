@@ -1,0 +1,50 @@
+# $Id: _basedirs.txt,v 1.11 2009-04-09 06:34:36 brian Exp $
+# base initramfs system recipe; all other recipies build on top of this one
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+# system directories
+dir /bin 0755 0 0
+dir /boot 0755 0 0
+dir /dev 0755 0 0
+dir /etc 0755 0 0
+dir /etc/init.d 0755 0 0
+dir /etc/modprobe.d 755 0 0
+dir /etc/network 0755 0 0
+dir /lib 0755 0 0
+dir /lib/modules 0755 0 0
+dir /mnt 0755 0 0
+dir /mnt/cdrom 0755 0 0
+dir /mnt/floppy 0755 0 0
+dir /mnt/flash 0755 0 0
+dir /proc 0755 0 0
+dir /sbin 0755 0 0
+dir /sys 0755 0 0
+dir /usr 0755 0 0
+dir /usr/bin 0755 0 0
+dir /usr/lib 0755 0 0
+dir /usr/sbin 0755 0 0
+dir /usr/share 0755 0 0
+dir /usr/share/locale 0755 0 0
+dir /tmp/ 1777 0 0
+dir /var 0755 0 0
+dir /var/lib 0755 0 0
+dir /var/log 0755 0 0
+dir /var/run 0755 0 0
+# _basedirs /bin
+# IMPORTANT: busybox must now be sourced from the individual project initramfs
+# script instead of from this base file
+slink /bin/sh /bin/busybox 0755 0 0
+file /bin/dir.sh :BUILD_BASE:/scripts/dir.sh 0755 0 0
+slink /bin/dir /bin/dir.sh 0755 0 0 
+# a fake bash, mostly to make ldd work correctly
+file /bin/fakebash.sh :BUILD_BASE:/scripts/fakebash.sh 0755 0 0
+slink /bin/bash /bin/fakebash.sh 0755 0 0 
+# create a symlink from nslookup to the host command
+slink /usr/bin/host /usr/bin/nslookup 0755 0 0
+# _basedirs /etc
+slink /etc/mtab /proc/mounts 0755 0 0
+file /etc/ant_functions.sh :BUILD_BASE:/builds/common/initscripts/ant_functions.sh 0755 0 0
+# the below two files should be provided by the specific project's initramfs
+# file listing
+file /etc/ld.so.conf :BUILD_BASE:/builds/common/ld.so.conf 0644 0 0
+file /etc/lode-lat1u-16.psf.gz :BUILD_BASE:/builds/common/lode-lat1u-16.psf.gz 0644 0 0

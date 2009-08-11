@@ -1,0 +1,8 @@
+# $Id: parted.lenny.txt,v 1.1 2008-10-03 22:59:11 brian Exp $
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+# parted /lib
+file /lib/libparted-1.8.so.10.0.0 /lib/libparted-1.8.so.10.0.0 0644 0 0
+slink /lib/libparted-1.8.so.10 /lib/libparted-1.8.so.10.0.0 0644 0 0
+# parted sbin
+file /sbin/parted /sbin/parted 0755 0 0

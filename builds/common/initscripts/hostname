@@ -1,0 +1,47 @@
+#! /bin/sh
+
+# $Id: hostname,v 1.3 2009-07-16 00:23:49 brian Exp $
+# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+
+# picks up things like colorize()
+source $ANT_FUNCTIONS
+
+PATH=/sbin:/bin  # No remote fs at start
+ACTION=$1
+BINARY=/bin/hostname
+[ -x "$BINARY" ] || exit 1
+BASENAME=$(/usr/bin/basename $BINARY)
+DESC="$BASENAME: Setting hostname to"
+BINARY_OPTS="-r -c"
+
+case "$ACTION" in
+  vars)
+    # echo out what commandline variables are parsed by this script
+    echo "${BASENAME}:"
+    exit 0
+  ;;
+  start)
+    get_hostname # from ant_functions
+	colorize $S_TIP "$DESC $HOSTNAME"
+	$BINARY $HOSTNAME
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	;;
+  stop)
+	PATH=/bin:/sbin:/usr/bin:/usr/sbin
+	colorize $INFO "Stopping $DESC"
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	;;
+  restart|force-reload)
+ 	$0 stop
+ 	$0 start
+	;;
+  *)
+	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+	exit 3
+	;;
+esac
+
+:
+

@@ -1,0 +1,17 @@
+# $Id: ghosts.txt,v 1.3 2009-03-20 09:10:37 brian Exp $
+# description: a set of MP3's from the NIN _Ghosts_ release
+# depends: _base icecast2.lenny perl-shout.lenny
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# files are stored in /tmp
+file /tmp/01-Ghosts_I.mp3 /tmp/01-Ghosts_I.mp3 0644 0 0
+file /tmp/02-Ghosts_I.mp3 /tmp/02-Ghosts_I.mp3 0644 0 0
+#file /tmp/03-Ghosts_I.mp3 /tmp/03-Ghosts_I.mp3 0644 0 0
+#file /tmp/04-Ghosts_I.mp3 /tmp/04-Ghosts_I.mp3 0644 0 0
+# vi: set sw=4 ts=4 paste:

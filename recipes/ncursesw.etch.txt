@@ -1,0 +1,7 @@
+# $Id: ncursesw.etch.txt,v 1.1 2009-03-07 03:58:46 brian Exp $
+# depends: _base
+# ncursesw /usr/lib
+# helpcommand: 
+# versioncommand: 
+file /usr/lib/libncursesw.so.5.4 /usr/lib/libncursesw.so.5.4 0644 0 0
+slink /usr/lib/libncursesw.so.5 /usr/lib/libncursesw.so.5.4 0644 0 0

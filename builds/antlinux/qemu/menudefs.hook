@@ -1,0 +1,3 @@
+[submenu] (Frequently Used) {}
+    [exec] (mrxvt) {/usr/bin/mrxvt} </usr/share/pixmaps/mrxvt.png>
+[end]

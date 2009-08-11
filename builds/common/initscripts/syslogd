@@ -1,0 +1,49 @@
+#! /bin/sh
+
+# $Id: syslogd,v 1.13 2009-05-13 07:34:26 brian Exp $
+# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+
+source $ANT_FUNCTIONS
+PATH=/sbin:/bin  # No remote fs at start
+ACTION=$1
+BINARY=/sbin/syslogd
+[ -x "$BINARY" ] || exit 1
+DESC="system logger daemon"
+BASENAME=$(/usr/bin/basename $BINARY)
+BINARY_OPTS="-S" # -S: smaller logging output
+
+case "$1" in
+  vars)
+    echo "${BASENAME}:"
+    exit 0
+  ;;
+  start)
+	colorize $S_TIP "$BASENAME: Starting $DESC;"
+	$BINARY $BINARY_OPTS >> $BOOT_LOG 2>&1
+    cmd_status $?
+    # get_pid sets $CHILD_PID
+    get_pid $BINARY
+    write_child_pid $BASENAME $CHILD_PID
+    colorize $S_SUCCESS "$SUCCESS"
+    echo " (PID=${CHILD_PID})"
+	;;
+  stop)
+	PATH=/bin:/sbin:/usr/bin:/usr/sbin
+    SYSLOGD_PID=$(cat /var/run/${BASENAME}.pid)
+	colorize $S_TIP "$BASENAME: Stopping $DESC "
+    echo -n "(PID=${SYSLOGD_PID});"
+    /bin/kill -TERM $SYSLOGD_PID
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	;;
+  restart|force-reload)
+ 	$0 stop
+ 	$0 start
+	;;
+  *)
+	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+	exit 3
+	;;
+esac
+
+:

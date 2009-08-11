@@ -1,0 +1,12 @@
+# $Id: rng-tools.txt,v 1.4 2009-02-27 09:06:03 brian Exp $
+# depends: _base
+# rng-tools /dev
+nod /dev/hwrng 0600 0 0 c 10 183
+# rng-tools /usr
+# helpcommand: /usr/sbin/rngd --help
+# versioncommand: /usr/sbin/rngd --version
+file /etc/modprobe.d/rng-tools /etc/modprobe.d/rng-tools 0644 0 0
+file /usr/sbin/rngd /usr/sbin/rngd 0755 0 0
+# examplecommand: /usr/bin/rngtest -c 1 </dev/hwrng
+# helpcommand: /usr/bin/rngtest --help
+file /usr/bin/rngtest /usr/bin/rngtest 0755 0 0

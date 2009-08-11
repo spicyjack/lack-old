@@ -1,0 +1,43 @@
+#! /bin/sh
+
+# $Id: sysfs,v 1.12 2008-01-31 19:59:22 brian Exp $
+# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+
+source $ANT_FUNCTIONS
+PATH=/sbin:/bin  # No remote fs at start
+ACTION=$1
+BINARY=/bin/mount
+[ -x "$BINARY" ] || exit 1
+BASENAME="sysfs"
+DESC="/sys (sysfs for 2.6 Linux kernel)"
+BINARY_OPTS="sysfs /sys -t sysfs"
+#BOOT_LOG=/var/log/boot.log # this is set in _init.sh now
+
+case "$ACTION" in
+  vars)
+    echo "${BASENAME}:"
+    exit 0
+  ;;
+  start)
+	colorize $S_TIP "$BASENAME: Mounting $DESC;"
+    $BINARY $BINARY_OPTS >> $BOOT_LOG 2>&1
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	;;
+  stop)
+    colorize $S_TIP "$BASENAME: Unmounting $DESC;"
+    /bin/umount /sys
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	;;
+  restart|force-reload)
+    $0 stop
+    $0 start
+	;;
+  *)
+	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+	exit 3
+	;;
+esac
+
+:

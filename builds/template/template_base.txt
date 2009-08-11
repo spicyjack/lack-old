@@ -1,0 +1,62 @@
+# $Id: template_base.txt,v 1.1 2009-07-14 05:09:04 brian Exp $
+# A template file for the base set of files that need to be included with a
+# project
+# Notation used for the 'make_initramfs_cpio' command
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+# make sure you get busybox in each project's specific initramfs file list now
+file /bin/busybox /tmp/busybox-1.13.3-x86 0755 0 0
+# busybox getopt hides in /bin
+slink /usr/bin/getopt /bin/getopt 0755 0 0
+# /etc
+file /etc/hostname /tmp/hostname.blank-mbr 0644 0 0
+file /etc/modules :BUILD_BASE:/builds/blank-mbr/etcfiles/modules 0644 0 0
+# /sbin
+file /sbin/modprobe /sbin/modprobe 0755 0 0
+# /usr/bin
+# a script that runs nslookup
+file /usr/bin/host :BUILD_BASE:/builds/common/host.sh 0755 0 0
+# the main /init script is created in make_initramfs.sh; no need to include it
+# here
+# get the full set of init helper scripts
+dir /etc/init.d 0755 0 0
+#file /etc/init.d/makedevs :BUILD_BASE:/builds/common/initscripts/makedevs 0755 0 0
+file /etc/init.d/bb_install :BUILD_BASE:/builds/common/initscripts/bb_install 0755 0 0
+file /etc/init.d/blank-mbr :BUILD_BASE:/builds/common/initscripts/blank-mbr 0755 0 0
+file /etc/init.d/hostname :BUILD_BASE:/builds/common/initscripts/hostname 0755 0 0
+file /etc/init.d/kernel_modules :BUILD_BASE:/builds/common/initscripts/kernel_modules 0755 0 0
+file /etc/init.d/klogd :BUILD_BASE:/builds/common/initscripts/klogd 0755 0 0
+file /etc/init.d/loadfont :BUILD_BASE:/builds/common/initscripts/loadfont 0755 0 0
+file /etc/init.d/miscfs :BUILD_BASE:/builds/common/initscripts/miscfs 0755 0 0 0
+file /etc/init.d/procfs :BUILD_BASE:/builds/common/initscripts/procfs 0755 0 0
+file /etc/init.d/remount_rootfs :BUILD_BASE:/builds/common/initscripts/remount_rootfs 0755 0 0
+file /etc/init.d/rootvol :BUILD_BASE:/builds/common/initscripts/rootvol 0755 0 0
+file /etc/init.d/run_program :BUILD_BASE:/builds/common/initscripts/run_program 0755 0 0
+file /etc/init.d/syslogd :BUILD_BASE:/builds/common/initscripts/syslogd 0755 0 0
+file /etc/init.d/sysfs :BUILD_BASE:/builds/common/initscripts/sysfs 0755 0 0
+file /etc/init.d/udev :BUILD_BASE:/builds/common/initscripts/udev 0755 0 0
+file /etc/init.d/usb_modules :BUILD_BASE:/builds/common/initscripts/usb_modules 0755 0 0
+# start symlinks
+dir /etc/start 0755 0 0
+#slink /etc/start/01remount_rootfs /etc/init.d/remount_rootfs 0755 0 0
+#slink /etc/start/02bb_install /etc/init.d/bb_install 0755 0 0
+#slink /etc/start/05makedevs /etc/init.d/makedevs 0755 0 0
+#slink /etc/start/10syslogd /etc/init.d/syslogd 0755 0 0
+#slink /etc/start/11klogd /etc/init.d/klogd 0755 0 0
+#slink /etc/start/10sysfs /etc/init.d/sysfs 0755 0 0
+#slink /etc/start/10udev /etc/init.d/udev 0755 0 0
+slink /etc/start/10miscfs /etc/init.d/miscfs 0755 0 0
+slink /etc/start/20kernel_modules /etc/init.d/kernel_modules 0755 0 0
+slink /etc/start/25hostname /etc/init.d/hostname 0755 0 0
+slink /etc/start/30run_program /etc/init.d/run_program 0755 0 0
+slink /etc/start/35blank-mbr /etc/init.d/blank-mbr 0755 0 0
+# stop symlinks
+# stop symlinks
+dir /etc/stop 0755 0 0
+slink /etc/stop/75sysfs /etc/init.d/sysfs 0755 0 0
+slink /etc/stop/89klogd /etc/init.d/klogd 0755 0 0
+slink /etc/stop/90syslogd /etc/init.d/syslogd 0755 0 0
+slink /etc/stop/99procfs /etc/init.d/procfs 0755 0 0
+# vi: set sw=4 ts=4 paste:
+# eof

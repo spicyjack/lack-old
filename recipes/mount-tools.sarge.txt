@@ -1,0 +1,19 @@
+# $Id: mount-tools.sarge.txt,v 1.2 2009-03-09 08:35:48 brian Exp $
+# loop-aes /bin
+# both of these files are SUID
+file /bin/mount /bin/mount 4755 0 0 
+file /bin/umount /bin/umount 4755 0 0 
+# loop-aes /etc
+file /etc/passwd :BUILD_BASE:/builds/naranja/passwd 0644 0 0
+file /etc/nsswitch.conf :BUILD_BASE:/builds/antlinux/nsswitch.conf 0644 0 0
+# loop-aes /lib
+file /lib/libnss_files-2.3.2.so /lib/libnss_files-2.3.2.so 0644 0 0
+slink /lib/libnss_files.so.2 /lib/tls/libnss_files-2.3.6.so 0644 0 0  
+file /lib/libnss_dns-2.3.2.so /lib/libnss_dns-2.3.2.so 0644 0 0
+slink /lib/libnss_dns.so.2 /lib/libnss_dns-2.3.2.so 0644 0 0  
+# loop-aes sbin
+file /sbin/losetup /sbin/losetup 0755 0 0
+file /sbin/swapon /sbin/swapon 0755 0 0
+slink /sbin/swapoff /sbin/swapon 0755 0 0
+# loop-aes usr
+file /usr/bin/gpg /usr/bin/gpg 4755 0 0

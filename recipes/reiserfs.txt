@@ -1,0 +1,5 @@
+# $Id: reiserfs.txt,v 1.2 2006-10-24 16:38:10 brian Exp $
+# reiserfs /sbin
+file /sbin/mkfs.reiserfs /sbin/mkfs.reiserfs 0755 0 0
+file /sbin/fsck.reiserfs /sbin/fsck.reiserfs 0755 0 0
+file /sbin/resize_reiserfs /sbin/resize_reiserfs 0755 0 0

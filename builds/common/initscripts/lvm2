@@ -1,0 +1,62 @@
+#! /bin/sh
+
+# $Id: lvm2,v 1.12 2008-01-25 01:36:04 brian Exp $
+# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+source $ANT_FUNCTIONS
+BASENAME="lvm2"
+PATH=/sbin:/bin  # No remote fs at start
+ACTION=$1
+DESC="Logical Volume Manager"
+
+case "$ACTION" in
+  vars)
+    echo "${BASENAME}:"
+    echo "cmdline - volgrp; volume group to activate"
+    exit 0
+  ;;
+  start)
+    file_parse "/proc/cmdline" "volgrp"
+    # pass the name of the volume back out for other scripts to use
+    if [ "x$VOL_GRP" != "xno" -o "x$VOL_GRP" != "xNO" ]; then
+        # scan for volumes first
+    	colorize $S_TIP "${BASENAME}: scanning for logical volumes;"
+        /sbin/vgscan >> $BOOT_LOG 2>&1
+        cmd_status $?
+        colorize_nl $S_SUCCESS "$SUCCESS"
+
+        # now activate volumes
+        if [ "x$VOL_GRP" != "x" ]; then
+            # activate a specific volume
+            # root device will be concatenated using vol_grp/rootvol
+            colorize $S_TIP "${BASENAME}: enabling volume group ${VOL_GRP};"
+            /sbin/vgchange -ay --ignorelockingfailure $VOL_GRP \
+                >> $BOOT_LOG 2>&1
+        else
+            # activate all volumes, the root= parameter should point to the
+            # exact root device
+            colorize $S_TIP "${BASENAME}: enabling all volume groups;"
+            /sbin/vgchange -ay --ignorelockingfailure >> $BOOT_LOG 2>&1
+        fi
+        cmd_status $?
+        colorize_nl $S_SUCCESS "$SUCCESS"
+    else
+        colorize $S_INFO "${BASENAME}: 'volgrp=no' parameter found "
+        colorize_nl $S_INFO "in /proc/cmdline"
+        colorize_nl $S_INFO "${BASENAME}: Skipping activation of LVM groups"
+    fi
+	;;
+  stop)
+    # noop
+    :
+	;;
+  restart|force-reload)
+    # noop
+    :
+	;;
+  *)
+	echo "Usage: $BASENAME {start|stop|restart|force-reload|vars}" >&2
+	exit 3
+	;;
+esac
+
+:

@@ -1,0 +1,4 @@
+# $Id: xfs.txt,v 1.1 2006-10-12 06:15:43 brian Exp $
+# xfs /sbin
+file /sbin/mkfs.xfs /sbin/mkfs.xfs 0755 0 0
+file /sbin/fsck.xfs /sbin/fsck.xfs 0755 0 0

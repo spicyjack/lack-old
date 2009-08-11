@@ -1,0 +1,4 @@
+# $Id: jfs.txt,v 1.1 2006-10-12 06:15:43 brian Exp $
+# jfs /sbin
+file /sbin/mkfs.jfs /sbin/mkfs.jfs 0755 0 0
+file /sbin/fsck.jfs /sbin/fsck.jfs 0755 0 0

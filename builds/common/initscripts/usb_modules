@@ -1,0 +1,43 @@
+#!/bin/sh
+
+# $Id: usb_modules,v 1.5 2009-05-07 07:22:12 brian Exp $
+# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+
+source $ANT_FUNCTIONS
+PATH=/sbin:/bin:/usr/bin
+ACTION=$1
+BINARY="/sbin/modprobe"
+BASENAME="usb_modules"
+DESC="Loading kernel USB modules;"
+BINARY_OPTS=""
+
+case "$ACTION" in
+  vars)
+    echo "${BASENAME}:"
+    exit 0
+  ;;
+  start)
+	colorize_nl $S_TIP "${BASENAME}: $DESC"
+    for MODULE in usbcore ehci-hcd uhci-hcd usbhid hid;
+    do
+	    colorize_nl $S_TIP "  - $MODULE"
+    	$BINARY $BINARY_OPTS $MODULE >> $BOOT_LOG 2>&1
+    	#$BINARY $BINARY_OPTS $MODULE
+        cmd_status $?
+    done
+	;;
+  stop)
+    # noop
+    :
+	;;
+  restart|force-reload)
+    # noop
+    :
+	;;
+  *)
+	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+	exit 3
+	;;
+esac
+
+:

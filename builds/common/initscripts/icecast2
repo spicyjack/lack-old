@@ -1,0 +1,52 @@
+#! /bin/sh
+
+# $Id: icecast2,v 1.5 2009-03-20 09:10:36 brian Exp $
+# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+
+source $ANT_FUNCTIONS
+
+PATH=/sbin:/bin:/usr/bin  # No remote fs at start
+ACTION=$1
+BINARY=/usr/bin/icecast2
+[ -x "$BINARY" ] || exit 1
+BASENAME=$(/usr/bin/basename $BINARY)
+DESC="icecast2 HTTP Streaming server"
+# -b == background, -c config file
+BINARY_OPTS="-b -c /etc/icecast2/icecast.xml"
+
+case "$ACTION" in
+    vars)
+        # echo out what commandline variables are parsed by this script
+        echo "${BASENAME}:"
+        exit 0
+    ;;
+    start)
+        IFS_UP=$(/bin/ip address | /bin/grep UP | /usr/bin/wc -l)
+        if [ $IFS_UP -gt 0 ]; then
+    	    colorize $S_TIP "Starting $DESC"
+	        su -s /bin/sh -c "$BINARY $BINARY_OPTS" icecast2 >>$BOOT_LOG 2&>1
+            cmd_status $? $BASENAME
+            colorize_nl $S_SUCCESS "$SUCCESS"
+            # don't know why something here is writing this file...
+            rm -f /1
+        else
+            colorize $S_INFO "Not starting $DESC; no network interfaces up"
+        fi
+	    ;;
+    stop)
+	    colorize $S_TIP "Stopping $DESC"
+        kill -TERM $(cat /var/run/icecast.pid)
+        cmd_status $? $BASENAME
+        colorize_nl $S_SUCCESS "$SUCCESS"
+	    ;;
+    restart|force-reload)
+ 	    $0 stop
+ 	    $0 start
+	    ;;
+    *)
+	    echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+	    exit 3
+	    ;;
+esac
+
+:

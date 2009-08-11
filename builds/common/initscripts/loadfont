@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# $Id: loadfont,v 1.4 2008-10-07 07:56:56 brian Exp $
+# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+
+source $ANT_FUNCTIONS
+PATH=/sbin:/bin  # No remote fs at start
+ACTION=$1
+BASENAME="loadfont"
+DESC="'lode-lat1u-16' font from GoboLinux" 
+
+case "$ACTION" in
+  vars)
+    echo "${BASENAME}:"
+    exit 0
+  ;;
+  start)
+    # purdy font
+    colorize $S_TIP "${BASENAME}: Loading ${DESC};"
+    $BB gunzip -c /etc/lode-lat1u-16.psf.gz | $BB loadfont
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	;;
+  stop)
+    # noop
+    :
+	;;
+  restart|force-reload)
+    # noop
+    :
+	;;
+  *)
+	echo "Usage: $SCRIPTNAME {start|stop|restart|force-reload}" >&2
+	exit 3
+	;;
+esac
+
+:

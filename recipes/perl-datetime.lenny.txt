@@ -1,0 +1,23 @@
+# $Id: perl-datetime.lenny.txt,v 1.2 2009-03-20 09:10:37 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+file /usr/lib/perl5/DateTime.pm /usr/lib/perl5/DateTime.pm 644 0 0
+dir /usr/lib/perl5/DateTime 755 0 0
+file /usr/lib/perl5/DateTime/Infinite.pm /usr/lib/perl5/DateTime/Infinite.pm 644 0 0
+file /usr/lib/perl5/DateTime/Helpers.pm /usr/lib/perl5/DateTime/Helpers.pm 644 0 0
+file /usr/lib/perl5/DateTime/Duration.pm /usr/lib/perl5/DateTime/Duration.pm 644 0 0
+file /usr/lib/perl5/DateTime/LeapSecond.pm /usr/lib/perl5/DateTime/LeapSecond.pm 644 0 0
+dir /usr/lib/perl5/auto 755 0 0
+dir /usr/lib/perl5/auto/DateTime 755 0 0
+file /usr/lib/perl5/auto/DateTime/DateTime.so /usr/lib/perl5/auto/DateTime/DateTime.so 755 0 0
+file /usr/lib/perl5/DateTimePP.pm /usr/lib/perl5/DateTimePP.pm 644 0 0
+file /usr/lib/perl5/DateTimePPExtra.pm /usr/lib/perl5/DateTimePPExtra.pm 644 0 0
+# vi: set sw=4 ts=4 paste:

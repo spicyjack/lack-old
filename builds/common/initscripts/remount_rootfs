@@ -1,0 +1,42 @@
+#! /bin/sh
+
+# $Id: remount_rootfs,v 1.2 2008-01-31 19:59:22 brian Exp $
+# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+
+source $ANT_FUNCTIONS
+PATH=/sbin:/bin  # No remote fs at start
+ACTION=$1
+BINARY=/bin/mount
+[ -x "$BINARY" ] || exit 1
+BASENAME="remount_rootfs"
+DESC="root filesystem (rootfs)"
+BINARY_OPTS="rootfs / -o remount"
+
+case "$ACTION" in
+  vars)
+    echo "${BASENAME}:"
+    exit 0
+  ;;
+  start)
+	colorize $S_TIP "$BASENAME: $DESC read/write;"
+	$BINARY $BINARY_OPTS,rw >> $BOOT_LOG 2>&1
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	;;
+  stop)
+	colorize $S_TIP "$BASENAME: $DESC read-only;"
+	$BINARY $BINARY_OPTS,ro >> $BOOT_LOG 2>&1
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	;;
+  restart|force-reload)
+    # noop
+    :
+	;;
+  *)
+	echo "Usage: $SCRIPTNAME {start|stop|restart|force-reload}" >&2
+	exit 3
+	;;
+esac
+
+:

@@ -1,0 +1,26 @@
+# $Id: perl-mp3-tag.lenny.txt,v 1.2 2009-03-20 09:10:37 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+dir /usr/share/perl5/MP3 755 0 0
+file /usr/share/perl5/MP3/Tag.pm /usr/share/perl5/MP3/Tag.pm 644 0 0
+file /usr/share/perl5/MP3/ID3v2-Data.pod /usr/share/perl5/MP3/ID3v2-Data.pod 644 0 0
+dir /usr/share/perl5/MP3/Tag 755 0 0
+file /usr/share/perl5/MP3/Tag/ID3v1.pm /usr/share/perl5/MP3/Tag/ID3v1.pm 644 0 0
+file /usr/share/perl5/MP3/Tag/File.pm /usr/share/perl5/MP3/Tag/File.pm 644 0 0
+file /usr/share/perl5/MP3/Tag/CDDB_File.pm /usr/share/perl5/MP3/Tag/CDDB_File.pm 644 0 0
+file /usr/share/perl5/MP3/Tag/ParseData.pm /usr/share/perl5/MP3/Tag/ParseData.pm 644 0 0
+file /usr/share/perl5/MP3/Tag/ID3v2.pm /usr/share/perl5/MP3/Tag/ID3v2.pm 644 0 0
+file /usr/share/perl5/MP3/Tag/Inf.pm /usr/share/perl5/MP3/Tag/Inf.pm 644 0 0
+file /usr/share/perl5/MP3/Tag/LastResort.pm /usr/share/perl5/MP3/Tag/LastResort.pm 644 0 0
+dir /usr/bin 755 0 0
+file /usr/bin/typeset_audio_dir /usr/bin/typeset_audio_dir 755 0 0
+file /usr/bin/audio_rename /usr/bin/audio_rename 755 0 0
+# vi: set sw=4 ts=4 paste:

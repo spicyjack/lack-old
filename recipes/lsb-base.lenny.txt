@@ -1,0 +1,15 @@
+# $Id: lsb-base.lenny.txt,v 1.2 2009-03-20 09:10:37 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+dir /etc/lsb-base 755 0 0
+dir /lib/lsb 755 0 0
+file /lib/lsb/init-functions /lib/lsb/init-functions 644 0 0
+# vi: set sw=4 ts=4 paste:

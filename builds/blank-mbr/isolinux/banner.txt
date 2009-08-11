@@ -1,0 +1,21 @@
+40
+'##:::::'##::::'###::::'########::'##::: ##:'####:'##::: ##::'######:::
+ ##:'##: ##:::'## ##::: ##.... ##: ###:: ##:. ##:: ###:: ##:'##... ##::
+ ##: ##: ##::'##:. ##:: ##:::: ##: ####: ##:: ##:: ####: ##: ##:::..:::
+ ##: ##: ##:'##:::. ##: ########:: ## ## ##:: ##:: ## ## ##: ##::'####:
+ ##: ##: ##: #########: ##.. ##::: ##. ####:: ##:: ##. ####: ##::: ##::
+ ##: ##: ##: ##.... ##: ##::. ##:: ##:. ###:: ##:: ##:. ###: ##::: ##::
+. ###. ###:: ##:::: ##: ##:::. ##: ##::. ##:'####: ##::. ##:. ######:::
+:...::...:::..:::::..::..:::::..::..::::..::....::..::::..:::......::::
+0f
+
+40WARNING0f: This ISO image will blank the first 20M of a hard drive.  
+
+Boot the image by entering the following commands:
+
+<Enter> - Boots the image, prompts for a device to blank, confirms blanking
+blank blankdev=/dev/device_name - Blanks 'blankdev' 20with0f confirmation
+blank blankdev=/dev/device_name confirm=n - Blanks with 40NO0f confirmation
+
+You can also get a menu of cheat codes by hitting the <60F10f> key.
+

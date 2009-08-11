@@ -1,0 +1,28 @@
+# $Id: debootstrap.lenny.txt,v 1.1 2008-10-03 22:59:10 brian Exp $
+# debootstrap /usr/sbin
+file /usr/sbin/debootstrap /usr/sbin/debootstrap 0755 0 0
+# debootstrap /usr/share
+dir /usr/share/debootstrap 0755 0 0
+# debootstrap uses pkgdetails for something
+# If you're in here looking for this file, it needs to be compiled using
+# 'make pkgdetails' in the unpacked debootstrap source tree; copy it to
+# /tmp once you compile it
+#file /usr/share/debootstrap/pkgdetails /tmp/pkgdetails 0755 0 0
+file /usr/share/debootstrap/functions /usr/share/debootstrap/functions 0644 0 0
+file /usr/share/debootstrap/devices.tar.gz /usr/share/debootstrap/devices.tar.gz 0644 0 0
+dir /usr/share/debootstrap/scripts 0755 0 0
+file /usr/share/debootstrap/scripts/woody.buildd /usr/share/debootstrap/scripts/woody.buildd 0644 0 0
+file /usr/share/debootstrap/scripts/breezy /usr/share/debootstrap/scripts/breezy 0644 0 0
+file /usr/share/debootstrap/scripts/sarge.fakechroot /usr/share/debootstrap/scripts/sarge.fakechroot 0644 0 0
+file /usr/share/debootstrap/scripts/warty /usr/share/debootstrap/scripts/warty 0644 0 0
+file /usr/share/debootstrap/scripts/potato /usr/share/debootstrap/scripts/potato 0644 0 0
+file /usr/share/debootstrap/scripts/woody /usr/share/debootstrap/scripts/woody 0644 0 0
+file /usr/share/debootstrap/scripts/warty.buildd /usr/share/debootstrap/scripts/warty.buildd 0644 0 0
+file /usr/share/debootstrap/scripts/hoary.buildd /usr/share/debootstrap/scripts/hoary.buildd 0644 0 0
+file /usr/share/debootstrap/scripts/sarge /usr/share/debootstrap/scripts/sarge 0644 0 0
+file /usr/share/debootstrap/scripts/sid /usr/share/debootstrap/scripts/sid 0644 0 0
+file /usr/share/debootstrap/scripts/hoary /usr/share/debootstrap/scripts/hoary 0644 0 0
+file /usr/share/debootstrap/scripts/sarge.buildd /usr/share/debootstrap/scripts/sarge.buildd 0644 0 0
+file /usr/share/debootstrap/scripts/etch /usr/share/debootstrap/scripts/etch 0644 0 0
+file /usr/share/debootstrap/scripts/lenny /usr/share/debootstrap/scripts/lenny 0644 0 0
+

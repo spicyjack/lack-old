@@ -1,0 +1,47 @@
+#! /bin/sh
+
+# $Id: webserver,v 1.7 2008-01-31 19:59:22 brian Exp $
+# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+
+# FIXME
+# - allow for changing the HTTP port via /proc/cmdline or a config file
+
+source $ANT_FUNCTIONS
+PATH=/sbin:/bin  # No remote fs at start
+ACTION=$1
+BINARY="/usr/sbin/thttpd"
+[ -x "$BINARY" ] || exit 0
+DESC="Webserver"
+BASENAME=$(/usr/bin/basename $BINARY)
+HTTPD_PORT=27448 # (2-shit)
+BINARY_OPTS=""
+
+case "$ACTION" in
+  vars)
+    echo "${BASENAME}:"
+    exit 0
+  ;;
+  start)
+	colorize $S_INFO "$BASENAME: Starting $DESC"
+    $BINARY $BINARY_OPTS 
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	;;
+  stop)
+	colorize $S_INFO "$BASENAME: Stopping $DESC"
+    HTTPD_PID=$(cat /var/run/webserver.pid)
+    /bin/kill $HTTPD_PID
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	;;
+  restart|force-reload)
+    $0 stop
+    $0 start
+	;;
+  *)
+	echo "Usage: webserver {start|stop|restart|force-reload}" >&2
+	exit 3
+	;;
+esac
+
+:

@@ -1,0 +1,27 @@
+<h3>blank_mbr</h3>
+<p>Looking for a quick way to nuke a partition table from a machine?  You've
+found one here!</p>
+
+<h4>Usage</h4>
+
+<p>Burn the ISO or create a bootable USB flash drive with syslinux, then use
+the <em>vmlinuz</em> Linux kernel and <em>initramfs</em> image to boot up the
+system, specifiying a drive to blank the master boot record on.  Example
+syslinux/isolinux command line:
+
+<p><code>blank blankdev=/dev/some/device</code>
+
+<p>Remember kids, this ISO/initramfs image will wipe the first 20M of the
+drive (using the command listed at [1]), so if you have data on there that you
+wanted to save, good luck getting it back!  
+
+<p>Actually, getting your data back should be pretty easy, but it will just
+take a while, you would have to recreate the partition table, or send the disk
+out to a recovery service and have them fetch the data for you.
+
+<h3>Enjoy!</h3>
+
+<p>Complaint department?  <a href="mailto:elspicyjack at gmail dot
+com">Clickie here</a>
+
+<p>[1] <code>dd if=/dev/zero of=/dev/to/wipe bs=1024 count=20000</code>

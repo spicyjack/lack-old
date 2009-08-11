@@ -1,0 +1,7 @@
+# modules file for initrd image
+# comments start with a # at the beginning of the line
+# don't put them anywhere else, or the whole line will get filtered
+#unix
+#af_packet
+#loop
+# note that modules now are for the most part picked up by udev

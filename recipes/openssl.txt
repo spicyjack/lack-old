@@ -1,0 +1,20 @@
+# $Id: openssl.txt,v 1.6 2009-03-20 09:10:37 brian Exp $
+# description: OpenSSL
+# depends: _base
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# openssl /usr/lib
+file /usr/lib/libcrypto.so.0.9.8 /usr/lib/libcrypto.so.0.9.8 0644 0 0
+file /usr/lib/libssl.so.0.9.8 /usr/lib/libssl.so.0.9.8 0644 0 0
+# openssl /usr/lib/ssl
+dir /usr/lib/ssl 0755 0 0
+file /usr/lib/ssl/openssl.cnf /usr/lib/ssl/openssl.cnf 0644 0 0
+# openssl /usr
+file /usr/bin/openssl /usr/bin/openssl 0755 0 0
+# vi: set sw=4 ts=4 paste:

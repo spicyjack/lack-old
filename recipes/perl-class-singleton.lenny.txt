@@ -1,0 +1,14 @@
+# $Id: perl-class-singleton.lenny.txt,v 1.2 2009-03-20 09:10:37 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+dir /usr/share/perl5/Class 755 0 0
+file /usr/share/perl5/Class/Singleton.pm /usr/share/perl5/Class/Singleton.pm 644 0 0
+# vi: set sw=4 ts=4 paste:

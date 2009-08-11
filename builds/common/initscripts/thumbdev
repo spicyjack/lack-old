@@ -1,0 +1,62 @@
+#! /bin/sh
+
+# $Id: thumbdev,v 1.16 2009-07-31 22:59:19 brian Exp $
+# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+
+source $ANT_FUNCTIONS
+ACTION=$1
+BASENAME="thumbdev"
+DESC="Checking for Thumbdrive device in /proc/cmdline (thumbdev)"
+
+# we need this for both the start and stop actions; grab it here
+file_parse "/proc/cmdline" "thumbdev" 
+THUMB_DEV=$PARSED 
+
+#HOSTNAME=$(/bin/cat /etc/hostname | /usr/bin/tr -d '\n')
+get_hostname # from ant_functions
+KEY_MOUNT="/mnt/flash/keyhosts"
+
+case "$ACTION" in
+  vars)
+    echo "${BASENAME}:"
+    echo "cmdline - thumbdev; USB thumbdrive device/partition"
+    exit 0
+  ;;
+  start)
+	colorize_nl $S_TIP "$BASENAME: $DESC"
+
+    # set a default just in case
+    if [ -z $THUMB_DEV ]; then
+        THUMB_DEV=/dev/sdc1
+    fi
+	;;
+  stop)
+    # unmount the thumbdrive if it's mounted
+    if [ -d $KEY_MOUNT/$HOSTNAME ]; then
+        colorize $S_TIP "$BASENAME: Unmounting Thumbdrive device"
+        /bin/umount $THUMB_DEV
+        if [ $? -eq 0 ]; then
+            colorize_nl $S_SUCCESS "$SUCCESS"
+            colorize_nl $S_SUCCESS \
+                "####################################################"
+            colorize_nl $S_SUCCESS \
+                "## Please remove the Thumbdrive from the USB port ##"
+            colorize_nl $S_SUCCESS \
+                "####################################################"
+            sleep 1
+        else
+            cmd_status $?
+        fi # if [ $? -eq 0 ]; then
+    fi # if [ -d "/mnt/flash/keys" ]; then
+	;;
+  restart|force-reload)
+    # noop
+    :
+	;;
+  *)
+	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+	exit 3
+	;;
+esac
+
+:

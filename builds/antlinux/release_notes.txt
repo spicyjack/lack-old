@@ -1,0 +1,37 @@
+Antlinux Release Notes
+ http://groups.google.com/group/psas | <psas@groups.google.com>
+
+version 2009.5 (08Apr2009)
+--------------------------
+- added a dialog menu system for interaction and control of programs/utilities
+- added 'xterm' terminfo entry so the dialog menus work in shellinabox
+- added lspci and libraries for debugging hardware problems
+- added SUDO and required libraries
+- updated to Linux kernel 2.6.29.1
+- added network detection to icecast script; no network, no icecast
+
+version 2009.4 (13Mar2009)
+--------------------------
+- added shellinabox
+- added alsamixer and ALSA tools
+
+version 2009.3 (05Mar2009) 
+--------------------------
+- basic instructions displayed on tty1
+- output of simplebake shown on tty2
+- login shells on tty3, tty4, tty5
+- added dialog, mpg123 and ncurses support
+
+version 2009.2 (04Mar2009)
+--------------------------
+- added startbake.sh and simplebake.pl scripts and started them automatically
+- bugsquashing udev
+
+version 2009.1 (27Feb2009)
+--------------------------
+- added udev support
+- added missing modprobe.d directories
+
+version 2009.0 (21Jan2009)
+--------------------------
+- first ISO created using 29Dec2009 initramfs image

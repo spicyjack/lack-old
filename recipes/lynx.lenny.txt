@@ -1,0 +1,87 @@
+# $Id: lynx.lenny.txt,v 1.3 2009-03-21 08:24:12 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+file /usr/bin/lynx.cur /usr/bin/lynx.cur 755 0 0
+slink /usr/bin/lynx /usr/bin/lynx.cur 755 0 0
+dir /usr/share/locale/ca 755 0 0
+dir /usr/share/locale/ca/LC_MESSAGES 755 0 0
+file /usr/share/locale/ca/LC_MESSAGES/lynx.mo /usr/share/locale/ca/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/locale/cs 755 0 0
+dir /usr/share/locale/cs/LC_MESSAGES 755 0 0
+file /usr/share/locale/cs/LC_MESSAGES/lynx.mo /usr/share/locale/cs/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/locale/da 755 0 0
+dir /usr/share/locale/da/LC_MESSAGES 755 0 0
+file /usr/share/locale/da/LC_MESSAGES/lynx.mo /usr/share/locale/da/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/locale/de 755 0 0
+dir /usr/share/locale/de/LC_MESSAGES 755 0 0
+file /usr/share/locale/de/LC_MESSAGES/lynx.mo /usr/share/locale/de/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/locale/et 755 0 0
+dir /usr/share/locale/et/LC_MESSAGES 755 0 0
+file /usr/share/locale/et/LC_MESSAGES/lynx.mo /usr/share/locale/et/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/locale/fr 755 0 0
+dir /usr/share/locale/fr/LC_MESSAGES 755 0 0
+file /usr/share/locale/fr/LC_MESSAGES/lynx.mo /usr/share/locale/fr/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/locale/hu 755 0 0
+dir /usr/share/locale/hu/LC_MESSAGES 755 0 0
+file /usr/share/locale/hu/LC_MESSAGES/lynx.mo /usr/share/locale/hu/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/locale/it 755 0 0
+dir /usr/share/locale/it/LC_MESSAGES 755 0 0
+file /usr/share/locale/it/LC_MESSAGES/lynx.mo /usr/share/locale/it/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/locale/ja 755 0 0
+dir /usr/share/locale/ja/LC_MESSAGES 755 0 0
+file /usr/share/locale/ja/LC_MESSAGES/lynx.mo /usr/share/locale/ja/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/locale/nl 755 0 0
+dir /usr/share/locale/nl/LC_MESSAGES 755 0 0
+file /usr/share/locale/nl/LC_MESSAGES/lynx.mo /usr/share/locale/nl/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/locale/pt_BR 755 0 0
+dir /usr/share/locale/pt_BR/LC_MESSAGES 755 0 0
+file /usr/share/locale/pt_BR/LC_MESSAGES/lynx.mo /usr/share/locale/pt_BR/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/locale/ru 755 0 0
+dir /usr/share/locale/ru/LC_MESSAGES 755 0 0
+file /usr/share/locale/ru/LC_MESSAGES/lynx.mo /usr/share/locale/ru/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/locale/rw 755 0 0
+dir /usr/share/locale/rw/LC_MESSAGES 755 0 0
+file /usr/share/locale/rw/LC_MESSAGES/lynx.mo /usr/share/locale/rw/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/locale/sl 755 0 0
+dir /usr/share/locale/sl/LC_MESSAGES 755 0 0
+file /usr/share/locale/sl/LC_MESSAGES/lynx.mo /usr/share/locale/sl/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/locale/sv 755 0 0
+dir /usr/share/locale/sv/LC_MESSAGES 755 0 0
+file /usr/share/locale/sv/LC_MESSAGES/lynx.mo /usr/share/locale/sv/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/locale/tr 755 0 0
+dir /usr/share/locale/tr/LC_MESSAGES 755 0 0
+file /usr/share/locale/tr/LC_MESSAGES/lynx.mo /usr/share/locale/tr/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/locale/uk 755 0 0
+dir /usr/share/locale/uk/LC_MESSAGES 755 0 0
+file /usr/share/locale/uk/LC_MESSAGES/lynx.mo /usr/share/locale/uk/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/locale/vi 755 0 0
+dir /usr/share/locale/vi/LC_MESSAGES 755 0 0
+file /usr/share/locale/vi/LC_MESSAGES/lynx.mo /usr/share/locale/vi/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/locale/zh_CN 755 0 0
+dir /usr/share/locale/zh_CN/LC_MESSAGES 755 0 0
+file /usr/share/locale/zh_CN/LC_MESSAGES/lynx.mo /usr/share/locale/zh_CN/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/locale/zh_TW 755 0 0
+dir /usr/share/locale/zh_TW/LC_MESSAGES 755 0 0
+file /usr/share/locale/zh_TW/LC_MESSAGES/lynx.mo /usr/share/locale/zh_TW/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/locale/en 755 0 0
+dir /usr/share/locale/en/LC_MESSAGES 755 0 0
+file /usr/share/locale/en/LC_MESSAGES/lynx.mo /usr/share/locale/en/LC_MESSAGES/lynx.mo 644 0 0
+dir /usr/share/menu 755 0 0
+file /usr/share/menu/lynx-cur /usr/share/menu/lynx-cur 644 0 0
+dir /usr/lib 755 0 0
+dir /usr/lib/mime 755 0 0
+dir /usr/lib/mime/packages 755 0 0
+file /usr/lib/mime/packages/lynx-cur /usr/lib/mime/packages/lynx-cur 644 0 0
+dir /etc 755 0 0
+dir /etc/lynx-cur 755 0 0
+file /etc/lynx-cur/lynx.lss /etc/lynx-cur/lynx.lss 644 0 0
+file /etc/lynx-cur/lynx.cfg /etc/lynx-cur/lynx.cfg 644 0 0
+# vi: set sw=4 ts=4 paste:

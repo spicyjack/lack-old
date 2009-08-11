@@ -1,0 +1,88 @@
+# $Id: icecast2.lenny.txt,v 1.10 2009-08-10 08:38:58 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# packages: icecast2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# these two directories are bere because icecast doesn't run with root
+# privileges, and won't be able to write to /var/log by default
+# icecast logs
+dir /var/log/icecast2 0755 108 110
+# icecast pid; 
+dir /var/run/icecast2 0755 108 110
+# moved all of these to the per-project filelists
+# icecast config file
+#dir /etc/icecast2 0770 108 110
+#file /etc/icecast2/icecast.xml /etc/icecast2/icecast.xml 0660 108 110
+# icecast web status pages
+#dir /etc/icecast2/web 0755 108 110
+#file /etc/icecast2/web/status.xsl /etc/icecast2/web/status.xsl 0660 108 110
+#file /etc/icecast2/web/status2.xsl /etc/icecast2/web/status2.xsl 0660 108 110
+#file /etc/icecast2/web/style.css /etc/icecast2/web/style.css 0660 108 110
+#file /etc/icecast2/web/auth.xsl /etc/icecast2/web/auth.xsl 0660 108 110
+#file /etc/icecast2/web/server_version.xsl /etc/icecast2/web/server_version.xsl 0660 108 110
+# icecast admin web pages
+#dir /etc/icecast2/admin 0755 108 110
+#file /etc/icecast2/admin/listclients.xsl /etc/icecast2/admin/listclients.xsl 0660 108 110
+#file /etc/icecast2/admin/listmounts.xsl /etc/icecast2/admin/listmounts.xsl 0660 108 110
+#file /etc/icecast2/admin/moveclients.xsl /etc/icecast2/admin/moveclients.xsl 0660 108 110
+#file /etc/icecast2/admin/response.xsl /etc/icecast2/admin/response.xsl 0660 108 110
+#file /etc/icecast2/admin/stats.xsl /etc/icecast2/admin/stats.xsl 0660 108 110
+#file /etc/icecast2/admin/manageauth.xsl /etc/icecast2/admin/manageauth.xsl 0660 108 110
+#file /etc/icecast2/admin/updatemetadata.xsl /etc/icecast2/admin/updatemetadata.xsl 0660 108 110
+# icecast binary
+file /usr/bin/icecast2 /usr/bin/icecast2 0755 0 0
+# icecast libs
+slink /lib/libcom_err.so.2 /lib/libcom_err.so.2.1 0777 0 0
+file /lib/libcom_err.so.2.1 /lib/libcom_err.so.2.1 0644 0 0
+file /lib/libkeyutils-1.2.so /lib/libkeyutils-1.2.so 0644 0 0
+slink /lib/libkeyutils.so.1 /lib/libkeyutils-1.2.so 0777 0 0
+slink /usr/lib/libcurl-gnutls.so.4 /usr/lib/libcurl-gnutls.so.4.1.0 0777 0 0
+file /usr/lib/libcurl-gnutls.so.4.1.0 /usr/lib/libcurl-gnutls.so.4.1.0 0644 0 0
+slink /usr/lib/libgcrypt.so.11 /usr/lib/libgcrypt.so.11.4.4 0777 0 0
+file /usr/lib/libgcrypt.so.11.4.4 /usr/lib/libgcrypt.so.11.4.4 0644 0 0
+slink /usr/lib/libgnutls.so.26 /usr/lib/libgnutls.so.26.4.6 0777 0 0
+file /usr/lib/libgnutls.so.26.4.6 /usr/lib/libgnutls.so.26.4.6 0644 0 0
+slink /usr/lib/libgpg-error.so.0 /usr/lib/libgpg-error.so.0.3.0 0777 0 0
+file /usr/lib/libgpg-error.so.0.3.0 /usr/lib/libgpg-error.so.0.3.0 0644 0 0
+slink /usr/lib/libgssapi_krb5.so.2 /usr/lib/libgssapi_krb5.so.2.2 0777 0 0
+file /usr/lib/libgssapi_krb5.so.2.2 /usr/lib/libgssapi_krb5.so.2.2 0644 0 0
+slink /usr/lib/libidn.so.11 /usr/lib/libidn.so.11.5.37 0777 0 0
+file /usr/lib/libidn.so.11.5.37 /usr/lib/libidn.so.11.5.37 0644 0 0
+slink /usr/lib/libk5crypto.so.3 /usr/lib/libk5crypto.so.3.1 0777 0 0
+file /usr/lib/libk5crypto.so.3.1 /usr/lib/libk5crypto.so.3.1 0644 0 0
+slink /usr/lib/libkrb5.so.3 /usr/lib/libkrb5.so.3.3 0777 0 0
+file /usr/lib/libkrb5.so.3.3 /usr/lib/libkrb5.so.3.3 0644 0 0
+slink /usr/lib/libkrb5support.so.0 /usr/lib/libkrb5support.so.0.1 0777 0 0
+file /usr/lib/libkrb5support.so.0.1 /usr/lib/libkrb5support.so.0.1 0644 0 0
+slink /usr/lib/liblber-2.4.so.2 /usr/lib/liblber-2.4.so.2.1.0 0777 0 0
+file /usr/lib/liblber-2.4.so.2.1.0 /usr/lib/liblber-2.4.so.2.1.0 0644 0 0
+slink /usr/lib/libldap_r-2.4.so.2 /usr/lib/libldap_r-2.4.so.2.1.0 0777 0 0
+file /usr/lib/libldap_r-2.4.so.2.1.0 /usr/lib/libldap_r-2.4.so.2.1.0 0644 0 0
+slink /usr/lib/libogg.so.0 /usr/lib/libogg.so.0.5.3 0777 0 0
+file /usr/lib/libogg.so.0.5.3 /usr/lib/libogg.so.0.5.3 0644 0 0
+slink /usr/lib/libsasl2.so.2 /usr/lib/libsasl2.so.2.0.22 0777 0 0
+file /usr/lib/libsasl2.so.2.0.22 /usr/lib/libsasl2.so.2.0.22 0644 0 0
+slink /usr/lib/libtasn1.so.3 /usr/lib/libtasn1.so.3.0.15 0777 0 0
+file /usr/lib/libtasn1.so.3.0.15 /usr/lib/libtasn1.so.3.0.15 0644 0 0
+slink /usr/lib/libtheora.so.0 /usr/lib/libtheora.so.0.3.3 0777 0 0
+file /usr/lib/libtheora.so.0.3.3 /usr/lib/libtheora.so.0.3.3 0644 0 0
+slink /usr/lib/libvorbis.so.0 /usr/lib/libvorbis.so.0.4.0 0777 0 0
+file /usr/lib/libvorbis.so.0.4.0 /usr/lib/libvorbis.so.0.4.0 0644 0 0
+slink /usr/lib/libxml2.so.2 /usr/lib/libxml2.so.2.6.32 0777 0 0
+file /usr/lib/libxml2.so.2.6.32 /usr/lib/libxml2.so.2.6.32 0644 0 0
+slink /usr/lib/libxslt.so.1 /usr/lib/libxslt.so.1.1.24 0777 0 0
+file /usr/lib/libxslt.so.1.1.24 /usr/lib/libxslt.so.1.1.24 0644 0 0
+slink /usr/lib/libz.so.1 /usr/lib/libz.so.1.2.3.3 0777 0 0
+file /usr/lib/libz.so.1.2.3.3 /usr/lib/libz.so.1.2.3.3 0644 0 0
+# /usr/lib/sse2
+dir /usr/lib/sse2 0755 0 0
+slink /usr/lib/sse2/libspeex.so.1 /usr/lib/sse2/libspeex.so.1.5.0 0777 0 0
+file /usr/lib/sse2/libspeex.so.1.5.0 /usr/lib/sse2/libspeex.so.1.5.0 0644 0 0
+# vi: set sw=4 ts=4 paste:

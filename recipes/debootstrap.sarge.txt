@@ -1,0 +1,18 @@
+# $Id: debootstrap.sarge.txt,v 1.1 2008-10-03 22:59:10 brian Exp $
+# debootstrap /usr/sbin
+file /usr/sbin/debootstrap /usr/sbin/debootstrap 0755 0 0
+# debootstrap /usr/lib
+dir /usr/lib/debootstrap 0755 0 0
+file /usr/lib/debootstrap/functions /usr/lib/debootstrap/functions 0644 0 0
+file /usr/lib/debootstrap/pkgdetails /usr/lib/debootstrap/pkgdetails 0755 0 0
+file /usr/lib/debootstrap/devices.tar.gz /usr/lib/debootstrap/devices.tar.gz 0644 0 0
+file /usr/lib/debootstrap/arch /usr/lib/debootstrap/arch 0644 0 0
+dir /usr/lib/debootstrap/scripts 0755 0 0
+file /usr/lib/debootstrap/scripts/slink /usr/lib/debootstrap/scripts/slink 0644 0 0
+file /usr/lib/debootstrap/scripts/potato /usr/lib/debootstrap/scripts/potato 0644 0 0
+file /usr/lib/debootstrap/scripts/woody /usr/lib/debootstrap/scripts/woody 0644 0 0
+file /usr/lib/debootstrap/scripts/sarge /usr/lib/debootstrap/scripts/sarge 0644 0 0
+file /usr/lib/debootstrap/scripts/sid /usr/lib/debootstrap/scripts/sid 0644 0 0
+file /usr/lib/debootstrap/scripts/woody.buildd /usr/lib/debootstrap/scripts/woody.buildd 0644 0 0
+file /usr/lib/debootstrap/scripts/sarge.buildd /usr/lib/debootstrap/scripts/sarge.buildd 0644 0 0
+file /usr/lib/debootstrap/scripts/sid.buildd /usr/lib/debootstrap/scripts/sid.buildd 0644 0 0

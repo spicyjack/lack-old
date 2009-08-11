@@ -1,0 +1,45 @@
+# $Id: mpg123.lenny.txt,v 1.3 2009-03-20 09:10:37 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+file /usr/bin/mpg123-alsa /usr/bin/mpg123-alsa 755 0 0
+file /usr/bin/mpg123-esd /usr/bin/mpg123-esd 755 0 0
+file /usr/bin/mpg123-nas /usr/bin/mpg123-nas 755 0 0
+file /usr/bin/mpg123-oss /usr/bin/mpg123-oss 755 0 0
+file /usr/bin/mpg123-oss-i486 /usr/bin/mpg123-oss-i486 755 0 0
+file /usr/bin/mpg123 /usr/bin/mpg123.bin 755 0 0
+# /usr/lib/mpg123
+dir /usr/lib/mpg123 755 0 0
+file /usr/lib/mpg123/output_alsa.la /usr/lib/mpg123/output_alsa.la 644 0 0
+file /usr/lib/mpg123/output_arts.la /usr/lib/mpg123/output_arts.la 644 0 0
+file /usr/lib/mpg123/output_dummy.la /usr/lib/mpg123/output_dummy.la 644 0 0
+file /usr/lib/mpg123/output_esd.la /usr/lib/mpg123/output_esd.la 644 0 0
+file /usr/lib/mpg123/output_jack.la /usr/lib/mpg123/output_jack.la 644 0 0
+file /usr/lib/mpg123/output_nas.la /usr/lib/mpg123/output_nas.la 644 0 0
+file /usr/lib/mpg123/output_oss.la /usr/lib/mpg123/output_oss.la 644 0 0
+file /usr/lib/mpg123/output_pulse.la /usr/lib/mpg123/output_pulse.la 644 0 0
+file /usr/lib/mpg123/output_alsa.so /usr/lib/mpg123/output_alsa.so 644 0 0
+file /usr/lib/mpg123/output_arts.so /usr/lib/mpg123/output_arts.so 644 0 0
+file /usr/lib/mpg123/output_dummy.so /usr/lib/mpg123/output_dummy.so 644 0 0
+file /usr/lib/mpg123/output_esd.so /usr/lib/mpg123/output_esd.so 644 0 0
+file /usr/lib/mpg123/output_jack.so /usr/lib/mpg123/output_jack.so 644 0 0
+file /usr/lib/mpg123/output_nas.so /usr/lib/mpg123/output_nas.so 644 0 0
+file /usr/lib/mpg123/output_oss.so /usr/lib/mpg123/output_oss.so 644 0 0
+file /usr/lib/mpg123/output_pulse.so /usr/lib/mpg123/output_pulse.so 644 0 0
+#dir /usr/lib/mime 755 0 0
+#dir /usr/lib/mime/packages 755 0 0
+#file /usr/lib/mime/packages/mpg123 /usr/lib/mime/packages/mpg123 644 0 0
+# libltdl3 /usr/lib
+file /usr/lib/libltdl.so.3.1.6 /usr/lib/libltdl.so.3.1.6 644 0 0
+slink /usr/lib/libltdl.so.3 /usr/lib/libltdl.so.3.1.6 777 0 0
+# libmpg123-0 /usr/lib
+file /usr/lib/libmpg123.so.0.2.4 /usr/lib/libmpg123.so.0.2.4 644 0 0
+slink /usr/lib/libmpg123.so.0 /usr/lib/libmpg123.so.0.2.4 777 0 0
+# vi: set sw=4 ts=4 paste:

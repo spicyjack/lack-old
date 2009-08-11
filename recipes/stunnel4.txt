@@ -1,0 +1,16 @@
+# $Id: stunnel4.txt,v 1.4 2007-04-26 05:20:44 brian Exp $
+# depends: _base openssl
+# helpcommand: /usr/bin/stunnel4  --help
+# versioncommand: /usr/bin/stunnel4 --version
+# examplecommand: /usr/bin/stunnel4 -x -y -z 10
+#
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# stunnel4 /etc/stunnel
+# for config files, added in the individual project filelists
+dir /etc/stunnel 0755 0 0
+# stunnel4 /usr/bin
+file /usr/bin/stunnel4 /usr/bin/stunnel4 0755 0 0
+slink /usr/bin/stunnel /usr/bin/stunnel4 0755 0 0
+slink /usr/sbin/stunnel /usr/bin/stunnel4 0755 0 0

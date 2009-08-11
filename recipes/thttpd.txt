@@ -1,0 +1,18 @@
+# $Id: thttpd.txt,v 1.2 2009-04-03 02:22:53 brian Exp $
+# depends: _base 
+# helpcommand: /usr/sbin/thttpd --help
+# versioncommand: /usr/sbin/thttpd --version
+# examplecommand: /usr/sbin/thttpd -C /path/to/config/file/thttpd.conf
+#
+# build thttpd with ./configure && make
+#
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# NOTE: the initramfs script is supposed to provide the thttpd config file
+# thttpd /usr/bin
+file /usr/sbin/htpasswd /usr/local/src/thttpd-2.25b/extras/htpasswd 0755 0 0
+# thttpd /usr/sbin
+file /usr/sbin/thttpd /usr/local/src/thttpd-2.25b/thttpd 0755 0 0
+# thttpd /var/www
+dir /var/www 0755 0 0

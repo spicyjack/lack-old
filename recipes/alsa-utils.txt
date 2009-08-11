@@ -1,0 +1,61 @@
+# $Id: alsa-utils.txt,v 1.4 2009-07-24 08:39:27 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+file /usr/sbin/alsactl /usr/sbin/alsactl 755 0 0
+file /usr/sbin/alsaconf /usr/sbin/alsaconf 755 0 0
+# /usr/bin
+file /usr/bin/amixer /usr/bin/amixer 755 0 0
+file /usr/bin/aseqnet /usr/bin/aseqnet 755 0 0
+file /usr/bin/aconnect /usr/bin/aconnect 755 0 0
+file /usr/bin/asoundconf /usr/bin/asoundconf 755 0 0
+file /usr/bin/aplay /usr/bin/aplay 755 0 0
+file /usr/bin/iecset /usr/bin/iecset 755 0 0
+#file /usr/bin/aseqdump /usr/bin/aseqdump 755 0 0
+file /usr/bin/alsamixer /usr/bin/alsamixer 755 0 0
+file /usr/bin/speaker-test /usr/bin/speaker-test 755 0 0
+file /usr/bin/aplaymidi /usr/bin/aplaymidi 755 0 0
+file /usr/bin/amidi /usr/bin/amidi 755 0 0
+#file /usr/bin/arecordmidi /usr/bin/arecordmidi 755 0 0
+dir /usr/share/sounds 755 0 0
+dir /usr/share/sounds/alsa 755 0 0
+file /usr/share/sounds/alsa/Rear_Center.wav /usr/share/sounds/alsa/Rear_Center.wav 644 0 0
+file /usr/share/sounds/alsa/Front_Left.wav /usr/share/sounds/alsa/Front_Left.wav 644 0 0
+file /usr/share/sounds/alsa/Noise.wav /usr/share/sounds/alsa/Noise.wav 644 0 0
+file /usr/share/sounds/alsa/Front_Center.wav /usr/share/sounds/alsa/Front_Center.wav 644 0 0
+file /usr/share/sounds/alsa/Front_Right.wav /usr/share/sounds/alsa/Front_Right.wav 644 0 0
+file /usr/share/sounds/alsa/Side_Left.wav /usr/share/sounds/alsa/Side_Left.wav 644 0 0
+file /usr/share/sounds/alsa/Rear_Right.wav /usr/share/sounds/alsa/Rear_Right.wav 644 0 0
+file /usr/share/sounds/alsa/Side_Right.wav /usr/share/sounds/alsa/Side_Right.wav 644 0 0
+file /usr/share/sounds/alsa/Rear_Left.wav /usr/share/sounds/alsa/Rear_Left.wav 644 0 0
+dir /usr/share/locale/ja 755 0 0
+dir /usr/share/locale/ja/LC_MESSAGES 755 0 0
+file /usr/share/locale/ja/LC_MESSAGES/alsa-utils.mo /usr/share/locale/ja/LC_MESSAGES/alsa-utils.mo 644 0 0
+file /usr/share/locale/ja/LC_MESSAGES/alsaconf.mo /usr/share/locale/ja/LC_MESSAGES/alsaconf.mo 644 0 0
+dir /usr/share/locale/ru 755 0 0
+dir /usr/share/locale/ru/LC_MESSAGES 755 0 0
+file /usr/share/locale/ru/LC_MESSAGES/alsaconf.mo /usr/share/locale/ru/LC_MESSAGES/alsaconf.mo 644 0 0
+dir /etc 755 0 0
+dir /etc/alsa 755 0 0
+dir /etc/alsa/modprobe-post-install.d 755 0 0
+file /etc/alsa/modprobe-post-install.d/alsa-utils /etc/alsa/modprobe-post-install.d/alsa-utils 755 0 0
+dir /etc/udev 755 0 0
+file /etc/udev/alsa-utils.rules /etc/udev/alsa-utils.rules 644 0 0
+dir /etc/udev/rules.d 755 0 0
+dir /etc/init.d 755 0 0
+file /etc/init.d/alsa-utils /etc/init.d/alsa-utils 755 0 0
+dir /lib 755 0 0
+dir /lib/udev 755 0 0
+file /lib/udev/alsa-utils /lib/udev/alsa-utils 755 0 0
+dir /var 755 0 0
+dir /var/lib 755 0 0
+dir /var/lib/alsa 755 0 0
+slink /usr/bin/arecord /usr/bin/aplay 777 0 0
+# vi: set sw=4 ts=4 paste:

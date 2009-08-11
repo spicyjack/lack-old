@@ -1,0 +1,23 @@
+# $Id: calavera.txt,v 1.4 2009-03-20 09:10:37 brian Exp $
+# description: host specific stuff for 'calavera'
+# depends: _base
+# helpcommand: 
+# versioncommand: 
+# examplecommand: 
+#
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# calavera /etc/network
+file /etc/network/interfaces /home/brian/cvs/antlinux/builds/naranja/network.interfaces.calavera 0644 0 0
+# calavera /etc/stunnel
+file /etc/stunnel/calavera.key.pem.nopass /dev/shm/calavera.key.pem.nopass 0644 0 0
+slink /etc/stunnel/ssl.key /etc/stunnel/calavera.key.pem.nopass 0644 0 0
+file /etc/stunnel/calavera.cert.pem /dev/shm/calavera.cert.pem 0644 0 0
+slink /etc/stunnel/ssl.cert.pem /etc/stunnel/calavera.cert.pem 0644 0 0
+# calavera /etc/hostname
+file /etc/hostname /dev/shm/hostname.calavera 0644 0 0
+# ryba busybox
+file /bin/busybox /tmp/busybox-1.12.1 0755 0 0
+
+# vi: set sw=4 ts=4 paste:

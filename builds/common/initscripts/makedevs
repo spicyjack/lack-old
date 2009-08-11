@@ -1,0 +1,40 @@
+#! /bin/sh
+
+# $Id: makedevs,v 1.14 2008-01-31 19:59:22 brian Exp $
+# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+
+source $ANT_FUNCTIONS
+PATH=/sbin:/bin  # No remote fs at start
+ACTION=$1
+BINARY=/sbin/makedevs
+[ -x "$BINARY" ] || exit 1
+BASENAME="makedevs"
+DESC="Creating device files in /dev"
+BINARY_OPTS="-d /etc/devs.txt / "
+
+case "$ACTION" in
+  vars)
+    echo "${BASENAME}:"
+    exit 0
+  ;;
+  start)
+	colorize $S_TIP "$BASENAME: $DESC;"
+	$BINARY $BINARY_OPTS >> $BOOT_LOG 2>&1
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	;;
+  stop)
+    # noop
+    :
+	;;
+  restart|force-reload)
+    # noop
+    :
+	;;
+  *)
+	echo "Usage: $SCRIPTNAME {start|stop|restart|force-reload}" >&2
+	exit 3
+	;;
+esac
+
+:

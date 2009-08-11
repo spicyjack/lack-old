@@ -1,0 +1,46 @@
+# $Id: perl-ui-dialog.lenny.txt,v 1.2 2009-03-20 09:10:37 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+dir /usr/share/perl5 755 0 0
+dir /usr/share/perl5/UI 755 0 0
+dir /usr/share/perl5/UI/Dialog 755 0 0
+#file /usr/share/perl5/UI/Dialog/Console.pod /usr/share/perl5/UI/Dialog/Console.pod 644 0 0
+file /usr/share/perl5/UI/Dialog/Backend.pm /usr/share/perl5/UI/Dialog/Backend.pm 644 0 0
+#file /usr/share/perl5/UI/Dialog/Backend.pod /usr/share/perl5/UI/Dialog/Backend.pod 644 0 0
+#file /usr/share/perl5/UI/Dialog/Gauged.pod /usr/share/perl5/UI/Dialog/Gauged.pod 644 0 0
+#file /usr/share/perl5/UI/Dialog/KDE.pm /usr/share/perl5/UI/Dialog/KDE.pm 644 0 0
+file /usr/share/perl5/UI/Dialog/Gauged.pm /usr/share/perl5/UI/Dialog/Gauged.pm 644 0 0
+dir /usr/share/perl5/UI/Dialog/Backend 755 0 0
+#file /usr/share/perl5/UI/Dialog/Backend/ASCII.pod /usr/share/perl5/UI/Dialog/Backend/ASCII.pod 644 0 0
+file /usr/share/perl5/UI/Dialog/Backend/ASCII.pm /usr/share/perl5/UI/Dialog/Backend/ASCII.pm 644 0 0
+#file /usr/share/perl5/UI/Dialog/Backend/Zenity.pod /usr/share/perl5/UI/Dialog/Backend/Zenity.pod 644 0 0
+file /usr/share/perl5/UI/Dialog/Backend/CDialog.pm /usr/share/perl5/UI/Dialog/Backend/CDialog.pm 644 0 0
+#file /usr/share/perl5/UI/Dialog/Backend/XOSD.pod /usr/share/perl5/UI/Dialog/Backend/XOSD.pod 644 0 0
+#file /usr/share/perl5/UI/Dialog/Backend/KDialog.pod /usr/share/perl5/UI/Dialog/Backend/KDialog.pod 644 0 0
+#file /usr/share/perl5/UI/Dialog/Backend/XDialog.pm /usr/share/perl5/UI/Dialog/Backend/XDialog.pm 644 0 0
+#file /usr/share/perl5/UI/Dialog/Backend/Nautilus.pod /usr/share/perl5/UI/Dialog/Backend/Nautilus.pod 644 0 0
+#file /usr/share/perl5/UI/Dialog/Backend/XDialog.pod /usr/share/perl5/UI/Dialog/Backend/XDialog.pod 644 0 0
+#file /usr/share/perl5/UI/Dialog/Backend/GDialog.pm /usr/share/perl5/UI/Dialog/Backend/GDialog.pm 644 0 0
+#file /usr/share/perl5/UI/Dialog/Backend/KDialog.pm /usr/share/perl5/UI/Dialog/Backend/KDialog.pm 644 0 0
+#file /usr/share/perl5/UI/Dialog/Backend/Zenity.pm /usr/share/perl5/UI/Dialog/Backend/Zenity.pm 644 0 0
+file /usr/share/perl5/UI/Dialog/Backend/Whiptail.pm /usr/share/perl5/UI/Dialog/Backend/Whiptail.pm 644 0 0
+#file /usr/share/perl5/UI/Dialog/Backend/Nautilus.pm /usr/share/perl5/UI/Dialog/Backend/Nautilus.pm 644 0 0
+#file /usr/share/perl5/UI/Dialog/Backend/XOSD.pm /usr/share/perl5/UI/Dialog/Backend/XOSD.pm 644 0 0
+#file /usr/share/perl5/UI/Dialog/Backend/GDialog.pod /usr/share/perl5/UI/Dialog/Backend/GDialog.pod 644 0 0
+#file /usr/share/perl5/UI/Dialog/Backend/CDialog.pod /usr/share/perl5/UI/Dialog/Backend/CDialog.pod 644 0 0
+#file /usr/share/perl5/UI/Dialog/Backend/Whiptail.pod /usr/share/perl5/UI/Dialog/Backend/Whiptail.pod 644 0 0
+#file /usr/share/perl5/UI/Dialog/GNOME.pod /usr/share/perl5/UI/Dialog/GNOME.pod 644 0 0
+#file /usr/share/perl5/UI/Dialog/GNOME.pm /usr/share/perl5/UI/Dialog/GNOME.pm 644 0 0
+#file /usr/share/perl5/UI/Dialog/KDE.pod /usr/share/perl5/UI/Dialog/KDE.pod 644 0 0
+file /usr/share/perl5/UI/Dialog/Console.pm /usr/share/perl5/UI/Dialog/Console.pm 644 0 0
+#file /usr/share/perl5/UI/Dialog.pod /usr/share/perl5/UI/Dialog.pod 644 0 0
+file /usr/share/perl5/UI/Dialog.pm /usr/share/perl5/UI/Dialog.pm 644 0 0
+# vi: set sw=4 ts=4 paste:

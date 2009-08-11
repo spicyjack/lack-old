@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# $Id: procfs,v 1.9 2008-10-07 07:56:56 brian Exp $
+# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+
+source $ANT_FUNCTIONS
+PATH=/sbin:/bin  # No remote fs at start
+ACTION=$1
+BINARY=/bin/mount
+[ -x "$BINARY" ] || exit 1
+BASENAME="procfs"
+DESC="process information pseudo-filesystem (/proc)"
+BINARY_OPTS="proc /proc -t proc"
+
+# proc needs to be mounted before you can remount the root filesystem
+# read/write.  Since the root filesystem is read-only at this point, when you
+# mount /proc, the kernel goes to update /etc/mtab and fails (read-only
+# filesystem)
+
+case "$ACTION" in
+  vars)
+    echo "${BASENAME}:"
+    exit 0
+  ;;
+  start)
+	colorize $S_TIP "$BASENAME: Mounting $DESC;"
+    $BINARY $BINARY_OPTS >> $BOOT_LOG 2>&1
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	;;
+  stop)
+	PATH=/bin:/sbin:/usr/bin:/usr/sbin
+	colorize $S_TIP "$BASENAME: Unmounting $DESC;"
+    /bin/umount /proc
+    cmd_status $?
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	;;
+  restart|force-reload)
+ 	$0 stop
+ 	$0 start
+	;;
+  *)
+	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+	exit 3
+	;;
+esac
+
+:

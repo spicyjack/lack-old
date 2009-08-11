@@ -1,0 +1,17 @@
+# $Id: curl.lenny.txt,v 1.2 2009-03-20 09:10:37 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/curl --help
+# versioncommand: /usr/bin/curl --version
+# examplecommand: /usr/bin/curl -x -y -z 10
+#
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# curl /usr/bin
+file /usr/bin/curl /usr/bin/curl 0755 0 0
+#slink /usr/bin/someotherbin /usr/bin/curl 0755 0 0
+slink /usr/lib/libcurl-gnutls.so.3 -> libcurl-gnutls.so.4
+lrwxrwxrwx 1 root root     23 2008-11-21 14:45 /usr/lib/libcurl-gnutls.so.4 -> libcurl-gnutls.so.4.1.0
+-rw-r--r-- 1 root root 229672 2008-07-02 06:43 /usr/lib/libcurl-gnutls.so.4.1.0
+# vi: set sw=4 ts=4 paste:

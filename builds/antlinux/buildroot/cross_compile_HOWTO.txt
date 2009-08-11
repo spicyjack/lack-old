@@ -1,0 +1,490 @@
+This HOWTO is a written-down account how to cross-compile
+busybox for i486-linux-uclibc, having only a host compiler
+available at the beginning. You may also need to have
+some other standard tools installed on the host machine
+(sed, perl, texinfo and the like).
+
+The HOWTO can be useful for anyone who has no experience yet
+with cross compiling and building cross-compiling toolchains
+from scratch.
+
+Building i386 and x86_64 toolchains is a useful stepping stone
+in learning how to build a toolchain for the entirely different
+CPU/architecture.
+
+
+	Preparation
+
+We are going to build cross-compiling toolchain first, and then
+we will compile busybox. Since end result will be still runnable
+on the host machine, and is a static executable, you will be
+able to trivially check whether end result is working properly.
+
+We are going to need the following files:
+
+binutils-2.18.tar.bz2
+gcc-4.3.1.tar.bz2
+linux-2.6.25.4.tar.bz2
+
+Download them from the well-known locations on the Internet.
+
+We will also use the following files, which are supplied
+at http://busybox.net/~vda/HOWTO/i486-linux-uclibc/:
+
+installink.sh
+busybox-20080607.svn.tar.bz2 - busybox tree of svn revision 22256 (2008-06-07)
+uclibc-20080607.svn.tar.bz2 - uclibc tree of svn revision 22256 (2008-06-07)
+busybox-20080607.config
+uclibc-20080607.config
+busybox - resulting bunary for comparison
+
+Binutils, gcc, and uclibc will be installed in separate directories.
+Some files will be symlinked into /usr/cross/i486-linux-uclibc/*
+and /usr/bin/* in order to be found by parts of toolchain.
+
+The directory scheme used in this HOWTO is by no means mandatory.
+After you get more familiar with cross-compiler build process,
+feel free to experiment and do it your unique way.
+
+Note that all steps should complete without errors. Examine output
+of each step before continuing. If you are going to automate it,
+make build stop if any step exits with nonzero exit code.
+
+It is highly recommended to save build scripts and logs of each step
+somewhere in the directory with final installed package -
+you will find them invaluable when you build toolchains
+for other architectures or with newer versions of tools.
+
+
+	Binutils
+
+We will build and install binutils into /usr/app/binutils-2.18-i486-linux-uclibc.
+We will symlink binutils' i486-linux-uclibc-XXX executables to /usr/bin,
+this will allow them to be called directly without directory prefix from anywhere:
+
+i486-linux-uclibc-addr2line -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-addr2line
+i486-linux-uclibc-ar -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-ar
+i486-linux-uclibc-as -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-as
+i486-linux-uclibc-c++filt -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-c++filt
+i486-linux-uclibc-gprof -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-gprof
+i486-linux-uclibc-ld -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-ld
+i486-linux-uclibc-nm -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-nm
+i486-linux-uclibc-objcopy -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-objcopy
+i486-linux-uclibc-objdump -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-objdump
+i486-linux-uclibc-ranlib -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-ranlib
+i486-linux-uclibc-readelf -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-readelf
+i486-linux-uclibc-size -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-size
+i486-linux-uclibc-strings -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-strings
+i486-linux-uclibc-strip -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-strip
+
+We will also symlink binutils' i486-linux-uclibc/bin/XXX executables
+(which are the same as above, just in a different directory and with different name)
+to /usr/cross/i486-linux-uclibc/bin/XXX, this is needed for gcc to find them.
+
+ar -> /usr/app/binutils-2.18-i486-linux-uclibc/i486-linux-uclibc/bin/ar
+as -> /usr/app/binutils-2.18-i486-linux-uclibc/i486-linux-uclibc/bin/as
+ld -> /usr/app/binutils-2.18-i486-linux-uclibc/i486-linux-uclibc/bin/ld
+nm -> /usr/app/binutils-2.18-i486-linux-uclibc/i486-linux-uclibc/bin/nm
+objcopy -> /usr/app/binutils-2.18-i486-linux-uclibc/i486-linux-uclibc/bin/objcopy
+objdump -> /usr/app/binutils-2.18-i486-linux-uclibc/i486-linux-uclibc/bin/objdump
+ranlib -> /usr/app/binutils-2.18-i486-linux-uclibc/i486-linux-uclibc/bin/ranlib
+strip -> /usr/app/binutils-2.18-i486-linux-uclibc/i486-linux-uclibc/bin/strip
+
+We will also symlink binutils' i486-linux-uclibc/lib/ldscripts directory
+to /usr/cross/i486-linux-uclibc/lib/ldscripts. This is not essential for
+this particular toolchain, but for some other toolchains it's crucial.
+
+Step 1: configure
+
+Unpack binutils-2.18.
+Run "makeinfo --version", if it reports "makeinfo (GNU texinfo) 4.XX"
+(two-digit minor version), you need to correct binutils' configure
+(it misunderstands above as "makeinfo has version less than 4.4").
+Just remove this fragment from configure.
+    # For an installed makeinfo, we require it to be from texinfo 4.4 or
+    # higher, else we use the "missing" dummy.
+    if ${MAKEINFO} --version \
+       | egrep 'texinfo[^0-9]*([1-3][0-9]|4\.[4-9]|[5-9])' >/dev/null 2>&1; then
+      :
+    else
+      MAKEINFO="$MISSING makeinfo"
+    fi
+
+Create an empty directory binutils-2.18/.obj-i486-linux-uclibc inside
+unpacked binutils tree. Create and run the following script
+
+#!/bin/sh
+SRC=..
+CROSS=`basename "$PWD"`
+CROSS="${CROSS#.obj-}"
+NAME=`cd $SRC;pwd`
+NAME=`basename "$NAME"`-$CROSS
+STATIC=/usr/app/$NAME
+
+$SRC/configure \
+--prefix=$STATIC                        \
+--exec-prefix=$STATIC                   \
+--bindir=/usr/bin                       \
+--sbindir=/usr/sbin                     \
+--libexecdir=$STATIC/libexec            \
+--datadir=$STATIC/share                 \
+--sysconfdir=/etc                       \
+--sharedstatedir=$STATIC/var/com        \
+--localstatedir=$STATIC/var             \
+--libdir=/usr/lib                       \
+--includedir=/usr/include               \
+--infodir=/usr/info                     \
+--mandir=/usr/man                       \
+\
+--oldincludedir=/usr/include            \
+\
+--target=$CROSS                         \
+\
+--with-sysroot=/usr/cross/$CROSS        \
+\
+--disable-rpath                         \
+--disable-nls                           \
+\
+2>&1 | tee -a "$0.log"
+
+
+Step 2: build
+
+#!/bin/sh
+make "$@" 2>&1 | tee -a "$0.log"
+
+
+Step 3: install
+
+#!/bin/sh
+SRC=..
+CROSS=`basename "$PWD"`
+CROSS="${CROSS#.obj-}"
+NAME=`cd $SRC;pwd`
+NAME=`basename "$NAME"`-$CROSS
+STATIC=/usr/app/$NAME
+
+make \
+prefix=$STATIC                          \
+exec-prefix=$STATIC                     \
+bindir=$STATIC/bin                      \
+sbindir=$STATIC/sbin                    \
+libexecdir=$STATIC/libexec              \
+datadir=$STATIC/share                   \
+sysconfdir=$STATIC/var_template/etc     \
+sharedstatedir=$STATIC/var_template/com \
+localstatedir=$STATIC/var_template      \
+libdir=$STATIC/lib                      \
+includedir=$STATIC/include              \
+infodir=$STATIC/info                    \
+mandir=$STATIC/man                      \
+\
+install 2>&1 | tee -a "$0.log"
+
+
+Step 4: symlink
+
+Go to /usr/app/binutils-2.18-i486-linux-uclibc, copy installink.sh into it,
+create and run the following script:
+
+#!/bin/sh
+. ./installink.sh
+
+NAME=`basename "$PWD"`
+VER=-`echo $NAME | cut -d '-' -f 2-99`
+NAME=`echo $NAME | cut -d '-' -f 1`
+CROSS=`basename $PWD | cut -d '-' -f 3-99`
+STATIC=/usr/app/$NAME$VER
+
+test "${STATIC%$CROSS}" = "$STATIC" && { echo 'Wrong $CROSS in '"$0"; exit 1; }
+
+mkdir -p /usr/cross/$CROSS/bin
+mkdir -p /usr/cross/$CROSS/lib
+# Don't want to deal with pairs of usr/bin/ and bin/, usr/lib/ and lib/
+# in /usr/cross/$CROSS. This seems to be the easiest fix:
+ln -s . /usr/cross/$CROSS/usr
+
+# Do we really want to install tclsh8.4 and wish8.4 though? What are those btw?
+link_samename_strip     /usr/bin                "$STATIC/bin/*"
+link_samename_strip     /usr/cross/$CROSS/bin   "$STATIC/$CROSS/bin/*"
+# elf2flt.ld and ldscripts/*. Actually seems to work just fine
+# without ldscripts/* symlinked, but elf2flt does insist.
+link_samename           /usr/cross/$CROSS/lib   "$STATIC/$CROSS/lib/*"
+
+
+Binutils installation is complete, we can build GCC now.
+
+
+	GCC
+
+We will build and install GCC into /usr/app/gcc-4.3.1-i486-linux-uclibc.
+We will symlink gcc's i486-linux-uclibc-XXX executables to /usr/bin,
+this will allow them to be called directly without directory prefix from anywhere:
+
+i486-linux-uclibc-c++ -> /usr/app/gcc-4.3.1-i486-linux-uclibc/bin/i486-linux-uclibc-c++
+i486-linux-uclibc-cpp -> /usr/app/gcc-4.3.1-i486-linux-uclibc/bin/i486-linux-uclibc-cpp
+i486-linux-uclibc-g++ -> /usr/app/gcc-4.3.1-i486-linux-uclibc/bin/i486-linux-uclibc-g++
+i486-linux-uclibc-gcc -> /usr/app/gcc-4.3.1-i486-linux-uclibc/bin/i486-linux-uclibc-gcc
+i486-linux-uclibc-gcc-4.3.1 -> /usr/app/gcc-4.3.1-i486-linux-uclibc/bin/i486-linux-uclibc-gcc-4.3.1
+i486-linux-uclibc-gccbug -> /usr/app/gcc-4.3.1-i486-linux-uclibc/bin/i486-linux-uclibc-gccbug
+i486-linux-uclibc-gcov -> /usr/app/gcc-4.3.1-i486-linux-uclibc/bin/i486-linux-uclibc-gcov
+
+GCC needs to be configured with switches which disable building
+some parts of the compiler which require target C standard library
+to be present. Resulting compiler is enough to build C standard library
+(and busybox), but for other tasks we will build more feature complete one
+later.
+
+Step 1: configure
+
+Unpack gcc-4.3.1, create an empty directory gcc-4.3.1.obj-i486-linux-uclibc
+BESIDE it (not inside), and create and run the following script
+
+#!/bin/sh
+CROSS=`basename "$PWD" | cut -d- -f3-99`
+SRC=../`basename "$PWD" .obj-$CROSS`
+NAME=`cd $SRC;pwd`
+NAME=`basename "$NAME" .obj-$CROSS`-$CROSS
+STATIC=/usr/app/$NAME
+
+$SRC/configure \
+--prefix=$STATIC                                \
+--exec-prefix=$STATIC                           \
+--bindir=$STATIC/bin                            \
+--sbindir=$STATIC/sbin                          \
+--libexecdir=$STATIC/libexec                    \
+--datadir=$STATIC/share                         \
+--sysconfdir=/etc                               \
+--sharedstatedir=$STATIC/var/com                \
+--localstatedir=$STATIC/var                     \
+--libdir=$STATIC/lib                            \
+--includedir=$STATIC/include                    \
+--infodir=$STATIC/info                          \
+--mandir=$STATIC/man                            \
+\
+--disable-nls                                   \
+\
+--with-local-prefix=/usr/local                  \
+--with-slibdir=$STATIC/lib                      \
+\
+--target=$CROSS                                 \
+--with-gnu-ld                                   \
+--with-ld="/usr/bin/$CROSS-ld"                  \
+--with-gnu-as                                   \
+--with-as="/usr/bin/$CROSS-as"                  \
+\
+--with-sysroot=/usr/cross/$CROSS                \
+\
+--enable-languages="c"                          \
+--disable-shared                                \
+--disable-threads                               \
+--disable-tls                                   \
+--disable-multilib                              \
+--disable-decimal-float                         \
+--disable-libgomp                               \
+--disable-libssp                                \
+--disable-libmudflap                            \
+--without-headers                               \
+--with-newlib                                   \
+\
+2>&1 | tee -a "$0.log"
+
+
+Step 2: build
+
+#!/bin/sh
+CROSS=`basename "$PWD" | cut -d- -f3-99`
+
+# "The directory that should contain system headers does not exist:
+# /usr/cross/foobar/usr/include"
+mkdir -p /usr/cross/$CROSS/usr/include
+
+make "$@" 2>&1 | tee -a "$0.log"
+
+
+Step 3: install
+
+#!/bin/sh
+CROSS=`basename "$PWD" | cut -d- -f3-99`
+SRC=../`basename "$PWD" .obj-$CROSS`
+NAME=`cd $SRC;pwd`
+NAME=`basename "$NAME" .obj-$CROSS`-$CROSS
+STATIC=/usr/app/$NAME
+
+make -k \
+prefix=$STATIC                          \
+exec-prefix=$STATIC                     \
+bindir=$STATIC/bin                      \
+sbindir=$STATIC/sbin                    \
+libexecdir=$STATIC/libexec              \
+datadir=$STATIC/share                   \
+sysconfdir=$STATIC/var_template/etc     \
+sharedstatedir=$STATIC/var_template/com \
+localstatedir=$STATIC/var_template      \
+libdir=$STATIC/lib                      \
+includedir=$STATIC/include              \
+infodir=$STATIC/info                    \
+mandir=$STATIC/man                      \
+\
+install 2>&1 | tee -a "$0.log"
+
+
+Step 4: symlink
+
+Go to /usr/app/gcc-4.3.1-i486-linux-uclibc, copy installink.sh into it,
+create and run the following script:
+
+#!/bin/sh
+. ./installink.sh
+
+NAME=`basename "$PWD"`
+VER=-`echo $NAME | cut -d '-' -f 2-99`
+NAME=`echo $NAME | cut -d '-' -f 1`
+CROSS=`basename $PWD | cut -d '-' -f 3-99`
+STATIC=/usr/app/$NAME$VER
+
+test "${STATIC%$CROSS}" = "$STATIC" && { echo 'Wrong $CROSS in '"$0"; exit 1; }
+
+# Strip executables anywhere in the tree
+# grep guards against matching files like *.o, *.so* etc
+strip `find -perm +111 -type f | grep '/[a-z0-9]*$' | xargs`
+# symlink binaries
+link_samename_strip /usr/bin                "$STATIC/bin/*"
+# symlink libs
+link_samename /usr/cross/$CROSS/lib         "$STATIC/$CROSS/lib/*"
+# symlink includes
+link_samename /usr/cross/$CROSS/include/c++ "$STATIC/$CROSS/include/c++/*"
+
+
+GCC installation is complete, we can build C library now.
+
+
+	C library
+
+We will use uclibc as our libc. It will be installed in
+/usr/app/uclibc-20080607.svn-i486-linux-uclibc
+We will use latest (as of this writing) development version.
+We will symlink uclibc's libraries and include files
+to /usr/cross/i486-linux-uclibc/*
+so that gcc and binutils can find them.
+
+Unpack supplied uclibc-20080607.svn.tar.bz2,
+copy supplied uclibc-20080607.config as .config into it.
+Note: usage of i486-linux-uclibc-XXX toolchain is specified
+in this .config - take a look inside if you want to see how.
+Busybox .config does it in a similar way.
+
+
+Step 1: make sanitized kernel headers.
+
+Unpack linux-2.6.25.4.tar.bz2 into uclibc tree, cd there, create and run this script
+
+#!/bin/sh
+make ARCH=i386 CROSS_COMPILE=i486-linux-uclibc- defconfig 2>&1 | tee -a "$0.log"
+ln -s asm-x86 include/asm
+make ARCH=i386 CROSS_COMPILE=i486-linux-uclibc- headers_install 2>&1 | tee -a "$0.log"
+
+After this you may delete everything inside kernel tree except usr/include/*.
+
+
+Step 2: build
+
+Return one directory up into uclibc tree and run
+
+#!/bin/sh
+make "$@" 2>&1 | tee -a "$0.log"
+
+
+Step 3: install
+
+#!/bin/sh
+{
+make install || exit 1
+make install_kernel_headers || exit 1
+} 2>&1 | tee -a "$0.log"
+
+Copy contents of !INSTALL/* to /usr/app/uclibc-20080607.svn-i486-linux-uclibc.
+
+
+Step 4: symlink
+
+Go to /usr/app/uclibc-20080607.svn-i486-linux-uclibc, copy installink.sh into it,
+create and run the following script:
+
+#!/bin/sh
+. ./installink.sh
+
+NAME=`basename "$PWD"`
+VER=-`echo $NAME | cut -d '-' -f 2-99`
+NAME=`echo $NAME | cut -d '-' -f 1`
+STATIC=/usr/app/$NAME$VER
+CROSS=`echo $NAME$VER | cut -d- -f3-99`
+ARCH=`echo $NAME$VER | cut -d- -f3 | sed -e 's/i.86/i386/'`
+
+mkdir -p /usr/cross/$CROSS/lib
+mkdir -p /usr/cross/$CROSS/include
+# symlink libs
+link_samename /usr/cross/$CROSS/lib     "$STATIC/$ARCH/usr/lib/*"
+# symlink includes
+link_samename /usr/cross/$CROSS/include "$STATIC/$ARCH/usr/include/*"
+
+
+uclibc and with it the entire toolchain installation is complete,
+we can build applications against it now.
+
+
+	Busybox
+
+We will use latest (as of this writing) development version.
+Unpack supplied busybox-20080607.svn.tar.bz2,
+copy supplied busybox-20080607.config as .config into it.
+
+Run this script:
+
+#!/bin/sh
+make "$@" 2>&1 | tee -a "$0.log"
+
+
+Busybox binary is built.
+
+Enjoy.
+
+You may want to compare the executable to one at
+http://busybox.net/~vda/HOWTO/i486-linux-uclibc/busybox.
+Note that busybox binary contains build timestamp as a string
+and therefore your image will not be absolutely the same.
+Instead of just comparing them with diff, dump both binaries
+with "hexdump -vC busybox >busybox.hex" and diff the output.
+If everything worked correctly, there will be very few differences.
+
+If the above procedure didn't work for you, email <vda.linux@googlemail.com>.
+It means that I probably forgot to write down some small detail.
+
+
+	Feature-complete GCC
+
+If you need to have GCC which is not only enough to build uclibc and busybox,
+but full-fledged one, go back to GCC step, clen up build directory,
+replace these lines in the script which runs configure:
+
+--enable-languages="c"                          \
+--disable-...                                   \
+--disable-...                                   \
+--without-headers                               \
+--with-newlib                                   \
+
+with
+
+--enable-languages="c,c++"                      \
+--disable-shared                                \
+--disable-threads                               \
+--disable-tls                                   \
+--disable-libgomp                               \
+
+and repeat configure/make/make install steps.
+
+If you need to build shared binaries and/or threaded applications,
+you need to play with uclibc .config file too: enable HAVE_SHARED
+and UCLIBC_HAS_THREADS options. Then you should be able to build
+GCC without --disable-shared, --disable-threads, --disable-tls,
+--disable-libgomp.

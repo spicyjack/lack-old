@@ -1,0 +1,27 @@
+# $Id: dhclient.txt,v 1.10 2009-04-09 06:34:36 brian Exp $
+# description: DHCP client from ISC
+# depends: _base 
+# helpcommand: /sbin/dhclient --help
+# versioncommand: /sbin/dhclient --help
+# examplecommand: /sbin/dhclient <ethernet interface> 
+#
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# for whatever reason, dhclient now wants things in a different place on the
+# initramfs image instead of how it wants things on a stock debian image.  Lack
+# of a config file perhaps?
+#
+# dhclient /var/lib 
+dir /etc/network/if-down.d 0755 0 0
+dir /etc/network/if-post-down.d 0755 0 0
+dir /etc/network/if-pre-up.d 0755 0 0
+dir /etc/network/if-up.d 0755 0 0
+# dhclient /var/lib 
+dir /var/lib/dhcp 0755 0 0
+slink /var/lib/dhcp3 /var/lib/dhcp 0755 0 0
+# dhclient /sbin
+file /sbin/dhclient /sbin/dhclient 0755 0 0
+file /sbin/dhclient-script :BUILD_BASE:/builds/common/dhclient-script 0755 0 0
+slink /etc/dhclient-script /sbin/dhclient-script 0755 0 0
+# vi: set sw=4 ts=4 paste:

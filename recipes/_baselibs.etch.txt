@@ -1,0 +1,71 @@
+# $Id: _baselibs.etch.txt,v 1.1 2008-10-03 22:59:10 brian Exp $
+# base initramfs system recipe; all other recipies build on top of this one
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+# _baselibs /lib
+file /lib/libbz2.so.1.0.3 /lib/libbz2.so.1.0.3 0644 0 0
+slink /lib/libbz2.so.1.0 /lib/libbz2.so.1.0.3 0644 0 0
+slink /lib/libbz2.so.1 /lib/libbz2.so.1.0.3 0644 0 0
+file /lib/libblkid.so.1.0 /lib/libblkid.so.1.0 0644 0 0
+slink /lib/libblkid.so.1 /lib/libblkid.so.1.0 0644 0 0
+file /lib/libncurses.so.5.5 /lib/libncurses.so.5.5 0644 0 0
+slink /lib/libncurses.so.5 /lib/libncurses.so.5.5 0644 0 0
+# apparently there's no version 4 of of the readline libs in 'etch'
+#file /lib/libreadline.so.4.3 /lib/libreadline.so.4.3 0644 0 0
+#slink /lib/libreadline.so.4 /lib/libreadline.so.4.3 0644 0 0
+file /lib/libreadline.so.5.2 /lib/libreadline.so.5.2 0644 0 0
+slink /lib/libreadline.so.5 /lib/libreadline.so.5.2 0644 0 0
+file /lib/libselinux.so.1 /lib/libselinux.so.1 0644 0 0
+file /lib/libsepol.so.1 /lib/libsepol.so.1 0644 0 0
+file /lib/libuuid.so.1.2 /lib/libuuid.so.1.2 0644 0 0
+slink /lib/libuuid.so.1 /lib/libuuid.so.1.2 0644 0 0
+file /lib/libusb-0.1.so.4.4.4 /lib/libusb-0.1.so.4.4.4 0644 0 0
+slink /lib/libusb-0.1.so.4 /lib/libusb-0.1.so.4.4.4 0644 0 0
+file /lib/libwrap.so.0.7.6 /lib/libwrap.so.0.7.6 0644 0 0
+slink /lib/libwrap.so.0 /lib/libwrap.so.0.7.6 0644 0 0
+file /lib/libz.so.1.2.3 /usr/lib/libz.so.1.2.3 0644 0 0
+slink /lib/libz.so.1 /lib/libz.so.1.2.3 0644 0 0
+slink /lib/libz.so /lib/libz.so.1.2.3 0644 0 0
+# _baselibs /lib/tls
+dir /lib/tls 0755 0 0
+file /lib/ld-2.3.6.so /lib/ld-2.3.6.so 0755 0 0
+slink /lib/ld-linux.so.2 /lib/ld-2.3.6.so 0755 0 0
+file /lib/tls/libc-2.3.6.so /lib/tls/libc-2.3.6.so 0755 0 0
+slink /lib/tls/libc.so.6 /lib/tls/libc-2.3.6.so 0755 0 0
+slink /lib/libc.so.6 /lib/tls/libc-2.3.6.so 0755 0 0
+slink /lib/libc-2.3.6.so /lib/tls/libc-2.3.6.so 0755 0 0
+file /lib/tls/libcrypt-2.3.6.so /lib/tls/libcrypt-2.3.6.so 0644 0 0
+slink /lib/tls/libcrypt.so.1 /lib/tls/libcrypt-2.3.6.so 0644 0 0
+slink /lib/libcrypt.so.1 /lib/tls/libcrypt-2.3.6.so 0644 0 0
+slink /lib/libcrypt-2.3.6.so /lib/tls/libcrypt-2.3.6.so 0644 0 0
+file /lib/tls/libdl-2.3.6.so /lib/tls/libdl-2.3.6.so 0644 0 0
+slink /lib/tls/libdl.so.2 /lib/tls/libdl-2.3.6.so 0644 0 0
+slink /lib/libdl.so.2 /lib/tls/libdl-2.3.6.so 0644 0 0
+slink /lib/libdl-2.3.6.so /lib/tls/libdl-2.3.6.so 0644 0 0
+file /lib/tls/librt-2.3.6.so /lib/tls/librt-2.3.6.so 0644 0 0
+slink /lib/tls/librt.so.1 /lib/tls/librt-2.3.6.so 0644 0 0
+slink /lib/librt.so.1 /lib/tls/librt-2.3.6.so 0644 0 0
+slink /lib/librt-2.3.6.so /lib/tls/librt-2.3.6.so 0644 0 0
+file /lib/tls/libm-2.3.6.so /lib/tls/libm-2.3.6.so 0644 0 0
+slink /lib/tls/libm.so.6 /lib/tls/libm-2.3.6.so 0644 0 0
+slink /lib/libm.so.6 /lib/tls/libm-2.3.6.so 0644 0 0
+file /lib/tls/libnsl-2.3.6.so /lib/tls/libnsl-2.3.6.so 0644 0 0
+slink /lib/tls/libnsl.so.1 /lib/tls/libnsl-2.3.6.so 0644 0 0
+slink /lib/libnsl.so.1 /lib/tls/libnsl-2.3.6.so 0644 0 0
+slink /lib/libnsl-2.3.6.so /lib/tls/libnsl-2.3.6.so 0644 0 0
+file /lib/tls/libpthread-2.3.6.so /lib/tls/libpthread-2.3.6.so 0755 0 0
+slink /lib/tls/libpthread.so.0 /lib/tls/libpthread-2.3.6.so 0755 0 0
+file /lib/libpthread-0.10.so /lib/libpthread-0.10.so 0755 0 0
+slink /lib/libpthread.so.0 /lib/libpthread-0.10.so 0755 0 0
+file /lib/tls/libresolv-2.3.6.so /lib/tls/libresolv-2.3.6.so 0644 0 0
+slink /lib/tls/libresolv.so.2 /lib/tls/libresolv-2.3.6.so 0644 0 0
+slink /lib/libresolv.so.2 /lib/tls/libresolv-2.3.6.so 0644 0 0
+slink /lib/libresolv-2.3.6.so /lib/tls/libresolv-2.3.6.so 0644 0 0
+file /lib/tls/libutil-2.3.6.so /lib/tls/libutil-2.3.6.so 0644 0 0
+slink /lib/tls/libutil.so.1 /lib/tls/libutil-2.3.6.so 0644 0 0
+slink /lib/libutil.so.1 /lib/tls/libutil-2.3.6.so 0644 0 0
+slink /lib/libutil-2.3.6.so /lib/tls/libutil-2.3.6.so 0644 0 0
+# _baselibs /lib/terminfo
+dir /lib/terminfo 0755 0 0
+dir /lib/terminfo/l 0755 0 0
+file /lib/terminfo/l/linux /lib/terminfo/l/linux 0644 0 0
