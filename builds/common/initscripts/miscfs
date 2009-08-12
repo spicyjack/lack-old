@@ -4,7 +4,6 @@
 # Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
 
 source $ANT_FUNCTIONS
-PATH=/sbin:/bin  # No remote fs at start
 ACTION=$1
 BINARY=/bin/mount
 [ -x "$BINARY" ] || exit 1
@@ -22,9 +21,10 @@ case "$ACTION" in
     if [ ! -d /proc/bus ]; then
         echo
         colorize_nl $S_FAILURE "/proc directory not mounted?"
-        ls -R /proc/bus/usb
-        sleep 5
+
     fi
+    ls -R /proc/bus/usb
+    sleep 5
     $BINARY usbfs /proc/bus/usb -t usbfs -o rw >> $BOOT_LOG 2>&1
     cmd_status $? "mount usbfs /proc/bus/usb -t usbfs -o rw"
     colorize_nl $S_SUCCESS "$SUCCESS"
