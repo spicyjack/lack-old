@@ -12,6 +12,7 @@
 dir /usr/share/menu 755 0 0
 file /usr/share/menu/x11-xserver-utils /usr/share/menu/x11-xserver-utils 644 0 0
 dir /usr/bin 755 0 0
+file /usr/bin/mcookie /usr/bin/mcookie 755 0 0
 file /usr/bin/iceauth /usr/bin/iceauth 755 0 0
 file /usr/bin/sessreg /usr/bin/sessreg 755 0 0
 file /usr/bin/showrgb /usr/bin/showrgb 755 0 0

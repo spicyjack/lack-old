@@ -19,6 +19,10 @@ case "$ACTION" in
   ;;
   start)
 	colorize $S_TIP "$BASENAME: Mounting /proc/bus/usb (usbfs);"
+    if [ ! -d /proc/cmdline ]; then
+        colorize_nl $S_FAILURE "/proc directory not mounted?"
+        sleep 5
+    fi
     $BINARY usbfs /proc/bus/usb -t usbfs -o rw >> $BOOT_LOG 2>&1
     cmd_status $? "mount usbfs /proc/bus/usb -t usbfs -o rw"
     colorize_nl $S_SUCCESS "$SUCCESS"
