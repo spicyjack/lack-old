@@ -9,9 +9,9 @@ source $ANT_FUNCTIONS
 ACTION=$1
 BINARY=/bin/rm
 [ -x "$BINARY" ] || exit 1
-BASENAME=$(kmod_nuke)
+BASENAME="kmod_nuke"
 DESC="kernel modules in /lib/modules"
-BINARY_OPTS="-r -c"
+BINARY_OPTS="-rf"
 
 case "$ACTION" in
   vars)

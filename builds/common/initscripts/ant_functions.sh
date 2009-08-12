@@ -88,21 +88,9 @@ cmd_status () {
         echo
         colorize $S_FAILURE "Command '$COMMAND' failed with status code: "
         colorize_nl $S_INFO ">${STATUS}<"
-        case $STATUS in
-            1)  # most scripts will hit this
-                DEBUG=1 
-                want_shell
-                ;;
-            2)  # run=sh; drop to a shell (with job control)
-                exec /bin/sh < dev/console > dev/console 2>&1
-                ;;
-            3)  # run=init; start init, which will start subshells
-                exec $BB init < dev/console > dev/console 2>&1
-                ;;
-            4)  # run=install; start the installer
-                exec $BB sh /etc/install.sh
-                ;;
-        esac
+        # removed the 'case' statement here, exec'ing the console from this
+        # script was lame
+        want_shell
     fi
 } # cmd_status
 

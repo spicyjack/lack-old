@@ -24,7 +24,7 @@ STREAMING_SH_PID="/var/run/streaming.sh.pid"
 # flag to know whether or not we should be running
 STREAMING_FLAG="/var/run/streaming.flag"
 # don't use wget by default
-USE_WGET=0
+USE_WGET=1
 # set quiet mode by default, needs to be set prior to the getops call
 QUIET=1
 
@@ -70,8 +70,7 @@ while true ; do
     -k|--killall    Kill all running instances of this script, don't start
     -s|--use-spdif  Use the S/PDIF digital audio out, if found
     -u|--url        URL to connect to for streaming
-    -w|--use-wget   Use wget | mpg123 for streaming (more reliable streaming)
-
+    -w|--no-wget    Don't use wget | mpg123 for streaming (less reliable)
 
 EOF
 		exit 0;;		
@@ -92,8 +91,8 @@ EOF
                         STREAM_URL=$2; 
                         ERRORLOOP=$(($ERRORLOOP - 1));
                         shift 2;;
-        -w|--use-wget) # URL to connect to for streaming
-                        USE_WGET=1
+        -w|--no-wget) # URL to connect to for streaming
+                        USE_WGET=0
                         shift;;
 		--) shift; break;;
 	esac
