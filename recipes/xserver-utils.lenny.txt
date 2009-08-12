@@ -9,10 +9,8 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 #
-dir /usr/share/menu 755 0 0
-file /usr/share/menu/x11-xserver-utils /usr/share/menu/x11-xserver-utils 644 0 0
-dir /usr/bin 755 0 0
-file /usr/bin/mcookie /usr/bin/mcookie 755 0 0
+#dir /usr/share/menu 755 0 0
+#file /usr/share/menu/x11-xserver-utils /usr/share/menu/x11-xserver-utils 644 0 0
 file /usr/bin/iceauth /usr/bin/iceauth 755 0 0
 file /usr/bin/sessreg /usr/bin/sessreg 755 0 0
 file /usr/bin/showrgb /usr/bin/showrgb 755 0 0
@@ -35,7 +33,6 @@ file /usr/bin/xtrapproto /usr/bin/xtrapproto 755 0 0
 file /usr/bin/xtrapreset /usr/bin/xtrapreset 755 0 0
 file /usr/bin/xtrapstats /usr/bin/xtrapstats 755 0 0
 file /usr/bin/xvidtune /usr/bin/xvidtune 755 0 0
-dir /etc 755 0 0
 dir /etc/X11 755 0 0
 dir /etc/X11/app-defaults 755 0 0
 file /etc/X11/app-defaults/Xvidtune /etc/X11/app-defaults/Xvidtune 644 0 0

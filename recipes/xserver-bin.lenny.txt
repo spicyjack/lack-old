@@ -17,5 +17,8 @@ file /etc/X11/xinit/xserverrc /etc/X11/xinit/xserverrc 755 0 0
 # /usr/bin
 file /usr/bin/startx /usr/bin/startx 755 0 0
 file /usr/bin/xinit /usr/bin/xinit 755 0 0
+file /usr/bin/mcookie /usr/bin/mcookie 755 0 0
+file /usr/bin/xauth /usr/bin/xauth 755 0 0
 file /usr/bin/X /usr/bin/X 6755 0 0
+slink /usr/bin/X11 /usr/bin 755 0 0
 # vi: set sw=4 ts=4 paste:

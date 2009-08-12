@@ -19,21 +19,25 @@ case "$ACTION" in
   ;;
   start)
 	colorize $S_TIP "$BASENAME: Mounting /proc/bus/usb (usbfs);"
-    if [ ! -d /proc/cmdline ]; then
+    if [ ! -d /proc/bus ]; then
+        echo
         colorize_nl $S_FAILURE "/proc directory not mounted?"
+        ls -R /proc/bus/usb
         sleep 5
     fi
     $BINARY usbfs /proc/bus/usb -t usbfs -o rw >> $BOOT_LOG 2>&1
     cmd_status $? "mount usbfs /proc/bus/usb -t usbfs -o rw"
     colorize_nl $S_SUCCESS "$SUCCESS"
 	colorize $S_TIP "$BASENAME: Mounting /dev/pts (devpts);"
-    mkdir /dev/pts
+    # apparently udev is creating these
+    #mkdir /dev/pts
     $BINARY devpts /dev/pts -t devpts -o rw,noexec,nosuid,gid=5,mode=620 \
         >> $BOOT_LOG 2>&1
     cmd_status $? "$BINARY devpts /dev/pts -t devpts"
     colorize_nl $S_SUCCESS "$SUCCESS"
 	colorize $S_TIP "$BASENAME: Mounting /dev/shm (tmpfs);"
-    mkdir /dev/shm
+    # apparently udev is creating these
+    #mkdir /dev/shm
     $BINARY tmpfs /dev/shm -t tmpfs -o rw,nosuid,nodev >> $BOOT_LOG 2>&1
     cmd_status $? "mount tmpfs /dev/shm -t tmpfs -o rw,nosuid,nodev"
     colorize_nl $S_SUCCESS "$SUCCESS"
