@@ -1,0 +1,62 @@
+# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+dir /usr/lib 755 0 0
+dir /usr/lib/xorg 755 0 0
+dir /usr/lib/xorg/modules 755 0 0
+file /usr/lib/xorg/modules/libafb.so /usr/lib/xorg/modules/libafb.so 644 0 0
+file /usr/lib/xorg/modules/libcfb.so /usr/lib/xorg/modules/libcfb.so 644 0 0
+file /usr/lib/xorg/modules/libcfb32.so /usr/lib/xorg/modules/libcfb32.so 644 0 0
+file /usr/lib/xorg/modules/libexa.so /usr/lib/xorg/modules/libexa.so 644 0 0
+file /usr/lib/xorg/modules/libfb.so /usr/lib/xorg/modules/libfb.so 644 0 0
+file /usr/lib/xorg/modules/libint10.so /usr/lib/xorg/modules/libint10.so 644 0 0
+file /usr/lib/xorg/modules/libmfb.so /usr/lib/xorg/modules/libmfb.so 644 0 0
+file /usr/lib/xorg/modules/libpcidata.so /usr/lib/xorg/modules/libpcidata.so 644 0 0
+file /usr/lib/xorg/modules/libscanpci.so /usr/lib/xorg/modules/libscanpci.so 644 0 0
+file /usr/lib/xorg/modules/libshadow.so /usr/lib/xorg/modules/libshadow.so 644 0 0
+file /usr/lib/xorg/modules/libshadowfb.so /usr/lib/xorg/modules/libshadowfb.so 644 0 0
+file /usr/lib/xorg/modules/libvbe.so /usr/lib/xorg/modules/libvbe.so 644 0 0
+file /usr/lib/xorg/modules/libvgahw.so /usr/lib/xorg/modules/libvgahw.so 644 0 0
+file /usr/lib/xorg/modules/libwfb.so /usr/lib/xorg/modules/libwfb.so 644 0 0
+file /usr/lib/xorg/modules/libxaa.so /usr/lib/xorg/modules/libxaa.so 644 0 0
+file /usr/lib/xorg/modules/libxf1bpp.so /usr/lib/xorg/modules/libxf1bpp.so 644 0 0
+file /usr/lib/xorg/modules/libxf4bpp.so /usr/lib/xorg/modules/libxf4bpp.so 644 0 0
+file /usr/lib/xorg/modules/libxf8_16bpp.so /usr/lib/xorg/modules/libxf8_16bpp.so 644 0 0
+file /usr/lib/xorg/modules/libxf8_32bpp.so /usr/lib/xorg/modules/libxf8_32bpp.so 644 0 0
+dir /usr/lib/xorg/modules/extensions 755 0 0
+file /usr/lib/xorg/modules/extensions/libdbe.so /usr/lib/xorg/modules/extensions/libdbe.so 644 0 0
+file /usr/lib/xorg/modules/extensions/libdri.so /usr/lib/xorg/modules/extensions/libdri.so 644 0 0
+file /usr/lib/xorg/modules/extensions/libextmod.so /usr/lib/xorg/modules/extensions/libextmod.so 644 0 0
+file /usr/lib/xorg/modules/extensions/libGLcore.so /usr/lib/xorg/modules/extensions/libGLcore.so 644 0 0
+file /usr/lib/xorg/modules/extensions/libglx.so /usr/lib/xorg/modules/extensions/libglx.so 644 0 0
+file /usr/lib/xorg/modules/extensions/librecord.so /usr/lib/xorg/modules/extensions/librecord.so 644 0 0
+file /usr/lib/xorg/modules/extensions/libxtrap.so /usr/lib/xorg/modules/extensions/libxtrap.so 644 0 0
+dir /usr/lib/xorg/modules/fonts 755 0 0
+file /usr/lib/xorg/modules/fonts/libfreetype.so /usr/lib/xorg/modules/fonts/libfreetype.so 644 0 0
+dir /usr/lib/xorg/modules/linux 755 0 0
+file /usr/lib/xorg/modules/linux/libfbdevhw.so /usr/lib/xorg/modules/linux/libfbdevhw.so 644 0 0
+dir /usr/lib/xorg/modules/multimedia 755 0 0
+file /usr/lib/xorg/modules/multimedia/bt829_drv.so /usr/lib/xorg/modules/multimedia/bt829_drv.so 644 0 0
+file /usr/lib/xorg/modules/multimedia/fi1236_drv.so /usr/lib/xorg/modules/multimedia/fi1236_drv.so 644 0 0
+file /usr/lib/xorg/modules/multimedia/msp3430_drv.so /usr/lib/xorg/modules/multimedia/msp3430_drv.so 644 0 0
+file /usr/lib/xorg/modules/multimedia/tda8425_drv.so /usr/lib/xorg/modules/multimedia/tda8425_drv.so 644 0 0
+file /usr/lib/xorg/modules/multimedia/tda9850_drv.so /usr/lib/xorg/modules/multimedia/tda9850_drv.so 644 0 0
+file /usr/lib/xorg/modules/multimedia/tda9885_drv.so /usr/lib/xorg/modules/multimedia/tda9885_drv.so 644 0 0
+file /usr/lib/xorg/modules/multimedia/uda1380_drv.so /usr/lib/xorg/modules/multimedia/uda1380_drv.so 644 0 0
+dir /usr/bin 755 0 0
+file /usr/bin/Xorg /usr/bin/Xorg 755 0 0
+file /usr/bin/cvt /usr/bin/cvt 755 0 0
+file /usr/bin/gtf /usr/bin/gtf 755 0 0
+dir /etc 755 0 0
+dir /etc/X11 755 0 0
+dir /etc/X11/xserver 755 0 0
+file /etc/X11/xserver/SecurityPolicy /etc/X11/xserver/SecurityPolicy 644 0 0
+# vi: set sw=4 ts=4 paste:

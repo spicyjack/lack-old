@@ -1,0 +1,149 @@
+# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# xorg pci ID's
+dir /usr/share/xserver-xorg 755 0 0
+dir /usr/share/xserver-xorg/pci 755 0 0
+# xorg modules
+dir /usr/lib/xorg 755 0 0
+dir /usr/lib/xorg/modules 755 0 0
+dir /usr/lib/xorg/modules/drivers 755 0 0
+# apm
+file /usr/share/xserver-xorg/pci/apm.ids /usr/share/xserver-xorg/pci/apm.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/apm_drv.so /usr/lib/xorg/modules/drivers/apm_drv.so 644 0 0
+# ark
+file /usr/share/xserver-xorg/pci/ark.ids /usr/share/xserver-xorg/pci/ark.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/ark_drv.so /usr/lib/xorg/modules/drivers/ark_drv.so 644 0 0
+# ati
+file /usr/lib/xorg/modules/drivers/ati_drv.so /usr/lib/xorg/modules/drivers/ati_drv.so 644 0 0
+# chips
+file /usr/share/xserver-xorg/pci/chips.ids /usr/share/xserver-xorg/pci/chips.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/chips_drv.so /usr/lib/xorg/modules/drivers/chips_drv.so 644 0 0
+# cirrus
+file /usr/share/xserver-xorg/pci/cirrus.ids /usr/share/xserver-xorg/pci/cirrus.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/cirrus_alpine.so /usr/lib/xorg/modules/drivers/cirrus_alpine.so 644 0 0
+file /usr/lib/xorg/modules/drivers/cirrus_drv.so /usr/lib/xorg/modules/drivers/cirrus_drv.so 644 0 0
+file /usr/lib/xorg/modules/drivers/cirrus_laguna.so /usr/lib/xorg/modules/drivers/cirrus_laguna.so 644 0 0
+# cyrix
+file /usr/share/xserver-xorg/pci/cyrix.ids /usr/share/xserver-xorg/pci/cyrix.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/cyrix_drv.so /usr/lib/xorg/modules/drivers/cyrix_drv.so 644 0 0
+# framebuffer
+file /usr/lib/xorg/modules/drivers/fbdev_drv.so /usr/lib/xorg/modules/drivers/fbdev_drv.so 644 0 0
+# glint
+file /usr/share/xserver-xorg/pci/glint.ids /usr/share/xserver-xorg/pci/glint.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/glint_drv.so /usr/lib/xorg/modules/drivers/glint_drv.so 644 0 0
+# i128
+file /usr/share/xserver-xorg/pci/i128.ids /usr/share/xserver-xorg/pci/i128.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/i128_drv.so /usr/lib/xorg/modules/drivers/i128_drv.so 644 0 0
+# intel 740
+file /usr/share/xserver-xorg/pci/i740.ids /usr/share/xserver-xorg/pci/i740.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/i740_drv.so /usr/lib/xorg/modules/drivers/i740_drv.so 644 0 0
+# imstt
+file /usr/share/xserver-xorg/pci/imstt.ids /usr/share/xserver-xorg/pci/imstt.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/imstt_drv.so /usr/lib/xorg/modules/drivers/imstt_drv.so 644 0 0
+# intel
+file /usr/share/xserver-xorg/pci/intel.ids /usr/share/xserver-xorg/pci/intel.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/ch7017.so /usr/lib/xorg/modules/drivers/ch7017.so 644 0 0
+file /usr/lib/xorg/modules/drivers/ch7xxx.so /usr/lib/xorg/modules/drivers/ch7xxx.so 644 0 0
+file /usr/lib/xorg/modules/drivers/intel_drv.so /usr/lib/xorg/modules/drivers/intel_drv.so 644 0 0
+file /usr/lib/xorg/modules/drivers/ivch.so /usr/lib/xorg/modules/drivers/ivch.so 644 0 0
+file /usr/lib/xorg/modules/drivers/sil164.so /usr/lib/xorg/modules/drivers/sil164.so 644 0 0
+file /usr/lib/xorg/modules/drivers/tfp410.so /usr/lib/xorg/modules/drivers/tfp410.so 644 0 0
+file /usr/lib/libI810XvMC.so.1.0.0 /usr/lib/libI810XvMC.so.1.0.0 644 0 0
+file /usr/lib/libIntelXvMC.so.1.0.0 /usr/lib/libIntelXvMC.so.1.0.0 644 0 0
+slink /usr/lib/xorg/modules/drivers/i810_drv.so /usr/lib/xorg/modules/drivers/intel_drv.so 777 0 0
+slink /usr/lib/libIntelXvMC.so.1 /usr/lib/libIntelXvMC.so.1.0.0 777 0 0
+slink /usr/lib/libIntelXvMC.so /usr/lib/libIntelXvMC.so.1.0.0 777 0 0
+slink /usr/lib/libI810XvMC.so.1 /usr/lib/libI810XvMC.so.1.0.0 777 0 0
+slink /usr/lib/libI810XvMC.so /usr/lib/libI810XvMC.so.1.0.0 777 0 0
+# ati mach64
+file /usr/share/xserver-xorg/pci/mach64.ids /usr/share/xserver-xorg/pci/mach64.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/mach64_drv.so /usr/lib/xorg/modules/drivers/mach64_drv.so 644 0 0
+# matrox
+file /usr/share/xserver-xorg/pci/mga.ids /usr/share/xserver-xorg/pci/mga.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/mga_drv.so /usr/lib/xorg/modules/drivers/mga_drv.so 644 0 0
+# neomagic
+file /usr/share/xserver-xorg/pci/neomagic.ids /usr/share/xserver-xorg/pci/neomagic.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/neomagic_drv.so /usr/lib/xorg/modules/drivers/neomagic_drv.so 644 0 0
+# nsc
+file /usr/share/xserver-xorg/pci/nsc.ids /usr/share/xserver-xorg/pci/nsc.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/nsc_drv.so /usr/lib/xorg/modules/drivers/nsc_drv.so 644 0 0
+# nvidia
+file /usr/share/xserver-xorg/pci/nv.ids /usr/share/xserver-xorg/pci/nv.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/nv_drv.so /usr/lib/xorg/modules/drivers/nv_drv.so 644 0 0
+# openchrome
+dir /usr/lib/xorg/modules/drivers 755 0 0
+file /usr/lib/xorg/modules/drivers/openchrome_drv.so /usr/lib/xorg/modules/drivers/openchrome_drv.so 644 0 0
+file /usr/lib/libchromeXvMC.so.1.0.0 /usr/lib/libchromeXvMC.so.1.0.0 644 0 0
+file /usr/lib/libchromeXvMCPro.so.1.0.0 /usr/lib/libchromeXvMCPro.so.1.0.0 644 0 0
+#dir /usr/share/lintian 755 0 0
+#dir /usr/share/lintian/overrides 755 0 0
+#file /usr/share/lintian/overrides/xserver-xorg-video-openchrome /usr/share/lintian/overrides/xserver-xorg-video-openchrome 644 0 0
+file /usr/share/xserver-xorg/pci/openchrome.ids /usr/share/xserver-xorg/pci/openchrome.ids 644 0 0
+slink /usr/lib/libchromeXvMCPro.so.1 /usr/lib/libchromeXvMCPro.so.1.0.0 777 0 0
+slink /usr/lib/libchromeXvMCPro.so /usr/lib/libchromeXvMCPro.so.1.0.0 777 0 0
+slink /usr/lib/libchromeXvMC.so /usr/lib/libchromeXvMC.so.1.0.0 777 0 0
+slink /usr/lib/libchromeXvMC.so.1 /usr/lib/libchromeXvMC.so.1.0.0 777 0 0
+# r128
+file /usr/share/xserver-xorg/pci/r128.ids /usr/share/xserver-xorg/pci/r128.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/r128_drv.so /usr/lib/xorg/modules/drivers/r128_drv.so 644 0 0
+# radeon
+file /usr/share/xserver-xorg/pci/radeon.ids /usr/share/xserver-xorg/pci/radeon.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/radeon_drv.so /usr/lib/xorg/modules/drivers/radeon_drv.so 644 0 0
+dir /usr/lib/xorg/modules/multimedia 755 0 0
+file /usr/lib/xorg/modules/multimedia/theatre200_drv.so /usr/lib/xorg/modules/multimedia/theatre200_drv.so 644 0 0
+file /usr/lib/xorg/modules/multimedia/theatre_detect_drv.so /usr/lib/xorg/modules/multimedia/theatre_detect_drv.so 644 0 0
+file /usr/lib/xorg/modules/multimedia/theatre_drv.so /usr/lib/xorg/modules/multimedia/theatre_drv.so 644 0 0
+# radeonhd
+file /usr/share/xserver-xorg/pci/radeonhd.ids /usr/share/xserver-xorg/pci/radeonhd.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/radeonhd_drv.so /usr/lib/xorg/modules/drivers/radeonhd_drv.so 644 0 0
+dir /usr/bin 755 0 0
+file /usr/bin/rhd_conntest /usr/bin/rhd_conntest 755 0 0
+# rendition
+file /usr/share/xserver-xorg/pci/rendition.ids /usr/share/xserver-xorg/pci/rendition.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/rendition_drv.so /usr/lib/xorg/modules/drivers/rendition_drv.so 644 0 0
+# s3
+file /usr/share/xserver-xorg/pci/s3.ids /usr/share/xserver-xorg/pci/s3.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/s3_drv.so /usr/lib/xorg/modules/drivers/s3_drv.so 644 0 0
+# s3virge
+file /usr/share/xserver-xorg/pci/s3virge.ids /usr/share/xserver-xorg/pci/s3virge.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/s3virge_drv.so /usr/lib/xorg/modules/drivers/s3virge_drv.so 644 0 0
+# savage
+file /usr/lib/xorg/modules/drivers/savage_drv.so /usr/lib/xorg/modules/drivers/savage_drv.so 644 0 0
+file /usr/share/xserver-xorg/pci/savage.ids /usr/share/xserver-xorg/pci/savage.ids 644 0 0
+# siliconmotion
+file /usr/share/xserver-xorg/pci/siliconmotion.ids /usr/share/xserver-xorg/pci/siliconmotion.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/siliconmotion_drv.so /usr/lib/xorg/modules/drivers/siliconmotion_drv.so 644 0 0
+# sis
+file /usr/share/xserver-xorg/pci/sis.ids /usr/share/xserver-xorg/pci/sis.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/sis_drv.so /usr/lib/xorg/modules/drivers/sis_drv.so 644 0 0
+# sisusb
+file /usr/lib/xorg/modules/drivers/sisusb_drv.so /usr/lib/xorg/modules/drivers/sisusb_drv.so 644 0 0
+# tga
+file /usr/share/xserver-xorg/pci/tga.ids /usr/share/xserver-xorg/pci/tga.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/tga_drv.so /usr/lib/xorg/modules/drivers/tga_drv.so 644 0 0
+# trident
+file /usr/share/xserver-xorg/pci/trident.ids /usr/share/xserver-xorg/pci/trident.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/trident_drv.so /usr/lib/xorg/modules/drivers/trident_drv.so 644 0 0
+# tseng
+file /usr/share/xserver-xorg/pci/tseng.ids /usr/share/xserver-xorg/pci/tseng.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/tseng_drv.so /usr/lib/xorg/modules/drivers/tseng_drv.so 644 0 0
+# vesa
+file /usr/lib/xorg/modules/drivers/vesa_drv.so /usr/lib/xorg/modules/drivers/vesa_drv.so 644 0 0
+# vga
+file /usr/lib/xorg/modules/drivers/vga_drv.so /usr/lib/xorg/modules/drivers/vga_drv.so 644 0 0
+# vmware
+file /usr/share/xserver-xorg/pci/vmware.ids /usr/share/xserver-xorg/pci/vmware.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/vmware_drv.so /usr/lib/xorg/modules/drivers/vmware_drv.so 644 0 0
+# voodoo
+file /usr/share/xserver-xorg/pci/voodoo.ids /usr/share/xserver-xorg/pci/voodoo.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/voodoo_drv.so /usr/lib/xorg/modules/drivers/voodoo_drv.so 644 0 0
+# vi: set sw=4 ts=4 paste:
