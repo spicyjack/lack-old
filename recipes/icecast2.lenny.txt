@@ -79,8 +79,6 @@ slink /usr/lib/libxml2.so.2 /usr/lib/libxml2.so.2.6.32 0777 0 0
 file /usr/lib/libxml2.so.2.6.32 /usr/lib/libxml2.so.2.6.32 0644 0 0
 slink /usr/lib/libxslt.so.1 /usr/lib/libxslt.so.1.1.24 0777 0 0
 file /usr/lib/libxslt.so.1.1.24 /usr/lib/libxslt.so.1.1.24 0644 0 0
-slink /usr/lib/libz.so.1 /usr/lib/libz.so.1.2.3.3 0777 0 0
-file /usr/lib/libz.so.1.2.3.3 /usr/lib/libz.so.1.2.3.3 0644 0 0
 # /usr/lib/sse2
 dir /usr/lib/sse2 0755 0 0
 slink /usr/lib/sse2/libspeex.so.1 /usr/lib/sse2/libspeex.so.1.5.0 0777 0 0

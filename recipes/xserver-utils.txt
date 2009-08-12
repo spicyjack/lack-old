@@ -1,0 +1,41 @@
+# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+dir /usr/share/menu 755 0 0
+file /usr/share/menu/x11-xserver-utils /usr/share/menu/x11-xserver-utils 644 0 0
+dir /usr/bin 755 0 0
+file /usr/bin/iceauth /usr/bin/iceauth 755 0 0
+file /usr/bin/sessreg /usr/bin/sessreg 755 0 0
+file /usr/bin/showrgb /usr/bin/showrgb 755 0 0
+file /usr/bin/xcmsdb /usr/bin/xcmsdb 755 0 0
+file /usr/bin/xgamma /usr/bin/xgamma 755 0 0
+file /usr/bin/xhost /usr/bin/xhost 755 0 0
+file /usr/bin/xmodmap /usr/bin/xmodmap 755 0 0
+file /usr/bin/xrandr /usr/bin/xrandr 755 0 0
+file /usr/bin/xrdb /usr/bin/xrdb 755 0 0
+file /usr/bin/xrefresh /usr/bin/xrefresh 755 0 0
+file /usr/bin/xset /usr/bin/xset 755 0 0
+file /usr/bin/xsetmode /usr/bin/xsetmode 755 0 0
+file /usr/bin/xsetpointer /usr/bin/xsetpointer 755 0 0
+file /usr/bin/xsetroot /usr/bin/xsetroot 755 0 0
+file /usr/bin/xstdcmap /usr/bin/xstdcmap 755 0 0
+file /usr/bin/xtrapchar /usr/bin/xtrapchar 755 0 0
+file /usr/bin/xtrapin /usr/bin/xtrapin 755 0 0
+file /usr/bin/xtrapout /usr/bin/xtrapout 755 0 0
+file /usr/bin/xtrapproto /usr/bin/xtrapproto 755 0 0
+file /usr/bin/xtrapreset /usr/bin/xtrapreset 755 0 0
+file /usr/bin/xtrapstats /usr/bin/xtrapstats 755 0 0
+file /usr/bin/xvidtune /usr/bin/xvidtune 755 0 0
+dir /etc 755 0 0
+dir /etc/X11 755 0 0
+dir /etc/X11/app-defaults 755 0 0
+file /etc/X11/app-defaults/Xvidtune /etc/X11/app-defaults/Xvidtune 644 0 0
+# vi: set sw=4 ts=4 paste:

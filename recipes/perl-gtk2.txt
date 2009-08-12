@@ -1,0 +1,95 @@
+# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# Gtk2
+dir /usr/lib/perl5 755 0 0
+dir /usr/lib/perl5/Gtk2 755 0 0
+dir /usr/lib/perl5/Gtk2/Gdk 755 0 0
+file /usr/lib/perl5/Gtk2/Gdk/Keysyms.pm /usr/lib/perl5/Gtk2/Gdk/Keysyms.pm 644 0 0
+file /usr/lib/perl5/Gtk2/TestHelper.pm /usr/lib/perl5/Gtk2/TestHelper.pm 644 0 0
+dir /usr/lib/perl5/Gtk2/Install 755 0 0
+file /usr/lib/perl5/Gtk2/Install/gtk2perl-autogen.h /usr/lib/perl5/Gtk2/Install/gtk2perl-autogen.h 644 0 0
+file /usr/lib/perl5/Gtk2/Install/gtk2perl.h /usr/lib/perl5/Gtk2/Install/gtk2perl.h 644 0 0
+file /usr/lib/perl5/Gtk2/Install/gtk.typemap /usr/lib/perl5/Gtk2/Install/gtk.typemap 644 0 0
+file /usr/lib/perl5/Gtk2/Install/pango.typemap /usr/lib/perl5/Gtk2/Install/pango.typemap 644 0 0
+file /usr/lib/perl5/Gtk2/Install/gtk2perl-versions.h /usr/lib/perl5/Gtk2/Install/gtk2perl-versions.h 644 0 0
+file /usr/lib/perl5/Gtk2/Install/gdk.typemap /usr/lib/perl5/Gtk2/Install/gdk.typemap 644 0 0
+file /usr/lib/perl5/Gtk2/Install/Files.pm /usr/lib/perl5/Gtk2/Install/Files.pm 644 0 0
+file /usr/lib/perl5/Gtk2/Install/doctypes /usr/lib/perl5/Gtk2/Install/doctypes 644 0 0
+file /usr/lib/perl5/Gtk2/Install/gtk2perl.typemap /usr/lib/perl5/Gtk2/Install/gtk2perl.typemap 644 0 0
+file /usr/lib/perl5/Gtk2/CodeGen.pm /usr/lib/perl5/Gtk2/CodeGen.pm 644 0 0
+file /usr/lib/perl5/Gtk2/SimpleMenu.pm /usr/lib/perl5/Gtk2/SimpleMenu.pm 644 0 0
+file /usr/lib/perl5/Gtk2/Helper.pm /usr/lib/perl5/Gtk2/Helper.pm 644 0 0
+file /usr/lib/perl5/Gtk2/SimpleList.pm /usr/lib/perl5/Gtk2/SimpleList.pm 644 0 0
+file /usr/lib/perl5/Gtk2/Pango.pm /usr/lib/perl5/Gtk2/Pango.pm 644 0 0
+dir /usr/lib/perl5/auto 755 0 0
+dir /usr/lib/perl5/auto/Gtk2 755 0 0
+file /usr/lib/perl5/auto/Gtk2/Gtk2.so /usr/lib/perl5/auto/Gtk2/Gtk2.so 644 0 0
+file /usr/lib/perl5/Gtk2.pm /usr/lib/perl5/Gtk2.pm 644 0 0
+# Glib 
+dir /usr/lib/perl5/auto/Glib 755 0 0
+file /usr/lib/perl5/auto/Glib/Glib.so /usr/lib/perl5/auto/Glib/Glib.so 644 0 0
+file /usr/lib/perl5/Glib.pm /usr/lib/perl5/Glib.pm 644 0 0
+dir /usr/lib/perl5/Glib 755 0 0
+file /usr/lib/perl5/Glib/Utils.pod /usr/lib/perl5/Glib/Utils.pod 644 0 0
+file /usr/lib/perl5/Glib/ParamSpec.pod /usr/lib/perl5/Glib/ParamSpec.pod 644 0 0
+dir /usr/lib/perl5/Glib/Param 755 0 0
+file /usr/lib/perl5/Glib/Param/Int64.pod /usr/lib/perl5/Glib/Param/Int64.pod 644 0 0
+file /usr/lib/perl5/Glib/Param/Flags.pod /usr/lib/perl5/Glib/Param/Flags.pod 644 0 0
+file /usr/lib/perl5/Glib/Param/Unichar.pod /usr/lib/perl5/Glib/Param/Unichar.pod 644 0 0
+file /usr/lib/perl5/Glib/Param/UInt.pod /usr/lib/perl5/Glib/Param/UInt.pod 644 0 0
+file /usr/lib/perl5/Glib/Param/Int.pod /usr/lib/perl5/Glib/Param/Int.pod 644 0 0
+file /usr/lib/perl5/Glib/Param/Double.pod /usr/lib/perl5/Glib/Param/Double.pod 644 0 0
+file /usr/lib/perl5/Glib/Param/Enum.pod /usr/lib/perl5/Glib/Param/Enum.pod 644 0 0
+file /usr/lib/perl5/Glib/Param/UInt64.pod /usr/lib/perl5/Glib/Param/UInt64.pod 644 0 0
+file /usr/lib/perl5/Glib/Param/String.pod /usr/lib/perl5/Glib/Param/String.pod 644 0 0
+file /usr/lib/perl5/Glib/Param/Boolean.pod /usr/lib/perl5/Glib/Param/Boolean.pod 644 0 0
+file /usr/lib/perl5/Glib/Flags.pod /usr/lib/perl5/Glib/Flags.pod 644 0 0
+file /usr/lib/perl5/Glib/BookmarkFile.pod /usr/lib/perl5/Glib/BookmarkFile.pod 644 0 0
+file /usr/lib/perl5/Glib/Boxed.pod /usr/lib/perl5/Glib/Boxed.pod 644 0 0
+file /usr/lib/perl5/Glib/Signal.pod /usr/lib/perl5/Glib/Signal.pod 644 0 0
+dir /usr/lib/perl5/Glib/Object 755 0 0
+file /usr/lib/perl5/Glib/Object/Subclass.pm /usr/lib/perl5/Glib/Object/Subclass.pm 644 0 0
+file /usr/lib/perl5/Glib/index.pod /usr/lib/perl5/Glib/index.pod 644 0 0
+file /usr/lib/perl5/Glib/ParseXSDoc.pm /usr/lib/perl5/Glib/ParseXSDoc.pm 644 0 0
+file /usr/lib/perl5/Glib/version.pod /usr/lib/perl5/Glib/version.pod 644 0 0
+file /usr/lib/perl5/Glib/KeyFile.pod /usr/lib/perl5/Glib/KeyFile.pod 644 0 0
+file /usr/lib/perl5/Glib/CodeGen.pm /usr/lib/perl5/Glib/CodeGen.pm 644 0 0
+file /usr/lib/perl5/Glib/GenPod.pm /usr/lib/perl5/Glib/GenPod.pm 644 0 0
+file /usr/lib/perl5/Glib/MakeHelper.pm /usr/lib/perl5/Glib/MakeHelper.pm 644 0 0
+file /usr/lib/perl5/Glib/MainLoop.pod /usr/lib/perl5/Glib/MainLoop.pod 644 0 0
+file /usr/lib/perl5/Glib/xsapi.pod /usr/lib/perl5/Glib/xsapi.pod 644 0 0
+dir /usr/lib/perl5/Glib/Install 755 0 0
+file /usr/lib/perl5/Glib/Install/Files.pm /usr/lib/perl5/Glib/Install/Files.pm 644 0 0
+file /usr/lib/perl5/Glib/Install/gperl_marshal.h /usr/lib/perl5/Glib/Install/gperl_marshal.h 644 0 0
+file /usr/lib/perl5/Glib/Install/gperl.h /usr/lib/perl5/Glib/Install/gperl.h 644 0 0
+file /usr/lib/perl5/Glib/Install/doctypes /usr/lib/perl5/Glib/Install/doctypes 644 0 0
+file /usr/lib/perl5/Glib/Install/typemap /usr/lib/perl5/Glib/Install/typemap 644 0 0
+file /usr/lib/perl5/Glib/Error.pod /usr/lib/perl5/Glib/Error.pod 644 0 0
+file /usr/lib/perl5/Glib/Markup.pod /usr/lib/perl5/Glib/Markup.pod 644 0 0
+file /usr/lib/perl5/Glib/Type.pod /usr/lib/perl5/Glib/Type.pod 644 0 0
+file /usr/lib/perl5/Glib/devel.pod /usr/lib/perl5/Glib/devel.pod 644 0 0
+file /usr/lib/perl5/Glib/Log.pod /usr/lib/perl5/Glib/Log.pod 644 0 0
+file /usr/lib/perl5/Glib/Object.pod /usr/lib/perl5/Glib/Object.pod 644 0 0
+# Cairo
+dir /usr/lib/perl5/Cairo 755 0 0
+dir /usr/lib/perl5/Cairo/Install 755 0 0
+file /usr/lib/perl5/Cairo/Install/cairo-perl-auto.typemap /usr/lib/perl5/Cairo/Install/cairo-perl-auto.typemap 644 0 0
+file /usr/lib/perl5/Cairo/Install/Files.pm /usr/lib/perl5/Cairo/Install/Files.pm 644 0 0
+file /usr/lib/perl5/Cairo/Install/doctypes /usr/lib/perl5/Cairo/Install/doctypes 644 0 0
+file /usr/lib/perl5/Cairo/Install/cairo-perl.h /usr/lib/perl5/Cairo/Install/cairo-perl.h 644 0 0
+file /usr/lib/perl5/Cairo/Install/cairo-perl.typemap /usr/lib/perl5/Cairo/Install/cairo-perl.typemap 644 0 0
+file /usr/lib/perl5/Cairo/Install/cairo-perl-auto.h /usr/lib/perl5/Cairo/Install/cairo-perl-auto.h 644 0 0
+dir /usr/lib/perl5/auto 755 0 0
+dir /usr/lib/perl5/auto/Cairo 755 0 0
+file /usr/lib/perl5/auto/Cairo/Cairo.so /usr/lib/perl5/auto/Cairo/Cairo.so 644 0 0
+file /usr/lib/perl5/Cairo.pm /usr/lib/perl5/Cairo.pm 644 0 0
+# vi: set sw=4 ts=4 paste:
