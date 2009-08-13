@@ -1,0 +1,115 @@
+#!/bin/sh
+# .bashrc
+
+# User specific aliases and functions
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+# add the user's .dir_colors directives
+eval $(/usr/bin/dircolors ~/.dir_colors)
+
+# and user aliases too
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+alias vi='/usr/bin/vim'
+alias dir='ls --color=tty --classify'
+alias listalias='cat ~/.mail_aliases | ~/bin/less.sh' 
+alias patchjunk='find . -name "*.rej" -o -name "*.orig"'
+alias imageinfo='/usr/bin/perl ~/cvs/perl_scripts/imageinfo.pl'
+alias rotate='/usr/bin/perl ~/cvs/perl_scripts/rotate.pl'
+alias filerenamer='/usr/bin/perl ~/cvs/perl_scripts/file_renamer.pl'
+
+#if [ $TERM == "linux" ] || [ $TERM == "screen" ] \
+#    || [ $TERM == "vt100" ] || [ $TERM == "vt102" ]; then
+	PS1='[\h][\u \W]\\$ '
+#else
+#	PS1='[\h][\W \!] \[\033]2;\u@\h:\w\007\]'
+#fi
+
+IRCNICK="q_gone"
+IRCNAME="Who's Yo Daddy???"
+IRCSERVER="chat.freenode.net"
+CVSROOT=/home/cvs
+CVS_RSH=/usr/bin/ssh
+RSYNC_RSH=/usr/bin/ssh
+EDITOR=/usr/bin/vim
+MAILPATH='/var/mail/brian?You have new mail:/var/mail/stuff?Stuff has new mail'
+PATH=~/bin:$PATH
+
+export PS1 IRCNICK IRCNAME IRCSERVER \
+CVSROOT MAILPATH CVS_RSH EDITOR PATH 
+
+# define some handy shell functions
+ff () { 
+	find . -name "*$1*" -print
+} #find file from here 
+
+histgrep () {
+    history | grep "$@" | tail -22 
+}   # history, one screenful please 
+
+find_agent () {
+    /usr/bin/find /tmp 2>/dev/null | grep agent
+} # find a list of agent sockets on the host
+
+pigfind () {
+    find . -maxdepth 1 -type d -exec du -s '{}' \; 2>/dev/null | sort -n
+} # get the sizes of the subdirectories of $PWD, sort from smallest to largest
+
+dice () {
+    if [ -z $1 ]; then 
+        RAND=4
+    else
+        RAND=$1
+    fi
+    perl ~/bin/diceparse.pl -l ~/bin/diceware.en.txt -n 20 -d -r $RAND
+} # creates a list of random words
+
+purlget () {
+        wget --http-user=speak --http-password=friend $1
+} # retrieves files from purl
+
+SOURCE_DIR="$HOME/src"
+hgstat () {
+    OLDPWD=$PWD
+    cd $SOURCE_DIR
+    for DIR in $(ls | grep hg);
+    do
+        echo "=== $DIR ===";
+        cd $DIR
+        hg status
+        cd ..;
+    done
+    cd $OLDPWD
+} # check the status in mercurial directories
+
+hginchk () {
+    OLDPWD=$PWD
+    cd $SOURCE_DIR
+    for DIR in $(ls | grep hg);
+    do
+        echo "=== $DIR ===";
+        cd $DIR
+        hg incoming
+        cd ..;
+    done
+    cd $OLDPWD
+} # check for inbound changes to mercurial directories
+
+hgoutchk () {
+    OLDPWD=$PWD
+    cd $SOURCE_DIR
+    for DIR in $(ls | grep hg);
+    do
+        echo "=== $DIR ===";
+        cd $DIR
+        hg outgoing
+        cd ..;
+    done
+    cd $OLDPWD
+} # check for outbound changes in mercurial directories
+
