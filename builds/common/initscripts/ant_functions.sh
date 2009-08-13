@@ -137,21 +137,6 @@ file_parse () {
     if [ $DEBUG ]; then echo "-> parsed string is ${PARSED}"; fi
 } # cmdline_parse()
 
-get_kernel_version () {
-# grab the kernel version and export it into the environment as shell
-# variables
-    colorize $TIP "- Determining Linux Kernel Version Number"; echo
-    # run uname, cut off everything after the '-' dash character
-    KERNEL_VER_STRING=$(/bin/uname -r | /usr/bin/cut -d'-' -f 1)
-    # find the major version with cut
-    KERNEL_MAJOR=$(/bin/echo $KERNEL_VER_STRING | /usr/bin/cut -d'.' -f 1)
-    # find the patchlevel with cut
-    KERNEL_MINOR=$(/bin/echo $KERNEL_VER_STRING | /usr/bin/cut -d'.' -f 2)
-    # find the sublevel with cut
-    KERNEL_PATCH_VERSION=$(/bin/echo $KERNEL_VER_STRING \
-        | /usr/bin/cut -d'.' -f 3)
-} # get_kernel_version()
-
 write_child_pid () {
 # write a PID file for scripts/programs that don't make their own
     CHILD_BINARY=$1
@@ -169,8 +154,25 @@ get_pid () {
 get_hostname () {
 # get the hostname from the file set in the initramfs image
     if [ -e "/etc/hostname" ]; then
-        HOSTNAME=$(/bin/cat /etc/hostname | /usr/bin/tr -d '\n')
+        HOSTNAME=$(/bin/cat /etc/hostname)
     else 
-        colorize_nl $S_FAILURE "ERROR: missing '/etc⁄hostname' file"
+        colorize_nl $S_FAILURE "ERROR: missing '/etc/hostname' file"
     fi
 } # get_hostname () 
+
+get_kernel_version () {
+# grab the kernel version and export it into the environment as shell
+# variables
+    colorize $TIP "- Determining Linux Kernel Version Number"; echo
+    # run uname, cut off everything after the '-' dash character
+    KERNEL_VER_STRING=$(/bin/uname -r | /usr/bin/cut -d'-' -f 1)
+    # find the major version with cut
+    KERNEL_MAJOR=$(/bin/echo $KERNEL_VER_STRING | /usr/bin/cut -d'.' -f 1)
+    # find the patchlevel with cut
+    KERNEL_MINOR=$(/bin/echo $KERNEL_VER_STRING | /usr/bin/cut -d'.' -f 2)
+    # find the sublevel with cut
+    KERNEL_PATCH_VERSION=$(/bin/echo $KERNEL_VER_STRING \
+        | /usr/bin/cut -d'.' -f 3)
+} # get_kernel_version()
+
+# vi: set sw=4 ts=4 ft=sh :

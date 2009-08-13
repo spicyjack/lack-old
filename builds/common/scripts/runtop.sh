@@ -84,12 +84,12 @@ EOF
 done
 
 ### begin script body
-colorize_nl $S_INFO "About to run the 'top' program..."
-colorize_nl $S_INFO "You can switch to other consoles using the F keys"
-colorize_nl $S_INFO "on the keyboard."
-colorize_nl $S_INFO "Note: this program will automatically restart itself"
-
-/usr/bin/top
+colorize_nl $S_INFO "Just about to run the 'top' program..."
+TEXT="You can switch to other consoles using the F keys"
+colorize_nl $S_INFO "$TEXT on the keyboard."
+colorize_nl $S_INFO "Note: if you exit 'top', it will automatically restart!"
+/bin/sleep $START_DELAY
+/usr/bin/top -d $TOP_DELAY
 
 exit ${EXIT}
 
