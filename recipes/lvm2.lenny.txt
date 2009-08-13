@@ -1,8 +1,8 @@
 # $Id: lvm2.lenny.txt,v 1.2 2008-10-10 07:58:03 brian Exp $
 # LVM etc files
 dir /etc/lvm 0755 0 0
-file /etc/lvm/lvm.conf :BUILD_BASE:/builds/common/lvm/lvm.conf 0644 0 0
-file /etc/lvmtab :BUILD_BASE:/builds/common/lvmtab 0644 0 0
+file /etc/lvm/lvm.conf :BUILD_BASE:/builds/common/etcfiles/lvm/lvm.conf 0644 0 0
+file /etc/lvmtab :BUILD_BASE:/builds/common/etcfiles/lvmtab 0644 0 0
 # LVM libraries
 file /lib/libdevmapper.so.1.02.1 /lib/libdevmapper.so.1.02.1 0644 0 0
 # LVM sbin

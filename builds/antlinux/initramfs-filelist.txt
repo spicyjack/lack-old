@@ -3,19 +3,19 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 # make sure you get busybox in each project's specific initramfs file list now
-file /bin/busybox /tmp/busybox-1.14.2-x86 0755 0 0
+file /bin/busybox /tmp/busybox-1.14.3-x86 0755 0 0
 # busybox getopt hides in /bin
 slink /usr/bin/getopt /bin/getopt 0755 0 0
 # /etc
 file /etc/hostname /tmp/hostname.antlinux 0644 0 0
 file /etc/modules :PROJECT_DIR:/etcfiles/modules 0644 0 0
 file /etc/fstab :PROJECT_DIR:/etcfiles/fstab 0644 0 0
-file /etc/inittab :BUILD_BASE:/builds/common/inittab 0644 0 0
+file /etc/inittab :BUILD_BASE:/builds/common/etcfiles/inittab 0644 0 0
 # /sbin
 file /sbin/modprobe /sbin/modprobe 0755 0 0
 # /usr/bin
 # a script that runs nslookup
-file /usr/bin/host :BUILD_BASE:/builds/common/host.sh 0755 0 0
+file /usr/bin/host :BUILD_BASE:/builds/common/scripts/host.sh 0755 0 0
 # the main /init script is created in make_initramfs.sh; no need to include it
 # here
 # get the full set of init helper scripts

@@ -1,9 +1,9 @@
-# $Id: blank-mbr_base.txt,v 1.5 2009-07-14 02:07:38 brian Exp $
+# $Id: blank-mbr_base.txt,v 1.6 2009-08-11 00:53:39 brian Exp $
 # dir <name> <mode> <uid> <gid>
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 # make sure you get busybox in each project's specific initramfs file list now
-file /bin/busybox /tmp/busybox-1.14.2-x86 0755 0 0
+file /bin/busybox /tmp/busybox-1.14.3-x86 0755 0 0
 # busybox getopt hides in /bin
 slink /usr/bin/getopt /bin/getopt 0755 0 0
 # /etc
@@ -13,7 +13,7 @@ file /etc/modules :PROJECT_DIR:/etcfiles/modules 0644 0 0
 file /sbin/modprobe /sbin/modprobe 0755 0 0
 # /usr/bin
 # a script that runs nslookup
-file /usr/bin/host :BUILD_BASE:/builds/common/host.sh 0755 0 0
+file /usr/bin/host :BUILD_BASE:/builds/common/scripts/host.sh 0755 0 0
 # the main /init script is created in make_initramfs.sh; no need to include it
 # here
 # get the full set of init helper scripts
@@ -57,7 +57,7 @@ slink /etc/stop/90syslogd /etc/init.d/syslogd 0755 0 0
 slink /etc/stop/99procfs /etc/init.d/procfs 0755 0 0
 # vi: set sw=4 ts=4 paste:
 # eof
-# $Id: linux-image-2.6.30.2-antlinux.txt,v 1.1 2009-08-01 22:38:00 brian Exp $
+# $Id: linux-image-2.6.30.2-antlinux.txt,v 1.1 2009-08-11 00:58:51 brian Exp $
 # description: example package with comments
 # depends: _base otherpackage1 otherpackage2
 # helpcommand: /usr/bin/somebin --help

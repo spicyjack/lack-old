@@ -20,6 +20,7 @@ mrxvt*iTabForeground: DarkSlateGrey
 mrxvt*transparent: True
 mrxvt*backgroundFade: 50
 mrxvt*fading: 0
+mrxvt*scrollBar: False
 mrxvt*transparentScrollbar: True
 mrxvt*transparentTabbar: True
 
