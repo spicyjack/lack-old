@@ -18,20 +18,19 @@ case "$ACTION" in
     exit 0
   ;;
   start)
-	colorize $S_INFO "${BASENAME}: Dumping debug info: environment"
+	colorize_nl $S_INFO "${BASENAME}: Dumping debug info: environment"
     set
-	colorize $S_INFO "${BASENAME}: Dumping debug info: /proc/cmdline"
+	colorize_nl $S_INFO "${BASENAME}: Dumping debug info: /proc/cmdline"
     cat /proc/cmdline
-	colorize $S_INFO "${BASENAME}: Dumping debug info: modules"
+	colorize_nl $S_INFO "${BASENAME}: Dumping debug info: modules"
     /sbin/lsmod 
-    colorize $S_INFO "${BASENAME}: Dumping debug info: network"
+    colorize_nl $S_INFO "${BASENAME}: Dumping debug info: network"
     /sbin/ifconfig
-    colorize $S_INFO "${BASENAME}: Dumping debug info: routing"
+    colorize_nl $S_INFO "${BASENAME}: Dumping debug info: routing"
     /bin/netstat
 	;;
   stop)
 	PATH=/bin:/sbin:/usr/bin:/usr/sbin
-	colorize $S_TIP "${BASENAME}: Stopping ${DESC}"
     :
 	;;
   restart|force-reload)
