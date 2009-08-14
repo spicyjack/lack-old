@@ -9,7 +9,6 @@ BINARY=/bin/mount
 [ -x "$BINARY" ] || exit 1
 BASENAME="miscfs"
 DESC="/dev/pts, /proc/bus/usb and /dev/shm filesystems"
-#BINARY_OPTS="sysfs /sys -t sysfs"
 
 case "$ACTION" in
   vars)
@@ -17,14 +16,26 @@ case "$ACTION" in
     exit 0
   ;;
   start)
-	colorize $S_TIP "$BASENAME: Mounting /proc/bus/usb (usbfs);"
-    if [ ! -d /proc/bus ]; then
-        echo
-        colorize_nl $S_FAILURE "/proc directory not mounted?"
-
-    fi
-    ls -R /proc/bus/usb
-    sleep 5
+	colorize_nl $S_TIP "$BASENAME: Checking for /proc/bus/usb directory"
+    KEY_TIMER=0
+    # start a throbber loop
+    colorize_nl $S_TIP "$BASENAME: Listing the /proc/bus directory"
+    /bin/ls /proc/bus 
+    while [ ! -d /proc/bus/usb ];
+    do
+        # print a twizzler thingie while we wait for key insertion
+        KEY_TIMER=$(($KEY_TIMER + 1))
+        case $KEY_TIMER in
+            1) echo -ne "- \r";; 
+            2) echo -ne "\\ \r";;
+            3) echo -ne "| \r";;
+            4) echo -ne "/ \r"; KEY_TIMER=0;;
+        esac
+        sleep 1
+    done # while [ ! -d /proc/bus ]
+    colorize_nl $S_TIP "$BASENAME: Listing the /proc/bus directory"
+    /bin/ls /proc/bus 
+	colorize $S_TIP "$BASENAME: Mounting usbfs on /proc/bus/usb"
     $BINARY usbfs /proc/bus/usb -t usbfs -o rw >> $BOOT_LOG 2>&1
     cmd_status $? "mount usbfs /proc/bus/usb -t usbfs -o rw"
     colorize_nl $S_SUCCESS "$SUCCESS"

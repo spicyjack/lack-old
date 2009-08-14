@@ -59,7 +59,7 @@ case "$ACTION" in
     colorize $S_TIP "${BASENAME} - $DESC " > $SERIAL_PORT
     echo "(THUMB_DEV=${THUMB_DEV});" > $SERIAL_PORT
     want_shell
-    KEY_TIMER=0
+    
     # FIXME test for multiple directories here
     # /mnt/flash/keyhosts/$HOSTNAME, /mnt/flash/keys
     loopback_test
@@ -82,6 +82,8 @@ case "$ACTION" in
     colorize_nl $S_TIP \
         "## Insert the USB thumbdrive with encrypted disk keys  ##"
     echo
+    # start the spinner loop
+    KEY_TIMER=0
     while [ ! -d $KEY_MOUNT/$HOSTNAME ]; 
     do
         # we already have a loopback device mounted from somewhere else

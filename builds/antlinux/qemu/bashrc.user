@@ -75,20 +75,20 @@ purlget () {
 
 SOURCE_DIR="$HOME/src"
 hgstat () {
-    OLDPWD=$PWD
+    START_DIR=$PWD
     cd $SOURCE_DIR
     for DIR in $(ls | grep hg);
     do
         echo "=== $DIR ===";
         cd $DIR
         hg status
-        cd ..;
+        cd ..
     done
-    cd $OLDPWD
+    cd $START_DIR
 } # check the status in mercurial directories
 
 hginchk () {
-    OLDPWD=$PWD
+    START_DIR=$PWD
     cd $SOURCE_DIR
     for DIR in $(ls | grep hg);
     do
@@ -97,11 +97,11 @@ hginchk () {
         hg incoming
         cd ..;
     done
-    cd $OLDPWD
+    cd $START_DIR
 } # check for inbound changes to mercurial directories
 
 hgoutchk () {
-    OLDPWD=$PWD
+    START_DIR=$PWD
     cd $SOURCE_DIR
     for DIR in $(ls | grep hg);
     do
@@ -110,6 +110,6 @@ hgoutchk () {
         hg outgoing
         cd ..;
     done
-    cd $OLDPWD
+    cd $START_DIR
 } # check for outbound changes in mercurial directories
 
