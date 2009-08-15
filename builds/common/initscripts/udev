@@ -73,10 +73,6 @@ case "$ACTION" in
     /bin/umount -l /dev
     cmd_status $?
     colorize_nl $S_SUCCESS "$SUCCESS"
-	#colorize $S_TIP "$BASENAME: Recreating static nodes in /dev; "
-    #/lib/udev/create_static_nodes /dev
-    #cmd_status $?
-    #colorize_nl $S_SUCCESS "$SUCCESS"
 	;;
   restart|force-reload)
     $0 stop
