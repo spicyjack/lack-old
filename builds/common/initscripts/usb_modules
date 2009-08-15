@@ -2,9 +2,15 @@
 
 # $Id: usb_modules,v 1.5 2009-05-07 07:22:12 brian Exp $
 # Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+# PLEASE DO NOT E-MAIL THE AUTHOR ABOUT THIS SOFTWARE
+# The proper venue for questions is the Antlinux mailing list at:
+# http://groups.google.com/group/antlinux or <antlinux@googlegroups.com>
+
+# this file will get touched if we're running in debug mode; this script will
+# have already been run
+if [ -e /var/run/debug ]; then exit 0; fi
 
 source $ANT_FUNCTIONS
-PATH=/sbin:/bin:/usr/bin
 ACTION=$1
 BINARY="/sbin/modprobe"
 BASENAME="usb_modules"

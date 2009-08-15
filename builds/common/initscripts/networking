@@ -7,8 +7,7 @@ source $ANT_FUNCTIONS
 PATH=/sbin:/bin  # No remote fs at start
 file_parse "/proc/cmdline" "network"
 NETWORK=$PARSED
-if [ "x$NETWORK" == "xno" -o "x$NETWORK" == "xoff" -o "x$NETWORK" == "x
-none" ]; then exit 0; fi
+if [ "x$NETWORK" == "xno" -o "x$NETWORK" == "xoff" -o "x$NETWORK" == "xnone" ]; then exit 0; fi
 
 ACTION=$1
 BINARY=/sbin/ifup

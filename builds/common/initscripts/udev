@@ -2,9 +2,15 @@
 
 # $Id: udev,v 1.10 2009-07-16 17:53:20 brian Exp $
 # Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+# PLEASE DO NOT E-MAIL THE AUTHOR ABOUT THIS SOFTWARE
+# The proper venue for questions is the Antlinux mailing list at:
+# http://groups.google.com/group/antlinux or <antlinux@googlegroups.com>
+
+# this file will get touched if we're running in debug mode; this script will
+# have already been run
+if [ -e /var/run/debug ]; then exit 0; fi
 
 source $ANT_FUNCTIONS
-PATH=/sbin:/bin  # No remote fs at start
 ACTION=$1
 BINARY=/sbin/udevd 
 [ -x "$BINARY" ] || exit 1
