@@ -19,8 +19,6 @@ case "$ACTION" in
 	colorize_nl $S_TIP "$BASENAME: Checking for /proc/bus/usb directory"
     KEY_TIMER=0
     # start a throbber loop
-    colorize_nl $S_TIP "$BASENAME: Listing the /proc/bus directory"
-    /bin/ls /proc/bus 
     while [ ! -d /proc/bus/usb ];
     do
         # print a twizzler thingie while we wait for key insertion
@@ -33,8 +31,6 @@ case "$ACTION" in
         esac
         sleep 1
     done # while [ ! -d /proc/bus ]
-    colorize_nl $S_TIP "$BASENAME: Listing the /proc/bus directory"
-    /bin/ls /proc/bus 
 	colorize $S_TIP "$BASENAME: Mounting usbfs on /proc/bus/usb"
     $BINARY usbfs /proc/bus/usb -t usbfs -o rw >> $BOOT_LOG 2>&1
     cmd_status $? "mount usbfs /proc/bus/usb -t usbfs -o rw"

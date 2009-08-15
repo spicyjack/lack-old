@@ -2,6 +2,10 @@
 
 # $Id: _init.sh,v 1.53 2009-08-01 05:57:33 brian Exp $
 # Copyright (c)2003 Brian Manning (elspicyjack at gmail dot com)
+# PLEASE DO NOT E-MAIL THE AUTHOR ABOUT THIS SOFTWARE
+# The proper venue for questions is the Antlinux mailing list at:
+# http://groups.google.com/group/antlinux or <antlinux@googlegroups.com>
+#
 # License terms at the bottom of this file
 
 # System bootstrapping script.  This script will
@@ -50,40 +54,38 @@ source $ANT_FUNCTIONS
 # show the header first
 $BB clear
 colorize_nl $S_INFO "=== Begin :PROJECT_NAME: /init script: PID is ${$} ==="
-
-# run some of the init scripts by hand to set up the runtime environment
+colorize_nl $S_INFO "=== DEBUG environment variable is currently: $DEBUG ==="
+# load the font immediately
 $BB sh /etc/init.d/loadfont start
-$BB sh /etc/init.d/remount_rootfs start
-$BB sh /etc/init.d/bb_install start
-$BB sh /etc/init.d/procfs start
-$BB sh /etc/init.d/sysfs start
-$BB sh /etc/init.d/udev start
-# do these by hand, otherwise we won't get the chance to pause running scripts
-# later (no keyboard to pause with)
-# FIXME have some way to detect whether these should be run by hand at the
-# beginning or not; maybe a debug script that calls all of these?
-# if [ $DEBUG ]; then
-#   run all of the below init scripts
-#$BB sh /etc/init.d/makedevs start
-$BB sh /etc/init.d/syslogd start
-$BB sh /etc/init.d/klogd start
-#$BB sh /etc/init.d/usb_modules start
+# are we debugging?
+if [ $DEBUG ]; then
+    # yep; set up enough of the environment (filesystems, mice, keyboards) so
+    # that the user can respond to questions we ask of them :)
+    $BB sh /etc/init.d/remount_rootfs start
+    $BB sh /etc/init.d/bb_install start
+    $BB sh /etc/init.d/procfs start
+    $BB sh /etc/init.d/sysfs start
+    $BB sh /etc/init.d/udev start
+    $BB sh /etc/init.d/syslogd start
+    $BB sh /etc/init.d/klogd start
+    $BB sh /etc/init.d/usb_modules start
+    # touch the debug flag file so these scripts don't run again later on
+    touch /var/run/debug
+    # since we just mounted /proc, we can also test to see if we want pauses
+    # in the init scripts
+    # do we want to stop in between scripts?
+    file_parse "/proc/cmdline" "pause"
+    export PAUSE_PROMPT=$PARSED
+fi 
 
-# now that procfs is mounted, we can actually parse /proc/cmdline
-file_parse "/proc/cmdline" "DEBUG"
-export DEBUG=$PARSED
 if [ "x$DEBUG" != "x" ]; then
-    echo "= DEBUG environment variable exists and is not empty;"
-    echo "= Prompts will be given at different times to allow"
-    echo "= for halting the startup process in order to drop to a shell."
-    echo "= Boot process will log to /var/log/debugboot.log."
-    echo "(DEBUG=${DEBUG})"
+    colorize_nl $S_INFO "DEBUG environment variable exists and is not empty;"
+    colorize_nl $S_INFO "Prompts will be given at different times to allow"
+    colorize_nl $S_INFO "for halting the startup process in order to drop"
+    colorize_nl $S_INFO "to a shell."
+    colorize_nl $S_INFO "init scripts will log to /var/log/debugboot.log."
     want_shell
 fi # if [ "x$DEBUG" != "x" ];
-
-# do we want to stop in between scripts?
-file_parse "/proc/cmdline" "pause"
-export PAUSE_PROMPT=$PARSED
 
 # this will run all of the start scripts in order
 # HINT: if you want to run init here, instead of exec'ing switch_root below,
@@ -102,7 +104,7 @@ for INITSCRIPT in /etc/start/*; do
     pause_prompt
 done
 
-# we can't run bbinit as it's own script without exec'ing it
+# the run_program script needs to be exec'ed to pass PID=1 to init
 file_parse "/proc/cmdline" "run" # returns any parsed data as $PARSED
 RUN_PROG=$PARSED
 if [ "x$RUN_PROG" != "x" ]; then
@@ -129,18 +131,20 @@ colorize_nl $S_TIP "- Running switch_root from initramfs ${PWD}"
 pause_prompt # pause=X on /proc/cmdline
 want_shell # DEBUG=X on /proc/cmdline
 
-# switch_root will delete all of the files in the root filesystem, then mount
-# the correct root filesystem where the old root filesystem used to be
-# needs the exec() call to inherit the PID of 1
+# switch_root will delete all of the files in the current tmpfs filesystem,
+# then mount the actual root filesystem where the tmpfs filesystem used to be;
+# we have to use exec() here so switch_root inherits the PID of 1
 exec switch_root -c /dev/console /mnt/rootvol /sbin/init
 # we lost busybox builtins when we unmounted /proc; do this the long way
-if [ $? -gt 0 ]; then
-    colorize_nl $S_FAILURE "switch_root failed!"
-    # call cmd_status with a status code that will cause the script to exit to
-    # a shell; don't prompt the user, once we go past here, we'll get a kernel
-    # panic
-    cmd_status 2 "switch_root"
-fi
+if [ $? -gt 0 ]; then colorize_nl $S_FAILURE "switch_root failed!"
+    # call cmd_status with a non-zero status code; this will cause the script
+    # to exit to a shell; don't prompt the user if they want to continue, once
+    # we go past here, we'll get a kernel panic
+    cmd_status 1 "switch_root" fi
+
+## END INIT SCRIPT!
+# once we get past here, the system's /sbin/init binary should have taken
+# over, or the kernel has panic'ed
 
 ### begin license
 # This program is free software; you can redistribute it and/or modify it under

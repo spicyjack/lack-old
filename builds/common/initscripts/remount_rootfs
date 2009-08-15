@@ -2,9 +2,15 @@
 
 # $Id: remount_rootfs,v 1.2 2008-01-31 19:59:22 brian Exp $
 # Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+# PLEASE DO NOT E-MAIL THE AUTHOR ABOUT THIS SOFTWARE
+# The proper venue for questions is the Antlinux mailing list at:
+# http://groups.google.com/group/antlinux or <antlinux@googlegroups.com>
+
+# this file will get touched if we're running in debug mode; this script will
+# have already been run
+if [ -e /var/run/debug ]; then exit 0; fi
 
 source $ANT_FUNCTIONS
-PATH=/sbin:/bin  # No remote fs at start
 ACTION=$1
 BINARY=/bin/mount
 [ -x "$BINARY" ] || exit 1
