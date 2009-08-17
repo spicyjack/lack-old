@@ -1,0 +1,51 @@
+<h3>antlinux</h3>
+<h4>Main Project Page</h4>
+<p><a
+href="http://code.google.com/p/antlinux/">http://code.google.com/p/antlinux/</a>
+
+<h4>What is this?</h4>
+<p>This is a demonstration initramfs image, with every kernel option turnen on
+and a basic <em>inittab</em> that starts up shells on the first four virtual
+consoles.  You would use this image to make sure the image will boot on your
+target hardware, and to poke around and see how things work :)</p>
+
+<p>Note that most of the memory usage is because of all of the kernel modules
+stored in <code>/lib/modules</code>, which in turn takes up space in the
+initramfs filesystem (ramdisk):
+
+<pre>
+~ # uname -a
+Linux antlinux 2.6.30.2-antlinux #1 SMP PREEMPT Sat Aug 1 11:52:48 PDT 2009 i686 GNU/Linux
+
+~ # du -sh /lib/modules
+61.7M   /lib/modules
+</pre>
+
+You can save a lot of space after booting by deleting the modules that you
+don't need from the initramfs filesystem.
+
+<h4>What's available?</h4>
+<ul>
+<li><em>vmlinuz-X.X.XX</em> and
+<em>initramfs-antlinux-X.X.XX.DATE.cpio.gz</em>, the kernel and initramfs
+image; can be used to PXEboot or with SYSLINUX for USB flash drives</li>
+<li><em>antlinux.VERSION.DATE.zip</em> - a zipfile containing the kernel and
+initramfs images</li> 
+<li><em>antlinux.VERSION.DATE.tar</em> - a tarball containing the kernel and
+initramfs images</li> 
+<li><em>antlinux.VERSION.DATE.iso</em> - an ISO image you burn with CD writing software</li> 
+</ul>
+
+<p>Download the tarball <strong>or</strong> the zipfile <strong>or</strong>
+the ISO image <strong>or</strong> the <em>vmlinuz</em> and
+<em>initramfs-blank-mbr</em> files, or download them all!
+
+<h4>Usage</h4>
+
+<p>Burn the ISO, create a bootable USB flash drive with syslinux or PXEboot
+the kernel and initramfs image, then boot up the system.  
+
+<h3>Enjoy!</h3>
+
+<p>Complaint department?  <a href="mailto:elspicyjack at gmail dot
+com">Clickie here</a>

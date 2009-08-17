@@ -10,6 +10,8 @@ c$$$cc$$$c$$$ "Y$c$$    $$    $$'    $$$ $$$ "Y$c$$$      $$$    Y$$$P
  YMM   ""`MMM     YM    MMM  """"YUMMMMM MMM     YM"YmmMMMM",m"       "Mm,
 0f
 
+http://code.google.com/p/antlinux/ | <antlinux@googlegroups.com>
+
 Release: 2e:RELEASE_DATE:0f
 
 Antlinux is a base distribution for creating run-from-CD or
