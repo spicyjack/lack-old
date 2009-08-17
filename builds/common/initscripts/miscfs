@@ -16,25 +16,6 @@ case "$ACTION" in
     exit 0
   ;;
   start)
-	colorize_nl $S_TIP "$BASENAME: Checking for /proc/bus/usb directory"
-    KEY_TIMER=0
-    # start a throbber loop
-    while [ ! -d /proc/bus/usb ];
-    do
-        # print a twizzler thingie while we wait for key insertion
-        KEY_TIMER=$(($KEY_TIMER + 1))
-        case $KEY_TIMER in
-            1) echo -ne "- \r";; 
-            2) echo -ne "\\ \r";;
-            3) echo -ne "| \r";;
-            4) echo -ne "/ \r"; KEY_TIMER=0;;
-        esac
-        sleep 1
-    done # while [ ! -d /proc/bus ]
-	colorize $S_TIP "$BASENAME: Mounting usbfs on /proc/bus/usb"
-    $BINARY usbfs /proc/bus/usb -t usbfs -o rw >> $BOOT_LOG 2>&1
-    cmd_status $? "mount usbfs /proc/bus/usb -t usbfs -o rw"
-    colorize_nl $S_SUCCESS "$SUCCESS"
 	colorize $S_TIP "$BASENAME: Mounting /dev/pts (devpts);"
     # apparently udev is creating these
     #mkdir /dev/pts
@@ -47,6 +28,25 @@ case "$ACTION" in
     #mkdir /dev/shm
     $BINARY tmpfs /dev/shm -t tmpfs -o rw,nosuid,nodev >> $BOOT_LOG 2>&1
     cmd_status $? "mount tmpfs /dev/shm -t tmpfs -o rw,nosuid,nodev"
+    colorize_nl $S_SUCCESS "$SUCCESS"
+	colorize_nl $S_TIP "$BASENAME: Checking for /proc/bus/usb directory"
+    KEY_TIMER=0
+    # start a throbber loop
+    while [ ! -d /proc/bus/usb ];
+    do
+        # print a twizzler thingie while we wait for key insertion
+        KEY_TIMER=$(($KEY_TIMER + 1))
+        case $KEY_TIMER in
+            1) echo -ne "| \r";; 
+            2) echo -ne "/ \r";;
+            3) echo -ne "- \r";;
+            4) echo -ne "\\ \r"; KEY_TIMER=0;;
+        esac
+        sleep 1s
+    done # while [ ! -d /proc/bus ]
+	colorize $S_TIP "$BASENAME: Mounting usbfs on /proc/bus/usb"
+    $BINARY usbfs /proc/bus/usb -t usbfs -o rw >> $BOOT_LOG 2>&1
+    cmd_status $? "mount usbfs /proc/bus/usb -t usbfs -o rw"
     colorize_nl $S_SUCCESS "$SUCCESS"
 	;;
   stop)
