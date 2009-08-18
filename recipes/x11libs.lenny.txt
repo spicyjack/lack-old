@@ -41,4 +41,6 @@ file /usr/lib/libXrandr.so.2.1.0 /usr/lib/libXrandr.so.2.1.0 644 0 0
 slink /usr/lib/libXrandr.so.2 /usr/lib/libXrandr.so.2.1.0 777 0 0
 file /usr/lib/libXrender.so.1.3.0 /usr/lib/libXrender.so.1.3.0 644 0 0
 slink /usr/lib/libXrender.so.1 /usr/lib/libXrender.so.1.3.0 777 0 0
+file /usr/lib/libXmuu.so.1.0.0 /usr/lib/libXmuu.so.1.0.0 644 0 0
+slink /usr/lib/libXmuu.so.1 /usr/lib/libXmuu.so.1.0.0 777 0 0
 # vi: set sw=4 ts=4 paste:

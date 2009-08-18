@@ -9,7 +9,12 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 #
-dir /usr/lib 755 0 0
+# /etc/X11
+dir /etc/X11 755 0 0
+dir /etc/X11/xserver 755 0 0
+file /etc/X11/Xwrapper.config :BUILD_BASE:/builds/common/etcfiles/Xwrapper.config 600 0 0
+file /etc/X11/xserver/SecurityPolicy /etc/X11/xserver/SecurityPolicy 644 0 0
+# /usr/lib/xorg
 dir /usr/lib/xorg 755 0 0
 dir /usr/lib/xorg/modules 755 0 0
 file /usr/lib/xorg/modules/libafb.so /usr/lib/xorg/modules/libafb.so 644 0 0
@@ -51,12 +56,11 @@ file /usr/lib/xorg/modules/multimedia/tda8425_drv.so /usr/lib/xorg/modules/multi
 file /usr/lib/xorg/modules/multimedia/tda9850_drv.so /usr/lib/xorg/modules/multimedia/tda9850_drv.so 644 0 0
 file /usr/lib/xorg/modules/multimedia/tda9885_drv.so /usr/lib/xorg/modules/multimedia/tda9885_drv.so 644 0 0
 file /usr/lib/xorg/modules/multimedia/uda1380_drv.so /usr/lib/xorg/modules/multimedia/uda1380_drv.so 644 0 0
-dir /usr/bin 755 0 0
+# /usr/bin
 file /usr/bin/Xorg /usr/bin/Xorg 755 0 0
+# symlink for the X server
+slink /etc/X11/X /usr/bin/Xorg 755 0 0
 file /usr/bin/cvt /usr/bin/cvt 755 0 0
 file /usr/bin/gtf /usr/bin/gtf 755 0 0
-dir /etc 755 0 0
-dir /etc/X11 755 0 0
-dir /etc/X11/xserver 755 0 0
-file /etc/X11/xserver/SecurityPolicy /etc/X11/xserver/SecurityPolicy 644 0 0
+
 # vi: set sw=4 ts=4 paste:
