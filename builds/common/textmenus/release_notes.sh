@@ -18,7 +18,7 @@
 # what's my name?
 SCRIPTNAME=$(basename $0)
 # filename of the release notes (can be changed from command line)
-RELEASE_NOTES="/etc/release_notes.txt"
+RELEASE_NOTES="/etc/docs/release_notes.txt"
 
 # set quiet mode by default, needs to be set prior to the getops call
 QUIET=1

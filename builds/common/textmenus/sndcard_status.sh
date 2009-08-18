@@ -1,5 +1,5 @@
 #!/bin/sh
-# !DESC-EN!10!sndcard_status!System status; memory/disk usage and system load
+# !DESC-EN!80!sndcard_status!Shows soundcards available and status
 
 # format of the description line:
 # !token and language!script name!script description
@@ -11,8 +11,8 @@
 # The proper venue for questions is the Propaganda mailing list at:
 # http://groups.google.com/group/psas or <psas@groups.google.com>
 #
-# shell script that collects stats from an Icecast server and presents them to
-# the user
+# shell script that collects stats from the 'aplay -l' command and presents
+# them to the user
 
 ### MAIN SCRIPT ###
 # what's my name?
@@ -80,14 +80,12 @@ EOF
 
 done
 
-SYS_MSG=$(echo 'blah blah blah\n'; /bin/true)
-SYS_MSG=$(echo "${SYS_MSG}\nblah blah blah\n"; /bin/false)
+MSG=$(echo "Status of installed sound cards (obtained from 'aplay -l')\n\n")
+MSG=$(echo "${MSG}"; aplay -l 2>&1 | tr '\n' "\n\n")
 ### SCRIPT MAIN LOOP ###
-dialog --backtitle "This is the title shown on the background 'panel'" \
-    --title "SYSTEM STATUS" --begin 1 2 --msgbox "$SYS_MSG" 21 75 \
+dialog --backtitle "Propaganda: Sound Card Status" \
+    --title "Sound Card Status" --begin 2 3 --msgbox "$MSG" 21 75 \
     2> /tmp/dialog.exit
-#echo "$SCRIPTNAME exit code was: ${?}"
-#sleep 1
 
 exit ${EXIT}
 

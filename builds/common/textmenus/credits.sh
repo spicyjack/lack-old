@@ -18,7 +18,7 @@
 # what's my name?
 SCRIPTNAME=$(basename $0)
 # filename of the release notes (can be changed from command line)
-CREDITS="/etc/credits.txt"
+CREDITS="/etc/docs/credits.txt"
 
 # set quiet mode by default, needs to be set prior to the getops call
 QUIET=1
