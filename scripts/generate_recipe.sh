@@ -49,7 +49,7 @@ TOUCH=$(which touch)
 # local variables
 VERBOSE=0
 # pattern of strings to exclude
-EXCLUDE="share/doc|man|info|bug"
+EXCLUDE="share/doc|/man|/info|bug"
 EXCLUDE="${EXCLUDE}|^/\.$|^/boot$|^/usr$|^/usr/share$|^/lib$|^/lib/modules$"
 
 ### FUNCTIONS ###
