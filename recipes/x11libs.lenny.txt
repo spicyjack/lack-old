@@ -67,4 +67,10 @@ dir /usr/share/lintian 755 0 0
 dir /usr/share/lintian/overrides 755 0 0
 file /usr/share/lintian/overrides/libgcc1 /usr/share/lintian/overrides/libgcc1 644 0 0
 file /lib/libgcc_s.so.1 /lib/libgcc_s.so.1 644 0 0
+# libxkbfile1
+file /usr/lib/libxkbfile.so.1.0.2 /usr/lib/libxkbfile.so.1.0.2 644 0 0
+slink /usr/lib/libxkbfile.so.1 /usr/lib/libxkbfile.so.1.0.2 777 0 0
+# libdrm2
+file /usr/lib/libdrm.so.2.3.1 /usr/lib/libdrm.so.2.3.1 644 0 0
+slink /usr/lib/libdrm.so.2 /usr/lib/libdrm.so.2.3.1 777 0 0
 # vi: set sw=4 ts=4 paste:

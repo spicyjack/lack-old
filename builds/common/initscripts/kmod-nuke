@@ -9,7 +9,7 @@ source $ANT_FUNCTIONS
 ACTION=$1
 BINARY=/bin/rm
 [ -x "$BINARY" ] || exit 1
-BASENAME="kmod_nuke"
+BASENAME="kmod-nuke"
 DESC="kernel modules in /lib/modules"
 BINARY_OPTS="-rf"
 

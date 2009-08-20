@@ -14,7 +14,7 @@ source $ANT_FUNCTIONS
 ACTION=$1
 BINARY=$BB
 [ -x "$BINARY" ] || exit 1
-BASENAME="bb_install"
+BASENAME="bb-install"
 DESC="Installing Busybox Symlinks"
 BINARY_OPTS="--install -s"
 

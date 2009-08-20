@@ -5,7 +5,7 @@
 
 source $ANT_FUNCTIONS
 ACTION=$1
-BASENAME="run_program"
+BASENAME="run-program"
 DESC="Running special run requests from /proc/cmdline"
 
 case "$ACTION" in

@@ -63,12 +63,12 @@ if [ $DEBUG ]; then
     # set up enough of the environment (filesystems, mice, keyboards) so
     # that the user can respond to questions we ask of them :)
     $BB sh /etc/init.d/loadfont start
-    $BB sh /etc/init.d/remount_rootfs start
-    $BB sh /etc/init.d/bb_install start
+    $BB sh /etc/init.d/remount-rootfs start
+    $BB sh /etc/init.d/bb-install start
     $BB sh /etc/init.d/procfs start
     $BB sh /etc/init.d/sysfs start
     $BB sh /etc/init.d/udev start
-    $BB sh /etc/init.d/usb_modules start
+    $BB sh /etc/init.d/usb-modules start
     #$BB sh /etc/init.d/syslogd start
     #$BB sh /etc/init.d/klogd start
     # touch the debug flag file so these scripts don't run again later on
@@ -106,14 +106,14 @@ for INITSCRIPT in /etc/start/*; do
     pause_prompt
 done
 
-# the run_program script needs to be exec'ed to pass PID=1 to init
+# the run-program script needs to be exec'ed to pass PID=1 to init
 file_parse "/proc/cmdline" "run" # returns any parsed data as $PARSED
 RUN_PROG=$PARSED
 if [ "x$RUN_PROG" != "x" ]; then
     colorize_nl $S_TIP "init: all scripts in /etc/start have been run"
     colorize_nl $S_TIP "init: 'run=???' requested on the command line"
-    colorize_nl $S_TIP "init: exec()'ing 'run_program' script"
-    exec /etc/init.d/run_program start
+    colorize_nl $S_TIP "init: exec()'ing 'run-program' script"
+    exec /etc/init.d/run-program start
 else
     colorize_nl $S_TIP "init: 'run=' parameter not specified on command line;"
     colorize_nl $S_TIP "init: continuing with the boot process"

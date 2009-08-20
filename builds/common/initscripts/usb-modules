@@ -13,7 +13,7 @@ if [ -e /var/run/debug ]; then exit 0; fi
 source $ANT_FUNCTIONS
 ACTION=$1
 BINARY="/sbin/modprobe"
-BASENAME="usb_modules"
+BASENAME="usb-modules"
 DESC="Loading kernel USB modules;"
 BINARY_OPTS=""
 

@@ -8,7 +8,7 @@ PATH=/sbin:/bin  # No remote fs at start
 ACTION=$1
 BINARY=/sbin/modprobe
 [ -x "$BINARY" ] || exit 0
-BASENAME="kernel_modules"
+BASENAME="kernel-modules"
 DESC="Loading kernel modules;"
 BINARY_OPTS=""
 MODULES_FILE="/etc/modules"

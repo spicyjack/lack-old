@@ -1,0 +1,33 @@
+# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+file /usr/bin/koi8rxterm /usr/bin/koi8rxterm 755 0 0
+file /usr/bin/lxterm /usr/bin/lxterm 755 0 0
+file /usr/bin/resize /usr/bin/resize 755 0 0
+file /usr/bin/uxterm /usr/bin/uxterm 755 0 0
+file /usr/bin/xterm /usr/bin/xterm 2755 0 43
+#dir /usr/share/lintian 755 0 0
+#dir /usr/share/lintian/overrides 755 0 0
+#file /usr/share/lintian/overrides/xterm /usr/share/lintian/overrides/xterm 644 0 0
+#dir /usr/share/menu 755 0 0
+#file /usr/share/menu/xterm /usr/share/menu/xterm 644 0 0
+#dir /usr/share/pixmaps 755 0 0
+#file /usr/share/pixmaps/xterm-color_32x32.xpm /usr/share/pixmaps/xterm-color_32x32.xpm 644 0 0
+#file /usr/share/pixmaps/xterm-color_48x48.xpm /usr/share/pixmaps/xterm-color_48x48.xpm 644 0 0
+#file /usr/share/pixmaps/xterm_32x32.xpm /usr/share/pixmaps/xterm_32x32.xpm 644 0 0
+#file /usr/share/pixmaps/xterm_48x48.xpm /usr/share/pixmaps/xterm_48x48.xpm 644 0 0
+#dir /etc/X11 755 0 0
+#dir /etc/X11/app-defaults 755 0 0
+#file /etc/X11/app-defaults/KOI8RXTerm /etc/X11/app-defaults/KOI8RXTerm 644 0 0
+#file /etc/X11/app-defaults/UXTerm /etc/X11/app-defaults/UXTerm 644 0 0
+#file /etc/X11/app-defaults/XTerm /etc/X11/app-defaults/XTerm 644 0 0
+#file /etc/X11/app-defaults/XTerm-color /etc/X11/app-defaults/XTerm-color 644 0 0
+# vi: set sw=4 ts=4 paste:
