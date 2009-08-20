@@ -46,6 +46,7 @@ export BOOT_LOG="/var/log/boot.log"
 export ANT_FUNCTIONS="/etc/ant_functions.sh"
 # path to busybox
 export BB="/bin/busybox"
+DEBUG_BOOT_LOG="/var/log/debugboot.log"
 
 # source the functions script.  this is where colorize(), cmd_status(),
 # want_shell() and file_parse() is coming from
@@ -54,36 +55,37 @@ source $ANT_FUNCTIONS
 # show the header first
 $BB clear
 colorize_nl $S_INFO "=== Begin :PROJECT_NAME: /init script: PID is ${$} ==="
-colorize_nl $S_INFO "=== DEBUG environment variable is currently: $DEBUG ==="
-# load the font immediately
-$BB sh /etc/init.d/loadfont start
+
 # are we debugging?
 if [ $DEBUG ]; then
-    # yep; set up enough of the environment (filesystems, mice, keyboards) so
+    colorize_nl $S_INFO "=== DEBUG environment variable currently: $DEBUG ==="
+    # yep, we are; 
+    # set up enough of the environment (filesystems, mice, keyboards) so
     # that the user can respond to questions we ask of them :)
+    $BB sh /etc/init.d/loadfont start
     $BB sh /etc/init.d/remount_rootfs start
     $BB sh /etc/init.d/bb_install start
     $BB sh /etc/init.d/procfs start
     $BB sh /etc/init.d/sysfs start
     $BB sh /etc/init.d/udev start
-    $BB sh /etc/init.d/syslogd start
-    $BB sh /etc/init.d/klogd start
     $BB sh /etc/init.d/usb_modules start
+    #$BB sh /etc/init.d/syslogd start
+    #$BB sh /etc/init.d/klogd start
     # touch the debug flag file so these scripts don't run again later on
-    touch /var/run/debug
+    touch /var/run/debug.state
+    colorize_nl $S_INFO "=== dumping shell environment to debug.state  ==="
+    set > /var/run/debug.state
     # since we just mounted /proc, we can also test to see if we want pauses
     # in the init scripts
     # do we want to stop in between scripts?
     file_parse "/proc/cmdline" "pause"
     export PAUSE_PROMPT=$PARSED
-fi 
-
-if [ "x$DEBUG" != "x" ]; then
     colorize_nl $S_INFO "DEBUG environment variable exists and is not empty;"
     colorize_nl $S_INFO "Prompts will be given at different times to allow"
     colorize_nl $S_INFO "for halting the startup process in order to drop"
     colorize_nl $S_INFO "to a shell."
-    colorize_nl $S_INFO "init scripts will log to /var/log/debugboot.log."
+    colorize_nl $S_INFO "init scripts will log to $DEBUG_BOOT_LOG."
+    export DEBUG_BOOT_LOG
     want_shell
 fi # if [ "x$DEBUG" != "x" ];
 
@@ -97,7 +99,7 @@ for INITSCRIPT in /etc/start/*; do
     else
     	# debugging, turn on sh -x
         colorize_nl $S_TIP "- Running 'sh -x $INITSCRIPT start'"
-    	sh -x $INITSCRIPT start 2>&1 >> /var/log/debugboot.log
+    	sh -x $INITSCRIPT start 2>&1 >> $DEBUG_BOOT_LOG
     fi	
     cmd_status $? $INITSCRIPT
     # was a pause asked for?

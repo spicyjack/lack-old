@@ -8,7 +8,9 @@
 
 # this file will get touched if we're running in debug mode; this script will
 # have already been run
-if [ -e /var/run/debug ]; then exit 0; fi
+# commenting this out for now, it's been commented out in the debug section of
+# the init script
+#if [ -e /var/run/debug ]; then exit 0; fi
 
 source $ANT_FUNCTIONS
 ACTION=$1

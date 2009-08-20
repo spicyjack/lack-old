@@ -18,7 +18,6 @@ file /usr/bin/host :BUILD_BASE:/builds/common/scripts/host.sh 0755 0 0
 # here
 # get the full set of init helper scripts
 dir /etc/init.d 0755 0 0
-#file /etc/init.d/makedevs :BUILD_BASE:/builds/common/initscripts/makedevs 0755 0 0
 file /etc/init.d/bb_install :BUILD_BASE:/builds/common/initscripts/bb_install 0755 0 0
 file /etc/init.d/blank-mbr :BUILD_BASE:/builds/common/initscripts/blank-mbr 0755 0 0
 file /etc/init.d/hostname :BUILD_BASE:/builds/common/initscripts/hostname 0755 0 0
@@ -36,19 +35,19 @@ file /etc/init.d/udev :BUILD_BASE:/builds/common/initscripts/udev 0755 0 0
 file /etc/init.d/usb_modules :BUILD_BASE:/builds/common/initscripts/usb_modules 0755 0 0
 # start symlinks
 dir /etc/start 0755 0 0
-#slink /etc/start/01remount_rootfs /etc/init.d/remount_rootfs 0755 0 0
-#slink /etc/start/02bb_install /etc/init.d/bb_install 0755 0 0
-#slink /etc/start/05makedevs /etc/init.d/makedevs 0755 0 0
-#slink /etc/start/10syslogd /etc/init.d/syslogd 0755 0 0
-#slink /etc/start/11klogd /etc/init.d/klogd 0755 0 0
-#slink /etc/start/10sysfs /etc/init.d/sysfs 0755 0 0
-#slink /etc/start/10udev /etc/init.d/udev 0755 0 0
-slink /etc/start/10miscfs /etc/init.d/miscfs 0755 0 0
+slink /etc/start/00loadfont /etc/init.d/loadfont 0755 0 0
+slink /etc/start/01remount_rootfs /etc/init.d/remount_rootfs 0755 0 0
+slink /etc/start/02bb_install /etc/init.d/bb_install 0755 0 0
+slink /etc/start/03hostname /etc/init.d/hostname 0755 0 0
+slink /etc/start/05procfs /etc/init.d/procfs 0755 0 0
+slink /etc/start/06sysfs /etc/init.d/sysfs 0755 0 0
+slink /etc/start/10udev /etc/init.d/udev 0755 0 0
+slink /etc/start/11miscfs /etc/init.d/miscfs 0755 0 0
+slink /etc/start/15syslogd /etc/init.d/syslogd 0755 0 0
+slink /etc/start/16klogd /etc/init.d/klogd 0755 0 0
 slink /etc/start/20kernel_modules /etc/init.d/kernel_modules 0755 0 0
-slink /etc/start/25hostname /etc/init.d/hostname 0755 0 0
 slink /etc/start/30run_program /etc/init.d/run_program 0755 0 0
 slink /etc/start/35blank-mbr /etc/init.d/blank-mbr 0755 0 0
-# stop symlinks
 # stop symlinks
 dir /etc/stop 0755 0 0
 slink /etc/stop/75sysfs /etc/init.d/sysfs 0755 0 0
