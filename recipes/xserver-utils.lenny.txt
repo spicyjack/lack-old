@@ -9,8 +9,13 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 #
+# /etc/X11
+dir /etc/X11 755 0 0
+dir /etc/X11/app-defaults 755 0 0
+file /etc/X11/app-defaults/Xvidtune /etc/X11/app-defaults/Xvidtune 644 0 0
 #dir /usr/share/menu 755 0 0
 #file /usr/share/menu/x11-xserver-utils /usr/share/menu/x11-xserver-utils 644 0 0
+# /usr/bin
 file /usr/bin/iceauth /usr/bin/iceauth 755 0 0
 file /usr/bin/sessreg /usr/bin/sessreg 755 0 0
 file /usr/bin/showrgb /usr/bin/showrgb 755 0 0
@@ -33,7 +38,38 @@ file /usr/bin/xtrapproto /usr/bin/xtrapproto 755 0 0
 file /usr/bin/xtrapreset /usr/bin/xtrapreset 755 0 0
 file /usr/bin/xtrapstats /usr/bin/xtrapstats 755 0 0
 file /usr/bin/xvidtune /usr/bin/xvidtune 755 0 0
-dir /etc/X11 755 0 0
-dir /etc/X11/app-defaults 755 0 0
-file /etc/X11/app-defaults/Xvidtune /etc/X11/app-defaults/Xvidtune 644 0 0
+# /usr/share xfonts-utils
+dir /usr/share/aclocal 755 0 0
+file /usr/share/aclocal/fontutil.m4 /usr/share/aclocal/fontutil.m4 644 0 0
+dir /usr/share/fonts 755 0 0
+dir /usr/share/fonts/X11 755 0 0
+dir /usr/share/fonts/X11/util 755 0 0
+file /usr/share/fonts/X11/util/map-ISO8859-1 /usr/share/fonts/X11/util/map-ISO8859-1 644 0 0
+file /usr/share/fonts/X11/util/map-ISO8859-2 /usr/share/fonts/X11/util/map-ISO8859-2 644 0 0
+file /usr/share/fonts/X11/util/map-ISO8859-3 /usr/share/fonts/X11/util/map-ISO8859-3 644 0 0
+file /usr/share/fonts/X11/util/map-ISO8859-4 /usr/share/fonts/X11/util/map-ISO8859-4 644 0 0
+file /usr/share/fonts/X11/util/map-ISO8859-5 /usr/share/fonts/X11/util/map-ISO8859-5 644 0 0
+file /usr/share/fonts/X11/util/map-ISO8859-6 /usr/share/fonts/X11/util/map-ISO8859-6 644 0 0
+file /usr/share/fonts/X11/util/map-ISO8859-7 /usr/share/fonts/X11/util/map-ISO8859-7 644 0 0
+file /usr/share/fonts/X11/util/map-ISO8859-8 /usr/share/fonts/X11/util/map-ISO8859-8 644 0 0
+file /usr/share/fonts/X11/util/map-ISO8859-9 /usr/share/fonts/X11/util/map-ISO8859-9 644 0 0
+file /usr/share/fonts/X11/util/map-ISO8859-10 /usr/share/fonts/X11/util/map-ISO8859-10 644 0 0
+file /usr/share/fonts/X11/util/map-ISO8859-11 /usr/share/fonts/X11/util/map-ISO8859-11 644 0 0
+file /usr/share/fonts/X11/util/map-ISO8859-13 /usr/share/fonts/X11/util/map-ISO8859-13 644 0 0
+file /usr/share/fonts/X11/util/map-ISO8859-14 /usr/share/fonts/X11/util/map-ISO8859-14 644 0 0
+file /usr/share/fonts/X11/util/map-ISO8859-15 /usr/share/fonts/X11/util/map-ISO8859-15 644 0 0
+file /usr/share/fonts/X11/util/map-ISO8859-16 /usr/share/fonts/X11/util/map-ISO8859-16 644 0 0
+file /usr/share/fonts/X11/util/map-JISX0201.1976-0 /usr/share/fonts/X11/util/map-JISX0201.1976-0 644 0 0
+file /usr/share/fonts/X11/util/map-KOI8-R /usr/share/fonts/X11/util/map-KOI8-R 644 0 0
+# /usr/bin xfonts-utils
+file /usr/bin/bdftopcf /usr/bin/bdftopcf 755 0 0
+file /usr/bin/bdftruncate /usr/bin/bdftruncate 755 0 0
+file /usr/bin/mkfontdir /usr/bin/mkfontdir 755 0 0
+file /usr/bin/mkfontscale /usr/bin/mkfontscale 755 0 0
+file /usr/bin/ucs2any /usr/bin/ucs2any 755 0 0
+file /usr/bin/fonttosfnt /usr/bin/fonttosfnt 755 0 0
+# /usr/sbin xfonts-utils
+file /usr/sbin/update-fonts-alias /usr/sbin/update-fonts-alias 755 0 0
+file /usr/sbin/update-fonts-dir /usr/sbin/update-fonts-dir 755 0 0
+file /usr/sbin/update-fonts-scale /usr/sbin/update-fonts-scale 755 0 0
 # vi: set sw=4 ts=4 paste:
