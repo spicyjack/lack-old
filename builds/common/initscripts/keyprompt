@@ -63,6 +63,7 @@ case "$ACTION" in
     # FIXME test for multiple directories here
     # /mnt/flash/keyhosts/$HOSTNAME, /mnt/flash/keys
     loopback_test
+    echo
     colorize_nl $S_TIP \
         "#### #   #  #### #### ####  ######   ##  # #### ##   # ## "
     colorize_nl $S_TIP \

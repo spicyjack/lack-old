@@ -9,11 +9,40 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 #
+# x11-common
+dir /etc/X11 755 0 0
+file /etc/X11/rgb.txt /etc/X11/rgb.txt 644 0 0
+file /etc/X11/Xsession /etc/X11/Xsession 755 0 0
+dir /etc/X11/Xsession.d 755 0 0
+file /etc/X11/Xsession.d/20x11-common_process-args /etc/X11/Xsession.d/20x11-common_process-args 644 0 0
+file /etc/X11/Xsession.d/30x11-common_xresources /etc/X11/Xsession.d/30x11-common_xresources 644 0 0
+file /etc/X11/Xsession.d/40x11-common_xsessionrc /etc/X11/Xsession.d/40x11-common_xsessionrc 644 0 0
+file /etc/X11/Xsession.d/50x11-common_determine-startup /etc/X11/Xsession.d/50x11-common_determine-startup 644 0 0
+file /etc/X11/Xsession.d/90x11-common_ssh-agent /etc/X11/Xsession.d/90x11-common_ssh-agent 644 0 0
+file /etc/X11/Xsession.d/99x11-common_start /etc/X11/Xsession.d/99x11-common_start 644 0 0
+file /etc/X11/Xsession.options /etc/X11/Xsession.options 644 0 0
+dir /etc/X11/Xresources 755 0 0
+file /etc/X11/Xresources/x11-common /etc/X11/Xresources/x11-common 644 0 0
+dir /etc/init.d 755 0 0
+file /etc/init.d/x11-common /etc/init.d/x11-common 755 0 0
+dir /usr/share/X11 755 0 0
+dir /usr/include 755 0 0
+dir /usr/include/X11 755 0 0
+dir /usr/lib 755 0 0
+dir /usr/lib/X11 755 0 0
+dir /usr/X11R6 755 0 0
+dir /usr/bin 755 0 0
+slink /usr/share/X11/rgb.txt /etc/X11/rgb.txt 777 0 0
+slink /usr/X11R6/bin /usr/bin 777 0 0
+slink /usr/bin/X11 /usr/bin 777 0 0
+# xserver-xorg-core
 # /etc/X11
 dir /etc/X11 755 0 0
 dir /etc/X11/xserver 755 0 0
 file /etc/X11/Xwrapper.config :BUILD_BASE:/builds/common/etcfiles/Xwrapper.config 600 0 0
-file /etc/X11/xorg.conf /etc/X11/xorg.conf 644 0 0
+#file /etc/X11/xorg.conf /etc/X11/xorg.conf 644 0 0
+# we nuked a lot of font paths in the original
+file /etc/X11/xorg.conf :BUILD_BASE:/builds/common/etcfiles/xorg.conf 644 0 0
 file /etc/X11/xserver/SecurityPolicy /etc/X11/xserver/SecurityPolicy 644 0 0
 # /usr/bin
 file /usr/bin/Xorg /usr/bin/Xorg 755 0 0
