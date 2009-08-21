@@ -73,4 +73,8 @@ slink /usr/lib/libxkbfile.so.1 /usr/lib/libxkbfile.so.1.0.2 777 0 0
 # libdrm2
 file /usr/lib/libdrm.so.2.3.1 /usr/lib/libdrm.so.2.3.1 644 0 0
 slink /usr/lib/libdrm.so.2 /usr/lib/libdrm.so.2.3.1 777 0 0
+# libxft2
+dir /usr/lib 755 0 0
+file /usr/lib/libXft.so.2.1.2 /usr/lib/libXft.so.2.1.2 644 0 0
+slink /usr/lib/libXft.so.2 /usr/lib/libXft.so.2.1.2 777 0 0
 # vi: set sw=4 ts=4 paste:
