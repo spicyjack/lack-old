@@ -80,30 +80,23 @@ slink /usr/lib/libdrm.so.2 /usr/lib/libdrm.so.2.3.1 777 0 0
 dir /usr/lib 755 0 0
 file /usr/lib/libXft.so.2.1.2 /usr/lib/libXft.so.2.1.2 644 0 0
 slink /usr/lib/libXft.so.2 /usr/lib/libXft.so.2.1.2 777 0 0
-# libXaw7
+# libxaw7
 file /usr/lib/libXaw7.so.7.0.0 /usr/lib/libXaw7.so.7.0.0 644 0 0
 slink /usr/lib/libXaw7.so.7 /usr/lib/libXaw7.so.7.0.0 777 0 0
 slink /usr/lib/libXaw.so.7 /usr/lib/libXaw7.so.7.0.0 777 0 0
-# libXmu6
-dir /usr/lib 755 0 0
+# libxmu6
 file /usr/lib/libXmu.so.6.2.0 /usr/lib/libXmu.so.6.2.0 644 0 0
 slink /usr/lib/libXmu.so.6 /usr/lib/libXmu.so.6.2.0 777 0 0
 # libxt6
 file /usr/lib/libXt.so.6.0.0 /usr/lib/libXt.so.6.0.0 644 0 0
 slink /usr/lib/libXt.so.6 /usr/lib/libXt.so.6.0.0 777 0 0
-# vi: set sw=4 ts=4 paste:
-# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
-# description: example package with comments
-# depends: _base otherpackage1 otherpackage2
-# helpcommand: /usr/bin/somebin --help
-# versioncommand: /usr/bin/somebin --version
-# examplecommand: /usr/bin/somebin -x -y -z 10
-#
-# dir <name> <mode> <uid> <gid>
-# file <name> <source> <mode> <uid> <gid>
-# slink <new name> <original file> <mode> <uid> <gid>
-#
-dir /usr/lib 755 0 0
+# libsm6
 file /usr/lib/libSM.so.6.0.0 /usr/lib/libSM.so.6.0.0 644 0 0
 slink /usr/lib/libSM.so.6 /usr/lib/libSM.so.6.0.0 777 0 0
+# libice6
+file /usr/lib/libICE.so.6.3.0 /usr/lib/libICE.so.6.3.0 644 0 0
+slink /usr/lib/libICE.so.6 /usr/lib/libICE.so.6.3.0 777 0 0
+# libxpm4
+file /usr/lib/libXpm.so.4.11.0 /usr/lib/libXpm.so.4.11.0 644 0 0
+slink /usr/lib/libXpm.so.4 /usr/lib/libXpm.so.4.11.0 777 0 0
 # vi: set sw=4 ts=4 paste:
