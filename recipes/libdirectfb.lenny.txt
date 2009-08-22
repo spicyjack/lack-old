@@ -1,0 +1,66 @@
+# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+file /usr/lib/libdirect-1.0.so.0.1.0 /usr/lib/libdirect-1.0.so.0.1.0 644 0 0
+file /usr/lib/libdirectfb-1.0.so.0.1.0 /usr/lib/libdirectfb-1.0.so.0.1.0 644 0 0
+file /usr/lib/libfusion-1.0.so.0.1.0 /usr/lib/libfusion-1.0.so.0.1.0 644 0 0
+file /usr/lib/libuniquewm-1.0.so.0.1.0 /usr/lib/libuniquewm-1.0.so.0.1.0 644 0 0
+dir /usr/lib/directfb-1.0-0 755 0 0
+dir /usr/lib/directfb-1.0-0/interfaces 755 0 0
+dir /usr/lib/directfb-1.0-0/interfaces/IDirectFBFont 755 0 0
+file /usr/lib/directfb-1.0-0/interfaces/IDirectFBFont/libidirectfbfont_default.so /usr/lib/directfb-1.0-0/interfaces/IDirectFBFont/libidirectfbfont_default.so 644 0 0
+file /usr/lib/directfb-1.0-0/interfaces/IDirectFBFont/libidirectfbfont_dgiff.so /usr/lib/directfb-1.0-0/interfaces/IDirectFBFont/libidirectfbfont_dgiff.so 644 0 0
+dir /usr/lib/directfb-1.0-0/interfaces/IDirectFBImageProvider 755 0 0
+file /usr/lib/directfb-1.0-0/interfaces/IDirectFBImageProvider/libidirectfbimageprovider_dfiff.so /usr/lib/directfb-1.0-0/interfaces/IDirectFBImageProvider/libidirectfbimageprovider_dfiff.so 644 0 0
+file /usr/lib/directfb-1.0-0/interfaces/IDirectFBImageProvider/libidirectfbimageprovider_gif.so /usr/lib/directfb-1.0-0/interfaces/IDirectFBImageProvider/libidirectfbimageprovider_gif.so 644 0 0
+file /usr/lib/directfb-1.0-0/interfaces/IDirectFBImageProvider/libidirectfbimageprovider_mpeg2.so /usr/lib/directfb-1.0-0/interfaces/IDirectFBImageProvider/libidirectfbimageprovider_mpeg2.so 644 0 0
+dir /usr/lib/directfb-1.0-0/interfaces/IDirectFBVideoProvider 755 0 0
+file /usr/lib/directfb-1.0-0/interfaces/IDirectFBVideoProvider/libidirectfbvideoprovider_gif.so /usr/lib/directfb-1.0-0/interfaces/IDirectFBVideoProvider/libidirectfbvideoprovider_gif.so 644 0 0
+file /usr/lib/directfb-1.0-0/interfaces/IDirectFBVideoProvider/libidirectfbvideoprovider_v4l.so /usr/lib/directfb-1.0-0/interfaces/IDirectFBVideoProvider/libidirectfbvideoprovider_v4l.so 644 0 0
+dir /usr/lib/directfb-1.0-0/gfxdrivers 755 0 0
+file /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_ati128.so /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_ati128.so 644 0 0
+file /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_cyber5k.so /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_cyber5k.so 644 0 0
+file /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_i810.so /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_i810.so 644 0 0
+file /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_i830.so /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_i830.so 644 0 0
+file /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_mach64.so /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_mach64.so 644 0 0
+file /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_matrox.so /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_matrox.so 644 0 0
+file /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_neomagic.so /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_neomagic.so 644 0 0
+file /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_nsc.so /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_nsc.so 644 0 0
+file /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_nvidia.so /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_nvidia.so 644 0 0
+file /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_radeon.so /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_radeon.so 644 0 0
+file /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_savage.so /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_savage.so 644 0 0
+file /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_sis315.so /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_sis315.so 644 0 0
+file /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_tdfx.so /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_tdfx.so 644 0 0
+file /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_unichrome.so /usr/lib/directfb-1.0-0/gfxdrivers/libdirectfb_unichrome.so 644 0 0
+dir /usr/lib/directfb-1.0-0/inputdrivers 755 0 0
+file /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_joystick.so /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_joystick.so 644 0 0
+file /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_keyboard.so /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_keyboard.so 644 0 0
+file /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_linux_input.so /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_linux_input.so 644 0 0
+file /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_lirc.so /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_lirc.so 644 0 0
+file /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_mutouch.so /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_mutouch.so 644 0 0
+file /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_penmount.so /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_penmount.so 644 0 0
+file /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_ps2mouse.so /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_ps2mouse.so 644 0 0
+file /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_serialmouse.so /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_serialmouse.so 644 0 0
+file /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_sonypi.so /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_sonypi.so 644 0 0
+file /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_tslib.so /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_tslib.so 644 0 0
+file /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_wm97xx_ts.so /usr/lib/directfb-1.0-0/inputdrivers/libdirectfb_wm97xx_ts.so 644 0 0
+dir /usr/lib/directfb-1.0-0/systems 755 0 0
+file /usr/lib/directfb-1.0-0/systems/libdirectfb_fbdev.so /usr/lib/directfb-1.0-0/systems/libdirectfb_fbdev.so 644 0 0
+dir /usr/lib/directfb-1.0-0/wm 755 0 0
+file /usr/lib/directfb-1.0-0/wm/libdirectfbwm_default.so /usr/lib/directfb-1.0-0/wm/libdirectfbwm_default.so 644 0 0
+file /usr/lib/directfb-1.0-0/wm/libdirectfbwm_unique.so /usr/lib/directfb-1.0-0/wm/libdirectfbwm_unique.so 644 0 0
+dir /usr/share/directfb-1.0.1 755 0 0
+file /usr/share/directfb-1.0.1/cursor.dat /usr/share/directfb-1.0.1/cursor.dat 644 0 0
+slink /usr/lib/libdirect-1.0.so.0 /usr/lib/libdirect-1.0.so.0.1.0 777 0 0
+slink /usr/lib/libdirectfb-1.0.so.0 /usr/lib/libdirectfb-1.0.so.0.1.0 777 0 0
+slink /usr/lib/libfusion-1.0.so.0 /usr/lib/libfusion-1.0.so.0.1.0 777 0 0
+slink /usr/lib/libuniquewm-1.0.so.0 /usr/lib/libuniquewm-1.0.so.0.1.0 777 0 0
+# vi: set sw=4 ts=4 paste:
