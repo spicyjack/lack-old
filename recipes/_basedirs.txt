@@ -38,8 +38,8 @@ slink /bin/sh /bin/busybox 0755 0 0
 file /bin/dir.sh :BUILD_BASE:/builds/common/scripts/dir.sh 0755 0 0
 slink /bin/dir /bin/dir.sh 0755 0 0 
 # a fake bash, mostly to make ldd work correctly
-file /bin/fakebash.sh :BUILD_BASE:/builds/common/scripts/fakebash.sh 0755 0 0
-slink /bin/bash /bin/fakebash.sh 0755 0 0 
+file /bin/fake-bash.sh :BUILD_BASE:/builds/common/scripts/fake-bash.sh 0755 0 0
+slink /bin/bash /bin/fake-bash.sh 0755 0 0 
 # create a symlink from nslookup to the host command
 slink /usr/bin/host /usr/bin/nslookup 0755 0 0
 # _basedirs /etc

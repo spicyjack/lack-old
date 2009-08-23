@@ -19,6 +19,8 @@ RESTART_DELAY=3
 STREAM_URL="http://localhost:8000/propaganda"
 # PID of mpg123
 MPG123_PID="/var/run/mpg123.pid"
+# mpg123 logfile
+MPG123_LOG="/var/log/mpg123.log"
 # our PID
 STREAMING_SH_PID="/var/run/streaming.sh.pid"
 # flag to know whether or not we should be running
@@ -138,10 +140,10 @@ while [ ! -e $STREAMING_FLAG ]; do
         # written to $!, which is what we want
         # wget needs to be shut up however 
         /usr/bin/wget -q -O - $STREAM_URL \
-            | /usr/bin/mpg123 -o alsa - >> /var/log/mpg123.log 2>&1 &
+            | /usr/bin/mpg123 -o alsa - >> $MPG123_LOG 2>&1 &
     else
         # straight mpg123; the icecast metadata should go to the logfile
-        /usr/bin/mpg123 -o alsa $STREAM_URL >> /var/log/mpg123.log 2>&1 &
+        /usr/bin/mpg123 -o alsa $STREAM_URL >> $MPG123_LOG 2>&1 &
     fi
     # wget -q -O - - http://stream:7767/vault | mpg123 --stdout - | aplay -D
     # plughw:0,2 -f cd
@@ -153,6 +155,9 @@ while [ ! -e $STREAMING_FLAG ]; do
         PIDCHECK=$(/bin/cat $MPG123_PID)
         PSCHECK=$(/bin/ps | grep -c $PIDCHECK)
         if [ $PSCHECK -eq 0 ]; then
+            RESTART_DATE=$(date | tr -d '\n')
+            echo "mpg123 PID $MPG123_PID exited..." >> $MPG123_LOG
+            echo "Restarting mpg123 at $RESTART_DATE" >> $MPG123_LOG
             /bin/rm $MPG123_PID
             break
         fi
@@ -180,4 +185,4 @@ exit ${EXIT}
 ### END LICENSE
 
 # vi: set ft=sh sw=4 ts=4:
-# end of line
+# eof

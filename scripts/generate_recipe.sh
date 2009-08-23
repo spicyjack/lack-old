@@ -89,11 +89,12 @@ OSDETECT=$($UNAME -s)
 if [ ${OSDETECT} == "Darwin" ]; then 
     # this is the BSD part
     echo "WARNING: BSD OS Detected; long switches will not work here..."
-    TEMP=$(/usr/bin/getopt hp:qv $*)
+    TEMP=$(/usr/bin/getopt hvp:sa $*)
 elif [ ${OSDETECT} == "Linux" ]; then
     # and this is the GNU part
-    TEMP=$(/usr/bin/getopt -o hp:qv \
-	    --long help,package:,quiet,verbose -n '$SCRIPTNAME' -- "$@")
+    TEMP=$(/usr/bin/getopt -o hvp:sa \
+	    --long help,verbose,package:,skip-exclude,append \
+        -n '$SCRIPTNAME' -- "$@")
 else
     echo "Error: Unknown OS Type.  I don't know how to call"
     echo "'getopts' correctly for this operating system.  Exiting..."
@@ -131,6 +132,7 @@ while true ; do
     -v|--verbose      Nice pretty output messages
     -p|--package      Package to query for a list of files
     -s|--skip-exclude Skip excluding files in the output
+    -a|--append       Append the library files, don't generate a header
     NOTE: Long switches do not work with BSD systems (GNU extension)
 
     EXAMPLE USAGE:
@@ -139,18 +141,23 @@ while true ; do
 
 EOF
 		exit 0;;		
-        -p|--package)
-            PACKAGE_NAME=$2
-            ERRORLOOP=$(($ERRORLOOP - 1));
-            shift 2
-            ;;
         -v|--verbose) # output pretty messages
             VERBOSE=1
             ERRORLOOP=$(($ERRORLOOP - 1));
             shift
             ;;
+        -p|--package)
+            PACKAGE_NAME=$2
+            ERRORLOOP=$(($ERRORLOOP - 1));
+            shift 2
+            ;;
         -s|--skip|--skip-exclude) # skip excluding of files using grep
             SKIP_EXCLUDE=1
+            ERRORLOOP=$(($ERRORLOOP - 1));
+            shift
+            ;;
+        -a|--append) # don't print the header, it's not needed
+            APPEND=1
             ERRORLOOP=$(($ERRORLOOP - 1));
             shift
             ;;
@@ -178,7 +185,10 @@ fi
     cmd_status "dpkg" $? 
 
     # print the recipe header
-    dump_header
+    if [ "x$APPEND" == "x" ]; then
+        dump_header
+    fi 
+    echo "# ${PACKAGE_NAME}"
 
     for LINE in $(echo $OUTPUT); 
     do
@@ -216,5 +226,4 @@ fi
     exit 0
 
 # vi: set filetype=sh sw=4 ts=4:
-# end of line
-
+# eof
