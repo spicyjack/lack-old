@@ -13,7 +13,7 @@ SCRIPTNAME=$(/usr/bin/basename $0)
 # exit status
 EXIT=0
 # what to set the volume to
-VOL_LEVEL="85%"
+VOL_LEVEL="80%"
 # which channels to set the volume on
 ALSA_CHANNELS="Master PCM"
 # mute all channels? 0=no, 1=yes
