@@ -1,8 +1,8 @@
 # $Id: lvm2.etch.txt,v 1.1 2008-10-03 22:59:10 brian Exp $
 # LVM etc files
 dir /etc/lvm 0755 0 0
-file /etc/lvm/lvm.conf :BUILD_BASE:/builds/common/lvm/lvm.conf 0644 0 0
-file /etc/lvmtab :BUILD_BASE:/builds/common/lvmtab 0644 0 0
+file /etc/lvm/lvm.conf :BUILD_BASE:/common/lvm/lvm.conf 0644 0 0
+file /etc/lvmtab :BUILD_BASE:/common/lvmtab 0644 0 0
 # LVM libraries
 file /lib/libdevmapper.so.1.02 /lib/libdevmapper.so.1.02 0644 0 0
 dir /lib/lvm-200 0755 0 0

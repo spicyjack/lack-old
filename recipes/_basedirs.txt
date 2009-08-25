@@ -35,17 +35,17 @@ dir /var/tmp/ 1777 0 0
 # IMPORTANT: busybox must now be sourced from the individual project initramfs
 # script instead of from this base file
 slink /bin/sh /bin/busybox 0755 0 0
-file /bin/dir.sh :BUILD_BASE:/builds/common/scripts/dir.sh 0755 0 0
+file /bin/dir.sh :BUILD_BASE:/common/scripts/dir.sh 0755 0 0
 slink /bin/dir /bin/dir.sh 0755 0 0 
 # a fake bash, mostly to make ldd work correctly
-file /bin/fake-bash.sh :BUILD_BASE:/builds/common/scripts/fake-bash.sh 0755 0 0
+file /bin/fake-bash.sh :BUILD_BASE:/common/scripts/fake-bash.sh 0755 0 0
 slink /bin/bash /bin/fake-bash.sh 0755 0 0 
 # create a symlink from nslookup to the host command
 slink /usr/bin/host /usr/bin/nslookup 0755 0 0
 # _basedirs /etc
 slink /etc/mtab /proc/mounts 0755 0 0
-file /etc/ant_functions.sh :BUILD_BASE:/builds/common/initscripts/ant_functions.sh 0755 0 0
+file /etc/ant_functions.sh :BUILD_BASE:/common/initscripts/ant_functions.sh 0755 0 0
 # the below two files should be provided by the specific project's initramfs
 # file listing
-file /etc/ld.so.conf :BUILD_BASE:/builds/common/etcfiles/ld.so.conf 0644 0 0
-file /etc/lode-lat1u-16.psf.gz :BUILD_BASE:/builds/common/misc/lode-lat1u-16.psf.gz 0644 0 0
+file /etc/ld.so.conf :BUILD_BASE:/common/etcfiles/ld.so.conf 0644 0 0
+file /etc/lode-lat1u-16.psf.gz :BUILD_BASE:/common/misc/lode-lat1u-16.psf.gz 0644 0 0

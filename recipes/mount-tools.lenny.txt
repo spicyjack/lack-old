@@ -5,8 +5,8 @@
 file /bin/mount /bin/mount 4755 0 0 
 file /bin/umount /bin/umount 4755 0 0 
 # loop-aes /etc
-file /etc/passwd :BUILD_BASE:/builds/common/etcfiles/passwd 0644 0 0
-file /etc/nsswitch.conf :BUILD_BASE:/builds/common/etcfiles/nsswitch.conf 0644 0 0
+file /etc/passwd :BUILD_BASE:/common/etcfiles/passwd 0644 0 0
+file /etc/nsswitch.conf :BUILD_BASE:/common/etcfiles/nsswitch.conf 0644 0 0
 # loop-aes /lib
 file /lib/libnss_files-2.7.so /lib/libnss_files-2.7.so 0644 0 0
 slink /lib/libnss_files.so.2 /lib/libnss_files-2.7.so 0644 0 0  

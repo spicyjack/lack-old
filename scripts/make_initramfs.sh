@@ -409,7 +409,7 @@ echo "# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" >> $TEMPDIR/$FILELIST
 
 # create the new init.sh script, which will be appended to
 $TOUCH $TEMPDIR/init.sh
-sedify $BUILD_BASE/builds/common/initscripts/_init.sh $TEMPDIR/init.sh
+sedify $BUILD_BASE/common/initscripts/_init.sh $TEMPDIR/init.sh
 # add the init script to the filelist
 echo "file /init ${TEMPDIR}/init.sh 0755 0 0" >> $TEMPDIR/$FILELIST
 
