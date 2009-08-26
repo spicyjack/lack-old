@@ -9,90 +9,29 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 #
-dir /usr/lib 755 0 0
+# /usr/bin
+file /usr/bin/synclient /usr/bin/synclient 755 0 0
+file /usr/bin/syndaemon /usr/bin/syndaemon 755 0 0
+# /usr/lib
 dir /usr/lib/xorg 755 0 0
 dir /usr/lib/xorg/modules 755 0 0
 dir /usr/lib/xorg/modules/input 755 0 0
 file /usr/lib/xorg/modules/input/evdev_drv.so /usr/lib/xorg/modules/input/evdev_drv.so 644 0 0
-# vi: set sw=4 ts=4 paste:
-# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
-# description: example package with comments
-# depends: _base otherpackage1 otherpackage2
-# helpcommand: /usr/bin/somebin --help
-# versioncommand: /usr/bin/somebin --version
-# examplecommand: /usr/bin/somebin -x -y -z 10
-#
-# dir <name> <mode> <uid> <gid>
-# file <name> <source> <mode> <uid> <gid>
-# slink <new name> <original file> <mode> <uid> <gid>
-#
-dir /usr/lib 755 0 0
-dir /usr/lib/xorg 755 0 0
-dir /usr/lib/xorg/modules 755 0 0
-dir /usr/lib/xorg/modules/input 755 0 0
 file /usr/lib/xorg/modules/input/kbd_drv.so /usr/lib/xorg/modules/input/kbd_drv.so 644 0 0
-# vi: set sw=4 ts=4 paste:
-# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
-# description: example package with comments
-# depends: _base otherpackage1 otherpackage2
-# helpcommand: /usr/bin/somebin --help
-# versioncommand: /usr/bin/somebin --version
-# examplecommand: /usr/bin/somebin -x -y -z 10
-#
-# dir <name> <mode> <uid> <gid>
-# file <name> <source> <mode> <uid> <gid>
-# slink <new name> <original file> <mode> <uid> <gid>
-#
-dir /usr/lib 755 0 0
-dir /usr/lib/xorg 755 0 0
-dir /usr/lib/xorg/modules 755 0 0
-dir /usr/lib/xorg/modules/input 755 0 0
 file /usr/lib/xorg/modules/input/mouse_drv.so /usr/lib/xorg/modules/input/mouse_drv.so 644 0 0
-# vi: set sw=4 ts=4 paste:
-# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
-# description: example package with comments
-# depends: _base otherpackage1 otherpackage2
-# helpcommand: /usr/bin/somebin --help
-# versioncommand: /usr/bin/somebin --version
-# examplecommand: /usr/bin/somebin -x -y -z 10
-#
-# dir <name> <mode> <uid> <gid>
-# file <name> <source> <mode> <uid> <gid>
-# slink <new name> <original file> <mode> <uid> <gid>
-#
-dir /usr/bin 755 0 0
-file /usr/bin/synclient /usr/bin/synclient 755 0 0
-file /usr/bin/syndaemon /usr/bin/syndaemon 755 0 0
-dir /usr/lib 755 0 0
-dir /usr/lib/xorg 755 0 0
-dir /usr/lib/xorg/modules 755 0 0
-dir /usr/lib/xorg/modules/input 755 0 0
 file /usr/lib/xorg/modules/input/synaptics_drv.so /usr/lib/xorg/modules/input/synaptics_drv.so 644 0 0
+# /usr/share
 dir /usr/share/hal 755 0 0
 dir /usr/share/hal/fdi 755 0 0
 dir /usr/share/hal/fdi/policy 755 0 0
 dir /usr/share/hal/fdi/policy/20thirdparty 755 0 0
 file /usr/share/hal/fdi/policy/20thirdparty/11-x11-synaptics.fdi /usr/share/hal/fdi/policy/20thirdparty/11-x11-synaptics.fdi 644 0 0
-# vi: set sw=4 ts=4 paste:
-# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
-# description: example package with comments
-# depends: _base otherpackage1 otherpackage2
-# helpcommand: /usr/bin/somebin --help
-# versioncommand: /usr/bin/somebin --version
-# examplecommand: /usr/bin/somebin -x -y -z 10
-#
-# dir <name> <mode> <uid> <gid>
-# file <name> <source> <mode> <uid> <gid>
-# slink <new name> <original file> <mode> <uid> <gid>
-#
-dir /usr/lib 755 0 0
-dir /usr/lib/xorg 755 0 0
-dir /usr/lib/xorg/modules 755 0 0
-dir /usr/lib/xorg/modules/input 755 0 0
+# wacom
 file /usr/lib/xorg/modules/input/wacom_drv.so /usr/lib/xorg/modules/input/wacom_drv.so 644 0 0
 dir /usr/share/lintian 755 0 0
 dir /usr/share/lintian/overrides 755 0 0
 file /usr/share/lintian/overrides/xserver-xorg-input-wacom /usr/share/lintian/overrides/xserver-xorg-input-wacom 644 0 0
+# /lib/udev
 dir /lib/udev 755 0 0
 file /lib/udev/check_driver /lib/udev/check_driver 755 0 0
 dir /etc 755 0 0

@@ -24,7 +24,6 @@ file /usr/bin/xterm /usr/bin/xterm 2755 0 43
 #file /usr/share/pixmaps/xterm-color_48x48.xpm /usr/share/pixmaps/xterm-color_48x48.xpm 644 0 0
 #file /usr/share/pixmaps/xterm_32x32.xpm /usr/share/pixmaps/xterm_32x32.xpm 644 0 0
 #file /usr/share/pixmaps/xterm_48x48.xpm /usr/share/pixmaps/xterm_48x48.xpm 644 0 0
-#dir /etc/X11 755 0 0
 #dir /etc/X11/app-defaults 755 0 0
 #file /etc/X11/app-defaults/KOI8RXTerm /etc/X11/app-defaults/KOI8RXTerm 644 0 0
 #file /etc/X11/app-defaults/UXTerm /etc/X11/app-defaults/UXTerm 644 0 0

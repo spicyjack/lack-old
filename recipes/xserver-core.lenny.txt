@@ -10,7 +10,6 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # x11-common
-dir /etc/X11 755 0 0
 file /etc/X11/rgb.txt /etc/X11/rgb.txt 644 0 0
 file /etc/X11/Xsession /etc/X11/Xsession 755 0 0
 dir /etc/X11/Xsession.d 755 0 0
@@ -37,7 +36,6 @@ slink /usr/X11R6/bin /usr/bin 777 0 0
 slink /usr/bin/X11 /usr/bin 777 0 0
 # xserver-xorg-core
 # /etc/X11
-dir /etc/X11 755 0 0
 dir /etc/X11/xserver 755 0 0
 file /etc/X11/Xwrapper.config :BUILD_BASE:/common/etcfiles/Xwrapper.config 600 0 0
 #file /etc/X11/xorg.conf /etc/X11/xorg.conf 644 0 0

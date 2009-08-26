@@ -11,7 +11,6 @@
 #
 # xfonts-base
 # /etc/X11
-dir /etc/X11 755 0 0
 dir /etc/X11/fonts 755 0 0
 dir /etc/X11/fonts/misc 755 0 0
 file /etc/X11/fonts/misc/xfonts-base.alias /etc/X11/fonts/misc/xfonts-base.alias 644 0 0

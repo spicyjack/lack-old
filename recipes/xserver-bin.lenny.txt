@@ -10,7 +10,6 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # /etc
-dir /etc/X11 755 0 0
 dir /etc/X11/xinit 755 0 0
 file /etc/X11/xinit/xinitrc /etc/X11/xinit/xinitrc 644 0 0
 file /etc/X11/xinit/xserverrc /etc/X11/xinit/xserverrc 755 0 0

@@ -18,7 +18,6 @@ file /usr/bin/xkbprint /usr/bin/xkbprint 755 0 0
 file /usr/bin/xkbvleds /usr/bin/xkbvleds 755 0 0
 file /usr/bin/xkbwatch /usr/bin/xkbwatch 755 0 0
 # xkb-data
-dir /etc/X11 755 0 0
 dir /etc/X11/xkb 755 0 0
 file /etc/X11/xkb/base.xml /etc/X11/xkb/base.xml 644 0 0
 dir /usr/share/X11 755 0 0
