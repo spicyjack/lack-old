@@ -208,6 +208,12 @@ fi
         FILE_TYPE=$($STAT --printf "%F" $LINE)
         # MUG == Mode, UID, GID 
         STAT_MUG=$($STAT --printf "%a %u %g" $LINE)
+        # check if this is the kernel; we don't need to package it up in the
+        # initramfs file
+        if [ $(echo $LINE | grep -c "vmlinuz") -gt 0 ]; then
+            echo "file $LINE $LINE $STAT_MUG"
+            continue
+        fi
         case "$FILE_TYPE" in
             "regular file") echo "file $LINE $LINE $STAT_MUG";;
             "directory") echo "dir $LINE $STAT_MUG";;

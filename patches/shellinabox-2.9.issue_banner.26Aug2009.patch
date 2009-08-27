@@ -1,0 +1,40 @@
+diff -N -p -r -u shellinabox-2.9-clean/shellinabox/launcher.c shellinabox-2.9-patched/shellinabox/launcher.c
+--- shellinabox-2.9-clean/shellinabox/launcher.c	2009-05-23 12:17:22.000000000 -0700
++++ shellinabox-2.9-patched/shellinabox/launcher.c	2009-08-26 18:59:40.565663841 -0700
+@@ -1229,6 +1229,36 @@ static void childProcess(struct Service 
+ 
+   // Finally, launch the child process.
+   if (service->useLogin) {
++    // Open the /etc/issue file to be read out to the remote user
++#ifndef O_LARGEFILE
++#define O_LARGEFILE 0
++#endif
++    int fd                 = NOINTR(open("/etc/issue", O_RDONLY|O_LARGEFILE));
++    // skip if the open call resulted in an error
++    if (fd > 0) {
++      char *issueBanner;
++      // create a stat buffer
++      struct stat sb = { 0 };
++      // perform the fstat call
++      fstat(fd, &sb);
++      // read in at most 16k
++      ssize_t dataLen      = 16384;
++      // resize the buffer if it's less than 16k (most likely)
++      if (dataLen > sb.st_size) {
++        dataLen            = sb.st_size;
++      }
++      // malloc to match the total size of the file
++      check(issueBanner    = malloc(dataLen + 1));  
++      ssize_t bytesRead          = -1;
++      bytesRead            = NOINTR(read(fd, issueBanner, dataLen)); 
++      // we readf something, output it 
++      if (bytesRead > 0) {
++        puts(issueBanner);
++      }
++      free(issueBanner);
++    }
++    // now spawn the login process
++
+     execle("/bin/login", "login", "-p", "-h", peerName,
+            (void *)0, environment);
+     execle("/usr/bin/login", "login", "-p", "-h", peerName,
