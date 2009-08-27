@@ -1,0 +1,22 @@
+# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# cpp-4.3
+dir /usr/lib/gcc 755 0 0
+dir /usr/lib/gcc/i486-linux-gnu 755 0 0
+dir /usr/lib/gcc/i486-linux-gnu/4.3 755 0 0
+file /usr/lib/gcc/i486-linux-gnu/4.3/cc1 /usr/lib/gcc/i486-linux-gnu/4.3/cc1 755 0 0
+file /usr/bin/cpp-4.3 /usr/bin/cpp-4.3 755 0 0
+slink /usr/bin/i486-linux-gnu-cpp-4.3 /usr/bin/cpp-4.3 777 0 0
+# cpp
+slink /usr/bin/i486-linux-gnu-cpp /usr/bin/cpp-4.3 777 0 0
+slink /usr/bin/cpp /usr/bin/cpp-4.3 777 0 0
+# vi: set sw=4 ts=4 paste:
