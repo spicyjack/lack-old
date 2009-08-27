@@ -1,0 +1,7 @@
+/usr/bin/ssh:
+	/usr/lib/libcrypto.0.9.7.dylib (compatibility version 0.9.7, current version 0.9.7)
+	/usr/lib/libbsm.dylib (compatibility version 1.0.0, current version 1.0.0)
+	/usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.2.2)
+	/System/Library/Frameworks/Security.framework/Versions/A/Security (compatibility version 1.0.0, current version 222.0.0)
+	/System/Library/Frameworks/Kerberos.framework/Versions/A/Kerberos (compatibility version 5.0.0, current version 5.0.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 88.0.0)
