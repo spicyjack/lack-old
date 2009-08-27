@@ -69,6 +69,11 @@ dice () {
     perl ~/bin/diceparse.pl -l ~/bin/diceware.en.txt -n 20 -d -r $RAND
 } # creates a list of random words
 
+jdate () {
+    echo -n "The current julian date in GMT is: "
+    TZ=GMT date +%j
+}
+
 purlget () {
         wget --http-user=speak --http-password=friend $1
 } # retrieves files from purl
@@ -79,10 +84,23 @@ hgstat () {
     cd $SOURCE_DIR
     for DIR in $(ls | grep hg);
     do
-        echo "=== $DIR ===";
+        echo "=== hg status: $DIR ===";
         cd $DIR
         hg status
-        cd ..
+        cd ..;
+    done
+    cd $START_DIR
+} # check the status in mercurial directories
+
+hgpullall () {
+    START_DIR=$PWD
+    cd $SOURCE_DIR
+    for DIR in $(ls | grep hg);
+    do
+        echo "=== hg pull: $DIR ===";
+        cd $DIR
+        hg pull
+        cd ..;
     done
     cd $START_DIR
 } # check the status in mercurial directories
@@ -92,10 +110,10 @@ hginchk () {
     cd $SOURCE_DIR
     for DIR in $(ls | grep hg);
     do
-        echo "=== $DIR ===";
+        echo "=== hg incoming: $DIR ===";
         cd $DIR
         hg incoming
-        cd ..;
+        cd ..
     done
     cd $START_DIR
 } # check for inbound changes to mercurial directories
@@ -105,7 +123,7 @@ hgoutchk () {
     cd $SOURCE_DIR
     for DIR in $(ls | grep hg);
     do
-        echo "=== $DIR ===";
+        echo "=== hg outgoing: $DIR ===";
         cd $DIR
         hg outgoing
         cd ..;
@@ -113,3 +131,5 @@ hgoutchk () {
     cd $START_DIR
 } # check for outbound changes in mercurial directories
 
+# vi: set ft=sh sw=4 ts=4
+# fin!
