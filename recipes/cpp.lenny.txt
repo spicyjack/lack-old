@@ -14,9 +14,18 @@ dir /usr/lib/gcc 755 0 0
 dir /usr/lib/gcc/i486-linux-gnu 755 0 0
 dir /usr/lib/gcc/i486-linux-gnu/4.3 755 0 0
 file /usr/lib/gcc/i486-linux-gnu/4.3/cc1 /usr/lib/gcc/i486-linux-gnu/4.3/cc1 755 0 0
+slink /usr/bin/cc1 /usr/lib/gcc/i486-linux-gnu/4.3/cc1 755 0 0
 file /usr/bin/cpp-4.3 /usr/bin/cpp-4.3 755 0 0
 slink /usr/bin/i486-linux-gnu-cpp-4.3 /usr/bin/cpp-4.3 777 0 0
 # cpp
 slink /usr/bin/i486-linux-gnu-cpp /usr/bin/cpp-4.3 777 0 0
 slink /usr/bin/cpp /usr/bin/cpp-4.3 777 0 0
+# libmpfr1ldbl
+file /usr/lib/libmpfr.so.1.1.1 /usr/lib/libmpfr.so.1.1.1 644 0 0
+slink /usr/lib/libmpfr.so.1 /usr/lib/libmpfr.so.1.1.1 777 0 0
+# libgmp3c2
+file /usr/lib/libgmp.so.3.4.2 /usr/lib/libgmp.so.3.4.2 644 0 0
+file /usr/lib/libmp.so.3.1.11 /usr/lib/libmp.so.3.1.11 644 0 0
+slink /usr/lib/libgmp.so.3 /usr/lib/libgmp.so.3.4.2 777 0 0
+slink /usr/lib/libmp.so.3 /usr/lib/libmp.so.3.1.11 777 0 0
 # vi: set sw=4 ts=4 paste:
