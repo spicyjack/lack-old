@@ -1,0 +1,61 @@
+# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# fontconfig-config
+dir /etc/fonts 755 0 0
+file /etc/fonts/fonts.dtd /etc/fonts/fonts.dtd 644 0 0
+file /etc/fonts/fonts.conf /etc/fonts/fonts.conf 644 0 0
+dir /etc/fonts/conf.d 755 0 0
+file /etc/fonts/conf.d/README /etc/fonts/conf.d/README 644 0 0
+dir /etc/fonts/conf.avail 755 0 0
+file /etc/fonts/conf.avail/51-local.conf /etc/fonts/conf.avail/51-local.conf 644 0 0
+file /etc/fonts/conf.avail/20-unhint-small-vera.conf /etc/fonts/conf.avail/20-unhint-small-vera.conf 644 0 0
+file /etc/fonts/conf.avail/10-sub-pixel-bgr.conf /etc/fonts/conf.avail/10-sub-pixel-bgr.conf 644 0 0
+file /etc/fonts/conf.avail/80-delicious.conf /etc/fonts/conf.avail/80-delicious.conf 644 0 0
+file /etc/fonts/conf.avail/10-no-sub-pixel.conf /etc/fonts/conf.avail/10-no-sub-pixel.conf 644 0 0
+file /etc/fonts/conf.avail/65-khmer.conf /etc/fonts/conf.avail/65-khmer.conf 644 0 0
+file /etc/fonts/conf.avail/70-yes-bitmaps.conf /etc/fonts/conf.avail/70-yes-bitmaps.conf 644 0 0
+file /etc/fonts/conf.avail/10-unhinted.conf /etc/fonts/conf.avail/10-unhinted.conf 644 0 0
+file /etc/fonts/conf.avail/25-unhint-nonlatin.conf /etc/fonts/conf.avail/25-unhint-nonlatin.conf 644 0 0
+file /etc/fonts/conf.avail/10-autohint.conf /etc/fonts/conf.avail/10-autohint.conf 644 0 0
+file /etc/fonts/conf.avail/10-sub-pixel-vrgb.conf /etc/fonts/conf.avail/10-sub-pixel-vrgb.conf 644 0 0
+file /etc/fonts/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.avail/70-no-bitmaps.conf 644 0 0
+file /etc/fonts/conf.avail/40-nonlatin.conf /etc/fonts/conf.avail/40-nonlatin.conf 644 0 0
+file /etc/fonts/conf.avail/50-user.conf /etc/fonts/conf.avail/50-user.conf 644 0 0
+file /etc/fonts/conf.avail/90-synthetic.conf /etc/fonts/conf.avail/90-synthetic.conf 644 0 0
+file /etc/fonts/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.avail/10-sub-pixel-rgb.conf 644 0 0
+file /etc/fonts/conf.avail/20-fix-globaladvance.conf /etc/fonts/conf.avail/20-fix-globaladvance.conf 644 0 0
+file /etc/fonts/conf.avail/70-force-bitmaps.conf /etc/fonts/conf.avail/70-force-bitmaps.conf 644 0 0
+file /etc/fonts/conf.avail/60-latin.conf /etc/fonts/conf.avail/60-latin.conf 644 0 0
+file /etc/fonts/conf.avail/30-metric-aliases.conf /etc/fonts/conf.avail/30-metric-aliases.conf 644 0 0
+file /etc/fonts/conf.avail/65-fonts-persian.conf /etc/fonts/conf.avail/65-fonts-persian.conf 644 0 0
+file /etc/fonts/conf.avail/45-latin.conf /etc/fonts/conf.avail/45-latin.conf 644 0 0
+file /etc/fonts/conf.avail/65-nonlatin.conf /etc/fonts/conf.avail/65-nonlatin.conf 644 0 0
+file /etc/fonts/conf.avail/30-urw-aliases.conf /etc/fonts/conf.avail/30-urw-aliases.conf 644 0 0
+file /etc/fonts/conf.avail/10-sub-pixel-vbgr.conf /etc/fonts/conf.avail/10-sub-pixel-vbgr.conf 644 0 0
+file /etc/fonts/conf.avail/49-sansserif.conf /etc/fonts/conf.avail/49-sansserif.conf 644 0 0
+file /etc/fonts/conf.avail/69-unifont.conf /etc/fonts/conf.avail/69-unifont.conf 644 0 0
+slink /etc/fonts/conf.d/51-local.conf /etc/fonts/conf.avail/51-local.conf 777 0 0
+slink /etc/fonts/conf.d/20-unhint-small-vera.conf /etc/fonts/conf.avail/20-unhint-small-vera.conf 777 0 0
+slink /etc/fonts/conf.d/80-delicious.conf /etc/fonts/conf.avail/80-delicious.conf 777 0 0
+slink /etc/fonts/conf.d/40-nonlatin.conf /etc/fonts/conf.avail/40-nonlatin.conf 777 0 0
+slink /etc/fonts/conf.d/50-user.conf /etc/fonts/conf.avail/50-user.conf 777 0 0
+slink /etc/fonts/conf.d/90-synthetic.conf /etc/fonts/conf.avail/90-synthetic.conf 777 0 0
+slink /etc/fonts/conf.d/20-fix-globaladvance.conf /etc/fonts/conf.avail/20-fix-globaladvance.conf 777 0 0
+slink /etc/fonts/conf.d/60-latin.conf /etc/fonts/conf.avail/60-latin.conf 777 0 0
+slink /etc/fonts/conf.d/30-metric-aliases.conf /etc/fonts/conf.avail/30-metric-aliases.conf 777 0 0
+slink /etc/fonts/conf.d/65-fonts-persian.conf /etc/fonts/conf.avail/65-fonts-persian.conf 777 0 0
+slink /etc/fonts/conf.d/45-latin.conf /etc/fonts/conf.avail/45-latin.conf 777 0 0
+slink /etc/fonts/conf.d/65-nonlatin.conf /etc/fonts/conf.avail/65-nonlatin.conf 777 0 0
+slink /etc/fonts/conf.d/30-urw-aliases.conf /etc/fonts/conf.avail/30-urw-aliases.conf 777 0 0
+slink /etc/fonts/conf.d/49-sansserif.conf /etc/fonts/conf.avail/49-sansserif.conf 777 0 0
+slink /etc/fonts/conf.d/69-unifont.conf /etc/fonts/conf.avail/69-unifont.conf 777 0 0
+# vi: set sw=4 ts=4 paste:

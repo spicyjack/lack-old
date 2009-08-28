@@ -1,0 +1,34 @@
+# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# ttf-dejavu-extra
+dir /usr/share/fonts 755 0 0
+dir /usr/share/fonts/truetype 755 0 0
+dir /usr/share/fonts/truetype/ttf-dejavu 755 0 0
+file /usr/share/fonts/truetype/ttf-dejavu/DejaVuSansCondensed-BoldOblique.ttf /usr/share/fonts/truetype/ttf-dejavu/DejaVuSansCondensed-BoldOblique.ttf 644 0 0
+file /usr/share/fonts/truetype/ttf-dejavu/DejaVuSerif-Italic.ttf /usr/share/fonts/truetype/ttf-dejavu/DejaVuSerif-Italic.ttf 644 0 0
+file /usr/share/fonts/truetype/ttf-dejavu/DejaVuSans-ExtraLight.ttf /usr/share/fonts/truetype/ttf-dejavu/DejaVuSans-ExtraLight.ttf 644 0 0
+file /usr/share/fonts/truetype/ttf-dejavu/DejaVuSansMono-Oblique.ttf /usr/share/fonts/truetype/ttf-dejavu/DejaVuSansMono-Oblique.ttf 644 0 0
+file /usr/share/fonts/truetype/ttf-dejavu/DejaVuSerifCondensed-BoldItalic.ttf /usr/share/fonts/truetype/ttf-dejavu/DejaVuSerifCondensed-BoldItalic.ttf 644 0 0
+file /usr/share/fonts/truetype/ttf-dejavu/DejaVuSansMono-BoldOblique.ttf /usr/share/fonts/truetype/ttf-dejavu/DejaVuSansMono-BoldOblique.ttf 644 0 0
+file /usr/share/fonts/truetype/ttf-dejavu/DejaVuSerifCondensed-Bold.ttf /usr/share/fonts/truetype/ttf-dejavu/DejaVuSerifCondensed-Bold.ttf 644 0 0
+file /usr/share/fonts/truetype/ttf-dejavu/DejaVuSerif-BoldItalic.ttf /usr/share/fonts/truetype/ttf-dejavu/DejaVuSerif-BoldItalic.ttf 644 0 0
+file /usr/share/fonts/truetype/ttf-dejavu/DejaVuSans-Oblique.ttf /usr/share/fonts/truetype/ttf-dejavu/DejaVuSans-Oblique.ttf 644 0 0
+file /usr/share/fonts/truetype/ttf-dejavu/DejaVuSansCondensed-Bold.ttf /usr/share/fonts/truetype/ttf-dejavu/DejaVuSansCondensed-Bold.ttf 644 0 0
+file /usr/share/fonts/truetype/ttf-dejavu/DejaVuSerifCondensed.ttf /usr/share/fonts/truetype/ttf-dejavu/DejaVuSerifCondensed.ttf 644 0 0
+file /usr/share/fonts/truetype/ttf-dejavu/DejaVuSans-BoldOblique.ttf /usr/share/fonts/truetype/ttf-dejavu/DejaVuSans-BoldOblique.ttf 644 0 0
+file /usr/share/fonts/truetype/ttf-dejavu/DejaVuSansCondensed-Oblique.ttf /usr/share/fonts/truetype/ttf-dejavu/DejaVuSansCondensed-Oblique.ttf 644 0 0
+file /usr/share/fonts/truetype/ttf-dejavu/DejaVuSerifCondensed-Italic.ttf /usr/share/fonts/truetype/ttf-dejavu/DejaVuSerifCondensed-Italic.ttf 644 0 0
+file /usr/share/fonts/truetype/ttf-dejavu/DejaVuSansCondensed.ttf /usr/share/fonts/truetype/ttf-dejavu/DejaVuSansCondensed.ttf 644 0 0
+dir /etc/defoma 755 0 0
+dir /etc/defoma/hints 755 0 0
+file /etc/defoma/hints/ttf-dejavu-extra.hints /etc/defoma/hints/ttf-dejavu-extra.hints 644 0 0
+# vi: set sw=4 ts=4 paste:
