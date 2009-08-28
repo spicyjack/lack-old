@@ -1,0 +1,30 @@
+# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# windowlab
+dir /usr/bin 755 0 0
+file /usr/bin/windowlab /usr/bin/windowlab 755 0 0
+dir /usr/share/xsessions 755 0 0
+file /usr/share/xsessions/windowlab.desktop /usr/share/xsessions/windowlab.desktop 644 0 0
+dir /usr/share/menu 755 0 0
+file /usr/share/menu/windowlab /usr/share/menu/windowlab 644 0 0
+dir /usr/lib 755 0 0
+dir /usr/lib/windowlab 755 0 0
+file /usr/lib/windowlab/create_menu.sh /usr/lib/windowlab/create_menu.sh 755 0 0
+dir /etc 755 0 0
+dir /etc/X11 755 0 0
+dir /etc/X11/windowlab 755 0 0
+file /etc/X11/windowlab/windowlab.menurc /etc/X11/windowlab/windowlab.menurc 644 0 0
+file /etc/X11/windowlab/debian_config /etc/X11/windowlab/debian_config 644 0 0
+file /etc/X11/windowlab/common_menu /etc/X11/windowlab/common_menu 644 0 0
+dir /etc/menu-methods 755 0 0
+file /etc/menu-methods/windowlab /etc/menu-methods/windowlab 755 0 0
+# vi: set sw=4 ts=4 paste:

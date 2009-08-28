@@ -5,38 +5,25 @@
 
 ! mrxvt settings (mrxvt == multi-tab rxvt)
 ! basic settings
-mrxvt-full*geometry: 80x25
-mrxvt-full*foreground: White
-mrxvt-full*background: Black
-mrxvt-full*cursorColor: red
-!mrxvt-full*font: lucidasanstypewriter-14
-mrxvt-full*font: -xos4-terminus-bold-r-normal--24-240-72-72-c-120-iso10646-1
-!mrxvt-full*font: -xos4-terminus-bold-r-normal--20-200-72-72-c-100-iso10646-1
-mrxvt-full*saveLines: 2000
+mrxvt*geometry: 80x25
+mrxvt*foreground: White
+mrxvt*background: Black
+mrxvt*cursorColor: red
+!mrxvt*font: lucidasanstypewriter-14
+!mrxvt*font: -xos4-terminus-bold-r-normal--24-240-72-72-c-120-iso10646-1
+mrxvt*font: -xos4-terminus-bold-r-normal--14-*-*-*-*-*-iso10646-1
+!mrxvt*font: -xos4-terminus-bold-r-normal--20-200-72-72-c-100-iso10646-1
+mrxvt*saveLines: 2000
 ! settings to do with tabs and special features
-mrxvt-full*tabForeground: green
-mrxvt-full*iTabForeground: DarkSlateGrey
-mrxvt-full*transparent: True
-mrxvt-full*backgroundFade: 50
-mrxvt-full*fading: 0
-mrxvt-full*transparentScrollbar: True
-mrxvt-full*transparentTabbar: True
+mrxvt*tabForeground: green
+mrxvt*iTabForeground: DarkSlateGrey
+mrxvt*transparent: True
+mrxvt*backgroundFade: 50
+mrxvt*fading: 0
+mrxvt*transparentScrollbar: True
+mrxvt*transparentTabbar: True
 
-! rxvt settings
-Rxvt*background: Black
-Rxvt*foreground: White
-Rxvt*cursorColor: Red
-Rxvt*saveLines: 2000
-Rxvt*geometry: 80x25
-!rxvt-full*font: -xos4-terminus-bold-r-normal--24-240-72-72-c-120-iso10646-1
-!rxvt-full*font: -xos4-terminus-bold-r-normal--20-200-72-72-c-100-iso10646-1
-! good on 1200x1024 displays
-!Rxvt*font: -xos4-terminus-bold-r-normal--24-240-72-72-c-120-iso10646-1
-! good on 1024x768 displays
-!Rxvt*font: -xos4-terminus-*-r-normal--20-200-72-72-c-100-iso10646-1
-! good on 800x600 displays
-Rxvt*font: -xos4-terminus-*-r-normal--17-120-100-100-c-0-iso10646-1
-
+!Xterm resources
 xterm*background: Black
 xterm*foreground: White
 xterm*cursorColor: Red
@@ -44,8 +31,11 @@ xterm*reverseVideo: false
 xterm*scrollBar: true
 xterm*saveLines: 2000
 xterm*reverseWrap: true
-xterm*font: 9x15
+!xterm*font: 9x15
 Xterm*font: 9x15
+!xterm*font: -xos4-terminus-bold-r-normal--20-200-72-72-c-100-iso10646-1
+!xterm*font: -xos4-terminus-*-r-normal--17-120-100-100-c-0-iso10646-1
+xterm*font: -xos4-terminus-bold-r-normal--14-*-*-*-*-*-iso10646-1
 xterm*fullCursor: true
 xterm*scrollTtyOutput: off
 xterm*scrollKey: on
@@ -54,5 +44,3 @@ xterm*VT100.Translations: #override\n\
 	<KeyPress>Next : scroll-forw(1,page)
 xterm*titleBar: false
 xterm*geometry: 80x25
-
-ptkdb*scrollbars:se

@@ -12,7 +12,7 @@
 # linux-image-2.6.30.5-antlinux
 file /boot/config-2.6.30.5-antlinux /boot/config-2.6.30.5-antlinux 644 0 0
 file /boot/System.map-2.6.30.5-antlinux /boot/System.map-2.6.30.5-antlinux 644 0 0
-#file /boot/vmlinuz-2.6.30.5-antlinux /boot/vmlinuz-2.6.30.5-antlinux 644 0 0
+file /boot/vmlinuz-2.6.30.5-antlinux /boot/vmlinuz-2.6.30.5-antlinux 644 0 0
 dir /lib/modules/2.6.30.5-antlinux 755 0 0
 dir /lib/modules/2.6.30.5-antlinux/kernel 755 0 0
 dir /lib/modules/2.6.30.5-antlinux/kernel/arch 755 0 0
@@ -2950,7 +2950,6 @@ file /lib/firmware/2.6.30.5-antlinux/yam/9600.bin /lib/firmware/2.6.30.5-antlinu
 slink /lib/modules/2.6.30.5-antlinux/source /usr/src/linux-2.6.30.5 777 0 0
 slink /lib/modules/2.6.30.5-antlinux/build /usr/src/linux-2.6.30.5 777 0 0
 # loop-aes-modules-2.6.30.5-antlinux
-dir /lib/modules/2.6.30.5-antlinux 755 0 0
 dir /lib/modules/2.6.30.5-antlinux/updates 755 0 0
 file /lib/modules/2.6.30.5-antlinux/updates/loop.ko /lib/modules/2.6.30.5-antlinux/updates/loop.ko 644 0 0
 file /lib/modules/2.6.30.5-antlinux/updates/loop_serpent.ko /lib/modules/2.6.30.5-antlinux/updates/loop_serpent.ko 644 0 0
