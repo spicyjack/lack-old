@@ -12,7 +12,7 @@ proc            /proc           proc    defaults        0       0
 
 # ramfs/tmpfs filesystems
 #binfmt_misc /proc/sys/fs/binfmt_misc binfmt_misc 0 0
-tmpfs       /dev/shm    tmpfs       size=8m                 0   0
+#tmpfs       /dev/shm    tmpfs       size=8m                 0   0
 
 # some suggestions for system specfic mounts
 #/dev/hda1       /boot           ext2    defaults,noauto        0       2

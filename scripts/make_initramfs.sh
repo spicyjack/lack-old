@@ -41,7 +41,7 @@ QUIET=1 # 0 = no output, 1 = some output, 2 = noisy
 HARDLINK_INITRD=0 # don't hardlink the initramfs to the initrd file
 # this is the top level directory; all of the paths created below start from
 # this directory and then work down the directory tree
-BUILD_BASE="/home/demo/src/antlinux"
+BUILD_BASE="/home/demo/src/lack-hg"
 # the list of files output and fed to gen_init_cpio
 FILELIST="initramfs-filelist.txt"
 

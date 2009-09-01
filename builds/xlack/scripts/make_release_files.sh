@@ -8,14 +8,20 @@ CAT=$(which cat)
 SED=$(which sed)
 
 OUTPUT_DIR="/tmp"
-HOSTNAME="xantlinux"
+HOSTNAME="xlack"
 # any files in this list get enumerated over and the substitutions below are
 # performed on them
-INPUT_FILES="issue.${HOSTNAME}"
+INPUT_FILES="issue.${HOSTNAME} issue.${HOSTNAME}.nogetty"
+
+# verify the base file exists
+if [ ! -e $PROJECT_DIR/${HOSTNAME}.base.txt ]; then
+    echo "ERROR: ${PROJECT_DIR}/${HOSTNAME}.base.txt file does not exist"
+    exit 1
+fi # if [ $PROJECT_DIR/${HOSTNAME}.base.txt ]
 
 ### create the initramfs filelist
 if [ -e $PROJECT_DIR/kernel_configs/linux-image-$1.txt ]; then
-    cat $PROJECT_DIR/${HOSTNAME}_base.txt \
+    cat $PROJECT_DIR/${HOSTNAME}.base.txt \
         $PROJECT_DIR/kernel_configs/linux-image-$1.txt \
         > $PROJECT_DIR/initramfs-filelist.txt
 else
@@ -26,9 +32,6 @@ fi
 
 ### create the hostname file
 echo "${HOSTNAME}" > $OUTPUT_DIR/hostname.${HOSTNAME}
-
-#### EXIT HERE
-exit 0
 
 ### create the issue file
 source $PROJECT_DIR/release_info.cfg
