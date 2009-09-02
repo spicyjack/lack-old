@@ -417,17 +417,27 @@ echo "file /init ${TEMPDIR}/init.sh 0755 0 0" >> $TEMPDIR/$FILELIST
 for RECIPE in $(echo ${PACKAGES});
 do
     # verify the recipe file exists
-    if [ ! -r $BUILD_BASE/recipes/$RECIPE.txt ]; then
-        # nope; delete the output file and exit
-        echo "ERROR: ${RECIPE}.txt file does not exist in"
-        echo "${BUILD_BASE}/recipes directory"
-        rm $OUTPUT_FILE
-        exit 1
-    fi
-    # then do some searching and replacing
-    # because $BUILD_BASE has forward slashes in it, you need to use a
-    # different delimiter for sed    
-    sedify $BUILD_BASE/recipes/$RECIPE.txt $TEMPDIR/$FILELIST
+    # check in $PROJECT_DIR first; note this works even if $PROJECT_DIR is not
+    # defined; if it's not defined, it will fail, and the check in $BUILD_BASE
+    # will then be done
+    if [ -r $PROJECT_DIR/recipes/$RECIPE.txt ]; then
+        # project-specific recpie exists
+        RECIPE_DIR="$PROJECT_DIR/recipes"
+    else 
+        if [ -r $BUILD_BASE/recipes/$RECIPE.txt ]; then
+            # recipe exists in LACK recipes directory
+            RECIPE_DIR="$BUILD_BASE/recipes"
+        else
+            # nope; delete the output file and exit
+            echo "ERROR: ${RECIPE}.txt file does not exist in"
+            echo "${BUILD_BASE}/recipes (common) directory or"
+            echo "${PROJECT_DIR}/recipes (project-specific) directory"
+            rm $OUTPUT_FILE
+            exit 1
+        fi
+    fi # if [ -r $PROJECT_DIR/recipes/$RECIPE.txt ]
+    # then do some searching and replacing; write the output file to FILELIST
+    sedify $RECPIE_DIR/$RECIPE.txt $TEMPDIR/$FILELIST
 done 
 
 # verify the initramfs recipe file exists
