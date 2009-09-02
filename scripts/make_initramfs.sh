@@ -111,7 +111,7 @@ function sedify ()
     local SOURCE_FILE=$1
     local DEST_FILE=$2
 
-    cat $SOURCE_FILE | $SED \
+    $CAT $SOURCE_FILE | $SED \
         "{
         s!:PROJECT_NAME:!${PROJECT_NAME}!g;
         s!:PROJECT_DIR:!${PROJECT_DIR}!g;
@@ -437,7 +437,7 @@ do
         fi
     fi # if [ -r $PROJECT_DIR/recipes/$RECIPE.txt ]
     # then do some searching and replacing; write the output file to FILELIST
-    sedify $RECPIE_DIR/$RECIPE.txt $TEMPDIR/$FILELIST
+    sedify $RECIPE_DIR/$RECIPE.txt $TEMPDIR/$FILELIST
 done 
 
 # verify the initramfs recipe file exists
