@@ -14,8 +14,9 @@ use Glib qw(TRUE FALSE);
 # Gtk2->init; works if you don't use -init on use
 use Gtk2 -init;
 
-# create the window
-
+sub launch_terminal {
+    system(q(/usr/bin/mrxvt -geometry +0-0 &));
+} # sub launch_terminal
 
 # create a VBox to hold a label and a button
 my $vbox = Gtk2::VBox->new(FALSE, 5);
@@ -27,15 +28,24 @@ my $label = Gtk2::Label->new($label_text);
 # pack the label, expand == true, fill == true, 5 pixels padding
 $vbox->pack_start($label, TRUE, TRUE, 5);
 
-# create a 'quit' button
-my $button = Gtk2::Button->new (q|Quit (Restarts XWindows)|);
+# create a 'launch' button
+my $term = Gtk2::Button->new (q|Launch a Terminal Window|);
 # connect the button's 'click' signal to an action
-$button->signal_connect (clicked => sub { Gtk2->main_quit });
+$term->signal_connect (clicked => \&launch_terminal );
 # pack the button, expand == false, fill == FALSE, 5 pixels padding
-$vbox->pack_start($button, FALSE, FALSE, 5);
+$vbox->pack_start($term, FALSE, FALSE, 5);
+
+# create a 'quit' button
+my $quit = Gtk2::Button->new (q|Quit (Restarts XWindows)|);
+# connect the button's 'click' signal to an action
+$quit->signal_connect (clicked => sub { Gtk2->main_quit });
+# pack the button, expand == false, fill == FALSE, 5 pixels padding
+$vbox->pack_start($quit, FALSE, FALSE, 5);
 
 # create the mainwindow
+my $cursor = Gtk2::Gdk::Cursor->new(q(left-ptr));
 my $window = Gtk2::Window->new (q(toplevel));
+$vbox->window->set_cursor($cursor);
 # add the vbox
 $window->add($vbox);
 # center the window
