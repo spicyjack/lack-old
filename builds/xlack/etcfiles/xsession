@@ -3,7 +3,7 @@
 # xsession script for 'demo' user
 
 # set a black background
-/usr/bin/xsetroot -solid black
+/usr/bin/xsetroot -solid black -cursor_name left_ptr
 # set the image of the moon on top of it
 /usr/games/xphoon
 # start an xterm in the lower left corner of the screen

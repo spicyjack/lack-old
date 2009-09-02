@@ -26,31 +26,34 @@ my $label_text = "Hello world!\n";
 $label_text .= "Здравствуйте!\n";
 my $label = Gtk2::Label->new($label_text);
 # pack the label, expand == true, fill == true, 5 pixels padding
-$vbox->pack_start($label, TRUE, TRUE, 5);
+$vbox->pack_start($label, TRUE, TRUE, 2);
 
 # create a 'launch' button
 my $term = Gtk2::Button->new (q|Launch a Terminal Window|);
 # connect the button's 'click' signal to an action
 $term->signal_connect (clicked => \&launch_terminal );
 # pack the button, expand == false, fill == FALSE, 5 pixels padding
-$vbox->pack_start($term, FALSE, FALSE, 5);
+$vbox->pack_start($term, FALSE, FALSE, 2);
 
-# create a 'quit' button
+# CREATE a 'quit' button
 my $quit = Gtk2::Button->new (q|Quit (Restarts XWindows)|);
 # connect the button's 'click' signal to an action
 $quit->signal_connect (clicked => sub { Gtk2->main_quit });
 # pack the button, expand == false, fill == FALSE, 5 pixels padding
-$vbox->pack_start($quit, FALSE, FALSE, 5);
+$vbox->pack_start($quit, FALSE, FALSE, 2);
 
+# set the cursor on the display object
+my $cursor = Gtk2::Gdk::Cursor->new(q(left_ptr));
 # create the mainwindow
-my $cursor = Gtk2::Gdk::Cursor->new(q(left-ptr));
 my $window = Gtk2::Window->new (q(toplevel));
-$vbox->window->set_cursor($cursor);
 # add the vbox
+
 $window->add($vbox);
 # center the window
 $window->set_position(q(center));
 # show the window
 $window->show_all;
+my $toplevel = $window->window();
+$toplevel->set_cursor($cursor);
 # yield to Gtk2 and wait for user input
 Gtk2->main;
