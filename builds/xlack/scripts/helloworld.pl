@@ -3,7 +3,7 @@
 # Quick Gtk2-Perl demo script
 # Copyright (c) 2008 Brian Manning <elspicyjack at gmail dot com>
 # Used ideas from the following webpages:
-# http://forgeftp.novell.com//gtk2-perl-study/documentation/html/c1091.html
+# http://forgeftp.novell.com/gtk2-perl-study/documentation/html/c1091.html
 # and probably others
 
 use strict;
@@ -14,8 +14,18 @@ use Glib qw(TRUE FALSE);
 # Gtk2->init; works if you don't use -init on use
 use Gtk2 -init;
 
+my $mrxvt = q(/usr/bin/mrxvt);
+my $xterm = q(/usr/bin/xterm +sb);
+
 sub launch_terminal {
-    system(q(/usr/bin/mrxvt -geometry +0-0 &));
+    my $terminal;
+    if ( -e $mrxvt ) {
+        #$terminal = $mrxvt;
+        $terminal = $xterm;
+    } else {
+        $terminal = $xterm;
+    } # if ( -e $mrxvt )
+    system(qq($terminal -geometry +0-0 &));
 } # sub launch_terminal
 
 # create a VBox to hold a label and a button
@@ -45,15 +55,15 @@ $vbox->pack_start($quit, FALSE, FALSE, 2);
 # set the cursor on the display object
 my $cursor = Gtk2::Gdk::Cursor->new(q(left_ptr));
 # create the mainwindow
-my $window = Gtk2::Window->new (q(toplevel));
+my $toplevel = Gtk2::Window->new (q(toplevel));
 # add the vbox
 
-$window->add($vbox);
+$toplevel->add($vbox);
 # center the window
-$window->set_position(q(center));
+$toplevel->set_position(q(center));
 # show the window
-$window->show_all;
-my $toplevel = $window->window();
-$toplevel->set_cursor($cursor);
+$toplevel->show_all;
+# use the GDK window() object created by Gtk2::Gdk to set the cursor
+$toplevel->window->set_cursor($cursor);
 # yield to Gtk2 and wait for user input
 Gtk2->main;
