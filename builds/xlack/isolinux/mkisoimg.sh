@@ -12,12 +12,14 @@ if [ ! -e $BANNER ]; then
     echo "ERROR: file ${BANNER} not found!"
     exit 1
 fi
+echo "sedifying $BANNER to $INPUT_DIR/isolinux/banner.txt"
 cat $BANNER | sed "{ s!:RELEASE_DATE:!${VERSION} ${RELEASE_DATE}!g; }" \
     > $INPUT_DIR/isolinux/banner.txt
 
 MKISOFS=$(which mkisofs)
 
-$MKISOFS -r -J -v \
+# -f follow symlinks
+$MKISOFS -f -r -J -v \
 -A "LACK - XWindows Version - ${RELEASE_DATE}" \
 -publisher "http://code.google.com/p/lack" \
 -p "Brian Manning" \
