@@ -8,7 +8,7 @@
 . ###. ###:: ##:::: ##: ##:::. ##: ##::. ##:'####: ##::. ##:. ######:::
 :...::...:::..:::::..::..:::::..::..::::..::....::..::::..:::......::::
 0f
-http://code.google.com/p/antlinux/ | <antlinux@googlegroups.com>
+http://code.google.com/p/lack/ | <linuxack@googlegroups.com>
 
 Release: :RELEASE_DATE: 
 
