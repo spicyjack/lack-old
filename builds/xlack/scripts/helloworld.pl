@@ -25,6 +25,7 @@ sub move_launcher {
 
     # grab the current starting position
     my ($current_x, $current_y) = $toplevel->get_position();   
+    warn(qq(Starting position of the topwindow is x:$current_x, y:$current_y));
     if ( $move_direction eq q(center) ) {
         while ( $current_x != $start_x && $current_y != $start_y ) {
             # move the current x and y 
@@ -46,8 +47,13 @@ sub move_launcher {
         # pick a random spot at the top of the screen and go there 
         my $screen = $toplevel->get_screen();
         my $screen_width = $screen->get_width();
-        my $new_x = int(rand($screen_width));
-        while ( $current_x != $new_x && $current_y != 0 ) {
+        warn(qq(screen width is $screen_width));
+        my ($window_width, $window_height) = $toplevel->get_size();
+        warn(qq(window width is $window_width)); 
+        warn(qq(possible random value is 0-) . ($screen_width - $window_width));
+        my $new_x = int(rand($screen_width - $window_width));
+        warn(qq(new x is $new_x));
+        while ( $current_x != $new_x || $current_y != 0 ) {
             # move the current x and y 
             # if current == start, don't increment/decrement value
             if ( $current_x < $new_x ) { 
@@ -61,7 +67,7 @@ sub move_launcher {
             $toplevel->move($current_x, $current_y); 
             usleep 500;
         } # while ( $current_x != $start_x && $current_y != $start_y )
-        warn(q(new x and y are: ) . $current_x . qq(x ) . $current_y);
+        warn(q(new x and y are: ) . $current_x . qq( x ) . $current_y);
     } # if ( $move_direction eq q(center) )
 } # sub move_launcher
 
@@ -71,11 +77,12 @@ sub launch_terminal {
     my $terminal;
     if ( -e $mrxvt ) {
         #$terminal = $mrxvt;
+        # FIXME write a script that launches xterm and writes it's PID out to
+        # a file somewhere
         $terminal = $xterm;
     } else {
         $terminal = $xterm;
     } # if ( -e $mrxvt )
-    warn qq(toplevel isa ) . ref($toplevel);
     &move_launcher($toplevel, q(notcenter));
     system(qq($terminal -geometry +0-0 &));
 } # sub launch_terminal
@@ -100,7 +107,6 @@ my $term = Gtk2::Button->new (q|Launch a Terminal Window|);
 $term->signal_connect (clicked => sub { 
     my $self = shift;
     my $top = shift;
-    warn qq(toplevel isa ) . ref($top);
     &launch_terminal($top);
     }, $toplevel);
 #$term->signal_connect (clicked => \&launch_terminal($toplevel) );
