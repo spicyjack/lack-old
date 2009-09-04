@@ -15,8 +15,6 @@ use Glib qw(TRUE FALSE);
 # Gtk2->init; works if you don't use -init on use
 use Gtk2 -init;
 
-my $mrxvt = q(/usr/bin/mrxvt);
-my $xterm = q(/usr/bin/xterm +sb);
 my ($start_x, $start_y);
 
 sub move_launcher {
@@ -74,17 +72,15 @@ sub move_launcher {
 sub launch_terminal {
     my $toplevel = shift;
 
-    my $terminal;
-    if ( -e $mrxvt ) {
-        #$terminal = $mrxvt;
-        # FIXME write a script that launches xterm and writes it's PID out to
-        # a file somewhere
-        $terminal = $xterm;
-    } else {
-        $terminal = $xterm;
-    } # if ( -e $mrxvt )
     &move_launcher($toplevel, q(notcenter));
-    system(qq($terminal -geometry +0-0 &));
+    if ( -e q(start_term.sh) ) {
+        system( q(start_term.sh &) );
+    } elsif ( -e q(/etc/scripts/start_term.sh) ) {
+        system( q(start_term.sh &) );
+    } else {
+        warn q(ERROR: can't locate 'start_term.sh' script!);
+    } # if ( -e $mrxvt )
+    return FALSE;
 } # sub launch_terminal
 
 ### MAIN SCRIPT
@@ -107,6 +103,8 @@ my $term = Gtk2::Button->new (q|Launch a Terminal Window|);
 $term->signal_connect (clicked => sub { 
     my $self = shift;
     my $top = shift;
+    # FIXME Glib::MainLoop documents Glib::Timeout; add one here to keep
+    # checking on the spawned xterm process
     &launch_terminal($top);
     }, $toplevel);
 #$term->signal_connect (clicked => \&launch_terminal($toplevel) );
