@@ -22,16 +22,18 @@ sub move_launcher {
     my $move_direction = shift;
 
     # grab the current starting position
-    my ($current_x, $current_y) = $toplevel->get_position();   
+    my ($start_x, $start_y) = $toplevel->get_position();   
+    my ($current_x, $current_y) = ($start_x, $start_y);
     warn(qq(Starting position of the topwindow is x:$current_x, y:$current_y));
+
     if ( $move_direction eq q(center) ) {
         while ( $current_x != $start_x && $current_y != $start_y ) {
             # move the current x and y 
             # if current == start, don't increment/decrement value
             if ( $current_x < $start_x ) { 
-                $current_x++; 
+                $current_x ++; 
             } elsif ( $current_x > $start_x ) {
-                $current_x--; 
+                $current_x --; 
             }
             if ( $current_y < $start_y ) { 
                 $current_y++; 
@@ -51,13 +53,15 @@ sub move_launcher {
         warn(qq(possible random value is 0-) . ($screen_width - $window_width));
         my $new_x = int(rand($screen_width - $window_width));
         warn(qq(new x is $new_x));
+        warn(qq(Difference between new X and old X is: ) 
+            . abs($new_x - $current_x) );
         while ( $current_x != $new_x || $current_y != 0 ) {
             # move the current x and y 
             # if current == start, don't increment/decrement value
             if ( $current_x < $new_x ) { 
-                $current_x++; 
+                $current_x ++;
             } elsif ( $current_x > $new_x ) {
-                $current_x--; 
+                $current_x --;
             }
             if ( $current_y > 0 ) { 
                 $current_y--; 

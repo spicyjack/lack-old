@@ -34,16 +34,17 @@ case "$ACTION" in
                 ;;
             init) 
                 colorize_nl $S_INFO "$BASENAME: run=init; running busybox init";
-                    if [ $$ -eq 1 ]; then
+                if [ $$ -eq 1 ]; then
                     exec $BB init < dev/console > dev/console 2>&1
                 else 
                     colorize_nl $S_FAILURE \
-                        "$BASENAME: run=init specified but PID != 1";
+                        "$BASENAME: run=init specified but PID != 1 (PID $$)";
                     colorize_nl $S_FAILURE \
                         "$BASENAME: (i.e. script not exec'ed from /init)";
                     colorize_nl $S_INFO \
                         "$BASENAME: exec'ing busybox shell (/bin/sh)";
-                    exec $BB sh < dev/console > dev/console 2>&1 
+                    #exec $BB sh < dev/console > dev/console 2>&1 
+                    exec $BB sh 
                 fi # if [ $PPID -eq 1 ]
                 ;;
             install) 

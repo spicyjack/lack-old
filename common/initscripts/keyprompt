@@ -88,8 +88,8 @@ case "$ACTION" in
     do
         # we already have a loopback device mounted from somewhere else
         #if [ $LOOPBACK_TEST = 1 ]; then mount_success; fi
-        #/bin/mount -t vfat -o ro $THUMB_DEV /mnt/flash >/dev/null 2>&1
-        /bin/mount -t vfat -o ro $THUMB_DEV /mnt/flash
+        #/bin/mount -t vfat -o ro $THUMB_DEV /mnt/flash
+        /bin/mount -t vfat -o ro $THUMB_DEV /mnt/flash >/dev/null 2>&1
         if [ $? -eq 0 ]; then
             # if the mount was successful, break out of this while loop
             break
