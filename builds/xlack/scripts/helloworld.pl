@@ -9,6 +9,7 @@
 use strict;
 use warnings;
 use utf8;
+use Math::Trig;
 use Time::HiRes qw(usleep);
 # import the TRUE/FALSE constants from Glib prior to loading Gtk2
 use Glib qw(TRUE FALSE);
@@ -51,25 +52,24 @@ sub move_launcher {
         my ($window_width, $window_height) = $toplevel->get_size();
         warn(qq(window width is $window_width)); 
         warn(qq(possible random value is 0-) . ($screen_width - $window_width));
-        my $new_x = int(rand($screen_width - $window_width));
-        warn(qq(new x is $new_x));
-        warn(qq(Difference between new X and old X is: ) 
-            . abs($new_x - $current_x) );
-        while ( $current_x != $new_x || $current_y != 0 ) {
+		#my $new_x = int(rand($screen_width - $window_width));
+		#    . abs($new_x - $current_x) );
+		# compute the current theta (angle from 0 degrees)
+		my $theta = 360 - rad2deg(atan2($start_y, $start_x));
+		my $rho = sqrt( ($start_x**2) + ($start_y**2) );
+		print qq(starting theta is $theta\n);
+        while ( $theta < 360 ) {
             # move the current x and y 
+			$theta += 0.5;
+			my $new_x = $rho * cos(deg2rad($theta));
+			my $new_y = $rho * sin(deg2rad($theta));
+			print qq( for theta $theta, the new x/y values are: )
+				. qq($new_x, $new_y\n);
             # if current == start, don't increment/decrement value
-            if ( $current_x < $new_x ) { 
-                $current_x ++;
-            } elsif ( $current_x > $new_x ) {
-                $current_x --;
-            }
-            if ( $current_y > 0 ) { 
-                $current_y--; 
-            }
-            $toplevel->move($current_x, $current_y); 
-            usleep 500;
+			#$toplevel->move($current_x, $current_y); 
+			#usleep 500;
+	        warn(q(new x and y are: ) . $new_x . qq( x ) . $new_y);
         } # while ( $current_x != $start_x && $current_y != $start_y )
-        warn(q(new x and y are: ) . $current_x . qq( x ) . $current_y);
     } # if ( $move_direction eq q(center) )
 } # sub move_launcher
 
