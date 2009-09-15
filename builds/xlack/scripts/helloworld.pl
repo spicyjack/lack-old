@@ -71,13 +71,25 @@ sub launch_terminal {
         return TRUE; 
     } # if ( $move_dialog == 0 ) 
 
+    # FIXME check for the start_term.sh script first; throw up a message
+    # dialog if it's not found when the user clicks on the button, don't
+    # bother moving the dialog around
     if ( &dialog_move($top, q(notcenter)) == 1 ) {
         if ( -e q(start_term.sh) ) {
             system( q(start_term.sh &) );
         } elsif ( -e q(/etc/scripts/start_term.sh) ) {
             system( q(start_term.sh &) );
         } else {
-            warn q(ERROR: can't locate 'start_term.sh' script!);
+            # show the user a modal dialog to let them know something's wrong
+            my $dialog = Gtk2::MessageDialog->new(
+                $top,   # parent or undef
+                q(destroy-with-parent), # dialog flags
+                q(error), # message type
+                q(ok), # buttons type
+                q(Can't find 'start_term.sh' script on the system)
+            );
+            $dialog->run;
+            $dialog->destroy;
         } # if ( -e $mrxvt )
         return FALSE;
     } else {

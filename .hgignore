@@ -1,3 +1,4 @@
 syntax: regexp
+.*\.swp$
 initramfs-filelist\.txt$
 certificate\.pem$
