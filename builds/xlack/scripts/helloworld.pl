@@ -4,8 +4,9 @@
 # Copyright (c) 2008 Brian Manning <elspicyjack at gmail dot com>
 # Used ideas from the following webpages:
 # http://forgeftp.novell.com/gtk2-perl-study/documentation/html/c1091.html
-# trig math was obtained from "Trigonometry the Easy Way" (0812027175)
 # and probably others
+
+# trig math was obtained from "Trigonometry the Easy Way" (ISBN 0812027175)
 
 use strict;
 use warnings;
@@ -25,7 +26,7 @@ sub dialog_move {
     my $toplevel = shift;
     my $move_direction = shift;
 
-    print qq(entering dialog_move; current theta/rho $theta/$rho\n);
+    #print qq(entering dialog_move; current theta/rho $theta/$rho\n);
     # grab the current starting position
     if ( $move_direction eq q(center) ) {
         while ( $current_x != $start_x && $current_y != $start_y ) {
@@ -42,20 +43,20 @@ sub dialog_move {
                 $current_y--; 
             }
             $toplevel->move($current_x, $current_y); 
-            usleep 500;
         } # while ( $current_x != $start_x && $current_y != $start_y )
     } else {
+        $theta += 0.5;
         if ( $theta < 360 ) {
-            # move the current x and y 
-            $theta += 0.5;
+            # generate the new x and y 
             # absolute value of the sine/cosine of the angle
             my $new_x = int(abs($rho * cos(deg2rad($theta))));
             my $new_y = int(abs($rho * sin(deg2rad($theta))));
-            print qq( for theta $theta, the new x/y values are: )
-                . qq($new_x, $new_y\n);
+            #print qq( for theta $theta, the new x/y values are: )
+            #    . qq($new_x, $new_y\n);
             # if current == start, don't increment/decrement value
-            warn(q(new x and y are: ) . $new_x . qq( x ) . $new_y);
-            $toplevel->move($new_x, $new_y); 
+            if ( $new_y != 0 ) {
+                $toplevel->move($new_x, $new_y); 
+            }
             return 0;
         } else {
             return 1;
@@ -67,7 +68,6 @@ sub launch_terminal {
     my $top = shift;
 
     if ( $move_dialog == 0 ) {
-        print qq(move dialog == 0\n);
         return TRUE; 
     } # if ( $move_dialog == 0 ) 
 
@@ -130,13 +130,13 @@ $toplevel->show_all;
 ($start_x, $start_y) = $toplevel->get_position();
 # get the current rho/theta with the center of the circle being 0,0
 $rho = sqrt( ($start_x**2) + ($start_y**2) );
-$theta = 360 + rad2deg(atan2($start_y, $start_x));
+$theta = 360 - rad2deg(atan2($start_y, $start_x));
 # use the GDK window() object created by Gtk2::Gdk to set the cursor
 $toplevel->window->set_cursor($cursor);
 
 # create a timeout object to check and see if the main window needs to be
 # moved
-Glib::Timeout->add( 500, \&launch_terminal, $toplevel );
+Glib::Timeout->add( 20, \&launch_terminal, $toplevel );
 
 # yield to Gtk2 and wait for user input
 Gtk2->main;
