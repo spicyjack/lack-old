@@ -4,6 +4,7 @@
 # Copyright (c) 2008 Brian Manning <elspicyjack at gmail dot com>
 # Used ideas from the following webpages:
 # http://forgeftp.novell.com/gtk2-perl-study/documentation/html/c1091.html
+# trig math was obtained from "Trigonometry the Easy Way" (0812027175)
 # and probably others
 
 use strict;
@@ -16,17 +17,16 @@ use Glib qw(TRUE FALSE);
 # Gtk2->init; works if you don't use -init on use
 use Gtk2 -init;
 
-my ($start_x, $start_y);
+my ($start_x, $start_y, $current_x, $current_y);
+my ($rho, $theta);
+my $move_dialog = 0;
 
-sub move_launcher {
+sub dialog_move {
     my $toplevel = shift;
     my $move_direction = shift;
 
+    print qq(entering dialog_move; current theta/rho $theta/$rho\n);
     # grab the current starting position
-    my ($start_x, $start_y) = $toplevel->get_position();   
-    my ($current_x, $current_y) = ($start_x, $start_y);
-    warn(qq(Starting position of the topwindow is x:$current_x, y:$current_y));
-
     if ( $move_direction eq q(center) ) {
         while ( $current_x != $start_x && $current_y != $start_y ) {
             # move the current x and y 
@@ -45,46 +45,44 @@ sub move_launcher {
             usleep 500;
         } # while ( $current_x != $start_x && $current_y != $start_y )
     } else {
-        # pick a random spot at the top of the screen and go there 
-        my $screen = $toplevel->get_screen();
-        my $screen_width = $screen->get_width();
-        warn(qq(screen width is $screen_width));
-        my ($window_width, $window_height) = $toplevel->get_size();
-        warn(qq(window width is $window_width)); 
-        warn(qq(possible random value is 0-) . ($screen_width - $window_width));
-		#my $new_x = int(rand($screen_width - $window_width));
-		#    . abs($new_x - $current_x) );
-		# compute the current theta (angle from 0 degrees)
-		my $theta = 360 - rad2deg(atan2($start_y, $start_x));
-		my $rho = sqrt( ($start_x**2) + ($start_y**2) );
-		print qq(starting theta is $theta\n);
-        while ( $theta < 360 ) {
+        if ( $theta < 360 ) {
             # move the current x and y 
-			$theta += 0.5;
-			my $new_x = $rho * cos(deg2rad($theta));
-			my $new_y = $rho * sin(deg2rad($theta));
-			print qq( for theta $theta, the new x/y values are: )
-				. qq($new_x, $new_y\n);
+            $theta += 0.5;
+            # absolute value of the sine/cosine of the angle
+            my $new_x = int(abs($rho * cos(deg2rad($theta))));
+            my $new_y = int(abs($rho * sin(deg2rad($theta))));
+            print qq( for theta $theta, the new x/y values are: )
+                . qq($new_x, $new_y\n);
             # if current == start, don't increment/decrement value
-			#$toplevel->move($current_x, $current_y); 
-			#usleep 500;
-	        warn(q(new x and y are: ) . $new_x . qq( x ) . $new_y);
-        } # while ( $current_x != $start_x && $current_y != $start_y )
+            warn(q(new x and y are: ) . $new_x . qq( x ) . $new_y);
+            $toplevel->move($new_x, $new_y); 
+            return 0;
+        } else {
+            return 1;
+        } # if ( $theta < 360 )
     } # if ( $move_direction eq q(center) )
-} # sub move_launcher
+} # sub move_dialog
 
 sub launch_terminal {
-    my $toplevel = shift;
+    my $top = shift;
 
-    &move_launcher($toplevel, q(notcenter));
-    if ( -e q(start_term.sh) ) {
-        system( q(start_term.sh &) );
-    } elsif ( -e q(/etc/scripts/start_term.sh) ) {
-        system( q(start_term.sh &) );
+    if ( $move_dialog == 0 ) {
+        print qq(move dialog == 0\n);
+        return TRUE; 
+    } # if ( $move_dialog == 0 ) 
+
+    if ( &dialog_move($top, q(notcenter)) == 1 ) {
+        if ( -e q(start_term.sh) ) {
+            system( q(start_term.sh &) );
+        } elsif ( -e q(/etc/scripts/start_term.sh) ) {
+            system( q(start_term.sh &) );
+        } else {
+            warn q(ERROR: can't locate 'start_term.sh' script!);
+        } # if ( -e $mrxvt )
+        return FALSE;
     } else {
-        warn q(ERROR: can't locate 'start_term.sh' script!);
-    } # if ( -e $mrxvt )
-    return FALSE;
+        return TRUE;
+    } # if ( &move_dialog($toplevel, q(notcenter)) == 1 )
 } # sub launch_terminal
 
 ### MAIN SCRIPT
@@ -104,13 +102,10 @@ $vbox->pack_start($label, TRUE, TRUE, 2);
 # create a 'launch' button
 my $term = Gtk2::Button->new (q|Launch a Terminal Window|);
 # connect the button's 'click' signal to an action
+my $launch_timeout_source_id;
 $term->signal_connect (clicked => sub { 
-    my $self = shift;
-    my $top = shift;
-    # FIXME Glib::MainLoop documents Glib::Timeout; add one here to keep
-    # checking on the spawned xterm process
-    &launch_terminal($top);
-    }, $toplevel);
+    print qq(setting move_dialog to 1\n);
+    $move_dialog = 1; } );
 #$term->signal_connect (clicked => \&launch_terminal($toplevel) );
 # pack the button, expand == false, fill == FALSE, 5 pixels padding
 $vbox->pack_start($term, FALSE, FALSE, 2);
@@ -133,8 +128,15 @@ $toplevel->set_position(q(center));
 $toplevel->show_all;
 # set the starting position of the window
 ($start_x, $start_y) = $toplevel->get_position();
+# get the current rho/theta with the center of the circle being 0,0
+$rho = sqrt( ($start_x**2) + ($start_y**2) );
+$theta = 360 + rad2deg(atan2($start_y, $start_x));
 # use the GDK window() object created by Gtk2::Gdk to set the cursor
 $toplevel->window->set_cursor($cursor);
+
+# create a timeout object to check and see if the main window needs to be
+# moved
+Glib::Timeout->add( 500, \&launch_terminal, $toplevel );
 
 # yield to Gtk2 and wait for user input
 Gtk2->main;
