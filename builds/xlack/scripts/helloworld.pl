@@ -78,7 +78,7 @@ sub launch_terminal {
         if ( -e q(start_term.sh) ) {
             system( q(start_term.sh &) );
         } elsif ( -e q(/etc/scripts/start_term.sh) ) {
-            system( q(start_term.sh &) );
+            system( q(/etc/scripts/start_term.sh &) );
         } else {
             # show the user a modal dialog to let them know something's wrong
             my $dialog = Gtk2::MessageDialog->new(

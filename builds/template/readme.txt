@@ -31,6 +31,11 @@ kernel_configs/ - A directory containing Linux kernel .config files
 (linux-image-X.X.XX.X.txt) and a list of directories to exclude from the final
 list of files to include from the kernel packages (sections_to_remove.txt).
 
+recipes/ - A directory containing recipe files specific to this project.  Note
+that in the case of a name conflict between local recpie files and recpie
+files in the LACK project directory, the local recpie file will be used and
+the LACK recpie file ignored.
+
 scripts/ - A directory containing support scripts for this project
 (make_release_files.sh), as well as any scripts that may be used on the target
 system.  

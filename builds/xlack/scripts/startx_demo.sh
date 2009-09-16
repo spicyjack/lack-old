@@ -5,14 +5,25 @@
 HOME_DIR="/home/demo"
 STARTX="/usr/bin/startx"
 
-if [ $(/bin/grep -c DEBUG /proc/cmdline) -gt 0 ]; then
-    cat /home/demo/xsession | sed "s/^#\(exec xterm.*\)$/\1/" \
-        > $HOME_DIR/.xsession
+# see if we even want to run X
+if [ $(/bin/grep -c nox /proc/cmdline) -eq 0 ]; then
+    # yep, run X; now do we want a normal or debug session?
+    if [ $(/bin/grep -c DEBUG /proc/cmdline) -gt 0 ]; then
+        # normal session
+        cat /home/demo/xsession | sed "s/^#\(exec xterm.*\)$/\1/" \
+            > $HOME_DIR/.xsession
+    else
+        # debug session
+        cat /home/demo/xsession | sed "s/^#\(exec perl.*\)$/\1/" \
+            > $HOME_DIR/.xsession
+    fi
+    # set the xsession file to be executable
+    #chmod 755 $HOME_DIR/.xsession
+    /bin/su -s /bin/sh -c "$STARTX" demo
 else
-    cat /home/demo/xsession | sed "s/^#\(exec perl.*\)$/\1/" \
-        > $HOME_DIR/.xsession
+    # nope, don't run x; just sleep for a day, as /sbin/init will keep
+    # restarting this script if it exits
+    sleep 86400
 fi
-# set the xsession file to be executable
-#chmod 755 $HOME_DIR/.xsession
-/bin/su -s /bin/sh -c "$STARTX" demo
 
+exit 0
