@@ -99,6 +99,9 @@ file /usr/lib/perl/5.10.0/Params/ValidateXS.pm /usr/lib/perl5/Params/ValidateXS.
 # perl /usr/lib/perl/5.10.0/Scalar/Util
 dir /usr/lib/perl/5.10.0/Scalar 0755 0 0
 file /usr/lib/perl/5.10.0/Scalar/Util.pm /usr/lib/perl/5.10.0/Scalar/Util.pm 0644 0 0
+# perl /usr/share/perl/5.10.0/Time
+dir /usr/lib/perl/5.10.0/Time 755 0 0
+file /usr/lib/perl/5.10.0/Time/HiRes.pm /usr/lib/perl/5.10.0/Time/HiRes.pm 644 0 0
 ### /usr/share/perl
 # perl /usr/share/perl/5.10.0
 dir /usr/share/perl 0755 0 0
@@ -188,6 +191,11 @@ file /usr/lib/perl/5.10.0/auto/DynaLoader/autosplit.ix /usr/lib/perl/5.10.0/auto
 file /usr/lib/perl/5.10.0/auto/DynaLoader/dl_findfile.al /usr/lib/perl/5.10.0/auto/DynaLoader/dl_findfile.al 644 0 0
 dir /usr/lib/perl/5.10.0/auto/Socket 755 0 0
 file /usr/lib/perl/5.10.0/auto/Socket/Socket.so /usr/lib/perl/5.10.0/auto/Socket/Socket.so 644 0 0
+dir /usr/lib/perl/5.10.0/auto/Time 755 0 0
+dir /usr/lib/perl/5.10.0/auto/Time/HiRes 755 0 0
+file /usr/lib/perl/5.10.0/auto/Time/HiRes/HiRes.so /usr/lib/perl/5.10.0/auto/Tim
+e/HiRes/HiRes.so 644 0 0
+# perl 
 file /usr/lib/perl/5.10.0/Cwd.pm /usr/lib/perl/5.10.0/Cwd.pm 644 0 0
 file /usr/lib/perl/5.10.0/IO.pm /usr/lib/perl/5.10.0/IO.pm 644 0 0
 file /usr/lib/perl/5.10.0/re.pm /usr/lib/perl/5.10.0/re.pm 644 0 0
@@ -721,4 +729,8 @@ file /usr/share/perl/5.10.0/AutoLoader.pm /usr/share/perl/5.10.0/AutoLoader.pm 6
 file /usr/share/perl/5.10.0/Symbol.pm /usr/share/perl/5.10.0/Symbol.pm 644 0 0
 slink /usr/lib/perl/5.10 /usr/lib/perl/5.10.0 777 0 0
 slink /usr/share/perl/5.10 /usr/share/perl/5.10.0 777 0 0
+# perl-modules
+dir /usr/share/perl/5.10.0/Math 755 0 0
+file /usr/share/perl/5.10.0/Math/Complex.pm /usr/share/perl/5.10.0/Math/Complex.pm 644 0 0
+file /usr/share/perl/5.10.0/Math/Trig.pm /usr/share/perl/5.10.0/Math/Trig.pm 644 0 0
 # vi: set sw=4 ts=4 paste:
