@@ -239,6 +239,7 @@ file /usr/lib/perl/5.10.0/bits/socket.ph /usr/lib/perl/5.10.0/bits/socket.ph 644
 file /usr/lib/perl/5.10.0/bits/signum.ph /usr/lib/perl/5.10.0/bits/signum.ph 644 0 0
 file /usr/lib/perl/5.10.0/bits/wordsize.ph /usr/lib/perl/5.10.0/bits/wordsize.ph 644 0 0
 file /usr/lib/perl/5.10.0/bits/sigset.ph /usr/lib/perl/5.10.0/bits/sigset.ph 644 0 0
+# auto
 dir /usr/lib/perl/5.10.0/auto 755 0 0
 dir /usr/lib/perl/5.10.0/auto/B 755 0 0
 file /usr/lib/perl/5.10.0/auto/B/B.so /usr/lib/perl/5.10.0/auto/B/B.so 644 0 0
