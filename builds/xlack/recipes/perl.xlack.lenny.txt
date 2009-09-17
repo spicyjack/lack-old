@@ -193,8 +193,7 @@ dir /usr/lib/perl/5.10.0/auto/Socket 755 0 0
 file /usr/lib/perl/5.10.0/auto/Socket/Socket.so /usr/lib/perl/5.10.0/auto/Socket/Socket.so 644 0 0
 dir /usr/lib/perl/5.10.0/auto/Time 755 0 0
 dir /usr/lib/perl/5.10.0/auto/Time/HiRes 755 0 0
-file /usr/lib/perl/5.10.0/auto/Time/HiRes/HiRes.so /usr/lib/perl/5.10.0/auto/Tim
-e/HiRes/HiRes.so 644 0 0
+file /usr/lib/perl/5.10.0/auto/Time/HiRes/HiRes.so /usr/lib/perl/5.10.0/auto/Time/HiRes/HiRes.so 644 0 0
 # perl 
 file /usr/lib/perl/5.10.0/Cwd.pm /usr/lib/perl/5.10.0/Cwd.pm 644 0 0
 file /usr/lib/perl/5.10.0/IO.pm /usr/lib/perl/5.10.0/IO.pm 644 0 0
