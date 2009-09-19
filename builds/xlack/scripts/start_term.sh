@@ -2,7 +2,7 @@
 
 # script to start a terminal window
 # XXX if you want to disable mrxvt, don't include it's package
-MRXVT="/usr/bin/mrxvt"
+MRXVT="/usr/bin/mrxvt +sb"
 XTERM="/usr/bin/xterm +sb"
 
     # write our PID out to a file
