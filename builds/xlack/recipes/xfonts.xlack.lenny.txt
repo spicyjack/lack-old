@@ -18,7 +18,10 @@ file /etc/X11/fonts/misc/xfonts-base.alias /etc/X11/fonts/misc/xfonts-base.alias
 dir /usr/share/fonts 755 0 0
 dir /usr/share/fonts/X11 755 0 0
 dir /usr/share/fonts/X11/misc 755 0 0
+file /usr/share/fonts/X11/misc/fonts.alias /usr/share/fonts/X11/misc/fonts.alias 644 0 0
+file /usr/share/fonts/X11/misc/fonts.dir /usr/share/fonts/X11/misc/fonts.dir 644 0 0
 file /usr/share/fonts/X11/misc/6x13-ISO8859-1.pcf.gz /usr/share/fonts/X11/misc/6x13-ISO8859-1.pcf.gz 644 0 0
+file /usr/share/fonts/X11/misc/7x14.pcf.gz /usr/share/fonts/X11/misc/7x14.pcf.gz 644 0 0
 file /usr/share/fonts/X11/misc/cursor.pcf.gz /usr/share/fonts/X11/misc/cursor.pcf.gz 644 0 0
 file /usr/share/fonts/X11/misc/olcursor.pcf.gz /usr/share/fonts/X11/misc/olcursor.pcf.gz 644 0 0
 # vi: set sw=4 ts=4 paste:

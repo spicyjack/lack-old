@@ -1,9 +1,12 @@
 #!/bin/sh
 
 # script to start a terminal window
-# FIXME mrxvt is not currently working; break it in the xlack image too
-MRXVT="/usr/bin/nomrxvt"
+# XXX if you want to disable mrxvt, don't include it's package
+MRXVT="/usr/bin/mrxvt"
 XTERM="/usr/bin/xterm +sb"
+
+    # write our PID out to a file
+    echo $$ > /tmp/start_term.pid
 
     # launch mrxvt if it's available
     if [ -x $MRXVT ]; then
@@ -11,8 +14,11 @@ XTERM="/usr/bin/xterm +sb"
     else
         $XTERM -geometry +0-0 &
     fi
+    # grab the PID of the program that was just launched
     TERM_PID=$!
-    touch /tmp/terminal.$TERM_PID.pid
+    # write it to a file
+    echo $TERM_PID > /tmp/terminal.pid
+
     # loop waiting for the terminal to exit
     while /bin/true;
     do
@@ -23,7 +29,8 @@ XTERM="/usr/bin/xterm +sb"
         fi
     done
 
-    # remove the 'PID' file
-    rm /tmp/terminal.$TERM_PID.pid
-
+    # remove the terminal PID file
+    rm /tmp/terminal.pid
+    # remove our PID file
+    rm /tmp/start_term.pid
     exit 0

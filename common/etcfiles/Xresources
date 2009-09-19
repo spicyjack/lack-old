@@ -4,24 +4,27 @@
 #endif
 
 ! mrxvt settings (mrxvt == multi-tab rxvt)
-! basic settings
+! size
 mrxvt*geometry: 80x25
-mrxvt*foreground: White
-mrxvt*background: Black
-mrxvt*cursorColor: red
-!mrxvt*font: lucidasanstypewriter-14
-!mrxvt*font: -xos4-terminus-bold-r-normal--24-240-72-72-c-120-iso10646-1
-mrxvt*font: -xos4-terminus-bold-r-normal--14-*-*-*-*-*-iso10646-1
-!mrxvt*font: -xos4-terminus-bold-r-normal--20-200-72-72-c-100-iso10646-1
-mrxvt*saveLines: 2000
 ! settings to do with tabs and special features
-mrxvt*tabForeground: green
-mrxvt*iTabForeground: DarkSlateGrey
+mrxvt*saveLines: 2000
 mrxvt*transparent: True
 mrxvt*backgroundFade: 50
 mrxvt*fading: 0
 mrxvt*transparentScrollbar: True
 mrxvt*transparentTabbar: True
+! colors
+mrxvt*foreground: White
+mrxvt*background: Black
+mrxvt*cursorColor: red
+mrxvt*tabForeground: green
+mrxvt*iTabForeground: DarkSlateGrey
+! fonts
+!mrxvt*font: -xos4-terminus-bold-r-normal--24-240-72-72-c-120-iso10646-1
+!mrxvt*xft: True
+mrxvt*font: -xos4-terminus-bold-r-normal--14-*-*-*-*-*-iso10646-1
+mrxvt*mfont: -xos4-terminus-bold-r-normal--14-*-*-*-*-*-iso10646-1
+!mrxvt*font: -xos4-terminus-bold-r-normal--20-200-72-72-c-100-iso10646-1
 
 !Xterm resources
 xterm*background: Black

@@ -71,31 +71,42 @@ sub launch_terminal {
         return TRUE; 
     } # if ( $move_dialog == 0 ) 
 
-    # FIXME check for the start_term.sh script first; throw up a message
+    # check for the start_term.sh script first; throw up a message
     # dialog if it's not found when the user clicks on the button, don't
     # bother moving the dialog around
-    if ( &dialog_move($top, q(notcenter)) == 1 ) {
-        if ( -e q(start_term.sh) ) {
-            system( q(start_term.sh &) );
-        } elsif ( -e q(/etc/scripts/start_term.sh) ) {
+    if ( -e q(/etc/scripts/start_term.sh) ) {
+        if ( &dialog_move($top, q(notcenter)) == 1 ) {
             system( q(/etc/scripts/start_term.sh &) );
-        } else {
-            # show the user a modal dialog to let them know something's wrong
-            my $dialog = Gtk2::MessageDialog->new(
-                $top,   # parent or undef
-                q(destroy-with-parent), # dialog flags
-                q(error), # message type
-                q(ok), # buttons type
-                q(Can't find 'start_term.sh' script on the system)
-            );
-            $dialog->run;
-            $dialog->destroy;
-        } # if ( -e $mrxvt )
-        return FALSE;
+            $move_dialog = 0;
+        } 
     } else {
-        return TRUE;
-    } # if ( &move_dialog($toplevel, q(notcenter)) == 1 )
+        # show the user a modal dialog to let them know something's wrong
+        my $dialog = Gtk2::MessageDialog->new(
+            $top,   # parent or undef
+            q(destroy-with-parent), # dialog flags
+            q(error), # message type
+            q(ok), # buttons type
+            q(Can't run '/etc/scripts/start_term.sh')
+        );
+        $dialog->run;
+        $dialog->destroy;
+        # remove the timeout event; no need for it
+        return FALSE;
+    } # if ( -e $mrxvt )
+    # let the timeout event keep firing
+    return TRUE;
 } # sub launch_terminal
+
+# disable the launch terminal button if a terminal process is running
+sub check_terminal {
+    my $b_term = shift;
+
+    if ( -e q(/tmp/start_term.pid) ) {
+        $b_term->set_sensitive(FALSE);
+    } else {
+        $b_term->set_sensitive(TRUE);
+    } # if ( -e q(/tmp/start_term.pid) )
+} # sub check_terminal
 
 ### MAIN SCRIPT
 # create the mainwindow
@@ -112,15 +123,14 @@ my $label = Gtk2::Label->new($label_text);
 $vbox->pack_start($label, TRUE, TRUE, 2);
 
 # create a 'launch' button
-my $term = Gtk2::Button->new (q|Launch a Terminal Window|);
+my $b_term = Gtk2::Button->new (q|Launch a Terminal Window|);
 # connect the button's 'click' signal to an action
 my $launch_timeout_source_id;
-$term->signal_connect (clicked => sub { 
-    print qq(setting move_dialog to 1\n);
+$b_term->signal_connect (clicked => sub { 
+    #print qq(setting move_dialog to 1\n);
     $move_dialog = 1; } );
-#$term->signal_connect (clicked => \&launch_terminal($toplevel) );
 # pack the button, expand == false, fill == FALSE, 5 pixels padding
-$vbox->pack_start($term, FALSE, FALSE, 2);
+$vbox->pack_start($b_term, FALSE, FALSE, 2);
 
 # CREATE a 'quit' button
 my $quit = Gtk2::Button->new (q|Quit (Restarts XWindows)|);
@@ -149,6 +159,7 @@ $toplevel->window->set_cursor($cursor);
 # create a timeout object to check and see if the main window needs to be
 # moved
 Glib::Timeout->add( 20, \&launch_terminal, $toplevel );
+Glib::Timeout->add( 500, \&check_terminal, $b_term );
 
 # yield to Gtk2 and wait for user input
 Gtk2->main;
