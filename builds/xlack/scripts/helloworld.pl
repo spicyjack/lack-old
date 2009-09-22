@@ -123,7 +123,7 @@ my $label = Gtk2::Label->new($label_text);
 $vbox->pack_start($label, TRUE, TRUE, 2);
 
 # create a 'launch' button
-my $b_term = Gtk2::Button->new (q|Launch a Terminal Window|);
+my $b_term = Gtk2::Button->new (q|_Launch a Terminal Window|);
 # connect the button's 'click' signal to an action
 my $launch_timeout_source_id;
 $b_term->signal_connect (clicked => sub { 
@@ -133,7 +133,7 @@ $b_term->signal_connect (clicked => sub {
 $vbox->pack_start($b_term, FALSE, FALSE, 2);
 
 # CREATE a 'quit' button
-my $quit = Gtk2::Button->new (q|Quit (Restarts XWindows)|);
+my $quit = Gtk2::Button->new (q|_Quit (Restarts XWindows)|);
 # connect the button's 'click' signal to an action
 $quit->signal_connect (clicked => sub { Gtk2->main_quit });
 # pack the button, expand == false, fill == FALSE, 5 pixels padding
