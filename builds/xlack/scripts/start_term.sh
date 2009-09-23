@@ -1,19 +1,19 @@
 #!/bin/sh
 
 # script to start a terminal window
-# XXX if you want to disable mrxvt, don't include it's package
-MRXVT="/usr/bin/mrxvt +sb"
-XTERM="/usr/bin/xterm +sb"
 
     # write our PID out to a file
     echo $$ > /tmp/start_term.pid
 
     # launch mrxvt if it's available
-    if [ -x $MRXVT ]; then
-        $MRXVT -geometry +0-0 &
+    # XXX if you want to disable mrxvt, don't include it's package
+    if [ -x /usr/bin/mrxvt ]; then
+        TERM="/usr/bin/mrxvt"
     else
-        $XTERM -geometry +0-0 &
+        TERM="/usr/bin/xterm"
     fi
+    # launch the terminal process
+    $TERM +sb -geometry +0-0 &
     # grab the PID of the program that was just launched
     TERM_PID=$!
     # write it to a file
