@@ -46,6 +46,7 @@ sub dialog_move {
         } # while ( $current_x != $start_x && $current_y != $start_y )
     } else {
         $theta += 0.5;
+        print qq(moving dialog: theta is $theta\n);
         if ( $theta < 360 ) {
             # generate the new x and y 
             # absolute value of the sine/cosine of the angle
@@ -67,6 +68,7 @@ sub dialog_move {
 sub launch_terminal {
     my $top = shift;
 
+    # flag for moving the dialog; 0 == don't move, 1 == move
     if ( $move_dialog == 0 ) {
         return TRUE; 
     } # if ( $move_dialog == 0 ) 
@@ -75,8 +77,10 @@ sub launch_terminal {
     # dialog if it's not found when the user clicks on the button, don't
     # bother moving the dialog around
     if ( -e q(/etc/scripts/start_term.sh) ) {
+    #if ( 1 ) {
         if ( &dialog_move($top, q(notcenter)) == 1 ) {
             system( q(/etc/scripts/start_term.sh &) );
+            #system( q(touch /tmp/start_term.pid) );
             $move_dialog = 0;
         } 
     } else {
@@ -99,13 +103,24 @@ sub launch_terminal {
 
 # disable the launch terminal button if a terminal process is running
 sub check_terminal {
-    my $b_term = shift;
+    my $controls = shift;
 
+    # don't update the control if the window is moving
+    if ( $move_dialog == 1 ) { return TRUE; }
+
+    # bring the controls out from the anonymous array
+    my $b_term = ${$controls}[0];
+    my $b_term_label = ${$controls}[1];
     if ( -e q(/tmp/start_term.pid) ) {
         $b_term->set_sensitive(FALSE);
+        $b_term_label->set_markup_with_mnemonic( 
+            q(<span color="DimGrey">_Launch a Terminal Window</span>));
     } else {
         $b_term->set_sensitive(TRUE);
+        $b_term_label->set_markup_with_mnemonic( 
+            q(<span color="Black">_Launch a Terminal Window</span>));
     } # if ( -e q(/tmp/start_term.pid) )
+    return TRUE;
 } # sub check_terminal
 
 ### MAIN SCRIPT
@@ -123,7 +138,12 @@ my $label = Gtk2::Label->new($label_text);
 $vbox->pack_start($label, TRUE, TRUE, 2);
 
 # create a 'launch' button
-my $b_term = Gtk2::Button->new (q|_Launch a Terminal Window|);
+my $b_term_label = Gtk2::Label->new();
+my $b_term = Gtk2::Button->new();
+$b_term_label->set_markup_with_mnemonic(
+    q(<span color="Black">_Launch a Terminal Window</span>));
+$b_term->add($b_term_label);
+
 # connect the button's 'click' signal to an action
 my $launch_timeout_source_id;
 $b_term->signal_connect (clicked => sub { 
@@ -159,7 +179,8 @@ $toplevel->window->set_cursor($cursor);
 # create a timeout object to check and see if the main window needs to be
 # moved
 Glib::Timeout->add( 20, \&launch_terminal, $toplevel );
-Glib::Timeout->add( 500, \&check_terminal, $b_term );
+# this is how you pass in multiple objects/variables
+Glib::Timeout->add( 500, \&check_terminal, [$b_term, $b_term_label] );
 
 # yield to Gtk2 and wait for user input
 Gtk2->main;
