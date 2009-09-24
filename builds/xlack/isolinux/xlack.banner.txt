@@ -1,4 +1,4 @@
-1b
+10
               :::    ::::::           :::     :::::::: :::    :::              
              :+:    :+::+:         :+: :+:  :+:    :+::+:   :+:                
              +:+  +:+ +:+        +:+   +:+ +:+       +:+  +:+                  
@@ -7,7 +7,7 @@
          #+#    #+##+#       #+#     #+##+#    #+##+#   #+#                    
         ###    ################     ### ######## ###    ###                    
 0f
-         b1Linux Appliance Construction Kit (XWindows version)0f
+         4eLinux Appliance Construction Kit (XWindows version)0f
 
 1eRelease:0f :RELEASE_DATE:
 

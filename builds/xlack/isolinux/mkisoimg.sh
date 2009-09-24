@@ -2,7 +2,7 @@
 
 # script for making an ISO filesystem, for CD burning
 
-VERSION="2009.0"
+VERSION="2009.1"
 OUTPUT_DIR=/opt/sourcecode/ISO_Projects/
 INPUT_DIR=$OUTPUT_DIR/xlack
 RELEASE_DATE=$(/bin/date "+%d%b%Y-%H.%M.%S")
@@ -27,5 +27,5 @@ $MKISOFS -f -r -J -v \
 -c isolinux/boot.cat \
 -b isolinux/isolinux.bin \
 -no-emul-boot -boot-load-size 4 -boot-info-table \
--o xlack.$VERSION.iso \
+-o xlack.$VERSION.x86.iso \
 $INPUT_DIR
