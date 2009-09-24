@@ -13,7 +13,7 @@ Welcome to...
               Linux Appliance Construction Kit
     http://code.google.com/p/lack/ | <linuxack@googlegroups.com>
 
-Release: 2e:RELEASE_VER:0f, kernel :KERNEL_VER:
+Release: 2e:RELEASE_VER:0f
 
 This is a demonstration of the LACK project's Linux kernel/initramfs build.
 

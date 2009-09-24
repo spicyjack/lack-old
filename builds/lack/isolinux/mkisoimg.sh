@@ -2,11 +2,11 @@
 
 # script for making an ISO filesystem, for CD burning
 
-VERSION="2009.6"
+VERSION="2009.7"
 OUTPUT_DIR=/opt/sourcecode/ISO_Projects/
-INPUT_DIR=$OUTPUT_DIR/antlinux
+INPUT_DIR=$OUTPUT_DIR/lack
 RELEASE_DATE=$(/bin/date "+%d%b%Y-%H.%M.%S")
-BANNER="/tmp/antlinux.banner.txt"
+BANNER="/tmp/lack.banner.txt"
 
 if [ ! -e $BANNER ]; then
     echo "ERROR: file ${BANNER} not found!"
@@ -18,12 +18,12 @@ cat $BANNER | sed "{ s!:RELEASE_DATE:!${VERSION} ${RELEASE_DATE}!g; }" \
 MKISOFS=$(which mkisofs)
 
 $MKISOFS -r -J -v \
--A "Antlinux CD Tester - ${RELEASE_DATE}" \
--publisher "http://code.google.com/p/antlinux" \
+-A "LACK CD Tester - ${RELEASE_DATE}" \
+-publisher "http://code.google.com/p/lack" \
 -p "Brian Manning" \
--V "ANTLINUX-$VERSION" \
+-V "LACK-$VERSION" \
 -c isolinux/boot.cat \
 -b isolinux/isolinux.bin \
 -no-emul-boot -boot-load-size 4 -boot-info-table \
--o antlinux.$VERSION.iso \
+-o lack.$VERSION.iso \
 $INPUT_DIR
