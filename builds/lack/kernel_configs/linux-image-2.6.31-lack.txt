@@ -12,7 +12,7 @@
 # linux-image-2.6.31-lack
 file /boot/config-2.6.31-lack /boot/config-2.6.31-lack 644 0 0
 file /boot/System.map-2.6.31-lack /boot/System.map-2.6.31-lack 644 0 0
-file /boot/vmlinuz-2.6.31-lack /boot/vmlinuz-2.6.31-lack 644 0 0
+#file /boot/vmlinuz-2.6.31-lack /boot/vmlinuz-2.6.31-lack 644 0 0
 dir /lib/modules/2.6.31-lack 755 0 0
 dir /lib/modules/2.6.31-lack/kernel 755 0 0
 dir /lib/modules/2.6.31-lack/kernel/arch 755 0 0
@@ -3083,4 +3083,10 @@ file /lib/firmware/2.6.31-lack/yam/1200.bin /lib/firmware/2.6.31-lack/yam/1200.b
 file /lib/firmware/2.6.31-lack/yam/9600.bin /lib/firmware/2.6.31-lack/yam/9600.bin 644 0 0
 slink /lib/modules/2.6.31-lack/source /usr/src/linux-2.6.31 777 0 0
 slink /lib/modules/2.6.31-lack/build /usr/src/linux-2.6.31 777 0 0
+# loop-aes-modules-2.6.31-lack
+dir /lib/modules/2.6.31-lack/updates 755 0 0
+file /lib/modules/2.6.31-lack/updates/loop.ko /lib/modules/2.6.31-lack/updates/loop.ko 644 0 0
+file /lib/modules/2.6.31-lack/updates/loop_serpent.ko /lib/modules/2.6.31-lack/updates/loop_serpent.ko 644 0 0
+file /lib/modules/2.6.31-lack/updates/loop_twofish.ko /lib/modules/2.6.31-lack/updates/loop_twofish.ko 644 0 0
+file /lib/modules/2.6.31-lack/updates/loop_blowfish.ko /lib/modules/2.6.31-lack/updates/loop_blowfish.ko 644 0 0
 # vi: set sw=4 ts=4 paste:
