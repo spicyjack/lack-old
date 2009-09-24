@@ -575,6 +575,13 @@ dir /lib/modules/2.6.31-lack/kernel/drivers/usb/mon 755 0 0
 file /lib/modules/2.6.31-lack/kernel/drivers/usb/mon/usbmon.ko /lib/modules/2.6.31-lack/kernel/drivers/usb/mon/usbmon.ko 644 0 0
 dir /lib/modules/2.6.31-lack/kernel/drivers/usb/otg 755 0 0
 file /lib/modules/2.6.31-lack/kernel/drivers/usb/otg/nop-usb-xceiv.ko /lib/modules/2.6.31-lack/kernel/drivers/usb/otg/nop-usb-xceiv.ko 644 0 0
+dir /lib/modules/2.6.31-lack/kernel/fs 755 0 0
+file /lib/modules/2.6.31-lack/kernel/fs/binfmt_aout.ko /lib/modules/2.6.31-lack/kernel/fs/binfmt_aout.ko 644 0 0
+file /lib/modules/2.6.31-lack/kernel/fs/binfmt_misc.ko /lib/modules/2.6.31-lack/kernel/fs/binfmt_misc.ko 644 0 0
+file /lib/modules/2.6.31-lack/kernel/fs/mbcache.ko /lib/modules/2.6.31-lack/kernel/fs/mbcache.ko 644 0 0
+dir /lib/modules/2.6.31-lack/kernel/fs/nls 755 0 0
+file /lib/modules/2.6.31-lack/kernel/fs/nls/nls_base.ko /lib/modules/2.6.31-lack/kernel/fs/nls/nls_base.ko 644 0 0
+file /lib/modules/2.6.31-lack/kernel/fs/nls/nls_utf8.ko /lib/modules/2.6.31-lack/kernel/fs/nls/nls_utf8.ko 644 0 0
 dir /lib/modules/2.6.31-lack/kernel/lib 755 0 0
 file /lib/modules/2.6.31-lack/kernel/lib/crc-ccitt.ko /lib/modules/2.6.31-lack/kernel/lib/crc-ccitt.ko 644 0 0
 file /lib/modules/2.6.31-lack/kernel/lib/crc-itu-t.ko /lib/modules/2.6.31-lack/kernel/lib/crc-itu-t.ko 644 0 0
