@@ -8,20 +8,19 @@ CAT=$(which cat)
 SED=$(which sed)
 
 OUTPUT_DIR="/tmp"
-HOSTNAME="xlack"
 # any files in this list get enumerated over and the substitutions below are
 # performed on them
-INPUT_FILES="issue.${HOSTNAME} issue.${HOSTNAME}.nogetty"
+INPUT_FILES="issue.${PROJECT_NAME} issue.${PROJECT_NAME}.nogetty"
 
 # verify the base file exists
-if [ ! -e $PROJECT_DIR/${HOSTNAME}.base.txt ]; then
-    echo "ERROR: ${PROJECT_DIR}/${HOSTNAME}.base.txt file does not exist"
+if [ ! -e $PROJECT_DIR/${PROJECT_NAME}.base.txt ]; then
+    echo "ERROR: ${PROJECT_DIR}/${PROJECT_NAME}.base.txt file does not exist"
     exit 1
-fi # if [ $PROJECT_DIR/${HOSTNAME}.base.txt ]
+fi # if [ $PROJECT_DIR/${PROJECT_NAME}.base.txt ]
 
 ### create the initramfs filelist
 if [ -e $PROJECT_DIR/kernel_configs/linux-image-$1.txt ]; then
-    cat $PROJECT_DIR/${HOSTNAME}.base.txt \
+    cat $PROJECT_DIR/${PROJECT_NAME}.base.txt \
         $PROJECT_DIR/kernel_configs/linux-image-$1.txt \
         > $PROJECT_DIR/initramfs-filelist.txt
 else
@@ -31,16 +30,16 @@ else
 fi
 
 ### create the hostname file
-echo "${HOSTNAME}" > $OUTPUT_DIR/hostname.${HOSTNAME}
+echo "${PROJECT_NAME}" > $OUTPUT_DIR/hostname.${PROJECT_NAME}
 
-### create the issue file
-source $PROJECT_DIR/release_info.cfg
-
-# now build the file with the correct substitutions performed
+# build the file with the correct substitutions performed
+# below variables are set in the initramfs.cfg file
 for SEDFILE in $(echo $INPUT_FILES);
 do
     $CAT $PROJECT_DIR/etcfiles/$SEDFILE \
-        | $SED "{s!:RELEASE_VER:!${RELEASE_VER}!g;
+        | $SED "{
+            s!:KERNEL_VER:!${KERNEL_VER}!g;
+            s!:RELEASE_VER:!${RELEASE_VER}!g;
             s!:DEMO_PASS:!${DEMO_PASS}!g;
             }" \
     > $OUTPUT_DIR/$SEDFILE

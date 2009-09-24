@@ -1,4 +1,4 @@
-# $Id: antlinux_base.txt,v 1.3 2009-08-10 08:38:58 brian Exp $
+# $Id: lack_base.txt,v 1.3 2009-08-10 08:38:58 brian Exp $
 # dir <name> <mode> <uid> <gid>
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
@@ -7,10 +7,13 @@ file /bin/busybox /tmp/busybox-1.14.3-x86 0755 0 0
 # busybox getopt hides in /bin
 slink /usr/bin/getopt /bin/getopt 0755 0 0
 # /etc
-file /etc/hostname /tmp/hostname.antlinux 0644 0 0
+file /etc/hostname /tmp/hostname.lack 0644 0 0
+file /etc/issue.lack /tmp/issue.lack 0644 0 0
 file /etc/modules :PROJECT_DIR:/etcfiles/modules 0644 0 0
 file /etc/fstab :PROJECT_DIR:/etcfiles/fstab 0644 0 0
-file /etc/inittab :BUILD_BASE:/common/etcfiles/inittab 0644 0 0
+file /etc/inittab :PROJECT_DIR:/etcfiles/inittab 0644 0 0
+# the banner-printer-outer
+file /bin/start_shell.sh :PROJECT_DIR:/scripts/start_shell.sh 0755 0 0
 # /sbin
 file /sbin/modprobe /sbin/modprobe 0755 0 0
 # /usr/bin

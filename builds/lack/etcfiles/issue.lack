@@ -1,0 +1,18 @@
+[1;34;40m
+          _//            _/           _//   _//   _//
+          _//           _/ //      _//   _//_//  _//
+          _//          _/  _//    _//       _// _//
+          _//         _//   _//   _//       _/ _/
+          _//        _////// _//  _//       _//  _//
+          _//       _//       _//  _//   _//_//   _//
+          _////////_//         _//   _////  _//     _//
+[37;40m
+                 [1;36;44mLinux Appliance Construction Kit[0;37;40m
+     [1;36;44mhttp://code.google.com/p/lack/ | <linuxack@googlegroups.com>[0;37;40m
+
+[1;33;40mRelease:[37;40m :RELEASE_VER:, kernel :KERNEL_VER:
+
+Account info: [34;40m
+u: root               p: Disabled; use SUDO from 'demo' user account
+u: demo               p: :DEMO_PASS:
+[0;37;40m

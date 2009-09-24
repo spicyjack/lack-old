@@ -10,13 +10,12 @@ Welcome to...
           _//       _//       _//  _//   _//_//   _//  
           _////////_//         _//   _////  _//     _//
 0f
+              Linux Appliance Construction Kit
+    http://code.google.com/p/lack/ | <linuxack@googlegroups.com>
 
-http://code.google.com/p/lack/ | <linuxack@googlegroups.com>
+Release: 2e:RELEASE_VER:0f, kernel :KERNEL_VER:
 
-Release: 2e:RELEASE_DATE:0f
-
-Linux Appliance Construction Kit.  This is a demonstration of the LACK
-project's Linux kernel/initramfs build.
+This is a demonstration of the LACK project's Linux kernel/initramfs build.
 
 Hit the <0eEnter0f> key to boot the system...
 
