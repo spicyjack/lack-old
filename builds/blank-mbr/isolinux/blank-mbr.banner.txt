@@ -1,12 +1,9 @@
 40
-'##:::::'##::::'###::::'########::'##::: ##:'####:'##::: ##::'######:::
- ##:'##: ##:::'## ##::: ##.... ##: ###:: ##:. ##:: ###:: ##:'##... ##::
- ##: ##: ##::'##:. ##:: ##:::: ##: ####: ##:: ##:: ####: ##: ##:::..:::
- ##: ##: ##:'##:::. ##: ########:: ## ## ##:: ##:: ## ## ##: ##::'####:
- ##: ##: ##: #########: ##.. ##::: ##. ####:: ##:: ##. ####: ##::: ##::
- ##: ##: ##: ##.... ##: ##::. ##:: ##:. ###:: ##:: ##:. ###: ##::: ##::
-. ###. ###:: ##:::: ##: ##:::. ##: ##::. ##:'####: ##::. ##:. ######:::
-:...::...:::..:::::..::..:::::..::..::::..::....::..::::..:::......::::
+   '|| '||'  '|'     |     '||''|.   '|.   '|' '||' '|.   '|'  ..|'''.|       
+    '|. '|.  .'     |||     ||   ||   |'|   |   ||   |'|   |  .|'     '       
+     ||  ||  |     |  ||    ||''|'    | '|. |   ||   | '|. |  ||    ....      
+      ||| |||     .''''|.   ||   |.   |   |||   ||   |   |||  '|.    ||       
+       |   |     .|.  .||. .||.  '|' .|.   '|  .||. .|.   '|   ''|...'|       
 0f
 http://code.google.com/p/lack/ | <linuxack@googlegroups.com>
 
@@ -14,9 +11,10 @@ Release: :RELEASE_DATE:
 
 40WARNING0f: This ISO image will blank the first 20M of a hard drive.  
 
-A menu of cheat codes is available by hitting the <60F10f> key.
+A menu of cheat codes is available by hitting the <60F20f> key.
+You can return this menu by hitting the <60F10f> key. 
 
-Boot the image by entering the following commands:
+You can use one of the following commands to boot the system:
 <Enter> - Boots the image, prompts for a device to blank, confirms blanking
 blank blankdev=/dev/device_name - Blanks 'blankdev' 20with0f confirmation
 blank blankdev=/dev/device_name confirm=n - Blanks with 40NO0f confirmation

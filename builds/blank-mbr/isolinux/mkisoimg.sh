@@ -2,7 +2,7 @@
 
 # script for making an ISO filesystem, for CD burning
 
-VERSION="2009.6"
+VERSION="2009.7"
 OUTPUT_DIR=/opt/sourcecode/ISO_Projects/
 INPUT_DIR=$OUTPUT_DIR/blank-mbr
 RELEASE_DATE=$(/bin/date "+%d%b%Y-%H.%M.%S")
@@ -17,7 +17,7 @@ cat $BANNER | sed "{ s!:RELEASE_DATE:!${VERSION} ${RELEASE_DATE}!g; }" \
 
 MKISOFS=$(which mkisofs)
 
-$MKISOFS -r -J -v \
+$MKISOFS -f -r -J -v \
 -A "Partition Table Nuker! - ${RELEASE_DATE}" \
 -publisher "http://code.google.com/p/antlinux" \
 -p "Brian Manning" \
@@ -25,7 +25,5 @@ $MKISOFS -r -J -v \
 -c isolinux/boot.cat \
 -b isolinux/isolinux.bin \
 -no-emul-boot -boot-load-size 4 -boot-info-table \
--o blank-mbr.$VERSION.iso \
+-o blank-mbr.$VERSION.x86.iso \
 $INPUT_DIR
-
-
