@@ -211,7 +211,7 @@ fi
         # check if this is the kernel; we don't need to package it up in the
         # initramfs file
         if [ $(echo $LINE | grep -c "vmlinuz") -gt 0 ]; then
-            echo "file $LINE $LINE $STAT_MUG"
+            echo "#file $LINE $LINE $STAT_MUG"
             continue
         fi
         case "$FILE_TYPE" in
