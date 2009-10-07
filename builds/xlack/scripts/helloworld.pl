@@ -8,6 +8,12 @@
 
 # trig math was obtained from "Trigonometry the Easy Way" (ISBN 0812027175)
 
+# TODO
+# - use different movement rates; either vary the rate of change to the angle
+# of the dialog to the centerpoint, or use something like a 6ms delay to
+# Glib::Timeout and then skip Glib::Timeout calls when near the ends of the
+# loop to simulate speed changes
+
 use strict;
 use warnings;
 use utf8;
@@ -22,6 +28,7 @@ my ($start_x, $start_y, $current_x, $current_y);
 my ($rho, $theta);
 my $move_dialog = 0;
 
+# called by launch_terminal to perform the actual move of the dialog
 sub dialog_move {
     my $toplevel = shift;
     my $move_direction = shift;
