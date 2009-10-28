@@ -53,7 +53,7 @@ slink /etc/start/16klogd /etc/init.d/klogd 0755 0 0
 #slink /etc/start/18miscfs /etc/init.d/miscfs 0755 0 0
 slink /etc/start/20kernel-modules /etc/init.d/kernel-modules 0755 0 0
 # let run-program run from /init
-slink /etc/start/30run-program /etc/init.d/run-program 0755 0 0
+#slink /etc/start/30run-program /etc/init.d/run-program 0755 0 0
 # stop symlinks
 dir /etc/stop 0755 0 0
 slink /etc/stop/75sysfs /etc/init.d/sysfs 0755 0 0

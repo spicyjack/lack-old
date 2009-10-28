@@ -48,3 +48,9 @@ slink /lib/libutil.so.1 /lib/libutil-2.7.so 0644 0 0
 dir /lib/terminfo 0755 0 0
 dir /lib/terminfo/l 0755 0 0
 file /lib/terminfo/l/linux /lib/terminfo/l/linux 0644 0 0
+# libgcc1
+dir /usr/share/lintian 755 0 0
+dir /usr/share/lintian/overrides 755 0 0
+file /usr/share/lintian/overrides/libgcc1 /usr/share/lintian/overrides/libgcc1 644 0 0
+file /lib/libgcc_s.so.1 /lib/libgcc_s.so.1 644 0 0
+
