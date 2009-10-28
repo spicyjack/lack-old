@@ -13,7 +13,7 @@ file /etc/hostname /tmp/hostname.armlack 0644 0 0
 file /etc/issue.armlack /tmp/issue.armlack 0644 0 0
 #file /etc/modules :PROJECT_DIR:/etcfiles/modules 0644 0 0
 #file /etc/fstab :PROJECT_DIR:/etcfiles/fstab 0644 0 0
-#file /etc/inittab :PROJECT_DIR:/etcfiles/inittab 0644 0 0
+file /etc/inittab :PROJECT_DIR:/etcfiles/inittab 0644 0 0
 # the banner-printer-outer
 file /bin/start_shell.sh :BUILD_BASE:/common/scripts/start_shell.sh 0755 0 0
 # /sbin
