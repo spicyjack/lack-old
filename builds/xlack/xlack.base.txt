@@ -15,6 +15,7 @@ slink /usr/bin/getopt /bin/getopt 0755 0 0
 # generated files
 file /etc/issue.xlack /tmp/issue.xlack 0644 0 0
 file /etc/issue /tmp/issue.xlack.nogetty 0644 0 0
+slink /etc/issue.nogetty /etc/issue 0644 0 0
 file /etc/hostname /tmp/hostname.xlack 0644 0 0
 # files sourced from lack common directory
 file /etc/group :BUILD_BASE:/common/etcfiles/group 0644 0 0
