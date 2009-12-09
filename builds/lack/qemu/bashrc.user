@@ -39,6 +39,9 @@ RSYNC_RSH=/usr/bin/ssh
 EDITOR=/usr/bin/vim
 MAILPATH='/var/mail/brian?You have new mail:/var/mail/stuff?Stuff has new mail'
 PATH=~/bin:$PATH
+# for dh-make-perl
+export DEBFULLNAME="Brian Manning"
+export DEBEMAIL="elspicyjack at gmail dot com"
 
 export PS1 IRCNICK IRCNAME IRCSERVER \
 CVSROOT MAILPATH CVS_RSH EDITOR PATH 
