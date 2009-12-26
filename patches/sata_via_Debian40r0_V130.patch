@@ -1,0 +1,387 @@
+--- sata_via.c.orig	2007-02-02 12:14:42.000000000 +0800
++++ sata_via.c	2007-02-12 10:35:14.000000000 +0800
+@@ -52,6 +52,7 @@
+ enum board_ids_enum {
+ 	vt6420,
+ 	vt6421,
++	vt8251,
+ };
+ 
+ enum {
+@@ -63,7 +64,7 @@
+ 	PORT0			= (1 << 1),
+ 	PORT1			= (1 << 0),
+ 	ALL_PORTS		= PORT0 | PORT1,
+-	N_PORTS			= 2,
++	N_PORTS			= 3,
+ 
+ 	NATIVE_MODE_ALL		= (1 << 7) | (1 << 6) | (1 << 5) | (1 << 4),
+ 
+@@ -76,11 +77,17 @@
+ static void svia_scr_write (struct ata_port *ap, unsigned int sc_reg, u32 val);
+ static void vt6420_error_handler(struct ata_port *ap);
+ 
++
++static void via_pata_phy_reset(struct ata_port *ap);
++static void via_pata_set_piomode (struct ata_port *ap, struct ata_device *adev);
++static void via_pata_set_dmamode (struct ata_port *ap, struct ata_device *adev);
++
+ static const struct pci_device_id svia_pci_tbl[] = {
+-	{ 0x1106, 0x0591, PCI_ANY_ID, PCI_ANY_ID, 0, 0, vt6420 },
+ 	{ 0x1106, 0x3149, PCI_ANY_ID, PCI_ANY_ID, 0, 0, vt6420 },
+ 	{ 0x1106, 0x3249, PCI_ANY_ID, PCI_ANY_ID, 0, 0, vt6421 },
+-
++ 	{ 0x1106, 0x5287, PCI_ANY_ID, PCI_ANY_ID, 0, 0, vt8251 },
++ 	{ 0x1106, 0x5337, PCI_ANY_ID, PCI_ANY_ID, 0, 0, vt6420 },
++	{ 0x1106, 0x5372, PCI_ANY_ID, PCI_ANY_ID, 0, 0, vt6420 },
+ 	{ }	/* terminate list */
+ };
+ 
+@@ -142,6 +149,8 @@
+ 
+ static const struct ata_port_operations vt6421_sata_ops = {
+ 	.port_disable		= ata_port_disable,
++ 	.set_piomode		= via_pata_set_piomode,
++ 	.set_dmamode		= via_pata_set_dmamode,
+ 
+ 	.tf_load		= ata_tf_load,
+ 	.tf_read		= ata_tf_read,
+@@ -165,9 +174,40 @@
+ 
+ 	.irq_handler		= ata_interrupt,
+ 	.irq_clear		= ata_bmdma_irq_clear,
+-
++/*
+ 	.scr_read		= svia_scr_read,
+ 	.scr_write		= svia_scr_write,
++*/
++	.port_start		= ata_port_start,
++	.port_stop		= ata_port_stop,
++	.host_stop		= ata_host_stop,
++};
++
++static const struct ata_port_operations vt8251_sata_ops = {
++	.port_disable		= ata_port_disable,
++
++	.tf_load		= ata_tf_load,
++	.tf_read		= ata_tf_read,
++	.check_status		= ata_check_status,
++	.exec_command		= ata_exec_command,
++	.dev_select		= ata_std_dev_select,
++
++	.bmdma_setup            = ata_bmdma_setup,
++	.bmdma_start            = ata_bmdma_start,
++	.bmdma_stop		= ata_bmdma_stop,
++	.bmdma_status		= ata_bmdma_status,
++
++	.qc_prep		= ata_qc_prep,
++	.qc_issue		= ata_qc_issue_prot,
++	.data_xfer		= ata_pio_data_xfer,
++
++	.freeze			= ata_bmdma_freeze,
++	.thaw			= ata_bmdma_thaw,
++	.error_handler		= ata_bmdma_error_handler,
++	.post_internal_cmd	= ata_bmdma_post_internal_cmd,
++
++	.irq_handler		= ata_interrupt,
++	.irq_clear		= ata_bmdma_irq_clear,
+ 
+ 	.port_start		= ata_port_start,
+ 	.port_stop		= ata_port_stop,
+@@ -183,6 +223,15 @@
+ 	.port_ops	= &vt6420_sata_ops,
+ };
+ 
++static struct ata_port_info via287_port_info = {
++	.sht		= &svia_sht,
++	.host_flags	= ATA_FLAG_SLAVE_POSS | ATA_FLAG_SRST | ATA_FLAG_NO_LEGACY,
++	.pio_mask	= 0x1f,
++	.mwdma_mask	= 0x07,
++	.udma_mask	= 0x7f,
++	.port_ops	= &vt8251_sata_ops,
++};
++
+ MODULE_AUTHOR("Jeff Garzik");
+ MODULE_DESCRIPTION("SCSI low-level driver for VIA SATA controllers");
+ MODULE_LICENSE("GPL");
+@@ -286,6 +335,10 @@
+ 	16, 16, 16, 16, 32, 128
+ };
+ 
++static const unsigned int vt8251_bar_sizes[] = {
++	8, 4, 8, 4, 16, 1024 
++};
++
+ static unsigned long svia_scr_addr(unsigned long addr, unsigned int port)
+ {
+ 	return addr + (port * 128);
+@@ -302,15 +355,19 @@
+ {
+ 	unsigned long reg_addr = pci_resource_start(pdev, port);
+ 	unsigned long bmdma_addr = pci_resource_start(pdev, 4) + (port * 8);
++/*
+ 	unsigned long scr_addr;
++*/
+ 
+ 	probe_ent->port[port].cmd_addr = reg_addr;
+ 	probe_ent->port[port].altstatus_addr =
+ 	probe_ent->port[port].ctl_addr = (reg_addr + 8) | ATA_PCI_CTL_OFS;
+ 	probe_ent->port[port].bmdma_addr = bmdma_addr;
+ 
++/*
+ 	scr_addr = vt6421_scr_addr(pci_resource_start(pdev, 5), port);
+ 	probe_ent->port[port].scr_addr = scr_addr;
++*/
+ 
+ 	ata_std_ports(&probe_ent->port[port]);
+ }
+@@ -346,7 +403,7 @@
+ 	INIT_LIST_HEAD(&probe_ent->node);
+ 
+ 	probe_ent->sht		= &svia_sht;
+-	probe_ent->host_flags	= ATA_FLAG_SATA | ATA_FLAG_NO_LEGACY;
++	probe_ent->host_flags	= ATA_FLAG_SLAVE_POSS | ATA_FLAG_SRST | ATA_FLAG_NO_LEGACY;
+ 	probe_ent->port_ops	= &vt6421_sata_ops;
+ 	probe_ent->n_ports	= N_PORTS;
+ 	probe_ent->irq		= pdev->irq;
+@@ -361,6 +418,18 @@
+ 	return probe_ent;
+ }
+ 
++static struct ata_probe_ent *vt8251_init_probe_ent(struct pci_dev *pdev)
++{
++	struct ata_probe_ent *probe_ent;
++	struct ata_port_info *ppi = &via287_port_info;
++
++	probe_ent = ata_pci_init_native_mode(pdev, &ppi, ATA_PORT_PRIMARY | ATA_PORT_SECONDARY);
++	if (!probe_ent)
++		return NULL;
++
++	return probe_ent;
++}
++
+ static void svia_configure(struct pci_dev *pdev)
+ {
+ 	u8 tmp8;
+@@ -400,6 +469,194 @@
+ 	}
+ }
+ 
++/* add functions for pata */
++
++
++/**
++ *	via_pata_cbl_detect - Probe host controller cable detect info
++ *	@ap: Port for which cable detect info is desired
++ *
++ *	Read 80c cable indicator from ATA PCI device's PCI config
++ *	register.  This register is normally set by firmware (BIOS).
++ *
++ *	LOCKING:
++ *	None (inherited from caller).
++ */
++static void via_pata_cbl_detect(struct ata_port *ap)
++{
++	struct pci_dev *pdev = to_pci_dev(ap->host_set->dev);
++	int cfg_addr;
++	u8 tmp;
++	u16 tmp16;
++
++	pci_read_config_word(pdev, PCI_DEVICE_ID, &tmp16);
++
++	if ((ap->port_no == 2) && (tmp16 == 0x3249)) { /* PATA channel in VT6421 */
++		ap->cbl = ATA_CBL_PATA80;
++		cfg_addr = 0xB3;
++		pci_read_config_byte(pdev, cfg_addr, &tmp);
++		if (tmp & 0x10) { /* 40pin cable */
++			ap->cbl = ATA_CBL_PATA40;
++		} else { /* 80pin cable */
++			ap->cbl = ATA_CBL_PATA80;
++		}
++	}
++	else if ((ap->port_no == 1) && (tmp16 == 0x0581)) { /* PATA channel in cx700*/
++		ap->cbl = ATA_CBL_PATA80;
++		cfg_addr = 0x50;
++		pci_read_config_byte(pdev, cfg_addr, &tmp);
++		if (tmp & 0x10) { /* 40pin cable */
++			ap->cbl = ATA_CBL_PATA40;
++		} else { /* 80pin cable */
++			ap->cbl = ATA_CBL_PATA80;
++		}
++		
++	}
++	else { /* channel 0 and 1 are SATA channels */
++		ap->cbl = ATA_CBL_SATA;
++	}
++
++	return;
++}
++
++/**
++ *	via_pata_phy_reset - Probe specified port on PATA host controller
++ *	@ap: Port to probe
++ *
++ *	Probe PATA phy.
++ *
++ *	LOCKING:
++ *	None (inherited from caller).
++ */
++
++static void via_pata_phy_reset(struct ata_port *ap)
++{
++	via_pata_cbl_detect(ap);
++
++	ata_port_probe(ap);
++
++	ata_bus_reset(ap);
++}
++
++
++/**
++ *	via_pata_set_piomode - Initialize host controller PATA PIO timings
++ *	@ap: Port whose timings we are configuring
++ *	@adev: um
++ *	@pio: PIO mode, 0 - 4
++ *
++ *	Set PIO mode for device, in host controller PCI config space.
++ *
++ *	LOCKING:
++ *	None (inherited from caller).
++ */
++
++static void via_pata_set_piomode (struct ata_port *ap, struct ata_device *adev)
++{
++	struct pci_dev *dev = to_pci_dev(ap->host_set->dev);
++
++	u8 cfg_byte;
++	int cfg_addr;
++	u16 tmp16;
++
++	pci_read_config_word(dev, PCI_DEVICE_ID, &tmp16);
++
++       if ( (tmp16 == 0x3249) && (ap->port_no == 2) ) { /* PATA channel in VT6421 */
++	   	cfg_addr = 0xAB;
++       }
++	else if( (tmp16 == 0x0581) && (ap->port_no == 1) ) { /* PATA channel in cx700 */
++		cfg_addr = 0x49;
++	}
++	else{		
++		return;
++	}
++
++	switch (adev->pio_mode & 0x07) {
++		case 0:
++			cfg_byte = 0xa8;
++			break;
++		case 1:
++			cfg_byte = 0x65;
++			break;
++		case 2:
++			cfg_byte = 0x65;
++			break;
++		case 3:
++			cfg_byte = 0x31;
++			break;
++		case 4:
++			cfg_byte = 0x20;
++			break;
++		default:
++			cfg_byte = 0x20;
++	}
++
++	pci_write_config_byte (dev, cfg_addr, cfg_byte);
++}
++
++/**
++ *	via_pata_set_dmamode - Initialize host controller PATA PIO timings
++ *	@ap: Port whose timings we are configuring
++ *	@adev: um
++ *	@udma: udma mode, 0 - 6
++ *
++ *	Set UDMA mode for device, in host controller PCI config space.
++ *
++ *	LOCKING:
++ *	None (inherited from caller).
++ */
++
++static void via_pata_set_dmamode (struct ata_port *ap, struct ata_device *adev)
++{
++	struct pci_dev *dev	= to_pci_dev(ap->host_set->dev);
++
++	u8 cfg_byte;
++	int cfg_addr;
++	u16 tmp16;
++
++	pci_read_config_word(dev, PCI_DEVICE_ID, &tmp16);
++
++       if ( (tmp16 == 0x3249) && (ap->port_no == 2) ) { /* PATA channel in VT6421 */
++	   	cfg_addr = 0xB3;
++       }
++	else if( (tmp16 == 0x0581) && (ap->port_no == 1) ) { /* PATA channel in cx700 */
++		cfg_addr = 0x50;
++	}
++	else{		
++		return;
++	}
++
++	switch (adev->dma_mode & 0x07) {
++		case 0:
++			cfg_byte = 0xee;
++			break;	
++		case 1:
++			cfg_byte = 0xe8;
++			break;	
++		case 2:
++			cfg_byte = 0xe6;
++			break;	
++		case 3:
++			cfg_byte = 0xe4;
++			break;	
++		case 4:
++			cfg_byte = 0xe2;
++			break;	
++		case 5:
++			cfg_byte = 0xe1;
++			break;	
++		case 6:
++			cfg_byte = 0xe0;
++			break;	
++		default:
++			cfg_byte = 0xe0;
++	}
++
++	pci_write_config_byte (dev, cfg_addr, cfg_byte);
++}
++
++
++
+ static int svia_init_one (struct pci_dev *pdev, const struct pci_device_id *ent)
+ {
+ 	static int printed_version;
+@@ -435,8 +692,11 @@
+ 		}
+ 
+ 		bar_sizes = &svia_bar_sizes[0];
+-	} else {
++	} else if(board_id == vt6421) {
+ 		bar_sizes = &vt6421_bar_sizes[0];
++	} else if(board_id == vt8251) {
++		/* vt8251, do special init if needed */
++		bar_sizes = &vt8251_bar_sizes[0];
+ 	}
+ 
+ 	for (i = 0; i < ARRAY_SIZE(svia_bar_sizes); i++)
+@@ -460,8 +720,12 @@
+ 
+ 	if (board_id == vt6420)
+ 		probe_ent = vt6420_init_probe_ent(pdev);
+-	else
++	else if (board_id == vt6421)
+ 		probe_ent = vt6421_init_probe_ent(pdev);
++	else if (board_id == vt8251)
++		probe_ent = vt8251_init_probe_ent(pdev);
++	else
++		probe_ent = NULL;
+ 
+ 	if (!probe_ent) {
+ 		dev_printk(KERN_ERR, &pdev->dev, "out of memory\n");
