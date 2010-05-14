@@ -2,3 +2,4 @@ syntax: regexp
 .*\.swp$
 initramfs-filelist\.txt$
 certificate\.pem$
+scripts/keystore/batch.gnupg

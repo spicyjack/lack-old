@@ -38,7 +38,7 @@ CHALLENGE=0
 # path to write keys to; change with: --output
 KEY_OUT_DIR="/home/brian/keys"
 # path to diceparse.pl; change with: --dicepath
-DICEPATH="/home/brian/cvs/perl_scripts/"
+DICEPATH="/home/brian/src/perl-hg/"
 # generate a diceware phrase consisting of this many words (rolls); 
 # change with: --dicesize
 DICESIZE="5"
