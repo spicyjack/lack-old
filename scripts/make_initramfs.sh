@@ -151,8 +151,7 @@ cat <<-EOF
   -h|--help         Displays script options 
   -e|--examples     Displays examples of script usage
   -H|--longhelp     Displays script options, environment vars and examples 
-  -n|--dryrun       Builds filelists but does not run 'gen_init_cpio'
-
+  -n|--dry-run      Builds filelists but does not run 'gen_init_cpio'
 
   -f|--varsfile     File to read in to set script environment variables
   -s|--showvars     List variables set in the --project stanza
@@ -225,7 +224,7 @@ EOF
 ### BEGIN SCRIPT ###
 # run getopt
 TEMP=$(${GETOPT} -o hHenp:d:f:sb:o:qlk \
---long help,longhelp,examples,dryrun,project:,project-dir: \
+--long help,longhelp,examples,dry-run,project:,project-dir: \
 --long varsfile:,showvars,base:,output:,quiet,hardlink \
 --long keeplist,keepfiles,keep \
 -n "${SCRIPTNAME}" -- "$@")
@@ -267,8 +266,8 @@ while $TRUE; do
             ERRORLOOP=$(($ERRORLOOP - 1));
             shift 2
 	    	;; # --project
-        -n|--dryrun) # don't create the initramfs image, only filelists
-        	DRYRUN=1
+        -n|--dry-run) # don't create the initramfs image, only filelists
+        	DRY_RUN=1
             ERRORLOOP=$(($ERRORLOOP - 1));
             shift
 		    ;; # --dryrun
@@ -391,6 +390,7 @@ else
     exit 1
 fi # if [ -n $OUTPUT_FILE ]
 
+# FIXME don't bomb out if --dry-run is set
 # no sense in running if gen_init_cpio doesn't exist
 if [ ! -x "/usr/src/linux/usr/gen_init_cpio" ]; then
     echo "Huh. gen_init_cpio doesn't exist (in /usr/src/linux/usr)" >&2
@@ -399,7 +399,7 @@ if [ ! -x "/usr/src/linux/usr/gen_init_cpio" ]; then
 fi
 
 # create a temp directory
-TEMPDIR=$(${MKTEMP} -d) 
+TEMPDIR=$(${MKTEMP} -d tmp-initramfs.XXXXX) 
 
 # create the project /init script and put it in the temporary directory
 echo "# Begin $FILELIST; to make changes to this list, " >> $TEMPDIR/$FILELIST
@@ -468,10 +468,14 @@ if [ $QUIET -gt 0 ]; then
     EXTRA_CMDS="time "
 fi
 
-if [ $DRYRUN ]; then
+if [ $DRY_RUN ]; then
     # remove the empty initramfs file that was created earlier with 'touch'
     # leave both filelists (compressed and uncompressed)
+    echo "- Deleting $OUTPUT_FILE,"
+    echo "  as --dry-run won't create the file"
     rm $OUTPUT_FILE
+    echo "- initramfs output directory is: ${TEMPDIR}"
+    echo "  Please delete it manually"
 else
     # run the gen_init_cpio command, output to $OUTPUT_FILE
     eval $EXTRA_CMDS /usr/src/linux/usr/gen_init_cpio $TEMPDIR/$FILELIST \
@@ -489,7 +493,7 @@ else
         fi #if [ -r /boot/initrd-$KERNEL_VER.gz ]
         ln $OUTPUT_FILE /boot/initrd-$KERNEL_VER.gz
     fi # if [ $HARDLINK_INITRD -gt 0 ]
-fi # if [ $DRYRUN ];
+fi # if [ $DRY_RUN ];
 
 # if we got here, everything worked
 exit 0
