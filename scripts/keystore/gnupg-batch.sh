@@ -29,6 +29,7 @@ GETOPT=$(which getopt)
 MV=$(which mv)
 CAT=$(which cat)
 RM=$(which rm)
+UNAME=$(which uname)
 SCRIPTNAME=$(basename $0)
 
 # some defaults
@@ -111,7 +112,6 @@ function temp_key_move () {
 
 function rename_keys () {
 	# rename the keystore files to the name of their key ID
-   
     if [ $QUIET -gt 0 ]; then
 		echo "Renaming keystore.[sec|pub] to ${KEY_ID}.[sec|pub]"
 	fi
@@ -161,14 +161,25 @@ EOE
 } # show_examples
 
 ### BEGIN SCRIPT ###
-
-# run getopt
-TEMP=$(${GETOPT} -o hec:l:n:o:p:qt:vw:x \
---long help,examples,count:,dicepath:,list:,output:,overwrite \
---long quiet,tempdir:,tempnum:,verbose,wordlist:,challenge \
--n "${SCRIPTNAME}" -- "$@")
-
-cmd_status $GETOPT $?
+# BSD's getopt is simpler than the GNU getopt; we need to detect it 
+OSDETECT=$($UNAME -s)
+if [ $OSDETECT == "Darwin" ]; then
+    # this is the BSD part
+    echo "WARNING: BSD OS Detected; long switches will not work here..."
+    TEMP=$(${GETOPT} hec:l:n:o:p:qt:vw:x $*)
+    cmd_status $GETOPT $?
+elif [ $OSDETECT == "Linux" ]; then
+    # and this is the GNU part
+    TEMP=$(${GETOPT} -o hec:l:n:o:p:qt:vw:x \
+        --long help,examples,count:,dicepath:,list:,output:,overwrite \
+        --long quiet,tempdir:,tempnum:,verbose,wordlist:,challenge \
+        -n "${SCRIPTNAME}" -- "$@")
+    cmd_status $GETOPT $?
+else
+    echo "Error: Unknown OS Type.  I don't know how to call"
+    echo "'getopts' correctly for this operating system.  Exiting..."
+    exit 1
+fi
 
 # Note the quotes around `$TEMP': they are essential!
 # read in the $TEMP variable
