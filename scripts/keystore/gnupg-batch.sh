@@ -306,7 +306,8 @@ while $TRUE; do
         --secret-keyring ${OUTDIR}/keystore.sec \
         --keyring ${OUTDIR}/keystore.pub | \
         head -n 3 | tail -n 1 | \
-        sed '{s/sec   1024D\///; s/ .*$//}' )
+        sed -e 's/sec   1024D\///' -e 's/ .*$//' )
+        #sed '{s/sec   1024D\///; s/ .*$//}' )
 	if [ $QUIET -gt 1 ]; then echo "key ID is: ${KEY_ID}"; fi	
     # rename them
     if [ ! -e $OUTDIR/$KEY_ID.sec -a ! -e $OUTDIR/$KEY_ID.pub ]; then
