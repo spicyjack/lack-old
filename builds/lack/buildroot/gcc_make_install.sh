@@ -3,6 +3,7 @@ CROSS=`basename "$PWD" | cut -d- -f3-99`
 SRC=../`basename "$PWD" .obj-$CROSS`
 NAME=`cd $SRC;pwd`
 NAME=`basename "$NAME" .obj-$CROSS`-$CROSS
+INSTALL_PREFIX="/home/cross"
 # install prefix
 if [ -z $INSTALL_PREFIX ]; then
     echo "ERROR: missing INSTALL_PREFIX environment variable"

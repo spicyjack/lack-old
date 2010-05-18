@@ -5,6 +5,7 @@ NAME=`basename "$PWD"`
 VER=-`echo $NAME | cut -d '-' -f 2-99`
 NAME=`echo $NAME | cut -d '-' -f 1`
 CROSS=`basename $PWD | cut -d '-' -f 3-99`
+INSTALL_PREFIX="/home/cross"
 # install prefix
 if [ -z $INSTALL_PREFIX ]; then
     echo "ERROR: missing INSTALL_PREFIX environment variable"

@@ -5,7 +5,7 @@ NAME=`basename "$PWD"`
 VER=-`echo $NAME | cut -d '-' -f 2-99`
 NAME=`echo $NAME | cut -d '-' -f 1`
 CROSS=`basename $PWD | cut -d '-' -f 3-99`
-# install prefix
+INSTALL_PREFIX="/home/cross"
 # install prefix
 if [ -z $INSTALL_PREFIX ]; then
     echo "ERROR: missing INSTALL_PREFIX environment variable"
@@ -13,6 +13,7 @@ if [ -z $INSTALL_PREFIX ]; then
 fi
 # target install directory
 #STATIC_TARGET=$INSTALL_PREFIX/stow/$NAME$VER
+echo "Creating links from ${INSTALL_PREFIX}/stow/${NAME}${VER}"
 STATIC_TARGET=$INSTALL_PREFIX/stow/$NAME$VER
 # target cross-compilation install directory
 CROSS_TARGET=$INSTALL_PREFIX/cross

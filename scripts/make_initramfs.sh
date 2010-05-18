@@ -47,9 +47,7 @@ FILELIST="initramfs-filelist.txt"
 
 # helper functions
 
-# set the script parameters
-# FIXME move the other source call here; get this function to do all of the
-# work of finding the correct file and sourcing it
+# set the script parameters from initramfs.cfg or a user-specified file
 function set_vars() 
 {
     local PROJECT_DIR=$1
@@ -392,14 +390,16 @@ fi # if [ -n $OUTPUT_FILE ]
 
 # FIXME don't bomb out if --dry-run is set
 # no sense in running if gen_init_cpio doesn't exist
-if [ ! -x "/usr/src/linux/usr/gen_init_cpio" ]; then
-    echo "Huh. gen_init_cpio doesn't exist (in /usr/src/linux/usr)" >&2
-    echo "Can't build initramfs image... Exiting." >&2 
-    exit 1
-fi
+if [ ! $DRY_RUN ]; then
+    if [ ! -x "/usr/src/linux/usr/gen_init_cpio" ]; then
+        echo "Huh. gen_init_cpio doesn't exist (in /usr/src/linux/usr)" >&2
+        echo "Can't build initramfs image... Exiting." >&2 
+        exit 1
+    fi # if [ ! -x "/usr/src/linux/usr/gen_init_cpio" ]
+fi # if [ ! $DRY_RUN ]; then
 
 # create a temp directory
-TEMPDIR=$(${MKTEMP} -d tmp-initramfs.XXXXX) 
+TEMPDIR=$(${MKTEMP} -d /tmp/tmp-initramfs.XXXXX) 
 
 # create the project /init script and put it in the temporary directory
 echo "# Begin $FILELIST; to make changes to this list, " >> $TEMPDIR/$FILELIST
@@ -408,10 +408,10 @@ echo "# Filelist generated on $RFC_2822_DATE" >> $TEMPDIR/$FILELIST
 echo "# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" >> $TEMPDIR/$FILELIST
 
 # create the new init.sh script, which will be appended to
-$TOUCH $TEMPDIR/init.sh
+$TOUCH /$TEMPDIR/init.sh
 sedify $BUILD_BASE/common/initscripts/_init.sh $TEMPDIR/init.sh
 # add the init script to the filelist
-echo "file /init ${TEMPDIR}/init.sh 0755 0 0" >> $TEMPDIR/$FILELIST
+echo "file /init /${TEMPDIR}/init.sh 0755 0 0" >> $TEMPDIR/$FILELIST
 
 # copy all the desired recipie files first
 for RECIPE in $(echo ${PACKAGES});
@@ -472,8 +472,41 @@ if [ $DRY_RUN ]; then
     # remove the empty initramfs file that was created earlier with 'touch'
     # leave both filelists (compressed and uncompressed)
     echo "- Deleting $OUTPUT_FILE,"
-    echo "  as --dry-run won't create the file"
+    echo "  as --dry-run should not create this file"
     rm $OUTPUT_FILE
+    PERL_SCRIPT=$(cat <<'EOPS'
+        my $counter = 0;
+        while ( <> ) {
+            $counter++;
+            # skip comment lines
+            next if ( $_ =~ /^#/ );
+            next if ( $_ =~ /^$/ );
+            chomp($_);
+            # split the line up into fields
+            @line = split(q( ), $_);
+            if ( $line[0] eq q(dir) ) {
+                # $line[1] should be the name of the directory
+                print qq(WARN: missing directory : ) . $line[1] 
+                    . qq(, line $counter\n)
+                    unless ( -d $line[1] );
+            } elsif ( $line[0] eq q(file) ) {
+                print qq(WARN: missing file: ) . $line[2] 
+                    . qq(, line $counter\n)
+                    unless ( -e $line[2] );
+            } elsif ( $line[0] eq q(slink) ) {
+                print qq(WARN: missing symlink source: ) 
+                    . $line[2] . qq(, line $counter\n)
+                    unless ( -e $line[2] );
+            } else {
+                print qq(WARN: unknown filetype: ) . $line[0] 
+                    . qq(, line: $counter\n);
+            } # if ( $line[0] eq q(dir) )
+        } # while ( <> )
+EOPS)
+    echo "Running perl script on $TEMPDIR/$FILELIST"
+    cat $TEMPDIR/$FILELIST | perl -e "$PERL_SCRIPT" 
+
+    # barks if the file is missing
     echo "- initramfs output directory is: ${TEMPDIR}"
     echo "  Please delete it manually"
 else
