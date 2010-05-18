@@ -58,37 +58,38 @@ for other architectures or with newer versions of tools.
 
 	Binutils
 
-We will build and install binutils into /usr/app/binutils-2.18-i486-linux-uclibc.
+We will build and install binutils into
+$INSTALL_DIR (/usr/app/binutils-2.18-i486-linux-uclibc).
 We will symlink binutils' i486-linux-uclibc-XXX executables to /usr/bin,
 this will allow them to be called directly without directory prefix from anywhere:
 
-i486-linux-uclibc-addr2line -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-addr2line
-i486-linux-uclibc-ar -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-ar
-i486-linux-uclibc-as -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-as
-i486-linux-uclibc-c++filt -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-c++filt
-i486-linux-uclibc-gprof -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-gprof
-i486-linux-uclibc-ld -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-ld
-i486-linux-uclibc-nm -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-nm
-i486-linux-uclibc-objcopy -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-objcopy
-i486-linux-uclibc-objdump -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-objdump
-i486-linux-uclibc-ranlib -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-ranlib
-i486-linux-uclibc-readelf -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-readelf
-i486-linux-uclibc-size -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-size
-i486-linux-uclibc-strings -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-strings
-i486-linux-uclibc-strip -> /usr/app/binutils-2.18-i486-linux-uclibc/bin/i486-linux-uclibc-strip
+i486-linux-uclibc-addr2line -> $INSTALL_DIR/bin/i486-linux-uclibc-addr2line
+i486-linux-uclibc-ar -> $INSTALL_DIR/bin/i486-linux-uclibc-ar
+i486-linux-uclibc-as -> $INSTALL_DIR/bin/i486-linux-uclibc-as
+i486-linux-uclibc-c++filt -> $INSTALL_DIR/bin/i486-linux-uclibc-c++filt
+i486-linux-uclibc-gprof -> $INSTALL_DIR/bin/i486-linux-uclibc-gprof
+i486-linux-uclibc-ld -> $INSTALL_DIR/bin/i486-linux-uclibc-ld
+i486-linux-uclibc-nm -> $INSTALL_DIR/bin/i486-linux-uclibc-nm
+i486-linux-uclibc-objcopy -> $INSTALL_DIR/bin/i486-linux-uclibc-objcopy
+i486-linux-uclibc-objdump -> $INSTALL_DIR/bin/i486-linux-uclibc-objdump
+i486-linux-uclibc-ranlib -> $INSTALL_DIR/bin/i486-linux-uclibc-ranlib
+i486-linux-uclibc-readelf -> $INSTALL_DIR/bin/i486-linux-uclibc-readelf
+i486-linux-uclibc-size -> $INSTALL_DIR/bin/i486-linux-uclibc-size
+i486-linux-uclibc-strings -> $INSTALL_DIR/bin/i486-linux-uclibc-strings
+i486-linux-uclibc-strip -> $INSTALL_DIR/bin/i486-linux-uclibc-strip
 
 We will also symlink binutils' i486-linux-uclibc/bin/XXX executables
 (which are the same as above, just in a different directory and with different name)
 to /usr/cross/i486-linux-uclibc/bin/XXX, this is needed for gcc to find them.
 
-ar -> /usr/app/binutils-2.18-i486-linux-uclibc/i486-linux-uclibc/bin/ar
-as -> /usr/app/binutils-2.18-i486-linux-uclibc/i486-linux-uclibc/bin/as
-ld -> /usr/app/binutils-2.18-i486-linux-uclibc/i486-linux-uclibc/bin/ld
-nm -> /usr/app/binutils-2.18-i486-linux-uclibc/i486-linux-uclibc/bin/nm
-objcopy -> /usr/app/binutils-2.18-i486-linux-uclibc/i486-linux-uclibc/bin/objcopy
-objdump -> /usr/app/binutils-2.18-i486-linux-uclibc/i486-linux-uclibc/bin/objdump
-ranlib -> /usr/app/binutils-2.18-i486-linux-uclibc/i486-linux-uclibc/bin/ranlib
-strip -> /usr/app/binutils-2.18-i486-linux-uclibc/i486-linux-uclibc/bin/strip
+ar -> $INSTALL_DIR/i486-linux-uclibc/bin/ar
+as -> $INSTALL_DIR/i486-linux-uclibc/bin/as
+ld -> $INSTALL_DIR/i486-linux-uclibc/bin/ld
+nm -> $INSTALL_DIR/i486-linux-uclibc/bin/nm
+objcopy -> $INSTALL_DIR/i486-linux-uclibc/bin/objcopy
+objdump -> $INSTALL_DIR/i486-linux-uclibc/bin/objdump
+ranlib -> $INSTALL_DIR/i486-linux-uclibc/bin/ranlib
+strip -> $INSTALL_DIR/i486-linux-uclibc/bin/strip
 
 We will also symlink binutils' i486-linux-uclibc/lib/ldscripts directory
 to /usr/cross/i486-linux-uclibc/lib/ldscripts. This is not essential for
@@ -184,9 +185,10 @@ install 2>&1 | tee -a "$0.log"
 
 Step 4: symlink
 
-Go to /usr/app/binutils-2.18-i486-linux-uclibc, copy installink.sh into it,
+==============================
+Go to $INSTALL_DIR, copy installink.sh into it,
 create and run the following script:
-
+==============================
 #!/bin/sh
 . ./installink.sh
 
