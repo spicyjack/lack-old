@@ -18,12 +18,18 @@ ACTION=$1
 # prompt is set to 'no'
 file_parse "/proc/cmdline" "prompt"
 PROMPT=$PARSED
+# a default for the AES keylength
+AESKEY="128"
+file_parse "/proc/cmdline" "aeskey"
+if [ ! -z $PARSED ]; then
+    AESKEY=$PARSED
+fi # if [ ! -z $PARSED ]; then
 if [ "x$PROMPT" = "xno" ]; then 
     exit 0
 fi # if [ "x$PROMPT" != "xno" ]
 
 mount_success () {
-    MOUNTED="$ROOT_DEV mounted with AES128 encryption as /dev/loop0" 
+    MOUNTED="$ROOT_DEV mounted with AES${KEY} encryption as /dev/loop0" 
     colorize_nl $S_SUCCESS "${BASENAME} - ${MOUNTED}"
     colorize_nl $S_SUCCESS "${BASENAME} - ${MOUNTED}" > $SERIAL_PORT
     exit 0
@@ -152,7 +158,7 @@ case "$ACTION" in
         LOSETUP_CMD=$(echo "${PASSPHRASE}" \
             | /sbin/losetup -G ${KEY_MOUNT}/${HOSTNAME} \
             -K ${KEY_MOUNT}/${HOSTNAME}/disk_key.gpg -p 0 \
-            -e AES128 /dev/loop0 ${ROOT_DEV} 2>&1)
+            -e AES${AESKEY} /dev/loop0 ${ROOT_DEV} 2>&1)
         # was 'losetup' successful?  break out of this while loop
         # FIXME this will pass regardless of whether or not a loopback mount
         # works
