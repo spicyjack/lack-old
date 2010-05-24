@@ -17,6 +17,7 @@ case "$ACTION" in
   ;;
   start)
 	colorize_nl $S_TIP "$BASENAME: $DESC"
+    colorize_nl $S_INFO "$BASENAME: PID is ${$}"
     file_parse "/proc/cmdline" "run" # returns any parsed data as $PARSED
     RUN_PROG=$PARSED
     
