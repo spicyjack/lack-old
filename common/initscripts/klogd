@@ -43,7 +43,7 @@ case "$1" in
 	PATH=/bin:/sbin:/usr/bin:/usr/sbin
     KLOGD_PID=$(cat /var/run/${BASENAME}.pid)
 	colorize $S_TIP "${BASENAME}: Stopping $DESC "
-    echo -n "(PID = ${KLOGD_PID});"
+    echo -n "(PID=${KLOGD_PID});"
     /bin/kill -TERM $KLOGD_PID
     cmd_status $?
     colorize_nl "$S_SUCCESS" "$SUCCESS"

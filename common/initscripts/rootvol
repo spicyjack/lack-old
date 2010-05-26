@@ -39,9 +39,9 @@ case "$ACTION" in
         # bail out and tell the user 
         if [ ! -b $ROOT ]; then
             colorize_nl $S_FAILURE "hmm, root volume or device doesn't exist"
-            colorize_nl $S_FAILURE "volume  = '${VOL_GRP}'"
+            colorize_nl $S_FAILURE "volgrp  = '${VOL_GRP}'"
             colorize_nl $S_FAILURE "rootvol = '${ROOTVOL}'"
-            colorize_nl $S_FAILURE "root    = '${ROOT_DEV}'"
+            colorize_nl $S_FAILURE "rootdev = '${ROOT_DEV}'"
             DEBUG=1
             want_shell
         fi # if [ ! -b $ROOT ];
