@@ -29,6 +29,7 @@ case "$ACTION" in
     if [ -z $THUMB_DEV ]; then
         THUMB_DEV=/dev/sdc1
     fi
+    colorize_nl $S_TIP "$BASENAME: Will check ${THUMB_DEV} for keyhosts folder"
 	;;
   stop)
     # unmount the thumbdrive if it's mounted

@@ -61,9 +61,7 @@ case "$ACTION" in
     write_child_pid $BASENAME $$
     # loop until the encryption key directory becomes available
     colorize $S_TIP "${BASENAME} - $DESC "
-    echo "(THUMB_DEV=${THUMB_DEV});"
     colorize $S_TIP "${BASENAME} - $DESC " > $SERIAL_PORT
-    echo "(THUMB_DEV=${THUMB_DEV});" > $SERIAL_PORT
     want_shell
     
     # FIXME test for multiple directories here
