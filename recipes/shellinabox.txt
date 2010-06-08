@@ -5,13 +5,13 @@
 # helpcommand: /usr/bin/somebin --help
 # versioncommand: /usr/bin/somebin --version
 # examplecommand: /usr/bin/somebin -x -y -z 10
-# build with: ./configure --prefix=/usr/local/stow/shellinabox-2.9 \
+# build with: ./configure --prefix=/usr/local/stow/shellinabox-2.10 \
 # --disable-runtime-loading --disable-pam; make
 # dir <name> <mode> <uid> <gid>
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 #
-file /usr/bin/shellinaboxd /usr/local/stow/shellinabox-2.9/bin/shellinaboxd 755 0 0
+file /usr/bin/shellinaboxd /usr/local/stow/shellinabox-2.10/bin/shellinaboxd 755 0 0
 # shellinabox needs the xterm terminfo file to work when presenting dialog
 # screens
 dir /lib/terminfo 0755 0 0
