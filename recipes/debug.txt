@@ -4,3 +4,19 @@ file /usr/bin/strace /usr/bin/strace 0755 0 0
 # this needs /bin/bash (or a suitable substitute) to run
 file /usr/bin/ldd /usr/bin/ldd 0755 0 0
 file /usr/bin/lsof /usr/bin/lsof 0755 0 0
+# pv
+file /usr/bin/pv /usr/bin/pv 755 0 0
+dir /usr/share/locale 755 0 0
+dir /usr/share/locale/de 755 0 0
+dir /usr/share/locale/de/LC_MESSAGES 755 0 0
+file /usr/share/locale/de/LC_MESSAGES/pv.mo /usr/share/locale/de/LC_MESSAGES/pv.mo 644 0 0
+dir /usr/share/locale/fr 755 0 0
+dir /usr/share/locale/fr/LC_MESSAGES 755 0 0
+file /usr/share/locale/fr/LC_MESSAGES/pv.mo /usr/share/locale/fr/LC_MESSAGES/pv.mo 644 0 0
+dir /usr/share/locale/pl 755 0 0
+dir /usr/share/locale/pl/LC_MESSAGES 755 0 0
+file /usr/share/locale/pl/LC_MESSAGES/pv.mo /usr/share/locale/pl/LC_MESSAGES/pv.mo 644 0 0
+dir /usr/share/locale/pt 755 0 0
+dir /usr/share/locale/pt/LC_MESSAGES 755 0 0
+file /usr/share/locale/pt/LC_MESSAGES/pv.mo /usr/share/locale/pt/LC_MESSAGES/pv.mo 644 0 0
+# vi: set sw=4 ts=4 paste:

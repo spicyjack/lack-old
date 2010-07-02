@@ -13,13 +13,22 @@ if [ $(/bin/grep -c nox /proc/cmdline) -eq 0 ]; then
         # debug session
         cat /home/demo/xsession | sed "s/^#\(exec xterm.*\)$/\1/" \
             > $HOME_DIR/.xsession
+    elif [ $(/bin/egrep -c "flwm" /proc/cmdline) -gt 0 ]; then
+        # run flwm
+        cat /home/demo/xsession | sed "s/^#\(exec flwm.*\)$/\1/" \
+            > $HOME_DIR/.xsession
+    elif [ $(/bin/egrep -c "windowlab" /proc/cmdline) -gt 0 ]; then
+        # run flwm
+        cat /home/demo/xsession | sed "s/^#\(exec windowlab.*\)$/\1/" \
+            > $HOME_DIR/.xsession
     else
-        # normal session
+        # normal session with the Gtk2-Perl script greeter
         cat /home/demo/xsession | sed "s/^#\(exec perl.*\)$/\1/" \
             > $HOME_DIR/.xsession
     fi
     # set the xsession file to be executable
     #chmod 755 $HOME_DIR/.xsession
+    # start X as the demo user
     /bin/su -s /bin/sh -c "$STARTX" demo
 else
     # nope, don't run x; just sleep for a day, as /sbin/init will keep

@@ -1,0 +1,91 @@
+# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# gtk2-engines-xfce
+dir /usr/share/themes 755 0 0
+dir /usr/share/themes/Xfce 755 0 0
+dir /usr/share/themes/Xfce/gtk-2.0 755 0 0
+file /usr/share/themes/Xfce/gtk-2.0/gtkrc /usr/share/themes/Xfce/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/Xfce/README.html /usr/share/themes/Xfce/README.html 644 0 0
+dir /usr/share/themes/Xfce-4.0 755 0 0
+dir /usr/share/themes/Xfce-4.0/gtk-2.0 755 0 0
+file /usr/share/themes/Xfce-4.0/gtk-2.0/gtkrc /usr/share/themes/Xfce-4.0/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/Xfce-4.0/README.html /usr/share/themes/Xfce-4.0/README.html 644 0 0
+dir /usr/share/themes/Xfce-4.2 755 0 0
+dir /usr/share/themes/Xfce-4.2/gtk-2.0 755 0 0
+file /usr/share/themes/Xfce-4.2/gtk-2.0/gtkrc /usr/share/themes/Xfce-4.2/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/Xfce-4.2/README.html /usr/share/themes/Xfce-4.2/README.html 644 0 0
+dir /usr/share/themes/Xfce-b5 755 0 0
+dir /usr/share/themes/Xfce-b5/gtk-2.0 755 0 0
+file /usr/share/themes/Xfce-b5/gtk-2.0/gtkrc /usr/share/themes/Xfce-b5/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/Xfce-b5/README.html /usr/share/themes/Xfce-b5/README.html 644 0 0
+dir /usr/share/themes/Xfce-basic 755 0 0
+dir /usr/share/themes/Xfce-basic/gtk-2.0 755 0 0
+file /usr/share/themes/Xfce-basic/gtk-2.0/gtkrc /usr/share/themes/Xfce-basic/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/Xfce-basic/README.html /usr/share/themes/Xfce-basic/README.html 644 0 0
+dir /usr/share/themes/Xfce-cadmium 755 0 0
+dir /usr/share/themes/Xfce-cadmium/gtk-2.0 755 0 0
+file /usr/share/themes/Xfce-cadmium/gtk-2.0/gtkrc /usr/share/themes/Xfce-cadmium/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/Xfce-cadmium/README.html /usr/share/themes/Xfce-cadmium/README.html 644 0 0
+dir /usr/share/themes/Xfce-curve 755 0 0
+dir /usr/share/themes/Xfce-curve/gtk-2.0 755 0 0
+file /usr/share/themes/Xfce-curve/gtk-2.0/gtkrc /usr/share/themes/Xfce-curve/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/Xfce-curve/README.html /usr/share/themes/Xfce-curve/README.html 644 0 0
+dir /usr/share/themes/Xfce-dawn 755 0 0
+dir /usr/share/themes/Xfce-dawn/gtk-2.0 755 0 0
+file /usr/share/themes/Xfce-dawn/gtk-2.0/gtkrc /usr/share/themes/Xfce-dawn/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/Xfce-dawn/README.html /usr/share/themes/Xfce-dawn/README.html 644 0 0
+dir /usr/share/themes/Xfce-dusk 755 0 0
+dir /usr/share/themes/Xfce-dusk/gtk-2.0 755 0 0
+file /usr/share/themes/Xfce-dusk/gtk-2.0/gtkrc /usr/share/themes/Xfce-dusk/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/Xfce-dusk/README.html /usr/share/themes/Xfce-dusk/README.html 644 0 0
+dir /usr/share/themes/Xfce-kde2 755 0 0
+dir /usr/share/themes/Xfce-kde2/gtk-2.0 755 0 0
+file /usr/share/themes/Xfce-kde2/gtk-2.0/gtkrc /usr/share/themes/Xfce-kde2/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/Xfce-kde2/README.html /usr/share/themes/Xfce-kde2/README.html 644 0 0
+dir /usr/share/themes/Xfce-kolors 755 0 0
+dir /usr/share/themes/Xfce-kolors/gtk-2.0 755 0 0
+file /usr/share/themes/Xfce-kolors/gtk-2.0/gtkrc /usr/share/themes/Xfce-kolors/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/Xfce-kolors/README.html /usr/share/themes/Xfce-kolors/README.html 644 0 0
+dir /usr/share/themes/Xfce-light 755 0 0
+dir /usr/share/themes/Xfce-light/gtk-2.0 755 0 0
+file /usr/share/themes/Xfce-light/gtk-2.0/gtkrc /usr/share/themes/Xfce-light/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/Xfce-light/README.html /usr/share/themes/Xfce-light/README.html 644 0 0
+dir /usr/share/themes/Xfce-orange 755 0 0
+dir /usr/share/themes/Xfce-orange/gtk-2.0 755 0 0
+file /usr/share/themes/Xfce-orange/gtk-2.0/gtkrc /usr/share/themes/Xfce-orange/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/Xfce-orange/README.html /usr/share/themes/Xfce-orange/README.html 644 0 0
+dir /usr/share/themes/Xfce-redmondxp 755 0 0
+dir /usr/share/themes/Xfce-redmondxp/gtk-2.0 755 0 0
+file /usr/share/themes/Xfce-redmondxp/gtk-2.0/gtkrc /usr/share/themes/Xfce-redmondxp/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/Xfce-redmondxp/README.html /usr/share/themes/Xfce-redmondxp/README.html 644 0 0
+dir /usr/share/themes/Xfce-saltlake 755 0 0
+dir /usr/share/themes/Xfce-saltlake/gtk-2.0 755 0 0
+file /usr/share/themes/Xfce-saltlake/gtk-2.0/gtkrc /usr/share/themes/Xfce-saltlake/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/Xfce-saltlake/README.html /usr/share/themes/Xfce-saltlake/README.html 644 0 0
+dir /usr/share/themes/Xfce-smooth 755 0 0
+dir /usr/share/themes/Xfce-smooth/gtk-2.0 755 0 0
+file /usr/share/themes/Xfce-smooth/gtk-2.0/gtkrc /usr/share/themes/Xfce-smooth/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/Xfce-smooth/README.html /usr/share/themes/Xfce-smooth/README.html 644 0 0
+dir /usr/share/themes/Xfce-stellar 755 0 0
+dir /usr/share/themes/Xfce-stellar/gtk-2.0 755 0 0
+file /usr/share/themes/Xfce-stellar/gtk-2.0/gtkrc /usr/share/themes/Xfce-stellar/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/Xfce-stellar/README.html /usr/share/themes/Xfce-stellar/README.html 644 0 0
+dir /usr/share/themes/Xfce-winter 755 0 0
+dir /usr/share/themes/Xfce-winter/gtk-2.0 755 0 0
+file /usr/share/themes/Xfce-winter/gtk-2.0/gtkrc /usr/share/themes/Xfce-winter/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/Xfce-winter/README.html /usr/share/themes/Xfce-winter/README.html 644 0 0
+dir /usr/lib 755 0 0
+dir /usr/lib/gtk-2.0 755 0 0
+dir /usr/lib/gtk-2.0/2.10.0 755 0 0
+dir /usr/lib/gtk-2.0/2.10.0/engines 755 0 0
+file /usr/lib/gtk-2.0/2.10.0/engines/libxfce.so /usr/lib/gtk-2.0/2.10.0/engines/libxfce.so 644 0 0
+# vi: set sw=4 ts=4 paste:

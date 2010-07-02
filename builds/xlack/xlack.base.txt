@@ -22,7 +22,7 @@ file /etc/group :BUILD_BASE:/common/etcfiles/group 0644 0 0
 file /etc/passwd :BUILD_BASE:/common/etcfiles/passwd 0644 0 0
 file /etc/shadow :BUILD_BASE:/common/etcfiles/shadow 0640 0 0
 file /etc/sudoers :BUILD_BASE:/common/etcfiles/sudoers 0440 0 0
-file /etc/X11/xorg.conf :BUILD_BASE:/common/etcfiles/xorg.conf 644 0 0
+file /etc/X11/xorg.conf :PROJECT_DIR:/etcfiles/xorg.conf 644 0 0
 # files sourced from the xlack sub-project directory
 file /etc/inittab :PROJECT_DIR:/etcfiles/inittab 0644 0 0
 file /etc/modules :PROJECT_DIR:/etcfiles/modules 0644 0 0
@@ -49,7 +49,7 @@ dir /etc/scripts 0755 0 0
 file /etc/scripts/streaming.sh :BUILD_BASE:/common/scripts/streaming.sh 0755 0 0
 file /etc/scripts/setvolume.sh :BUILD_BASE:/common/scripts/setvolume.sh 0755 0 0
 file /etc/scripts/helloworld.pl :PROJECT_DIR:/scripts/helloworld.pl 0755 0 0
-file /etc/scripts/startx_demo.sh :PROJECT_DIR:/scripts/startx_demo.sh 0755 0 0
+file /etc/scripts/startx.sh :PROJECT_DIR:/scripts/startx.sh 0755 0 0
 file /etc/scripts/start_term.sh :PROJECT_DIR:/scripts/start_term.sh 0755 0 0
 # debugging X windows
 file /bin/logstartx.sh :BUILD_BASE:/common/scripts/logstartx.sh 0755 0 0

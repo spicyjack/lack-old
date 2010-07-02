@@ -1,0 +1,40 @@
+# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# gtk2-engines-magicchicken
+dir /usr/lib 755 0 0
+dir /usr/lib/gtk 755 0 0
+dir /usr/lib/gtk/themes 755 0 0
+dir /usr/lib/gtk/themes/engines 755 0 0
+dir /usr/lib/gtk-2.0 755 0 0
+dir /usr/lib/gtk-2.0/2.10.0 755 0 0
+dir /usr/lib/gtk-2.0/2.10.0/engines 755 0 0
+file /usr/lib/gtk-2.0/2.10.0/engines/libmgicchikn.so /usr/lib/gtk-2.0/2.10.0/engines/libmgicchikn.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/engines/libmgicchikn.la /usr/lib/gtk-2.0/2.10.0/engines/libmgicchikn.la 644 0 0
+dir /usr/share/themes 755 0 0
+dir /usr/share/themes/MagicChicken 755 0 0
+dir /usr/share/themes/MagicChicken/gtk-2.0 755 0 0
+file /usr/share/themes/MagicChicken/gtk-2.0/gtkrc /usr/share/themes/MagicChicken/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/MagicChicken/README /usr/share/themes/MagicChicken/README 644 0 0
+dir /usr/share/themes/OkayishChicken 755 0 0
+dir /usr/share/themes/OkayishChicken/gtk-2.0 755 0 0
+file /usr/share/themes/OkayishChicken/gtk-2.0/gtkrc /usr/share/themes/OkayishChicken/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/OkayishChicken/README /usr/share/themes/OkayishChicken/README 644 0 0
+dir /usr/share/themes/CortlandChicken 755 0 0
+dir /usr/share/themes/CortlandChicken/gtk-2.0 755 0 0
+file /usr/share/themes/CortlandChicken/gtk-2.0/gtkrc /usr/share/themes/CortlandChicken/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/CortlandChicken/gtk-2.0/check-in.png /usr/share/themes/CortlandChicken/gtk-2.0/check-in.png 644 0 0
+file /usr/share/themes/CortlandChicken/gtk-2.0/check-out.png /usr/share/themes/CortlandChicken/gtk-2.0/check-out.png 644 0 0
+file /usr/share/themes/CortlandChicken/gtk-2.0/radio-in.png /usr/share/themes/CortlandChicken/gtk-2.0/radio-in.png 644 0 0
+file /usr/share/themes/CortlandChicken/gtk-2.0/radio-out.png /usr/share/themes/CortlandChicken/gtk-2.0/radio-out.png 644 0 0
+file /usr/share/themes/CortlandChicken/gtk-2.0/radio-both.png /usr/share/themes/CortlandChicken/gtk-2.0/radio-both.png 644 0 0
+file /usr/share/themes/CortlandChicken/README /usr/share/themes/CortlandChicken/README 644 0 0
+# vi: set sw=4 ts=4 paste:

@@ -1,0 +1,56 @@
+# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# gtk2-engines
+dir /usr/share/gtk-engines 755 0 0
+file /usr/share/gtk-engines/clearlooks.xml /usr/share/gtk-engines/clearlooks.xml 644 0 0
+file /usr/share/gtk-engines/crux-engine.xml /usr/share/gtk-engines/crux-engine.xml 644 0 0
+file /usr/share/gtk-engines/hcengine.xml /usr/share/gtk-engines/hcengine.xml 644 0 0
+file /usr/share/gtk-engines/industrial.xml /usr/share/gtk-engines/industrial.xml 644 0 0
+file /usr/share/gtk-engines/mist.xml /usr/share/gtk-engines/mist.xml 644 0 0
+file /usr/share/gtk-engines/redmond95.xml /usr/share/gtk-engines/redmond95.xml 644 0 0
+file /usr/share/gtk-engines/glide.xml /usr/share/gtk-engines/glide.xml 644 0 0
+file /usr/share/gtk-engines/smooth.xml /usr/share/gtk-engines/smooth.xml 644 0 0
+file /usr/share/gtk-engines/thinice.xml /usr/share/gtk-engines/thinice.xml 644 0 0
+dir /usr/share/themes 755 0 0
+dir /usr/share/themes/Clearlooks 755 0 0
+dir /usr/share/themes/Clearlooks/gtk-2.0 755 0 0
+file /usr/share/themes/Clearlooks/gtk-2.0/gtkrc /usr/share/themes/Clearlooks/gtk-2.0/gtkrc 644 0 0
+dir /usr/share/themes/Crux 755 0 0
+dir /usr/share/themes/Crux/gtk-2.0 755 0 0
+file /usr/share/themes/Crux/gtk-2.0/gtkrc /usr/share/themes/Crux/gtk-2.0/gtkrc 644 0 0
+dir /usr/share/themes/Industrial 755 0 0
+dir /usr/share/themes/Industrial/gtk-2.0 755 0 0
+file /usr/share/themes/Industrial/gtk-2.0/gtkrc /usr/share/themes/Industrial/gtk-2.0/gtkrc 644 0 0
+dir /usr/share/themes/Mist 755 0 0
+dir /usr/share/themes/Mist/gtk-2.0 755 0 0
+file /usr/share/themes/Mist/gtk-2.0/gtkrc /usr/share/themes/Mist/gtk-2.0/gtkrc 644 0 0
+dir /usr/share/themes/Redmond 755 0 0
+dir /usr/share/themes/Redmond/gtk-2.0 755 0 0
+file /usr/share/themes/Redmond/gtk-2.0/gtkrc /usr/share/themes/Redmond/gtk-2.0/gtkrc 644 0 0
+dir /usr/share/themes/ThinIce 755 0 0
+dir /usr/share/themes/ThinIce/gtk-2.0 755 0 0
+file /usr/share/themes/ThinIce/gtk-2.0/gtkrc /usr/share/themes/ThinIce/gtk-2.0/gtkrc 644 0 0
+dir /usr/lib 755 0 0
+dir /usr/lib/gtk-2.0 755 0 0
+dir /usr/lib/gtk-2.0/2.10.0 755 0 0
+dir /usr/lib/gtk-2.0/2.10.0/engines 755 0 0
+file /usr/lib/gtk-2.0/2.10.0/engines/libclearlooks.so /usr/lib/gtk-2.0/2.10.0/engines/libclearlooks.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/engines/libcrux-engine.so /usr/lib/gtk-2.0/2.10.0/engines/libcrux-engine.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/engines/libglide.so /usr/lib/gtk-2.0/2.10.0/engines/libglide.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/engines/libhcengine.so /usr/lib/gtk-2.0/2.10.0/engines/libhcengine.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/engines/libindustrial.so /usr/lib/gtk-2.0/2.10.0/engines/libindustrial.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/engines/libluaengine.so /usr/lib/gtk-2.0/2.10.0/engines/libluaengine.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/engines/libmist.so /usr/lib/gtk-2.0/2.10.0/engines/libmist.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/engines/libredmond95.so /usr/lib/gtk-2.0/2.10.0/engines/libredmond95.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/engines/libsmooth.so /usr/lib/gtk-2.0/2.10.0/engines/libsmooth.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/engines/libthinice.so /usr/lib/gtk-2.0/2.10.0/engines/libthinice.so 644 0 0
+# vi: set sw=4 ts=4 paste:

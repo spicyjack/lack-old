@@ -1,0 +1,43 @@
+# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# gtk2-engines-nodoka
+dir /usr/share/themes 755 0 0
+dir /usr/share/themes/Nodoka 755 0 0
+dir /usr/share/themes/Nodoka/gtk-2.0 755 0 0
+file /usr/share/themes/Nodoka/gtk-2.0/gtkrc /usr/share/themes/Nodoka/gtk-2.0/gtkrc 644 0 0
+dir /usr/share/themes/Nodoka-Aqua 755 0 0
+dir /usr/share/themes/Nodoka-Aqua/gtk-2.0 755 0 0
+file /usr/share/themes/Nodoka-Aqua/gtk-2.0/gtkrc /usr/share/themes/Nodoka-Aqua/gtk-2.0/gtkrc 644 0 0
+dir /usr/share/themes/Nodoka-Gilouche 755 0 0
+dir /usr/share/themes/Nodoka-Gilouche/gtk-2.0 755 0 0
+file /usr/share/themes/Nodoka-Gilouche/gtk-2.0/gtkrc /usr/share/themes/Nodoka-Gilouche/gtk-2.0/gtkrc 644 0 0
+dir /usr/share/themes/Nodoka-Looks 755 0 0
+dir /usr/share/themes/Nodoka-Looks/gtk-2.0 755 0 0
+file /usr/share/themes/Nodoka-Looks/gtk-2.0/gtkrc /usr/share/themes/Nodoka-Looks/gtk-2.0/gtkrc 644 0 0
+dir /usr/share/themes/Nodoka-Midnight 755 0 0
+dir /usr/share/themes/Nodoka-Midnight/gtk-2.0 755 0 0
+file /usr/share/themes/Nodoka-Midnight/gtk-2.0/gtkrc /usr/share/themes/Nodoka-Midnight/gtk-2.0/gtkrc 644 0 0
+dir /usr/share/themes/Nodoka-Rounded 755 0 0
+dir /usr/share/themes/Nodoka-Rounded/gtk-2.0 755 0 0
+file /usr/share/themes/Nodoka-Rounded/gtk-2.0/gtkrc /usr/share/themes/Nodoka-Rounded/gtk-2.0/gtkrc 644 0 0
+dir /usr/share/themes/Nodoka-Silver 755 0 0
+dir /usr/share/themes/Nodoka-Silver/gtk-2.0 755 0 0
+file /usr/share/themes/Nodoka-Silver/gtk-2.0/gtkrc /usr/share/themes/Nodoka-Silver/gtk-2.0/gtkrc 644 0 0
+dir /usr/share/themes/Nodoka-Squared 755 0 0
+dir /usr/share/themes/Nodoka-Squared/gtk-2.0 755 0 0
+file /usr/share/themes/Nodoka-Squared/gtk-2.0/gtkrc /usr/share/themes/Nodoka-Squared/gtk-2.0/gtkrc 644 0 0
+dir /usr/lib 755 0 0
+dir /usr/lib/gtk-2.0 755 0 0
+dir /usr/lib/gtk-2.0/2.10.0 755 0 0
+dir /usr/lib/gtk-2.0/2.10.0/engines 755 0 0
+file /usr/lib/gtk-2.0/2.10.0/engines/libnodoka.so /usr/lib/gtk-2.0/2.10.0/engines/libnodoka.so 644 0 0
+# vi: set sw=4 ts=4 paste:

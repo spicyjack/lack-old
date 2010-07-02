@@ -1,0 +1,23 @@
+# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# gtk2-engines-sapwood
+dir /etc 755 0 0
+dir /etc/osso-af-init 755 0 0
+file /etc/osso-af-init/sapwood-server.sh /etc/osso-af-init/sapwood-server.sh 755 0 0
+dir /usr/lib 755 0 0
+dir /usr/lib/sapwood 755 0 0
+file /usr/lib/sapwood/sapwood-server /usr/lib/sapwood/sapwood-server 755 0 0
+dir /usr/lib/gtk-2.0 755 0 0
+dir /usr/lib/gtk-2.0/2.10.0 755 0 0
+dir /usr/lib/gtk-2.0/2.10.0/engines 755 0 0
+file /usr/lib/gtk-2.0/2.10.0/engines/libsapwood.so /usr/lib/gtk-2.0/2.10.0/engines/libsapwood.so 644 0 0
+# vi: set sw=4 ts=4 paste:

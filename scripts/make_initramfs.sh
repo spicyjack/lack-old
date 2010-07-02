@@ -371,6 +371,25 @@ fi
 # script
 export BUILD_BASE PROJECT_DIR
 
+# no sense in running if gen_init_cpio doesn't exist
+if [ ! $DRY_RUN ]; then
+    # set up an error flag
+    GENINITCPIO_ERROR=0
+    if [ ! -e "/usr/src/linux/usr/gen_init_cpio" ]; then
+        echo "Huh. gen_init_cpio doesn't exist"
+        GENINITCPIO_ERROR=1
+    elif [ ! -x "/usr/src/linux/usr/gen_init_cpio" ]; then
+        echo "Huh. gen_init_cpio is not executable (mode 755)"
+        GENINITCPIO_ERROR=1
+    fi # if [ ! -x "/usr/src/linux/usr/gen_init_cpio" ]
+
+    if [ $GENINITCPIO_ERROR -eq 1 ]; then
+        echo "  (Please check gen_init_cpio file in /usr/src/linux/usr)" >&2
+        echo "Can't build initramfs image... Exiting." >&2 
+        exit 1
+    fi # if [ $GENINITCPIO_ERROR -eq 1 ]
+fi # if [ ! $DRY_RUN ]; then
+
 # SOURCE! call set_vars to source the project file 
 set_vars $PROJECT_DIR
 
@@ -387,16 +406,6 @@ else
     show_vars
     exit 1
 fi # if [ -n $OUTPUT_FILE ]
-
-# FIXME don't bomb out if --dry-run is set
-# no sense in running if gen_init_cpio doesn't exist
-if [ ! $DRY_RUN ]; then
-    if [ ! -x "/usr/src/linux/usr/gen_init_cpio" ]; then
-        echo "Huh. gen_init_cpio doesn't exist (in /usr/src/linux/usr)" >&2
-        echo "Can't build initramfs image... Exiting." >&2 
-        exit 1
-    fi # if [ ! -x "/usr/src/linux/usr/gen_init_cpio" ]
-fi # if [ ! $DRY_RUN ]; then
 
 # create a temp directory
 TEMPDIR=$(${MKTEMP} -d /tmp/tmp-initramfs.XXXXX) 
