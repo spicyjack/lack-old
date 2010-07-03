@@ -5,56 +5,69 @@
 # TODO 
 # - set up linuxlogo by sed'ing /etc/inittab and doing 'telinit q'
 # - set up lode-lat1u-16 font in /etc/console-tools/config
+# - set up sources.list with contrib and non-free debian archives
 # - add nice header blocks in between sections
 # - split up sections into either shell functions or separate files that can be
 # run sysvinit style
 
-PACKAGE_LIST="cvs linuxlogo screen stow sudo ssh vim vim-scripts wget"
+PACKAGE_LIST="mercurial linuxlogo screen stow sudo ssh vim ctags wget"
+DOWNLOAD_URL="http://purl.portaboom.com/project_pkgs/"
 RC_TARBALL_FILE="rcfiles.tar"
 SPLASHSCREEN_FILE="sunspot_swedish-640x480.xpm.gz"
-DEMO_URL="http://files.antlinux.com/linux/demo/"
-TEMPDIR=/tmp/machine_setup
 GRUB_DIR=/boot/grub
 
 # external programs
-APTITUDE=$(which aptitude)
-WGET=$(which wget)
-TAR=$(which tar)
+APT_GET=$(which apt-get)
 CP=$(which cp)
 CHMOD=$(which chmod)
+LN=$(which ln)
+MKTEMP=$(which mktemp)
 MV=$(which mv)
+RM=$(which rm)
+RMDIR=$(which rmdir)
+TAR=$(which tar)
+WGET=$(which wget)
 
 # first, make sure we have an up-to-date package list
-$APTITUDE update
-$APTITUDE --assume-yes upgrade 
+$APT_GET update
+$APT_GET --yes upgrade 
 
 # install the packages needed to run a basic system
-$APTITUDE install $PACKAGE_LIST
+$APT_GET --yes install $PACKAGE_LIST
 
 # create a working directory and go to it
-mkdir -p $TEMPDIR
+TEMPDIR=$($MKTEMP -d /tmp/setup.XXXX)
+echo "TEMPDIR is $TEMPDIR"
 cd $TEMPDIR
+echo "Current directory is now $PWD"
 
 # get the .rcfiles tarball and install
-if [ ! -f $RC_TARBALL_FILE ]; then
-	$WGET $DEMO_URL/$RC_TARBALL_FILE
-fi
-$TAR -xvf $RC_TARBALL_FILE
-$CP -av .bashrc .vimrc .dir_colors ~
-$MKDIR ~/.ssh
-$CHMOD 700 ~/.ssh
-$CP .ssh/authorized_keys ~/.ssh
-$MV lode-lat1u-16.psf /usr/share/consolefonts
+$WGET --http-user=speak --http-password=friend $DOWNLOAD_URL/$RC_TARBALL_FILE
 
+if [ -e $RC_TARBALL_FILE ]; then
+
+    $TAR -xvf $RC_TARBALL_FILE
+    $MV -v .bashrc .vimrc .dir_colors .ssh ~
+    $CHMOD 700 ~/.ssh/
+    $MV lode-lat1u-16.psf /usr/share/consolefonts/
+    $MV sunspot_swedish-640x480.xpm.gz /boot/grub/
+    $LN -s $GRUB_DIR/menu.lst /etc/grub.cfg
+    # copy the default file out of the way
+    if [ -e /etc/linux_logo.conf ]; then
+        $MV /etc/linux_logo.conf /etc/linux_logo.conf.orig
+    fi
+    $MV linux_logo.conf /etc
 # get the splashscreen image and install
-cd $GRUB_DIR
-if [ ! -f $SPLASHSCREEN_FILE ]; then
-	$WGET $DEMO_URL/$SPLASHSCREEN_FILE
-fi
+    cd $GRUB_DIR
 
-if [ ! -h splash.xpm.gz ]; then
-	ln -s $SPLASHSCREEN_FILE splash.xpm.gz
-fi 
+    if [ ! -h splash.xpm.gz ]; then
+        ln -s $SPLASHSCREEN_FILE splash.xpm.gz
+    fi 
+
+    cd /
+    $RM $TEMPDIR/rcfiles.tar
+    $RMDIR $TEMPDIR
+fi # if [ -e $RC_TARBALL_FILE ]; then
 
 # go home and exit
 cd ~
