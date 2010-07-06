@@ -11,8 +11,8 @@ if [ -z $FILELIST ]; then
     echo "ERROR: FILELIST variable empty!"
     exit 1
 fi # if [ -z $FILELIST ]; then
-if [ -z $TEMPDIR ]; then 
-    echo "ERROR: TEMPDIR variable empty!"
+if [ -z $TEMP_DIR ]; then 
+    echo "ERROR: TEMP_DIR variable empty!"
     exit 1
 fi # if [ -z $FILELIST ]; then
 
@@ -38,7 +38,7 @@ else
 fi
 
 ### create the hostname file
-echo "${PROJECT_NAME}" > $TEMPDIR/hostname
+echo "${PROJECT_NAME}" > $TEMP_DIR/hostname
 
 # build the file with the correct substitutions performed
 # below variables are set in the initramfs.cfg file
@@ -50,20 +50,20 @@ do
             s!:RELEASE_VER:!${RELEASE_VER}!g;
             s!:DEMO_PASS:!${DEMO_PASS}!g;
             }" \
-    > $TEMPDIR/$SEDFILE
+    > $TEMP_DIR/$SEDFILE
 done
 
 # create the new init.sh script, which will be appended to
-#$TOUCH $TEMPDIR/init.sh
+#$TOUCH $TEMP_DIR/init.sh
 $CAT $BUILD_BASE/common/initscripts/_initramfs_init.sh | $SED \
     "{
     s!:PROJECT_NAME:!${PROJECT_NAME}!g;
     s!:PROJECT_DIR:!${PROJECT_DIR}!g;
     s!:BUILD_BASE:!${BUILD_BASE}!g;
     s!:VERSION:!${KERNEL_VER}!g; 
-    }" >> $TEMPDIR/init.sh
+    }" >> $TEMP_DIR/init.sh
 
 # add the init script to the filelist
-echo "file /init /${TEMPDIR}/init.sh 0755 0 0" >> $TEMPDIR/$FILELIST
+echo "file /init /${TEMP_DIR}/init.sh 0755 0 0" >> $TEMP_DIR/$FILELIST
 
 # vi: set sw=4 ts=4 paste:

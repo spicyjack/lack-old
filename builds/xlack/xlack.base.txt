@@ -13,10 +13,10 @@ file /bin/busybox /tmp/busybox-1.14.3-x86-run-parts 0755 0 0
 slink /usr/bin/getopt /bin/getopt 0755 0 0
 # /etc
 # generated files
-file /etc/issue.xlack /tmp/issue.xlack 0644 0 0
-file /etc/issue /tmp/issue.xlack.nogetty 0644 0 0
+file /etc/issue.xlack :TEMP_DIR:/issue.xlack 0644 0 0
+file /etc/issue :TEMP_DIR:/issue.xlack.nogetty 0644 0 0
 slink /etc/issue.nogetty /etc/issue 0644 0 0
-file /etc/hostname /tmp/hostname.xlack 0644 0 0
+file /etc/hostname :TEMP_DIR:/hostname 0644 0 0
 # files sourced from lack common directory
 file /etc/group :BUILD_BASE:/common/etcfiles/group 0644 0 0
 file /etc/passwd :BUILD_BASE:/common/etcfiles/passwd 0644 0 0
@@ -38,8 +38,8 @@ file /home/demo/fonttest.txt :BUILD_BASE:/common/etcfiles/fonttest.txt 0644 1000
 # this gets changed at runtime depending on whether or not debug is set
 file /home/demo/xsession :PROJECT_DIR:/etcfiles/xsession 0755 1000 100
 # shellinabox
-dir /etc/shellinabox 0755 0 0
-file /etc/shellinabox/styles.css :BUILD_BASE:/common/etcfiles/styles.css 0644 0 0
+#dir /etc/shellinabox 0755 0 0
+#file /etc/shellinabox/styles.css :BUILD_BASE:/common/etcfiles/styles.css 0644 0 0
 # shellinabox certs
 dir /etc/ssl 0755 0 0
 dir /etc/ssl/certs 0755 0 0

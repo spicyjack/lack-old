@@ -115,6 +115,7 @@ function sedify ()
         s!:PROJECT_DIR:!${PROJECT_DIR}!g;
         s!:BUILD_BASE:!${BUILD_BASE}!g;
         s!:VERSION:!${KERNEL_VER}!g; 
+        s!:TEMP_DIR:!${TEMP_DIR}!g; 
         }" >> $DEST_FILE
 } # function sedify ()
 
@@ -387,12 +388,12 @@ if [ ! $DRY_RUN ]; then
 fi # if [ ! $DRY_RUN ]; then
 
 # create a temp directory
-TEMPDIR=$(${MKTEMP} -d /tmp/tmp-initramfs.XXXXX) 
+TEMP_DIR=$(${MKTEMP} -d /tmp/tmp-initramfs.XXXXX) 
 
 ### EXPORTS
 # export things that were set up either in getopts or hardcoded into this
 # script
-export BUILD_BASE PROJECT_DIR TEMPDIR FILELIST
+export BUILD_BASE PROJECT_DIR TEMP_DIR FILELIST
 
 # SOURCE! call set_vars to source the project file 
 set_vars $PROJECT_DIR
@@ -412,20 +413,20 @@ else
 fi # if [ -n $OUTPUT_FILE ]
 
 # create the project /init script and put it in the temporary directory
-echo "# Begin $FILELIST; to make changes to this list, " >> $TEMPDIR/$FILELIST
-echo "# edit the source .txt file." >> $TEMPDIR/$FILELIST
-echo "# Filelist generated on $RFC_2822_DATE" >> $TEMPDIR/$FILELIST
-echo "# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" >> $TEMPDIR/$FILELIST
+echo "# Begin $FILELIST; to make changes to this list, " >> $TEMP_DIR/$FILELIST
+echo "# edit the source .txt file." >> $TEMP_DIR/$FILELIST
+echo "# Filelist generated on $RFC_2822_DATE" >> $TEMP_DIR/$FILELIST
+echo "# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" >> $TEMP_DIR/$FILELIST
 
 # create the new init.sh script, which will be appended to
 # moved to the individual project files; some projects don't need the full
 # init script, since they run from ramdisk instead (don't need stop scripts,
 # switch_root, and need to exec /init)
 
-#$TOUCH /$TEMPDIR/init.sh
-#sedify $BUILD_BASE/common/initscripts/_init.sh $TEMPDIR/init.sh
+#$TOUCH /$TEMP_DIR/init.sh
+#sedify $BUILD_BASE/common/initscripts/_init.sh $TEMP_DIR/init.sh
 # add the init script to the filelist
-#echo "file /init /${TEMPDIR}/init.sh 0755 0 0" >> $TEMPDIR/$FILELIST
+#echo "file /init /${TEMP_DIR}/init.sh 0755 0 0" >> $TEMP_DIR/$FILELIST
 
 # copy all the desired recipie files first
 for RECIPE in $(echo ${PACKAGES});
@@ -451,7 +452,7 @@ do
         fi
     fi # if [ -r $PROJECT_DIR/recipes/$RECIPE.txt ]
     # then do some searching and replacing; write the output file to FILELIST
-    sedify $RECIPE_DIR/$RECIPE.txt $TEMPDIR/$FILELIST
+    sedify $RECIPE_DIR/$RECIPE.txt $TEMP_DIR/$FILELIST
 done 
 
 # verify the initramfs recipe file exists
@@ -460,22 +461,22 @@ then
     # nope; delete the output file and exit
     echo "ERROR: initramfs-filelist.txt file does not exist in"
     echo "${PROJECT_DIR} directory"
-    rm -rf $TEMPDIR
+    rm -rf $TEMP_DIR
     exit 1
 fi
 
 # then grab the project specific file, which should have the kernel modules
 # and do some searching and replacing
-sedify $PROJECT_DIR/initramfs-filelist.txt $TEMPDIR/$FILELIST
+sedify $PROJECT_DIR/initramfs-filelist.txt $TEMP_DIR/$FILELIST
 
 # include the list of files that we just generated as part of the initramfs
 # image for future reference and debugging/troubleshooting
 echo -n "file /boot/initramfs-filelist.txt.gz " \
-    >> $TEMPDIR/$FILELIST
-echo "${TEMPDIR}/${FILELIST}.gz 0644 0 0" >> $TEMPDIR/$FILELIST
+    >> $TEMP_DIR/$FILELIST
+echo "${TEMP_DIR}/${FILELIST}.gz 0644 0 0" >> $TEMP_DIR/$FILELIST
 
 # compress the file list
-$GZIP -c -9 $TEMPDIR/$FILELIST > ${TEMPDIR}/${FILELIST}.gz
+$GZIP -c -9 $TEMP_DIR/$FILELIST > ${TEMP_DIR}/${FILELIST}.gz
 
 # generate the initramfs image
 if [ $QUIET -gt 0 ]; then
@@ -517,20 +518,20 @@ if [ $DRY_RUN ]; then
             } # if ( $line[0] eq q(dir) )
         } # while ( <> )
 EOPS)
-    echo "Running perl script on $TEMPDIR/$FILELIST"
-    cat $TEMPDIR/$FILELIST | perl -e "$PERL_SCRIPT" 
+    echo "Running perl script on $TEMP_DIR/$FILELIST"
+    cat $TEMP_DIR/$FILELIST | perl -e "$PERL_SCRIPT" 
 
     # barks if the file is missing
-    echo "- initramfs output directory is: ${TEMPDIR}"
+    echo "- initramfs output directory is: ${TEMP_DIR}"
     echo "  Please delete it manually"
 else
     # run the gen_init_cpio command, output to $OUTPUT_FILE
-    eval $EXTRA_CMDS /usr/src/linux/usr/gen_init_cpio $TEMPDIR/$FILELIST \
+    eval $EXTRA_CMDS /usr/src/linux/usr/gen_init_cpio $TEMP_DIR/$FILELIST \
         | $GZIP -c -9 > $OUTPUT_FILE      
     if [ -z $KEEP_INITRAMFS_FILELIST ]; then
-        rm -rf $TEMPDIR
+        rm -rf $TEMP_DIR
     else 
-        echo "initramfs file list directory is: ${TEMPDIR}"
+        echo "initramfs file list directory is: ${TEMP_DIR}"
         echo "Please delete it manually"
     fi # if [ -z $KEEP_INITRAMFS_FILELIST ]; then
     if [ $HARDLINK_INITRD -gt 0 ]; then

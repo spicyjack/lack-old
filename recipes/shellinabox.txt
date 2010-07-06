@@ -12,6 +12,11 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 file /usr/bin/shellinaboxd /usr/local/stow/shellinabox-2.10/bin/shellinaboxd 755 0 0
+dir /etc/shellinabox 0755 0 0
+file /etc/shellinabox/black-on-white.css /usr/local/stow/shellinabox-2.10/share/doc/shellinabox/black-on-white.css 644 0 0
+file /etc/shellinabox/color.css /usr/local/stow/shellinabox-2.10/share/doc/shellinabox/color.css 644 0 0
+file /etc/shellinabox/monochrome.css /usr/local/stow/shellinabox-2.10/share/doc/shellinabox/monochrome.css 644 0 0
+file /etc/shellinabox/white-on-black.css /usr/local/stow/shellinabox-2.10/share/doc/shellinabox/white-on-black.css 644 0 0
 # shellinabox needs the xterm terminfo file to work when presenting dialog
 # screens
 dir /lib/terminfo 0755 0 0
