@@ -9,15 +9,15 @@ STARTX="/usr/bin/startx"
 if [ $(/bin/grep -c nox /proc/cmdline) -eq 0 ]; then
     # yep, run X; now do we want a normal or debug session?
     # check for either debugging or explicit xterm call
-    if [ $(/bin/egrep -c "DEBUG|xterm" /proc/cmdline) -gt 0 ]; then
+    if [ $(/bin/egrep -c "wm=[DEBUG|xterm]" /proc/cmdline) -gt 0 ]; then
         # debug session
         cat /home/demo/xsession | sed "s/^#\(exec xterm.*\)$/\1/" \
             > $HOME_DIR/.xsession
-    elif [ $(/bin/egrep -c "flwm" /proc/cmdline) -gt 0 ]; then
+    elif [ $(/bin/egrep -c "wm=flwm" /proc/cmdline) -gt 0 ]; then
         # run flwm
         cat /home/demo/xsession | sed "s/^#\(exec flwm.*\)$/\1/" \
             > $HOME_DIR/.xsession
-    elif [ $(/bin/egrep -c "windowlab" /proc/cmdline) -gt 0 ]; then
+    elif [ $(/bin/egrep -c "wm=windowlab" /proc/cmdline) -gt 0 ]; then
         # run flwm
         cat /home/demo/xsession | sed "s/^#\(exec windowlab.*\)$/\1/" \
             > $HOME_DIR/.xsession

@@ -1,0 +1,18 @@
+# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# libfltk1.1
+dir /usr/lib 755 0 0
+file /usr/lib/libfltk.so.1.1 /usr/lib/libfltk.so.1.1 644 0 0
+file /usr/lib/libfltk_forms.so.1.1 /usr/lib/libfltk_forms.so.1.1 644 0 0
+file /usr/lib/libfltk_gl.so.1.1 /usr/lib/libfltk_gl.so.1.1 644 0 0
+file /usr/lib/libfltk_images.so.1.1 /usr/lib/libfltk_images.so.1.1 644 0 0
+# vi: set sw=4 ts=4 paste:

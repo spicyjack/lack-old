@@ -366,10 +366,6 @@ if [ "x$PROJECT_NAME" != "x" ]; then
     PROJECT_DIR=$BUILD_BASE/builds/$PROJECT_NAME
 fi
 
-### EXPORTS
-# export things that were set up either in getopts or hardcoded into this
-# script
-export BUILD_BASE PROJECT_DIR
 
 # no sense in running if gen_init_cpio doesn't exist
 if [ ! $DRY_RUN ]; then
@@ -390,6 +386,14 @@ if [ ! $DRY_RUN ]; then
     fi # if [ $GENINITCPIO_ERROR -eq 1 ]
 fi # if [ ! $DRY_RUN ]; then
 
+# create a temp directory
+TEMPDIR=$(${MKTEMP} -d /tmp/tmp-initramfs.XXXXX) 
+
+### EXPORTS
+# export things that were set up either in getopts or hardcoded into this
+# script
+export BUILD_BASE PROJECT_DIR TEMPDIR FILELIST
+
 # SOURCE! call set_vars to source the project file 
 set_vars $PROJECT_DIR
 
@@ -407,9 +411,6 @@ else
     exit 1
 fi # if [ -n $OUTPUT_FILE ]
 
-# create a temp directory
-TEMPDIR=$(${MKTEMP} -d /tmp/tmp-initramfs.XXXXX) 
-
 # create the project /init script and put it in the temporary directory
 echo "# Begin $FILELIST; to make changes to this list, " >> $TEMPDIR/$FILELIST
 echo "# edit the source .txt file." >> $TEMPDIR/$FILELIST
@@ -417,10 +418,14 @@ echo "# Filelist generated on $RFC_2822_DATE" >> $TEMPDIR/$FILELIST
 echo "# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" >> $TEMPDIR/$FILELIST
 
 # create the new init.sh script, which will be appended to
-$TOUCH /$TEMPDIR/init.sh
-sedify $BUILD_BASE/common/initscripts/_init.sh $TEMPDIR/init.sh
+# moved to the individual project files; some projects don't need the full
+# init script, since they run from ramdisk instead (don't need stop scripts,
+# switch_root, and need to exec /init)
+
+#$TOUCH /$TEMPDIR/init.sh
+#sedify $BUILD_BASE/common/initscripts/_init.sh $TEMPDIR/init.sh
 # add the init script to the filelist
-echo "file /init /${TEMPDIR}/init.sh 0755 0 0" >> $TEMPDIR/$FILELIST
+#echo "file /init /${TEMPDIR}/init.sh 0755 0 0" >> $TEMPDIR/$FILELIST
 
 # copy all the desired recipie files first
 for RECIPE in $(echo ${PACKAGES});
