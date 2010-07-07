@@ -89,11 +89,12 @@ OSDETECT=$($UNAME -s)
 if [ ${OSDETECT} == "Darwin" ]; then 
     # this is the BSD part
     echo "WARNING: BSD OS Detected; long switches will not work here..."
-    TEMP=$(/usr/bin/getopt hvp:sa $*)
+    TEMP=$(/usr/bin/getopt hvd:g:p:r:u:sa $*)
 elif [ ${OSDETECT} == "Linux" ]; then
     # and this is the GNU part
-    TEMP=$(/usr/bin/getopt -o hvp:sa \
-	    --long help,verbose,package:,skip-exclude,append \
+    TEMP=$(/usr/bin/getopt -o hvd:g:p:r:u:sa \
+	    --long help,verbose,directory:,package:,regex:,skip-exclude,append \
+        --long gid:,uid: \
         -n '$SCRIPTNAME' -- "$@")
 else
     echo "Error: Unknown OS Type.  I don't know how to call"
@@ -128,16 +129,23 @@ while true ; do
 	${SCRIPTNAME} [options]
 
 	SCRIPT OPTIONS
-    -h|--help         Displays this help message
-    -v|--verbose      Nice pretty output messages
-    -p|--package      Package to query for a list of files
-    -s|--skip-exclude Skip excluding files in the output
-    -a|--append       Append the library files, don't generate a header
+    -h|--help           Displays this help message
+    -v|--verbose        Nice pretty output messages
+    -p|--package        Package to query for a list of files
+    -d|--directory      Directory containing files to package
+    -s|--skip-exclude   Skip excluding files in the output
+    -a|--append         Append the library files, don't generate a header
+    -r|--regex          Apply the regular expression to destination file
     NOTE: Long switches do not work with BSD systems (GNU extension)
 
     EXAMPLE USAGE:
 
     ${SCRIPTNAME} --package binutils > binutils.txt
+
+    ${SCRIPTNAME} --directory /tmp/somedirectory > somepackage.txt
+
+    ${SCRIPTNAME} --directory /tmp/somedirectory \
+        --regex 's!/some/path!/other/path!g' > somepackage.txt
 
 EOF
 		exit 0;;		
@@ -146,8 +154,28 @@ EOF
             ERRORLOOP=$(($ERRORLOOP - 1));
             shift
             ;;
+        -u|--uid)
+            FUID=$2
+            ERRORLOOP=$(($ERRORLOOP - 1));
+            shift 2
+            ;;        
+        -g|--gid)
+            FGID=$2
+            ERRORLOOP=$(($ERRORLOOP - 1));
+            shift 2
+            ;;        
+        -d|--directory)
+            PACKAGE_DIR=$2
+            ERRORLOOP=$(($ERRORLOOP - 1));
+            shift 2
+            ;;        
         -p|--package)
             PACKAGE_NAME=$2
+            ERRORLOOP=$(($ERRORLOOP - 1));
+            shift 2
+            ;;
+        -r|--regex)
+            REGEX=$2
             ERRORLOOP=$(($ERRORLOOP - 1));
             shift 2
             ;;
@@ -174,15 +202,27 @@ EOF
     fi # if [ $ERROR_LOOP -gt 3 ];
 done
 
-if [ "x$PACKAGE_NAME" == "x" ]; then
+if [ "x$PACKAGE_NAME" == "x" -a "x$PACKAGE_DIR" == "x" ]; then
     echo "ERROR: must pass in a package name via --package"
+    echo "ERROR: or a directory name via --directory"
 	echo "Run '${SCRIPTNAME} --help' to see script options"
     exit 1
 fi
 
+#if [ -n $PACKAGE_NAME -a -n $PACKAGE_DIR ]; then
+#    echo "ERROR: must pass either --package or --directory arguments, not both"
+#	echo "Run '${SCRIPTNAME} --help' to see script options"
+#    exit 1
+#fi
+
 ### SCRIPT MAIN LOOP ###
-    OUTPUT=$(/usr/bin/dpkg -L $PACKAGE_NAME)
-    cmd_status "dpkg" $? 
+    if [ ! -z $PACKAGE_NAME ]; then
+        OUTPUT=$(/usr/bin/dpkg -L $PACKAGE_NAME)
+        cmd_status "dpkg" $? 
+    elif [ ! -z $PACKAGE_DIR ]; then 
+        OUTPUT=$(/usr/bin/find $PACKAGE_DIR -type f)
+        cmd_status "find $PACKAGE_DIR -type f" $? 
+    fi # if [ ! -z $PACKAGE_NAME ]
 
     # print the recipe header
     if [ "x$APPEND" == "x" ]; then
@@ -206,22 +246,42 @@ fi
         # this makes it easy to use case to decide what to write to the output
         # file
         FILE_TYPE=$($STAT --printf "%F" $LINE)
-        # MUG == Mode, UID, GID 
-        STAT_MUG=$($STAT --printf "%a %u %g" $LINE)
+        # AUG == access rights in octal, FUID, FGID 
+        STAT_AUG=$($STAT --printf "%a %u %g" $LINE)
+        PERMS=$(echo $STAT_AUG | awk '{print $1}')
+        # munge the userid/groupid bits
+        if [ -z $FUID ]; then
+            FUID=$(echo $STAT_AUG | awk '{print $2}')
+        fi
+
+        if [ -z $FGID ]; then
+            FGID=$(echo $STAT_AUG | awk '{print $3}')
+        fi
+
         # check if this is the kernel; we don't need to package it up in the
         # initramfs file
         if [ $(echo $LINE | grep -c "vmlinuz") -gt 0 ]; then
-            echo "#file $LINE $LINE $STAT_MUG"
+            echo "#file $LINE $LINE $STAT_AUG"
             continue
         fi
-        case "$FILE_TYPE" in
-            "regular file") echo "file $LINE $LINE $STAT_MUG";;
-            "directory") echo "dir $LINE $STAT_MUG";;
-            "symbolic link") 
-                TARGET=$($READLINK -f $LINE | $TR -d '\n')
-                echo "slink $LINE $TARGET $STAT_MUG"
-            ;;
-        esac                    
+
+        # munge the target filename if required
+        SOURCE=$LINE
+        if [ -n $REGEX ]; then
+            TARGET=$(echo $LINE | $SED $REGEX)
+        else
+            TARGET=$LINE
+        fi # if [ -n $REGEX ]
+        echo "file $TARGET $SOURCE $PERMS $FUID $FGID"
+
+        #case "$FILE_TYPE" in
+        #    "regular file") echo "file $TARGET $SOURCE $STAT_AUG";;
+        #    "directory") echo "dir $SOURCE $STAT_AUG";;
+        #    "symbolic link") 
+        #        TARGET=$($READLINK -f $SOURCE | $TR -d '\n')
+        #        echo "slink $SOURCE $TARGET $STAT_AUG"
+        #    ;;
+        #esac                    
     done # for LINE in $(echo $OUTPUT); 
 
     # print the vim tag at the bottom so the recipes are formatted nicely when

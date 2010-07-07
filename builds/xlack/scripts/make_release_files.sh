@@ -48,7 +48,7 @@ do
         | $SED "{
             s!:KERNEL_VER:!${KERNEL_VER}!g;
             s!:RELEASE_VER:!${RELEASE_VER}!g;
-            s!:DEMO_PASS:!${DEMO_PASS}!g;
+            s!:LACK_PASS:!${LACK_PASS}!g;
             }" \
     > $TEMP_DIR/$SEDFILE
 done
