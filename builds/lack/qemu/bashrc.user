@@ -17,34 +17,22 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias vi='/usr/bin/vim'
 alias dir='ls --color=tty --classify'
-alias listalias='cat ~/.mail_aliases | ~/bin/less.sh' 
-alias patchjunk='find . -name "*.rej" -o -name "*.orig"'
-alias imageinfo='/usr/bin/perl ~/cvs/perl_scripts/imageinfo.pl'
+alias imageinfo='/usr/bin/perl ~/src/perl-hg/imageinfo.pl'
 alias rotate='/usr/bin/perl ~/cvs/perl_scripts/rotate.pl'
-alias filerenamer='/usr/bin/perl ~/cvs/perl_scripts/file_renamer.pl'
+alias filerenamer='/usr/bin/perl ~/src/perl-hg/file_renamer.pl'
 
-#if [ $TERM == "linux" ] || [ $TERM == "screen" ] \
-#    || [ $TERM == "vt100" ] || [ $TERM == "vt102" ]; then
-	PS1='[\h][\u \W]\\$ '
-#else
-#	PS1='[\h][\W \!] \[\033]2;\u@\h:\w\007\]'
-#fi
+PS1='[\h][\u \W]\\$ '
 
-IRCNICK="q_gone"
-IRCNAME="Who's Yo Daddy???"
-IRCSERVER="chat.freenode.net"
 CVSROOT=/home/cvs
 CVS_RSH=/usr/bin/ssh
 RSYNC_RSH=/usr/bin/ssh
 EDITOR=/usr/bin/vim
-MAILPATH='/var/mail/brian?You have new mail:/var/mail/stuff?Stuff has new mail'
-PATH=~/bin:$PATH
-# for dh-make-perl
-export DEBFULLNAME="Brian Manning"
-export DEBEMAIL="elspicyjack at gmail dot com"
+PATH=~/bin:$PATH:/usr/games:/usr/local/games
+#all_proxy="http://127.0.0.1:3128"
+#no_proxy="localhost"
 
-export PS1 IRCNICK IRCNAME IRCSERVER \
-CVSROOT MAILPATH CVS_RSH EDITOR PATH 
+export PS1 CVSROOT MAILPATH CVS_RSH EDITOR PATH
+#CVSROOT MAILPATH CVS_RSH EDITOR PATH all_proxy no_proxy
 
 # define some handy shell functions
 ff () { 
@@ -63,15 +51,6 @@ pigfind () {
     find . -maxdepth 1 -type d -exec du -s '{}' \; 2>/dev/null | sort -n
 } # get the sizes of the subdirectories of $PWD, sort from smallest to largest
 
-dice () {
-    if [ -z $1 ]; then 
-        RAND=4
-    else
-        RAND=$1
-    fi
-    perl ~/bin/diceparse.pl -l ~/bin/diceware.en.txt -n 20 -d -r $RAND
-} # creates a list of random words
-
 jdate () {
     echo -n "The current julian date in GMT is: "
     TZ=GMT date +%j
@@ -85,7 +64,7 @@ SOURCE_DIR="$HOME/src"
 hgstat () {
     START_DIR=$PWD
     cd $SOURCE_DIR
-    for DIR in $(ls | grep hg);
+    for DIR in $(/bin/ls | grep hg);
     do
         echo "=== hg status: $DIR ===";
         cd $DIR
@@ -98,24 +77,36 @@ hgstat () {
 hgpullall () {
     START_DIR=$PWD
     cd $SOURCE_DIR
-    for DIR in $(ls | grep hg);
+    for DIR in $(/bin/ls | grep hg);
     do
         echo "=== hg pull: $DIR ===";
         cd $DIR
-        hg pull
+        IFS=$' \t'
+        HG_OUTPUT=$(hg pull -u)
+        # if the string 'no changes found' was not listed in the output...
+        if [ $(echo $HG_OUTPUT | grep -c "no changes found") -ne 1 ]; then
+            echo $HG_OUTPUT
+        fi
         cd ..;
+        IFS=$' \t\n'
     done
     cd $START_DIR
-} # check the status in mercurial directories
+} # hg pull in all mercurial directories
 
 hginchk () {
     START_DIR=$PWD
     cd $SOURCE_DIR
-    for DIR in $(ls | grep hg);
+    for DIR in $(/bin/ls | grep hg);
     do
         echo "=== hg incoming: $DIR ===";
         cd $DIR
-        hg incoming
+        IFS=$' \t'
+        HG_OUTPUT=$(hg incoming)
+        # if the string 'no changes found' was not listed in the output...
+        if [ $(echo $HG_OUTPUT | grep -c "no changes found") -ne 1 ]; then
+            echo $HG_OUTPUT
+        fi
+        IFS=$' \t\n'
         cd ..
     done
     cd $START_DIR
@@ -124,11 +115,17 @@ hginchk () {
 hgoutchk () {
     START_DIR=$PWD
     cd $SOURCE_DIR
-    for DIR in $(ls | grep hg);
+    for DIR in $(/bin/ls | grep hg);
     do
         echo "=== hg outgoing: $DIR ===";
         cd $DIR
-        hg outgoing
+        IFS=$' \t'
+        HG_OUTPUT=$(hg outgoing)
+        # if the string 'no changes found' was not listed in the output...
+        if [ $(echo $HG_OUTPUT | grep -c "no changes found") -ne 1 ]; then
+            echo $HG_OUTPUT
+        fi
+        IFS=$' \t\n'
         cd ..;
     done
     cd $START_DIR

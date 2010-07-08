@@ -37,4 +37,3 @@ diff -N -p -r -u shellinabox-2.10-orig/shellinabox/launcher.c shellinabox-2.10-i
      execle("/bin/login", "login", "-p", "-h", peerName,
             (void *)0, environment);
      execle("/usr/bin/login", "login", "-p", "-h", peerName,
-Binary files shellinabox-2.10-orig/shellinabox/.launcher.c.rej.swp and shellinabox-2.10-issue/shellinabox/.launcher.c.rej.swp differ
