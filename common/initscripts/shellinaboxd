@@ -17,9 +17,8 @@ if [ "x$SIAB_PID" == "x" ]; then SIAB_PID="/var/run/shellinabox.pid"; fi
 if [ "x$SIAB_PORT" == "x" ]; then SIAB_PORT="4200"; fi
 if [ "x$SIAB_CSS" == "x" ]; then SIAB_CSS="/etc/shellinabox/color.css"; fi
 # build the commandline
-BINARY_OPTS="--cert=/etc/ssl/certs --background=$SIAB_PID --port=$SIAB_PORT"
-BINARY_OPTS="${BINARY_OPTS} --css $SIAB_CSS "
-BINARY_OPTS="${BINARY_OPTS} --css /etc/shellinabox/white-on-black.css "
+OPTS="--cert=/etc/ssl/certs --background=$SIAB_PID --port=$SIAB_PORT"
+OPTS="${OPTS} --user-css Dark:+/etc/shellinabox/white-on-black.css;Color:+/etc/shellinabox/color.css"
 
 case "$ACTION" in
   vars)
@@ -29,7 +28,7 @@ case "$ACTION" in
   ;;
   start)
 	colorize $S_TIP "${BASENAME}: Starting ${DESC}"
-	$BINARY $BINARY_OPTS >> $BOOT_LOG 2>&1
+	$BINARY $OPTS >> $BOOT_LOG 2>&1
     cmd_status $?
     colorize_nl $S_SUCCESS "$SUCCESS"
 	;;

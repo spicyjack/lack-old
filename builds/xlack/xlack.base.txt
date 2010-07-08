@@ -3,8 +3,10 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 # home directories
-dir /home 0755 0 0
-dir /home/lack 0755 1000 1000
+# moved to _basedirs 07Jul2010
+#dir /home 0755 0 0
+#dir /home/lack 0755 1000 1000
+file /home/lack/.gtkrc-2.0 :PROJECT_DIR:/etcfiles/lack.gtkrc-2.0 644 1000 1000
 dir /home/nobody 0755 65535 65535
 # /bin
 # make sure you get busybox in each project's specific initramfs file list now

@@ -11,6 +11,8 @@ dir /etc/X11 0755 0 0
 dir /etc/init.d 0755 0 0
 dir /etc/modprobe.d 755 0 0
 dir /etc/network 0755 0 0
+dir /home 0755 0 0
+dir /home/lack 0755 1000 1000
 dir /lib 0755 0 0
 dir /lib/modules 0755 0 0
 dir /mnt 0755 0 0
