@@ -267,7 +267,7 @@ fi
 
         # munge the target filename if required
         SOURCE=$LINE
-        if [ -n $REGEX ]; then
+        if [ "x$REGEX" != "x" ]; then
             TARGET=$(echo $LINE | $SED $REGEX)
         else
             TARGET=$LINE

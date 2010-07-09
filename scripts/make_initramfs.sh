@@ -98,7 +98,7 @@ function find_first_free_filename()
         # increment the file counter in order to try and find a free filename
         FILE_COUNTER=$(($FILE_COUNTER + 1))
     done
-    echo "Output: $SEARCHDIR/$TESTNAME.$FILE_DATE.$FILE_COUNTER.cpio.gz"
+    echo "Output file: $SEARCHDIR/$TESTNAME.$FILE_DATE.$FILE_COUNTER.cpio.gz"
 
     OUTPUT_FILE=$SEARCHDIR/$TESTNAME.$FILE_DATE.$FILE_COUNTER.cpio.gz
 } # function find_first_free_filename()
@@ -309,7 +309,7 @@ while $TRUE; do
             shift
 		    ;; # --initrd
         -k|--keepfiles|--keeplist|--keep) # keep the initramfs file list 
-        	KEEP_INITRAMFS_FILELIST=1
+        	KEEP_TEMP_DIR=1
             ERRORLOOP=$(($ERRORLOOP - 1));
             shift
 		    ;; # --keep
@@ -341,27 +341,35 @@ fi
 
 # verify the build directory exists
 # the variable is hardcoded at the top of this script
+echo -n "- Checking for build base directory (${BUILD_BASE}); "
 if [ ! -d $BUILD_BASE ]; then
     echo "ERROR: build base directory doesn't exist"
     echo "(${BUILD_BASE})"
     exit 1
 fi
+echo "found!"
 
 # if the project directory was used, see if it exists
 if [ "x$PROJECT_DIR" != "x" ]; then
+    echo -n "- Checking for project directory; "
+
     if [ ! -d $PROJECT_DIR ]; then
         echo "ERROR: --project-dir specified, but $PROJECT_DIR does not exist"
         exit 1
     fi # if [ ! -d $PROJECT_DIR ]
+    echo "found!"
+    echo "- Project directory: ${PROJECT_DIR}"
 fi # if [ "x$PROJECT_DIR" != "x" ]
 
 # if the project name was used, see if it exists
 if [ "x$PROJECT_NAME" != "x" ]; then
+    echo -n "- Checking for project '${PROJECT_DIR}' in base dir; "
     if [ ! -d $BUILD_BASE/builds/$PROJECT_NAME ]; then
         echo "ERROR: --project specified, but project directory "
         echo "ERROR: $BUILD_BASE/builds/$PROJECT_NAME does not exist"
         exit 1
     fi # if [ ! -d $BUILD_BASE/builds/$PROJECT_NAME ]
+    echo "found!"
     # the project directory was passed in and it's valid
     # set it
     PROJECT_DIR=$BUILD_BASE/builds/$PROJECT_NAME
@@ -370,6 +378,7 @@ fi
 
 # no sense in running if gen_init_cpio doesn't exist
 if [ ! $DRY_RUN ]; then
+    echo -n "- Checking for gen_init_cpio file; "
     # set up an error flag
     GENINITCPIO_ERROR=0
     if [ ! -e "/usr/src/linux/usr/gen_init_cpio" ]; then
@@ -385,10 +394,12 @@ if [ ! $DRY_RUN ]; then
         echo "Can't build initramfs image... Exiting." >&2 
         exit 1
     fi # if [ $GENINITCPIO_ERROR -eq 1 ]
+    echo "found!"
 fi # if [ ! $DRY_RUN ]; then
 
 # create a temp directory
 TEMP_DIR=$(${MKTEMP} -d /tmp/tmp-initramfs.XXXXX) 
+echo "- Created temporary directory '${TEMP_DIR}'"
 
 ### EXPORTS
 # export things that were set up either in getopts or hardcoded into this
@@ -447,7 +458,12 @@ do
             echo "ERROR: ${RECIPE}.txt file does not exist in"
             echo "${BUILD_BASE}/recipes (common) directory or"
             echo "${PROJECT_DIR}/recipes (project-specific) directory"
+            echo "- Deleting output file ${OUTPUT_FILE}"
             rm $OUTPUT_FILE
+            if [ -z $KEEP_TEMP_DIR ]; then
+                echo "- Deleting temporary directory ${TEMP_DIR}"
+                rm -rf $TEMP_DIR
+            fi # if [ -z $KEEP_TEMP_DIR ]
             exit 1
         fi
     fi # if [ -r $PROJECT_DIR/recipes/$RECIPE.txt ]
@@ -456,6 +472,7 @@ do
 done 
 
 # verify the initramfs recipe file exists
+echo -n "- Checking for initramfs-filelist.txt file in project directory; "
 if [ ! -r $PROJECT_DIR/initramfs-filelist.txt ]; 
 then
     # nope; delete the output file and exit
@@ -464,6 +481,9 @@ then
     rm -rf $TEMP_DIR
     exit 1
 fi
+echo "found!"
+echo "- ${PROJECT_DIR}/initramfs-filelist.txt"
+
 
 # then grab the project specific file, which should have the kernel modules
 # and do some searching and replacing
@@ -528,12 +548,12 @@ else
     # run the gen_init_cpio command, output to $OUTPUT_FILE
     eval $EXTRA_CMDS /usr/src/linux/usr/gen_init_cpio $TEMP_DIR/$FILELIST \
         | $GZIP -c -9 > $OUTPUT_FILE      
-    if [ -z $KEEP_INITRAMFS_FILELIST ]; then
+    if [ -z $KEEP_TEMP_DIR ]; then
         rm -rf $TEMP_DIR
     else 
-        echo "initramfs file list directory is: ${TEMP_DIR}"
+        echo "initramfs temporary directory is: ${TEMP_DIR}"
         echo "Please delete it manually"
-    fi # if [ -z $KEEP_INITRAMFS_FILELIST ]; then
+    fi # if [ -z $KEEP_TEMP_DIR ]; then
     if [ $HARDLINK_INITRD -gt 0 ]; then
         echo "Hardlinking $OUTPUT_FILE to initrd file"
         if [ -r /boot/initrd-$KERNEL_VER.gz ]; then
