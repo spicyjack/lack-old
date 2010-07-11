@@ -272,16 +272,15 @@ fi
         else
             TARGET=$LINE
         fi # if [ -n $REGEX ]
-        echo "file $TARGET $SOURCE $PERMS $FUID $FGID"
 
-        #case "$FILE_TYPE" in
-        #    "regular file") echo "file $TARGET $SOURCE $STAT_AUG";;
-        #    "directory") echo "dir $SOURCE $STAT_AUG";;
-        #    "symbolic link") 
-        #        TARGET=$($READLINK -f $SOURCE | $TR -d '\n')
-        #        echo "slink $SOURCE $TARGET $STAT_AUG"
-        #    ;;
-        #esac                    
+        case "$FILE_TYPE" in
+            "regular file") echo "file $TARGET $SOURCE $PERMS $FUID $FGID";;
+            "directory") echo "dir $SOURCE $PERMS $FUID $FGID";;
+            "symbolic link") 
+                TARGET=$($READLINK -f $SOURCE | $TR -d '\n')
+                echo "slink $SOURCE $TARGET $PERMS $FUID $FGID"
+            ;;
+        esac                    
     done # for LINE in $(echo $OUTPUT); 
 
     # print the vim tag at the bottom so the recipes are formatted nicely when
