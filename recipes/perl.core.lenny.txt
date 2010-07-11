@@ -1,150 +1,19 @@
-# $Id: perl.lenny.txt,v 1.9 2009-03-12 06:03:28 brian Exp $
-# depends: _base 
-# helpcommand: /usr/bin/perl --help
-# versioncommand: /usr/bin/perl -v
-# examplecommand: /usr/bin/perl -e "print qq(Hello world!\n);"
+# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
 #
+# dir <name> <mode> <uid> <gid>
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 #
-# perl /usr/bin
+# perl-base
 file /usr/bin/perl /usr/bin/perl 0755 0 0
-### /usr/lib/perl
-# perl /usr/lib/perl/5.10.0
+file /usr/bin/perl5.10.0 /usr/bin/perl5.10.0 0755 0 0
 dir /usr/lib/perl 0755 0 0
 dir /usr/lib/perl/5.10.0 0755 0 0
-slink /usr/lib/perl/5.10 /usr/lib/perl/5.10.0 0755 0 0
-# map all scripts from /usr/lib/perl5 into /usr/lib/perl/5.10.0
-slink /usr/lib/perl5 /usr/lib/perl/5.10.0 0755 0 0
-# Core modules
-file /usr/lib/perl/5.10.0/Config.pm /usr/lib/perl/5.10.0/Config.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Config_heavy.pl /usr/lib/perl/5.10.0/Config_heavy.pl 0644 0 0
-file /usr/lib/perl/5.10.0/Cwd.pm /usr/lib/perl/5.10.0/Cwd.pm 0644 0 0
-file /usr/lib/perl/5.10.0/DynaLoader.pm /usr/lib/perl/5.10.0/DynaLoader.pm 0644 0 0
-
-file /usr/lib/perl/5.10.0/Errno.pm /usr/lib/perl/5.10.0/Errno.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Fcntl.pm /usr/lib/perl/5.10.0/Fcntl.pm 0644 0 0
-file /usr/lib/perl/5.10.0/lib.pm /usr/lib/perl/5.10.0/lib.pm 0644 0 0
-file /usr/lib/perl/5.10.0/XSLoader.pm /usr/lib/perl/5.10.0/XSLoader.pm 0644 0 0
-# perl /usr/lib/perl/5.10.0/auto
-dir /usr/lib/perl/5.10.0/auto 0755 0 0
-# perl /usr/lib/perl/5.10.0/auto/DynaLoader
-dir /usr/lib/perl/5.10.0/auto/DynaLoader 0755 0 0
-file /usr/lib/perl/5.10.0/auto/DynaLoader/dl_findfile.al /usr/lib/perl/5.10.0/auto/DynaLoader/dl_findfile.al 0644 0 0
-file /usr/lib/perl/5.10.0/auto/DynaLoader/dl_expandspec.al /usr/lib/perl/5.10.0/auto/DynaLoader/dl_expandspec.al 0644 0 0
-file /usr/lib/perl/5.10.0/auto/DynaLoader/dl_find_symbol_anywhere.al /usr/lib/perl/5.10.0/auto/DynaLoader/dl_find_symbol_anywhere.al 0644 0 0
-file /usr/lib/perl/5.10.0/auto/DynaLoader/autosplit.ix /usr/lib/perl/5.10.0/auto/DynaLoader/autosplit.ix 0644 0 0
-# perl /usr/lib/perl/5.10.0/auto/Encode
-dir /usr/lib/perl/5.10.0/auto/Encode 0755 0 0
-dir /usr/lib/perl/5.10.0/auto/Encode/CN 0755 0 0
-file /usr/lib/perl/5.10.0/auto/Encode/CN/CN.so /usr/lib/perl/5.10.0/auto/Encode/CN/CN.so 0644 0 0
-dir /usr/lib/perl/5.10.0/auto/Encode/JP 0755 0 0
-file /usr/lib/perl/5.10.0/auto/Encode/JP/JP.so /usr/lib/perl/5.10.0/auto/Encode/JP/JP.so 0644 0 0
-dir /usr/lib/perl/5.10.0/auto/Encode/KR 0755 0 0
-file /usr/lib/perl/5.10.0/auto/Encode/KR/KR.so /usr/lib/perl/5.10.0/auto/Encode/KR/KR.so 0644 0 0
-dir /usr/lib/perl/5.10.0/auto/Encode/TW 0755 0 0
-file /usr/lib/perl/5.10.0/auto/Encode/TW/TW.so /usr/lib/perl/5.10.0/auto/Encode/TW/TW.so 0644 0 0
-dir /usr/lib/perl/5.10.0/auto/Encode/EBCDIC 0755 0 0
-file /usr/lib/perl/5.10.0/auto/Encode/EBCDIC/EBCDIC.so /usr/lib/perl/5.10.0/auto/Encode/EBCDIC/EBCDIC.so 0644 0 0
-dir /usr/lib/perl/5.10.0/auto/Encode/Byte 0755 0 0
-file /usr/lib/perl/5.10.0/auto/Encode/Byte/Byte.so /usr/lib/perl/5.10.0/auto/Encode/Byte/Byte.so 0644 0 0
-dir /usr/lib/perl/5.10.0/auto/Encode/Symbol 0755 0 0
-file /usr/lib/perl/5.10.0/auto/Encode/Symbol/Symbol.so /usr/lib/perl/5.10.0/auto/Encode/Symbol/Symbol.so 0644 0 0
-file /usr/lib/perl/5.10.0/auto/Encode/Encode.so /usr/lib/perl/5.10.0/auto/Encode/Encode.so 0644 0 0
-dir /usr/lib/perl/5.10.0/auto/Encode/Unicode 0755 0 0
-file /usr/lib/perl/5.10.0/auto/Encode/Unicode/Unicode.so /usr/lib/perl/5.10.0/auto/Encode/Unicode/Unicode.so 0644 0 0
-# perl /usr/lib/perl/5.10.0/auto/Fcntl
-dir /usr/lib/perl/5.10.0/auto/Fcntl 0755 0 0
-file /usr/lib/perl/5.10.0/auto/Fcntl/Fcntl.so /usr/lib/perl/5.10.0/auto/Fcntl/Fcntl.so 0644 0 0
-# perl /usr/lib/perl/5.10.0/Encode
-file /usr/lib/perl/5.10.0/Encode.pm /usr/lib/perl/5.10.0/Encode.pm 0644 0 0
-dir /usr/lib/perl/5.10.0/Encode 0755 0 0
-dir /usr/lib/perl/5.10.0/Encode/CN 0755 0 0
-file /usr/lib/perl/5.10.0/Encode/CN/HZ.pm /usr/lib/perl/5.10.0/Encode/CN/HZ.pm 0644 0 0
-dir /usr/lib/perl/5.10.0/Encode/JP 0755 0 0
-file /usr/lib/perl/5.10.0/Encode/JP/H2Z.pm /usr/lib/perl/5.10.0/Encode/JP/H2Z.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Encode/JP/JIS7.pm /usr/lib/perl/5.10.0/Encode/JP/JIS7.pm 0644 0 0
-dir /usr/lib/perl/5.10.0/Encode/KR 0755 0 0
-file /usr/lib/perl/5.10.0/Encode/KR/2022_KR.pm /usr/lib/perl/5.10.0/Encode/KR/2022_KR.pm 0644 0 0
-dir /usr/lib/perl/5.10.0/Encode/MIME 0755 0 0
-dir /usr/lib/perl/5.10.0/Encode/MIME/Header 0755 0 0
-file /usr/lib/perl/5.10.0/Encode/MIME/Header/ISO_2022_JP.pm /usr/lib/perl/5.10.0/Encode/MIME/Header/ISO_2022_JP.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Encode/MIME/Name.pm /usr/lib/perl/5.10.0/Encode/MIME/Name.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Encode/MIME/Header.pm /usr/lib/perl/5.10.0/Encode/MIME/Header.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Encode/CJKConstants.pm /usr/lib/perl/5.10.0/Encode/CJKConstants.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Encode/CN.pm /usr/lib/perl/5.10.0/Encode/CN.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Encode/JP.pm /usr/lib/perl/5.10.0/Encode/JP.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Encode/KR.pm /usr/lib/perl/5.10.0/Encode/KR.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Encode/TW.pm /usr/lib/perl/5.10.0/Encode/TW.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Encode/EBCDIC.pm /usr/lib/perl/5.10.0/Encode/EBCDIC.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Encode/Guess.pm /usr/lib/perl/5.10.0/Encode/Guess.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Encode/Byte.pm /usr/lib/perl/5.10.0/Encode/Byte.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Encode/Alias.pm /usr/lib/perl/5.10.0/Encode/Alias.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Encode/GSM0338.pm /usr/lib/perl/5.10.0/Encode/GSM0338.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Encode/Config.pm /usr/lib/perl/5.10.0/Encode/Config.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Encode/Encoder.pm /usr/lib/perl/5.10.0/Encode/Encoder.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Encode/Symbol.pm /usr/lib/perl/5.10.0/Encode/Symbol.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Encode/Unicode.pm /usr/lib/perl/5.10.0/Encode/Unicode.pm 0644 0 0
-dir /usr/lib/perl/5.10.0/Encode/Unicode 0755 0 0
-file /usr/lib/perl/5.10.0/Encode/Unicode/UTF7.pm /usr/lib/perl/5.10.0/Encode/Unicode/UTF7.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Encode/Encoding.pm /usr/lib/perl/5.10.0/Encode/Encoding.pm 0644 0 0
-# perl /usr/lib/perl/5.10.0/List/Util
-dir /usr/lib/perl/5.10.0/List 0755 0 0
-file /usr/lib/perl/5.10.0/List/Util.pm /usr/lib/perl/5.10.0/List/Util.pm 0644 0 0
-# perl /usr/lib/perl/5.10.0/Params/Validate
-dir /usr/lib/perl/5.10.0/Params 0755 0 0
-file /usr/lib/perl/5.10.0/Params/Validate.pm /usr/lib/perl5/Params/Validate.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Params/ValidatePP.pm /usr/lib/perl5/Params/ValidatePP.pm 0644 0 0
-file /usr/lib/perl/5.10.0/Params/ValidateXS.pm /usr/lib/perl5/Params/ValidateXS.pm 0644 0 0
-# perl /usr/lib/perl/5.10.0/Scalar/Util
-dir /usr/lib/perl/5.10.0/Scalar 0755 0 0
-file /usr/lib/perl/5.10.0/Scalar/Util.pm /usr/lib/perl/5.10.0/Scalar/Util.pm 0644 0 0
-# perl /usr/share/perl/5.10.0/Time
-dir /usr/lib/perl/5.10.0/Time 0755 0 0
-file /usr/lib/perl/5.10.0/Time/HiRes.pm /usr/lib/perl/5.10.0/Time/HiRes.pm 0644 0 0
-### /usr/share/perl
-# perl /usr/share/perl/5.10.0
-dir /usr/share/perl 0755 0 0
-# a lot of modules use this directory here
-dir /usr/share/perl5 0755 0 0
-dir /usr/share/perl/5.10.0 0755 0 0
-slink /usr/share/perl/5.8 /usr/share/perl/5.10.0 0755 0 0
-slink /usr/share/perl/5.10 /usr/share/perl/5.10.0 0755 0 0
-file /usr/share/perl/5.10.0/base.pm /usr/share/perl/5.10.0/base.pm 0644 0 0
-file /usr/share/perl/5.10.0/bytes.pm /usr/share/perl/5.10.0/bytes.pm 0644 0 0
-file /usr/share/perl/5.10.0/constant.pm /usr/share/perl/5.10.0/constant.pm 0644 0 0
-file /usr/share/perl/5.10.0/flush.pl /usr/share/perl/5.10.0/flush.pl 0644 0 0
-file /usr/share/perl/5.10.0/integer.pm /usr/share/perl/5.10.0/integer.pm 0644 0 0
-file /usr/share/perl/5.10.0/overload.pm /usr/share/perl/5.10.0/overload.pm 0644 0 0
-file /usr/share/perl/5.10.0/strict.pm /usr/share/perl/5.10.0/strict.pm 0644 0 0
-file /usr/share/perl/5.10.0/subs.pm /usr/share/perl/5.10.0/subs.pm 0644 0 0
-file /usr/share/perl/5.10.0/utf8.pm /usr/share/perl/5.10.0/utf8.pm 0644 0 0
-file /usr/share/perl/5.10.0/utf8_heavy.pl /usr/share/perl/5.10.0/utf8_heavy.pl 0644 0 0
-file /usr/share/perl/5.10.0/vars.pm /usr/share/perl/5.10.0/vars.pm 0644 0 0
-file /usr/share/perl/5.10.0/warnings.pm /usr/share/perl/5.10.0/warnings.pm 0644 0 0
-dir /usr/share/perl/5.10.0/warnings 0755 0 0
-file /usr/share/perl/5.10.0/warnings/register.pm /usr/share/perl/5.10.0/warnings/register.pm 0644 0 0
-file /usr/share/perl/5.10.0/AutoLoader.pm /usr/share/perl/5.10.0/AutoLoader.pm 0644 0 0
-file /usr/share/perl/5.10.0/Exporter.pm /usr/share/perl/5.10.0/Exporter.pm 0644 0 0
-file /usr/share/perl/5.10.0/Carp.pm /usr/share/perl/5.10.0/Carp.pm 0644 0 0
-dir /usr/share/perl/5.10.0/Carp 0755 0 0
-file /usr/share/perl/5.10.0/Carp/Heavy.pm /usr/share/perl/5.10.0/Carp/Heavy.pm 0644 0 0
-file /usr/share/perl/5.10.0/Symbol.pm /usr/share/perl/5.10.0/Symbol.pm 0644 0 0
-# perl /usr/share/perl/5.10.0/File
-dir /usr/share/perl/5.10.0/File 0755 0 0
-file /usr/share/perl/5.10.0/File/Find.pm /usr/share/perl/5.10.0/File/Find.pm 0644 0 0
-file /usr/share/perl/5.10.0/File/Basename.pm /usr/share/perl/5.10.0/File/Basename.pm 0644 0 0
-file /usr/share/perl/5.10.0/File/Spec.pm /usr/share/perl/5.10.0/File/Spec.pm 0644 0 0
-# perl /usr/share/perl/5.10.0/File/Spec
-dir /usr/share/perl/5.10.0/File/Spec 0755 0 0
-file /usr/share/perl/5.10.0/File/Spec/Unix.pm /usr/share/perl/5.10.0/File/Spec/Unix.pm 0644 0 0
-# perl /usr/share/perl/5.10.0/Time
-dir /usr/share/perl/5.10.0/Time 0755 0 0
-file /usr/share/perl/5.10.0/Time/Local.pm /usr/share/perl/5.10.0/Time/Local.pm 0644 0 0
-# perl /usr/share/perl/5.10.0/unicore
-dir /usr/share/perl/5.10.0/unicore 0755 0 0
-file /usr/share/perl/5.10.0/unicore/Exact.pl /usr/share/perl/5.10.0/unicore/Exact.pl 0644 0 0
-# perl-base
 dir /usr/lib/perl/5.10.0/B 0755 0 0
 file /usr/lib/perl/5.10.0/B/Deparse.pm /usr/lib/perl/5.10.0/B/Deparse.pm 0644 0 0
 dir /usr/lib/perl/5.10.0/IO 0755 0 0
@@ -191,10 +60,6 @@ file /usr/lib/perl/5.10.0/auto/DynaLoader/autosplit.ix /usr/lib/perl/5.10.0/auto
 file /usr/lib/perl/5.10.0/auto/DynaLoader/dl_findfile.al /usr/lib/perl/5.10.0/auto/DynaLoader/dl_findfile.al 0644 0 0
 dir /usr/lib/perl/5.10.0/auto/Socket 0755 0 0
 file /usr/lib/perl/5.10.0/auto/Socket/Socket.so /usr/lib/perl/5.10.0/auto/Socket/Socket.so 0644 0 0
-dir /usr/lib/perl/5.10.0/auto/Time 0755 0 0
-dir /usr/lib/perl/5.10.0/auto/Time/HiRes 0755 0 0
-file /usr/lib/perl/5.10.0/auto/Time/HiRes/HiRes.so /usr/lib/perl/5.10.0/auto/Time/HiRes/HiRes.so 0644 0 0
-# perl 
 file /usr/lib/perl/5.10.0/Cwd.pm /usr/lib/perl/5.10.0/Cwd.pm 0644 0 0
 file /usr/lib/perl/5.10.0/IO.pm /usr/lib/perl/5.10.0/IO.pm 0644 0 0
 file /usr/lib/perl/5.10.0/re.pm /usr/lib/perl/5.10.0/re.pm 0644 0 0
@@ -726,10 +591,6 @@ file /usr/share/perl/5.10.0/base.pm /usr/share/perl/5.10.0/base.pm 0644 0 0
 file /usr/share/perl/5.10.0/integer.pm /usr/share/perl/5.10.0/integer.pm 0644 0 0
 file /usr/share/perl/5.10.0/AutoLoader.pm /usr/share/perl/5.10.0/AutoLoader.pm 0644 0 0
 file /usr/share/perl/5.10.0/Symbol.pm /usr/share/perl/5.10.0/Symbol.pm 0644 0 0
-slink /usr/lib/perl/5.10 /usr/lib/perl/5.10.0 0777 0 0
-slink /usr/share/perl/5.10 /usr/share/perl/5.10.0 0777 0 0
-# perl-modules
-dir /usr/share/perl/5.10.0/Math 0755 0 0
-file /usr/share/perl/5.10.0/Math/Complex.pm /usr/share/perl/5.10.0/Math/Complex.pm 0644 0 0
-file /usr/share/perl/5.10.0/Math/Trig.pm /usr/share/perl/5.10.0/Math/Trig.pm 0644 0 0
+slink /usr/lib/perl/5.10 /usr/lib/perl/5.10.0 777 0 0
+slink /usr/share/perl/5.10 /usr/share/perl/5.10.0 777 0 0
 # vi: set sw=4 ts=4 paste:

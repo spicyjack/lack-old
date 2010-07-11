@@ -137,8 +137,8 @@ file /usr/share/locale/tr/LC_MESSAGES/dialog.mo /usr/share/locale/tr/LC_MESSAGES
 dir /usr/share/locale/de 755 0 0
 dir /usr/share/locale/de/LC_MESSAGES 755 0 0
 file /usr/share/locale/de/LC_MESSAGES/dialog.mo /usr/share/locale/de/LC_MESSAGES/dialog.mo 644 0 0
-dir /usr/lib 755 0 0
 # HA! a dialog demo in perl
+dir /usr/lib/perl5 755 0 0
 file /usr/lib/perl5/dialog.pl /usr/lib/perl5/dialog.pl 644 0 0
 #file /usr/lib/libdialog.a /usr/lib/libdialog.a 644 0 0
 #dir /usr/include 755 0 0
