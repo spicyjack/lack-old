@@ -472,26 +472,26 @@ do
 done 
 
 # verify the initramfs recipe file exists
-echo -n "- Checking for initramfs-filelist.txt file in project directory; "
-if [ ! -r $PROJECT_DIR/initramfs-filelist.txt ]; 
+echo -n "- Checking for $FILELIST file in project directory; "
+if [ ! -r $PROJECT_DIR/$FILELIST ]; 
 then
     # nope; delete the output file and exit
-    echo "ERROR: initramfs-filelist.txt file does not exist in"
+    echo "ERROR: $FILELIST file does not exist in"
     echo "${PROJECT_DIR} directory"
     rm -rf $TEMP_DIR
     exit 1
 fi
 echo "found!"
-echo "- ${PROJECT_DIR}/initramfs-filelist.txt"
+echo "- ${PROJECT_DIR}/$FILELIST"
 
 
 # then grab the project specific file, which should have the kernel modules
 # and do some searching and replacing
-sedify $PROJECT_DIR/initramfs-filelist.txt $TEMP_DIR/$FILELIST
+sedify $PROJECT_DIR/$FILELIST $TEMP_DIR/$FILELIST
 
 # include the list of files that we just generated as part of the initramfs
 # image for future reference and debugging/troubleshooting
-echo -n "file /boot/initramfs-filelist.txt.gz " \
+echo -n "file /boot/${FILELIST}.gz " \
     >> $TEMP_DIR/$FILELIST
 echo "${TEMP_DIR}/${FILELIST}.gz 0644 0 0" >> $TEMP_DIR/$FILELIST
 
