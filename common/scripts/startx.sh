@@ -26,8 +26,24 @@ if [ $(/bin/grep -c nox /proc/cmdline) -eq 0 ]; then
         cat $HOME_DIR/xsession | sed "s/^#\(exec perl.*\)$/\1/" \
             > $HOME_DIR/.xsession
     fi
+
     # set the xsession file to be executable
     #chmod 755 $HOME_DIR/.xsession
+
+    # see if the user wants a different screen resolution 
+    if [ $(/bin/egrep -c "rez|res|resolution|X|x" /proc/cmdline) -eq 0 ]; then
+        if [ $(/bin/grep -c "1024x768" /proc/cmdline) -gt 0 ]; then
+            cat /etc/X11/xorg.conf.orig | sed 's/#\(Modes "1024x768"\)/\1/' \
+                > /etc/X11/xorg.conf 
+        elif [ $(/bin/grep -c "800x600" /proc/cmdline) -gt 0 ]; then
+            cat /etc/X11/xorg.conf.orig | sed 's/#\(Modes "800x600"\)/\1/' \
+                > /etc/X11/xorg.conf 
+        else 
+            cat /etc/X11/xorg.conf.orig | sed 's/#\(Modes "640x480"\)/\1/' \
+                > /etc/X11/xorg.conf 
+        fi # if [ $(/bin/grep -c "1024x768" /proc/cmdline) -gt 0 ]
+    fi # if [ $(/bin/egrep -c "rez|res|resolution|X|x" /proc/cmdline) 
+
     # start X as the lack user
     /bin/su -s /bin/sh -c "$STARTX" lack
 else

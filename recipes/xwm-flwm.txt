@@ -10,11 +10,9 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # flwm
-dir /etc 755 0 0
 dir /etc/menu-methods 755 0 0
 file /etc/menu-methods/flwm /etc/menu-methods/flwm 755 0 0
 dir /usr/share/menu 755 0 0
 file /usr/share/menu/flwm /usr/share/menu/flwm 644 0 0
-dir /usr/bin 755 0 0
 file /usr/bin/flwm /usr/bin/flwm 755 0 0
 # vi: set sw=4 ts=4 paste:
