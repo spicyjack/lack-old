@@ -152,6 +152,9 @@ case "$ACTION" in
         stty -echo
         read PASSPHRASE
         stty echo
+        # let the user know what we're up to
+        colorize $S_TIP "${BASENAME} - "
+        colorize_nl $S_TIP "Running losetup to attach loopback device..."
         # echo the passphrase read in to STDIN of losetup
         LOSETUP_CMD=$(echo "${PASSPHRASE}" \
             | /sbin/losetup -G ${KEY_MOUNT}/${HOSTNAME} \
