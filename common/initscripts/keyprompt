@@ -16,17 +16,22 @@ BASENAME="keyprompt"
 ACTION=$1
 # start the random key-picker and throbber unless
 # prompt is set to 'no'
+# BOOTCHEAT prompt=no - don't start the disk decryption toolchain
 file_parse "/proc/cmdline" "prompt"
 PROMPT=$PARSED
+
+if [ "x$PROMPT" = "xno" ]; then 
+    exit 0
+fi # if [ "x$PROMPT" != "xno" ]
+
 # a default for the AES keylength
+# BOOTCHEAT aeskey= - AES encryption key length; [128|192|256] bits
 AESKEY="128"
 file_parse "/proc/cmdline" "aeskey"
 if [ ! -z $PARSED ]; then
     AESKEY=$PARSED
 fi # if [ ! -z $PARSED ]; then
-if [ "x$PROMPT" = "xno" ]; then 
-    exit 0
-fi # if [ "x$PROMPT" != "xno" ]
+
 
 mount_success () {
     MOUNTED="$ROOT_DEV mounted with AES${KEY} encryption as /dev/loop0" 
@@ -52,6 +57,7 @@ case "$ACTION" in
     # from here on down, we should be just waiting either for user input or
     # for the CGI script to kill us instead
 
+    # BOOTCHEAT thumbdev= - device where the disk keys are stored
     file_parse "/proc/cmdline" "thumbdev" 
     THUMB_DEV=$PARSED 
     #HOSTNAME=$(/bin/cat /etc/hostname | /usr/bin/tr -d '\n')
@@ -125,6 +131,7 @@ case "$ACTION" in
      # get the path to the real root device which will be mounted to /dev/loop0
     colorize $S_TIP "${BASENAME} - "
     colorize_nl $S_TIP "Checking for root device in /proc/cmdline (rootdev)"
+    # BOOTCHEAT rootdev= - device with the encrypted root filesystem
     file_parse "/proc/cmdline" "rootdev" 
     ROOT_DEV=$PARSED
     if [ ! -b $ROOT_DEV ]; then

@@ -6,19 +6,23 @@ HOME_DIR="/home/lack"
 STARTX="/usr/bin/startx"
 
 # see if we even want to run X
+# BOOTCHEAT nox - Don't start XWindows
 if [ $(/bin/grep -c nox /proc/cmdline) -eq 0 ]; then
     # yep, run X; now do we want a normal or debug session?
     # check for either debugging or explicit xterm call
+    # BOOTCHEAT wm=[DEBUG|xterm] - Start X with an xterm window
     if [ $(/bin/egrep -c "wm=[DEBUG|xterm]" /proc/cmdline) -gt 0 ]; then
         # debug session
         cat $HOME_DIR/xsession | sed "s/^#\(exec xterm.*\)$/\1/" \
             > $HOME_DIR/.xsession
+    # BOOTCHEAT wm=flwm - Start X with flwm as the window manager
     elif [ $(/bin/egrep -c "wm=flwm" /proc/cmdline) -gt 0 ]; then
         # run flwm
         cat $HOME_DIR/xsession | sed "s/^#\(exec flwm.*\)$/\1/" \
             > $HOME_DIR/.xsession
+    # BOOTCHEAT wm=windowlab - Start X with windowlab as the window manager
     elif [ $(/bin/egrep -c "wm=windowlab" /proc/cmdline) -gt 0 ]; then
-        # run flwm
+        # run windowlab
         cat $HOME_DIR/xsession | sed "s/^#\(exec windowlab.*\)$/\1/" \
             > $HOME_DIR/.xsession
     else
@@ -31,6 +35,7 @@ if [ $(/bin/grep -c nox /proc/cmdline) -eq 0 ]; then
     #chmod 755 $HOME_DIR/.xsession
 
     # see if the user wants a different screen resolution 
+    # BOOTCHEAT [rez|res|resolution|X|x]=[1024x768|800x600] - X resolution
     if [ $(/bin/egrep -c "rez|res|resolution|X|x" /proc/cmdline) -eq 0 ]; then
         if [ $(/bin/grep -c "1024x768" /proc/cmdline) -gt 0 ]; then
             cat /etc/X11/xorg.conf.orig | sed 's/#\(Modes "1024x768"\)/\1/' \
