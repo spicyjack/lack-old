@@ -128,7 +128,7 @@ function show_help () {
 
     SCRIPT OPTIONS
     -h|--help      Show this help output
-    -w|--wordlist  Diceware wordlist to use
+    -l|--list      Diceware wordlist to use
     -s|--dicesize  Size of password to generate using diceparse.pl (Default: 5)
     -p|--dicepath  Path to the 'diceparse.pl' script
     -o|--output    Directory to write keys and keylist to
@@ -197,7 +197,7 @@ while true ; do
         -e|--examples) # show the script options
             show_examples
             ;;
-        -l|--list|--wordlist) # wordlist file to use
+        -l|--list|-w|--wordlist) # wordlist file to use
             WORDLIST=$2
             shift 2
             ERRORLOOP=$(($ERRORLOOP - 1))
