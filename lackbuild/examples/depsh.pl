@@ -7,11 +7,17 @@
 
 =head1 NAME
 
-depsh.pl
+depsh.pl - a system library dependency resolving tool
 
 =head1 VERSION
 
 The current version of this script is 0.1 (12Jul2006)
+
+Using sekret magick heuristics (the output of C<ldd>), determine the ѕet of
+system library dependencies for a given file.
+
+Optionally creates a tarball with all of the files required to satisfy
+dependencies, but this functionality is probably broken.
 
 =cut
 
