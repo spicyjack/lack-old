@@ -65,6 +65,9 @@ cmd_status () {
 
 dump_header () {
 
+# FIXME 
+# we know the name of the package.... generate a nicer header that includes
+# the current date and package name
 cat <<'EOHD'
 # $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
 # description: example package with comments
