@@ -98,7 +98,7 @@ function find_first_free_filename()
         # increment the file counter in order to try and find a free filename
         FILE_COUNTER=$(($FILE_COUNTER + 1))
     done
-    echo "Output file: $SEARCHDIR/$TESTNAME.$FILE_DATE.$FILE_COUNTER.cpio.gz"
+    echo "- Output file: $SEARCHDIR/$TESTNAME.$FILE_DATE.$FILE_COUNTER.cpio.gz"
 
     OUTPUT_FILE=$SEARCHDIR/$TESTNAME.$FILE_DATE.$FILE_COUNTER.cpio.gz
 } # function find_first_free_filename()
@@ -358,7 +358,7 @@ if [ "x$PROJECT_DIR" != "x" ]; then
         exit 1
     fi # if [ ! -d $PROJECT_DIR ]
     echo "found!"
-    echo "- Project directory: ${PROJECT_DIR}"
+    echo "  Project directory: ${PROJECT_DIR}"
 fi # if [ "x$PROJECT_DIR" != "x" ]
 
 # if the project name was used, see if it exists
@@ -482,7 +482,7 @@ then
     exit 1
 fi
 echo "found!"
-echo "- ${PROJECT_DIR}/$FILELIST"
+echo "  ${PROJECT_DIR}/$FILELIST"
 
 
 # then grab the project specific file, which should have the kernel modules
