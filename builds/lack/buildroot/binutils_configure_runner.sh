@@ -1,18 +1,21 @@
 #!/bin/sh
-# binutils source directory
-SRC=..
-CROSS=`basename "$PWD"`
-CROSS="${CROSS#.obj-}"
-NAME=`cd $SRC;pwd`
-# the full name of the install directory
-NAME=`basename "$NAME"`-$CROSS
+# run from inside the .obj-i486-linux-uclibc inside the binutils source dir
 # install prefix
 if [ -z $INSTALL_PREFIX ]; then
     echo "ERROR: missing INSTALL_PREFIX environment variable"
     exit 1
 fi
+SRC=..
+# what's our current directory name?
+CROSS=`basename "$PWD"`
+# remove the .obj at the end
+CROSS="${CROSS#.obj-}"
+NAME=`cd $SRC;pwd`
+# the full name of the install directory
+NAME=`basename "$NAME"`-$CROSS
+
 # target install directory
-STATIC_TARGET=$INSTALL_PREFIX/stow/$NAME
+STATIC_TARGET=$INSTALL_PREFIX/$NAME
 # target cross-compilation install directory
 CROSS_TARGET=$INSTALL_PREFIX/cross
 

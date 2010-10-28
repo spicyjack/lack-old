@@ -1,22 +1,23 @@
 #!/bin/sh
-# binutils source directory
+# run from inside the .obj-i486-linux-uclibc inside the binutils source dir
+# install prefix
+if [ -z $INSTALL_PREFIX ]; then
+    echo "ERROR: missing INSTALL_PREFIX environment variable"
+    exit 1
+fi
 SRC=..
 CROSS=`basename "$PWD"`
 CROSS="${CROSS#.obj-}"
 NAME=`cd $SRC;pwd`
 # the full name of the install directory
 NAME=`basename "$NAME"`-$CROSS
-# install prefix
-if [ -z $INSTALL_PREFIX ]; then
-    echo "ERROR: missing INSTALL_PREFIX environment variable"
-    exit 1
-fi
+
 # target install directory
-STATIC_TARGET=$INSTALL_PREFIX/stow/$NAME
+STATIC_TARGET=$INSTALL_PREFIX/$NAME
 # target cross-compilation install directory
 CROSS_TARGET=$INSTALL_PREFIX/cross
 
-time make \
+time sudo make \
 prefix=$STATIC_TARGET                          \
 exec-prefix=$STATIC_TARGET                     \
 bindir=$STATIC_TARGET/bin                      \

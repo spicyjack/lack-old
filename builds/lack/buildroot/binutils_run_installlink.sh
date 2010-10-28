@@ -13,8 +13,8 @@ if [ -z $INSTALL_PREFIX ]; then
 fi
 # target install directory
 #STATIC_TARGET=$INSTALL_PREFIX/stow/$NAME$VER
-echo "Creating links from ${INSTALL_PREFIX}/stow/${NAME}${VER}"
-STATIC_TARGET=$INSTALL_PREFIX/stow/$NAME$VER
+echo "Creating links from ${INSTALL_PREFIX}/${NAME}${VER}"
+STATIC_TARGET=$INSTALL_PREFIX/$NAME$VER
 # target cross-compilation install directory
 CROSS_TARGET=$INSTALL_PREFIX/cross
 
