@@ -1,0 +1,20 @@
+# $Id: mount-tools.lenny.txt,v 1.4 2009-08-10 08:38:58 brian Exp $
+# packages: loop-aes-utils
+# loop-aes /bin
+# both of these files are SUID
+file /bin/mount /bin/mount 4755 0 0 
+file /bin/umount /bin/umount 4755 0 0 
+# loop-aes /etc
+file /etc/passwd :BUILD_BASE:/common/etcfiles/passwd 0644 0 0
+file /etc/nsswitch.conf :BUILD_BASE:/common/etcfiles/nsswitch.conf 0644 0 0
+# loop-aes /lib
+file /lib/libnss_files-2.12.1.so /lib/libnss_files-2.12.1.so 0644 0 0
+slink /lib/libnss_files.so.2 /lib/libnss_files-2.12.1.so 0644 0 0  
+file /lib/libnss_dns-2.12.1.so /lib/libnss_dns-2.12.1.so 0644 0 0
+slink /lib/libnss_dns.so.2 /lib/libnss_dns-2.12.1.so 0644 0 0  
+# loop-aes sbin
+file /sbin/losetup /sbin/losetup 0755 0 0
+file /sbin/swapon /sbin/swapon 0755 0 0
+slink /sbin/swapoff /sbin/swapon 0755 0 0
+# loop-aes usr
+file /usr/bin/gpg /usr/bin/gpg 4755 0 0

@@ -1,0 +1,50 @@
+# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# libpam0g
+slink /lib/libpamc.so.0 /lib/libpamc.so.0.82.1 777 0 0
+file /lib/libpamc.so.0.82.1 /lib/libpamc.so.0.82.1 644 0 0
+slink /lib/libpam_misc.so.0 /lib/libpam_misc.so.0.82.0 777 0 0
+file /lib/libpam_misc.so.0.82.0 /lib/libpam_misc.so.0.82.0 644 0 0
+slink /lib/libpam.so.0 /lib/libpam.so.0.82.2 777 0 0
+file /lib/libpam.so.0.82.2 /lib/libpam.so.0.82.2 644 0 0
+dir /usr/share/lintian 755 0 0
+dir /usr/share/lintian/overrides 755 0 0
+file /usr/share/lintian/overrides/libpam0g /usr/share/lintian/overrides/libpam0g 644 0 0
+# vi: set sw=4 ts=4 paste:
+# libpam-runtime
+dir /etc 755 0 0
+file /etc/pam.conf /etc/pam.conf 644 0 0
+dir /etc/pam.d 755 0 0
+file /etc/pam.d/other /etc/pam.d/other 644 0 0
+dir /usr/sbin 755 0 0
+file /usr/sbin/pam-auth-update /usr/sbin/pam-auth-update 755 0 0
+file /usr/sbin/pam_getenv /usr/sbin/pam_getenv 755 0 0
+dir /usr/share/lintian 755 0 0
+dir /usr/share/lintian/overrides 755 0 0
+file /usr/share/lintian/overrides/libpam-runtime /usr/share/lintian/overrides/libpam-runtime 644 0 0
+dir /usr/share/pam 755 0 0
+file /usr/share/pam/common-account /usr/share/pam/common-account 644 0 0
+file /usr/share/pam/common-account.md5sums /usr/share/pam/common-account.md5sums 644 0 0
+file /usr/share/pam/common-auth /usr/share/pam/common-auth 644 0 0
+file /usr/share/pam/common-auth.md5sums /usr/share/pam/common-auth.md5sums 644 0 0
+file /usr/share/pam/common-password /usr/share/pam/common-password 644 0 0
+file /usr/share/pam/common-password.md5sums /usr/share/pam/common-password.md5sums 644 0 0
+file /usr/share/pam/common-session /usr/share/pam/common-session 644 0 0
+file /usr/share/pam/common-session.md5sums /usr/share/pam/common-session.md5sums 644 0 0
+file /usr/share/pam/common-session-noninteractive /usr/share/pam/common-session-noninteractive 644 0 0
+file /usr/share/pam/common-session-noninteractive.md5sums /usr/share/pam/common-session-noninteractive.md5sums 644 0 0
+dir /usr/share/pam-configs 755 0 0
+file /usr/share/pam-configs/unix /usr/share/pam-configs/unix 644 0 0
+dir /var 755 0 0
+dir /var/lib 755 0 0
+dir /var/lib/pam 755 0 0
+# vi: set sw=4 ts=4 paste:

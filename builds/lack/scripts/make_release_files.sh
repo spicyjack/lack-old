@@ -33,7 +33,7 @@ else
 fi
 
 ### create the hostname file
-echo "${PROJECT_NAME}" > $OUTPUT_DIR/hostname.${PROJECT_NAME}
+echo "${PROJECT_NAME}" > $TEMP_DIR/hostname.${PROJECT_NAME}
 
 # build the file with the correct substitutions performed
 # below variables are set in the initramfs.cfg file
@@ -46,7 +46,7 @@ do
             s!:RELEASE_VER:!${RELEASE_VER}!g;
             s!:DEMO_PASS:!${DEMO_PASS}!g;
             }" \
-    > $OUTPUT_DIR/$FILEBASE
+    > $TEMP_DIR/$FILEBASE
 done
 
 # vi: set sw=4 ts=4 paste:

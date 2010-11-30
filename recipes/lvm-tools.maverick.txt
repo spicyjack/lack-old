@@ -1,0 +1,88 @@
+# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# lvm2
+dir /etc 755 0 0
+dir /etc/lvm 755 0 0
+file /etc/lvm/lvm.conf /etc/lvm/lvm.conf 644 0 0
+dir /lib/udev 755 0 0
+dir /lib/udev/rules.d 755 0 0
+file /lib/udev/rules.d/56-lvm.rules /lib/udev/rules.d/56-lvm.rules 644 0 0
+file /lib/udev/rules.d/60-persistent-storage-lvm.rules /lib/udev/rules.d/60-persistent-storage-lvm.rules 644 0 0
+file /lib/udev/rules.d/85-lvm2.rules /lib/udev/rules.d/85-lvm2.rules 644 0 0
+dir /sbin 755 0 0
+file /sbin/fsadm /sbin/fsadm 755 0 0
+slink /sbin/lvchange /sbin/lvm 777 0 0
+slink /sbin/lvconvert /sbin/lvm 777 0 0
+slink /sbin/lvcreate /sbin/lvm 777 0 0
+slink /sbin/lvdisplay /sbin/lvm 777 0 0
+slink /sbin/lvextend /sbin/lvm 777 0 0
+file /sbin/lvm /sbin/lvm 755 0 0
+slink /sbin/lvmchange /sbin/lvm 777 0 0
+slink /sbin/lvmdiskscan /sbin/lvm 777 0 0
+file /sbin/lvmdump /sbin/lvmdump 755 0 0
+slink /sbin/lvmsadc /sbin/lvm 777 0 0
+slink /sbin/lvmsar /sbin/lvm 777 0 0
+slink /sbin/lvreduce /sbin/lvm 777 0 0
+slink /sbin/lvremove /sbin/lvm 777 0 0
+slink /sbin/lvrename /sbin/lvm 777 0 0
+slink /sbin/lvresize /sbin/lvm 777 0 0
+slink /sbin/lvs /sbin/lvm 777 0 0
+slink /sbin/lvscan /sbin/lvm 777 0 0
+slink /sbin/pvchange /sbin/lvm 777 0 0
+slink /sbin/pvck /sbin/lvm 777 0 0
+slink /sbin/pvcreate /sbin/lvm 777 0 0
+slink /sbin/pvdisplay /sbin/lvm 777 0 0
+slink /sbin/pvmove /sbin/lvm 777 0 0
+slink /sbin/pvremove /sbin/lvm 777 0 0
+slink /sbin/pvresize /sbin/lvm 777 0 0
+slink /sbin/pvs /sbin/lvm 777 0 0
+slink /sbin/pvscan /sbin/lvm 777 0 0
+slink /sbin/vgcfgbackup /sbin/lvm 777 0 0
+slink /sbin/vgcfgrestore /sbin/lvm 777 0 0
+slink /sbin/vgchange /sbin/lvm 777 0 0
+slink /sbin/vgck /sbin/lvm 777 0 0
+slink /sbin/vgconvert /sbin/lvm 777 0 0
+slink /sbin/vgcreate /sbin/lvm 777 0 0
+slink /sbin/vgdisplay /sbin/lvm 777 0 0
+slink /sbin/vgexport /sbin/lvm 777 0 0
+slink /sbin/vgextend /sbin/lvm 777 0 0
+slink /sbin/vgimport /sbin/lvm 777 0 0
+file /sbin/vgimportclone /sbin/vgimportclone 755 0 0
+slink /sbin/vgmerge /sbin/lvm 777 0 0
+slink /sbin/vgmknodes /sbin/lvm 777 0 0
+slink /sbin/vgreduce /sbin/lvm 777 0 0
+slink /sbin/vgremove /sbin/lvm 777 0 0
+slink /sbin/vgrename /sbin/lvm 777 0 0
+slink /sbin/vgs /sbin/lvm 777 0 0
+slink /sbin/vgscan /sbin/lvm 777 0 0
+slink /sbin/vgsplit /sbin/lvm 777 0 0
+#dir /usr/share/initramfs-tools 755 0 0
+#dir /usr/share/initramfs-tools/hooks 755 0 0
+#file /usr/share/initramfs-tools/hooks/lvm2 /usr/share/initramfs-tools/hooks/lvm2 755 0 0
+#dir /usr/share/initramfs-tools/scripts 755 0 0
+#dir /usr/share/initramfs-tools/scripts/init-premount 755 0 0
+#file /usr/share/initramfs-tools/scripts/init-premount/lvm2 /usr/share/initramfs-tools/scripts/init-premount/lvm2 755 0 0
+# dmsetup
+dir /lib/udev 755 0 0
+dir /lib/udev/rules.d 755 0 0
+file /lib/udev/rules.d/55-dm.rules /lib/udev/rules.d/55-dm.rules 644 0 0
+file /lib/udev/rules.d/60-persistent-storage-dm.rules /lib/udev/rules.d/60-persistent-storage-dm.rules 644 0 0
+dir /sbin 755 0 0
+file /sbin/dmsetup /sbin/dmsetup 755 0 0
+dir /usr/share/initramfs-tools 755 0 0
+dir /usr/share/initramfs-tools/hooks 755 0 0
+file /usr/share/initramfs-tools/hooks/dmsetup /usr/share/initramfs-tools/hooks/dmsetup 755 0 0
+# libdevmapper-event1.02.1
+file /lib/libdevmapper-event.so.1.02.1 /lib/libdevmapper-event.so.1.02.1 644 0 0
+# libdevmapper1.02.1
+file /lib/libdevmapper.so.1.02.1 /lib/libdevmapper.so.1.02.1 644 0 0
+# vi: set sw=4 ts=4 paste:

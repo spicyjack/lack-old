@@ -1,0 +1,168 @@
+# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# udev
+dir /etc 755 0 0
+dir /etc/init 755 0 0
+dir /etc/init.d 755 0 0
+#slink /etc/init.d/udev /lib/init/upstart-job 777 0 0
+#slink /etc/init.d/udev-finish /lib/init/upstart-job 777 0 0
+#slink /etc/init.d/udevmonitor /lib/init/upstart-job 777 0 0
+#slink /etc/init.d/udevtrigger /lib/init/upstart-job 777 0 0
+#file /etc/init/udev.conf /etc/init/udev.conf 644 0 0
+#file /etc/init/udev-finish.conf /etc/init/udev-finish.conf 644 0 0
+#file /etc/init/udevmonitor.conf /etc/init/udevmonitor.conf 644 0 0
+#file /etc/init/udevtrigger.conf /etc/init/udevtrigger.conf 644 0 0
+dir /etc/udev 755 0 0
+dir /etc/udev/rules.d 755 0 0
+file /etc/udev/rules.d/README /etc/udev/rules.d/README 644 0 0
+file /etc/udev/udev.conf /etc/udev/udev.conf 644 0 0
+dir /lib/firmware 755 0 0
+dir /lib/udev 755 0 0
+file /lib/udev/ata_id /lib/udev/ata_id 755 0 0
+file /lib/udev/cdrom_id /lib/udev/cdrom_id 755 0 0
+file /lib/udev/collect /lib/udev/collect 755 0 0
+file /lib/udev/create_floppy_devices /lib/udev/create_floppy_devices 755 0 0
+dir /lib/udev/devices 755 0 0
+dir /lib/udev/devices/net 755 0 0
+dir /lib/udev/devices/pts 755 0 0
+dir /lib/udev/devices/shm 755 0 0
+file /lib/udev/edd_id /lib/udev/edd_id 755 0 0
+file /lib/udev/findkeyboards /lib/udev/findkeyboards 755 0 0
+file /lib/udev/firmware /lib/udev/firmware 755 0 0
+file /lib/udev/fstab_import /lib/udev/fstab_import 755 0 0
+file /lib/udev/hid2hci /lib/udev/hid2hci 755 0 0
+file /lib/udev/hotplug.functions /lib/udev/hotplug.functions 644 0 0
+file /lib/udev/input_id /lib/udev/input_id 755 0 0
+file /lib/udev/keyboard-force-release.sh /lib/udev/keyboard-force-release.sh 755 0 0
+file /lib/udev/keymap /lib/udev/keymap 755 0 0
+dir /lib/udev/keymaps 755 0 0
+file /lib/udev/keymaps/acer /lib/udev/keymaps/acer 644 0 0
+file /lib/udev/keymaps/acer-aspire_5720 /lib/udev/keymaps/acer-aspire_5720 644 0 0
+file /lib/udev/keymaps/acer-aspire_5920g /lib/udev/keymaps/acer-aspire_5920g 644 0 0
+file /lib/udev/keymaps/acer-aspire_6920 /lib/udev/keymaps/acer-aspire_6920 644 0 0
+file /lib/udev/keymaps/acer-travelmate_c300 /lib/udev/keymaps/acer-travelmate_c300 644 0 0
+file /lib/udev/keymaps/asus /lib/udev/keymaps/asus 644 0 0
+file /lib/udev/keymaps/compaq-e_evo /lib/udev/keymaps/compaq-e_evo 644 0 0
+file /lib/udev/keymaps/dell /lib/udev/keymaps/dell 644 0 0
+file /lib/udev/keymaps/everex-xt5000 /lib/udev/keymaps/everex-xt5000 644 0 0
+dir /lib/udev/keymaps/force-release 755 0 0
+file /lib/udev/keymaps/force-release/common-volume-keys /lib/udev/keymaps/force-release/common-volume-keys 644 0 0
+file /lib/udev/keymaps/force-release/samsung-other /lib/udev/keymaps/force-release/samsung-other 644 0 0
+file /lib/udev/keymaps/fujitsu-amilo_pa_2548 /lib/udev/keymaps/fujitsu-amilo_pa_2548 644 0 0
+file /lib/udev/keymaps/fujitsu-amilo_pro_edition_v3505 /lib/udev/keymaps/fujitsu-amilo_pro_edition_v3505 644 0 0
+file /lib/udev/keymaps/fujitsu-amilo_pro_v3205 /lib/udev/keymaps/fujitsu-amilo_pro_v3205 644 0 0
+file /lib/udev/keymaps/fujitsu-amilo_si_1520 /lib/udev/keymaps/fujitsu-amilo_si_1520 644 0 0
+file /lib/udev/keymaps/fujitsu-esprimo_mobile_v5 /lib/udev/keymaps/fujitsu-esprimo_mobile_v5 644 0 0
+file /lib/udev/keymaps/fujitsu-esprimo_mobile_v6 /lib/udev/keymaps/fujitsu-esprimo_mobile_v6 644 0 0
+file /lib/udev/keymaps/hewlett-packard /lib/udev/keymaps/hewlett-packard 644 0 0
+file /lib/udev/keymaps/hewlett-packard-2510p_2530p /lib/udev/keymaps/hewlett-packard-2510p_2530p 644 0 0
+file /lib/udev/keymaps/hewlett-packard-compaq_elitebook /lib/udev/keymaps/hewlett-packard-compaq_elitebook 644 0 0
+file /lib/udev/keymaps/hewlett-packard-pavilion /lib/udev/keymaps/hewlett-packard-pavilion 644 0 0
+file /lib/udev/keymaps/hewlett-packard-presario-2100 /lib/udev/keymaps/hewlett-packard-presario-2100 644 0 0
+file /lib/udev/keymaps/hewlett-packard-tablet /lib/udev/keymaps/hewlett-packard-tablet 644 0 0
+file /lib/udev/keymaps/hewlett-packard-tx2 /lib/udev/keymaps/hewlett-packard-tx2 644 0 0
+file /lib/udev/keymaps/ibm-thinkpad-usb-keyboard-trackpoint /lib/udev/keymaps/ibm-thinkpad-usb-keyboard-trackpoint 644 0 0
+file /lib/udev/keymaps/inventec-symphony_6.0_7.0 /lib/udev/keymaps/inventec-symphony_6.0_7.0 644 0 0
+file /lib/udev/keymaps/lenovo-3000 /lib/udev/keymaps/lenovo-3000 644 0 0
+file /lib/udev/keymaps/lenovo-ideapad /lib/udev/keymaps/lenovo-ideapad 644 0 0
+file /lib/udev/keymaps/lenovo-thinkpad-usb-keyboard-trackpoint /lib/udev/keymaps/lenovo-thinkpad-usb-keyboard-trackpoint 644 0 0
+file /lib/udev/keymaps/lenovo-thinkpad_x200_tablet /lib/udev/keymaps/lenovo-thinkpad_x200_tablet 644 0 0
+file /lib/udev/keymaps/lenovo-thinkpad_x6_tablet /lib/udev/keymaps/lenovo-thinkpad_x6_tablet 644 0 0
+file /lib/udev/keymaps/lg-x110 /lib/udev/keymaps/lg-x110 644 0 0
+file /lib/udev/keymaps/logitech-wave /lib/udev/keymaps/logitech-wave 644 0 0
+file /lib/udev/keymaps/logitech-wave-cordless /lib/udev/keymaps/logitech-wave-cordless 644 0 0
+file /lib/udev/keymaps/logitech-wave-pro-cordless /lib/udev/keymaps/logitech-wave-pro-cordless 644 0 0
+file /lib/udev/keymaps/maxdata-pro_7000 /lib/udev/keymaps/maxdata-pro_7000 644 0 0
+file /lib/udev/keymaps/medion-fid2060 /lib/udev/keymaps/medion-fid2060 644 0 0
+file /lib/udev/keymaps/medionnb-a555 /lib/udev/keymaps/medionnb-a555 644 0 0
+file /lib/udev/keymaps/micro-star /lib/udev/keymaps/micro-star 644 0 0
+file /lib/udev/keymaps/module-asus-w3j /lib/udev/keymaps/module-asus-w3j 644 0 0
+file /lib/udev/keymaps/module-ibm /lib/udev/keymaps/module-ibm 644 0 0
+file /lib/udev/keymaps/module-lenovo /lib/udev/keymaps/module-lenovo 644 0 0
+file /lib/udev/keymaps/module-sony /lib/udev/keymaps/module-sony 644 0 0
+file /lib/udev/keymaps/module-sony-old /lib/udev/keymaps/module-sony-old 644 0 0
+file /lib/udev/keymaps/olpc-xo /lib/udev/keymaps/olpc-xo 644 0 0
+file /lib/udev/keymaps/onkyo /lib/udev/keymaps/onkyo 644 0 0
+file /lib/udev/keymaps/oqo-model2 /lib/udev/keymaps/oqo-model2 644 0 0
+file /lib/udev/keymaps/samsung-other /lib/udev/keymaps/samsung-other 644 0 0
+file /lib/udev/keymaps/samsung-sq1us /lib/udev/keymaps/samsung-sq1us 644 0 0
+file /lib/udev/keymaps/samsung-sx20s /lib/udev/keymaps/samsung-sx20s 644 0 0
+file /lib/udev/keymaps/toshiba-satellite_a100 /lib/udev/keymaps/toshiba-satellite_a100 644 0 0
+file /lib/udev/keymaps/toshiba-satellite_a110 /lib/udev/keymaps/toshiba-satellite_a110 644 0 0
+file /lib/udev/keymaps/toshiba-satellite_m30x /lib/udev/keymaps/toshiba-satellite_m30x 644 0 0
+file /lib/udev/keymaps/zepto-znote /lib/udev/keymaps/zepto-znote 644 0 0
+file /lib/udev/mobile-action-modeswitch /lib/udev/mobile-action-modeswitch 755 0 0
+file /lib/udev/mtd_probe /lib/udev/mtd_probe 755 0 0
+file /lib/udev/path_id /lib/udev/path_id 755 0 0
+file /lib/udev/pci-db /lib/udev/pci-db 755 0 0
+file /lib/udev/rule_generator.functions /lib/udev/rule_generator.functions 644 0 0
+dir /lib/udev/rules.d 755 0 0
+file /lib/udev/rules.d/40-ia64.rules /lib/udev/rules.d/40-ia64.rules 644 0 0
+file /lib/udev/rules.d/40-ppc.rules /lib/udev/rules.d/40-ppc.rules 644 0 0
+file /lib/udev/rules.d/50-firmware.rules /lib/udev/rules.d/50-firmware.rules 644 0 0
+file /lib/udev/rules.d/50-udev-default.rules /lib/udev/rules.d/50-udev-default.rules 644 0 0
+file /lib/udev/rules.d/60-cdrom_id.rules /lib/udev/rules.d/60-cdrom_id.rules 644 0 0
+file /lib/udev/rules.d/60-floppy.rules /lib/udev/rules.d/60-floppy.rules 644 0 0
+file /lib/udev/rules.d/60-persistent-alsa.rules /lib/udev/rules.d/60-persistent-alsa.rules 644 0 0
+file /lib/udev/rules.d/60-persistent-input.rules /lib/udev/rules.d/60-persistent-input.rules 644 0 0
+file /lib/udev/rules.d/60-persistent-serial.rules /lib/udev/rules.d/60-persistent-serial.rules 644 0 0
+file /lib/udev/rules.d/60-persistent-storage.rules /lib/udev/rules.d/60-persistent-storage.rules 644 0 0
+file /lib/udev/rules.d/60-persistent-storage-tape.rules /lib/udev/rules.d/60-persistent-storage-tape.rules 644 0 0
+file /lib/udev/rules.d/60-persistent-v4l.rules /lib/udev/rules.d/60-persistent-v4l.rules 644 0 0
+file /lib/udev/rules.d/61-mobile-action.rules /lib/udev/rules.d/61-mobile-action.rules 644 0 0
+file /lib/udev/rules.d/61-persistent-storage-edd.rules /lib/udev/rules.d/61-persistent-storage-edd.rules 644 0 0
+file /lib/udev/rules.d/70-acl.rules /lib/udev/rules.d/70-acl.rules 644 0 0
+file /lib/udev/rules.d/70-hid2hci.rules /lib/udev/rules.d/70-hid2hci.rules 644 0 0
+file /lib/udev/rules.d/75-cd-aliases-generator.rules /lib/udev/rules.d/75-cd-aliases-generator.rules 644 0 0
+file /lib/udev/rules.d/75-net-description.rules /lib/udev/rules.d/75-net-description.rules 644 0 0
+file /lib/udev/rules.d/75-persistent-net-generator.rules /lib/udev/rules.d/75-persistent-net-generator.rules 644 0 0
+file /lib/udev/rules.d/75-probe_mtd.rules /lib/udev/rules.d/75-probe_mtd.rules 644 0 0
+file /lib/udev/rules.d/75-tty-description.rules /lib/udev/rules.d/75-tty-description.rules 644 0 0
+file /lib/udev/rules.d/78-graphics-card.rules /lib/udev/rules.d/78-graphics-card.rules 644 0 0
+file /lib/udev/rules.d/78-sound-card.rules /lib/udev/rules.d/78-sound-card.rules 644 0 0
+file /lib/udev/rules.d/79-fstab_import.rules /lib/udev/rules.d/79-fstab_import.rules 644 0 0
+file /lib/udev/rules.d/80-drivers.rules /lib/udev/rules.d/80-drivers.rules 644 0 0
+file /lib/udev/rules.d/95-keyboard-force-release.rules /lib/udev/rules.d/95-keyboard-force-release.rules 644 0 0
+file /lib/udev/rules.d/95-keymap.rules /lib/udev/rules.d/95-keymap.rules 644 0 0
+file /lib/udev/rules.d/95-udev-late.rules /lib/udev/rules.d/95-udev-late.rules 644 0 0
+file /lib/udev/rules.d/README /lib/udev/rules.d/README 644 0 0
+file /lib/udev/scsi_id /lib/udev/scsi_id 755 0 0
+file /lib/udev/udev-acl /lib/udev/udev-acl 755 0 0
+file /lib/udev/usb-db /lib/udev/usb-db 755 0 0
+file /lib/udev/usb_id /lib/udev/usb_id 755 0 0
+file /lib/udev/v4l_id /lib/udev/v4l_id 755 0 0
+file /lib/udev/write_cd_rules /lib/udev/write_cd_rules 755 0 0
+file /lib/udev/write_net_rules /lib/udev/write_net_rules 755 0 0
+dir /sbin 755 0 0
+file /sbin/udevadm /sbin/udevadm 755 0 0
+file /sbin/udevd /sbin/udevd 755 0 0
+dir /usr/lib 755 0 0
+dir /usr/lib/ConsoleKit 755 0 0
+dir /usr/lib/ConsoleKit/run-seat.d 755 0 0
+slink /usr/lib/ConsoleKit/run-seat.d/udev-acl.ck /lib/udev/udev-acl 777 0 0
+dir /usr/lib/udev 755 0 0
+dir /usr/share/apport 755 0 0
+dir /usr/share/apport/package-hooks 755 0 0
+file /usr/share/apport/package-hooks/udev.py /usr/share/apport/package-hooks/udev.py 644 0 0
+dir /usr/share/initramfs-tools 755 0 0
+dir /usr/share/initramfs-tools/hooks 755 0 0
+file /usr/share/initramfs-tools/hooks/udev /usr/share/initramfs-tools/hooks/udev 755 0 0
+dir /usr/share/initramfs-tools/scripts 755 0 0
+dir /usr/share/initramfs-tools/scripts/init-bottom 755 0 0
+file /usr/share/initramfs-tools/scripts/init-bottom/udev /usr/share/initramfs-tools/scripts/init-bottom/udev 755 0 0
+dir /usr/share/initramfs-tools/scripts/init-top 755 0 0
+file /usr/share/initramfs-tools/scripts/init-top/udev /usr/share/initramfs-tools/scripts/init-top/udev 755 0 0
+dir /usr/share/initramfs-tools/scripts/nfs-top 755 0 0
+file /usr/share/initramfs-tools/scripts/nfs-top/udev /usr/share/initramfs-tools/scripts/nfs-top/udev 755 0 0
+dir /usr/share/pkgconfig 755 0 0
+file /usr/share/pkgconfig/udev.pc /usr/share/pkgconfig/udev.pc 644 0 0
+# vi: set sw=4 ts=4 paste:

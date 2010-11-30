@@ -29,6 +29,15 @@
 #   # perl /usr/lib/perl/5.8.8
 #   - prepend a filelist header, see perl.txt for an example
 
+# verify we're not running under dash
+if [ -z $BASH_VERSION ]; then
+#if [ $(readlink /bin/sh | grep -c dash) -gt 0 ]; then
+    # execute this script under bash instead
+    echo "WARNING: this script doesn't run under dash..." >&2
+    echo "WARNING: execute this script with /bin/bash" >&2
+    exit 1
+fi # if [ $(readlink /bin/sh | grep -c dash) -gt 0 ]
+
 # external programs used
 TRUE=$(which true)
 GETOPT=$(which getopt)
@@ -220,10 +229,10 @@ fi
 
 ### SCRIPT MAIN LOOP ###
     if [ ! -z $PACKAGE_NAME ]; then
-        OUTPUT=$(/usr/bin/dpkg -L $PACKAGE_NAME)
+        OUTPUT=$(/usr/bin/dpkg -L $PACKAGE_NAME | sort )
         cmd_status "dpkg" $? 
     elif [ ! -z $PACKAGE_DIR ]; then 
-        OUTPUT=$(/usr/bin/find $PACKAGE_DIR -type f)
+        OUTPUT=$(/usr/bin/find $PACKAGE_DIR -type f | sort)
         cmd_status "find $PACKAGE_DIR -type f" $? 
     fi # if [ ! -z $PACKAGE_NAME ]
 
