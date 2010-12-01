@@ -363,7 +363,7 @@ fi # if [ "x$PROJECT_DIR" != "x" ]
 
 # if the project name was used, see if it exists
 if [ "x$PROJECT_NAME" != "x" ]; then
-    echo -n "- Checking for project '${PROJECT_DIR}' in base dir; "
+    echo -n "- Checking for project '${PROJECT_NAME}' in base dir; "
     if [ ! -d $BUILD_BASE/builds/$PROJECT_NAME ]; then
         echo "ERROR: --project specified, but project directory "
         echo "ERROR: $BUILD_BASE/builds/$PROJECT_NAME does not exist"
