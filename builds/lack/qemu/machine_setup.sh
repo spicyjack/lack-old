@@ -10,7 +10,7 @@
 # - split up sections into either shell functions or separate files that can be
 # run sysvinit style
 
-PACKAGE_LIST="mercurial linuxlogo screen stow sudo ssh vim ctags wget"
+PACKAGE_LIST="mercurial linuxlogo screen stow sudo ssh vim ctags wget less"
 DOWNLOAD_URL="http://purl.portaboom.com/project_pkgs/"
 RC_TARBALL_FILE="rcfiles.tar"
 SPLASHSCREEN_FILE="sunspot_swedish-640x480.xpm.gz"
