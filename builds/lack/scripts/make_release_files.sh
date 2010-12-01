@@ -7,7 +7,6 @@
 CAT=$(which cat)
 SED=$(which sed)
 
-OUTPUT_DIR="/tmp"
 # any files in this list get enumerated over and the substitutions below are
 # performed on them
 INPUT_FILES="
