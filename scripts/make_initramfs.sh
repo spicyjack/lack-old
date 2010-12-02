@@ -44,6 +44,7 @@ HARDLINK_INITRD=0 # don't hardlink the initramfs to the initrd file
 BUILD_BASE="/home/demo/src/lack-hg"
 # the list of files output and fed to gen_init_cpio
 FILELIST="initramfs-filelist.txt"
+PROJECT_LIST="project-filelist.txt"
 
 # helper functions
 
@@ -404,7 +405,7 @@ echo "- Created temporary directory '${TEMP_DIR}'"
 ### EXPORTS
 # export things that were set up either in getopts or hardcoded into this
 # script
-export BUILD_BASE PROJECT_DIR TEMP_DIR FILELIST
+export BUILD_BASE PROJECT_DIR TEMP_DIR FILELIST PROJECT_LIST
 
 # SOURCE! call set_vars to source the project file 
 set_vars $PROJECT_DIR
@@ -472,27 +473,24 @@ do
 done 
 
 # verify the initramfs recipe file exists
-echo -n "- Checking for $FILELIST file in project directory; "
-if [ ! -r $PROJECT_DIR/$FILELIST ]; 
+echo -n "- Checking for $PROJECT_LIST file in $TEMP_DIR; "
+if [ ! -r $TEMP_DIR/$PROJECT_LIST ]; 
 then
     # nope; delete the output file and exit
-    echo "ERROR: $FILELIST file does not exist in"
-    echo "${PROJECT_DIR} directory"
+    echo "ERROR: ${PROJECT_LIST} file does not exist in ${TEMP_DIR}"
     rm -rf $TEMP_DIR
     exit 1
 fi
 echo "found!"
-echo "  ${PROJECT_DIR}/$FILELIST"
-
+echo "  ${TEMP_DIR}/${PROJECT_LIST}"
 
 # then grab the project specific file, which should have the kernel modules
 # and do some searching and replacing
-sedify $PROJECT_DIR/$FILELIST $TEMP_DIR/$FILELIST
+sedify $TEMP_DIR/$PROJECT_LIST $TEMP_DIR/$FILELIST
 
 # include the list of files that we just generated as part of the initramfs
 # image for future reference and debugging/troubleshooting
-echo -n "file /boot/${FILELIST}.gz " \
-    >> $TEMP_DIR/$FILELIST
+echo -n "file /boot/${FILELIST}.gz " >> $TEMP_DIR/$FILELIST
 echo "${TEMP_DIR}/${FILELIST}.gz 0644 0 0" >> $TEMP_DIR/$FILELIST
 
 # compress the file list
