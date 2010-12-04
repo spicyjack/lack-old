@@ -344,6 +344,7 @@ fi
 # the variable is hardcoded at the top of this script
 echo -n "- Checking for build base directory (${BUILD_BASE}); "
 if [ ! -d $BUILD_BASE ]; then
+    echo
     echo "ERROR: build base directory doesn't exist"
     echo "(${BUILD_BASE})"
     exit 1
@@ -355,7 +356,9 @@ if [ "x$PROJECT_DIR" != "x" ]; then
     echo -n "- Checking for project directory; "
 
     if [ ! -d $PROJECT_DIR ]; then
-        echo "ERROR: --project-dir specified, but $PROJECT_DIR does not exist"
+        echo
+        echo "ERROR: --project-dir specified, but directory does not exist"
+        echo "ERROR: tested directory: ${PROJECT_DIR}"
         exit 1
     fi # if [ ! -d $PROJECT_DIR ]
     echo "found!"
@@ -366,8 +369,9 @@ fi # if [ "x$PROJECT_DIR" != "x" ]
 if [ "x$PROJECT_NAME" != "x" ]; then
     echo -n "- Checking for project '${PROJECT_NAME}' in base dir; "
     if [ ! -d $BUILD_BASE/builds/$PROJECT_NAME ]; then
-        echo "ERROR: --project specified, but project directory "
-        echo "ERROR: $BUILD_BASE/builds/$PROJECT_NAME does not exist"
+        echo
+        echo "ERROR: --project specified, but project directory does not exist"
+        echo "ERROR: tested directory: ${BUILD_BASE}/builds/${PROJECT_NAME}"
         exit 1
     fi # if [ ! -d $BUILD_BASE/builds/$PROJECT_NAME ]
     echo "found!"
@@ -383,14 +387,17 @@ if [ ! $DRY_RUN ]; then
     # set up an error flag
     GENINITCPIO_ERROR=0
     if [ ! -e "/usr/src/linux/usr/gen_init_cpio" ]; then
+        echo
         echo "Huh. gen_init_cpio doesn't exist"
         GENINITCPIO_ERROR=1
     elif [ ! -x "/usr/src/linux/usr/gen_init_cpio" ]; then
+        echo
         echo "Huh. gen_init_cpio is not executable (mode 755)"
         GENINITCPIO_ERROR=1
     fi # if [ ! -x "/usr/src/linux/usr/gen_init_cpio" ]
 
     if [ $GENINITCPIO_ERROR -eq 1 ]; then
+        echo
         echo "  (Please check gen_init_cpio file in /usr/src/linux/usr)" >&2
         echo "Can't build initramfs image... Exiting." >&2 
         exit 1
@@ -477,8 +484,9 @@ echo -n "- Checking for $PROJECT_LIST file in $TEMP_DIR; "
 if [ ! -r $TEMP_DIR/$PROJECT_LIST ]; 
 then
     # nope; delete the output file and exit
+    echo
     echo "ERROR: ${PROJECT_LIST} file does not exist in ${TEMP_DIR}"
-    rm -rf $TEMP_DIR
+    #rm -rf $TEMP_DIR
     exit 1
 fi
 echo "found!"

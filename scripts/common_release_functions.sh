@@ -58,16 +58,16 @@ function check_base_file_exists {
 ## DESC: Creates the initramfs filelist.  Writes the initramfs filelist to
 ## DESC: the $TEMP_DIR.  Requires that the $PROJECT_DIR and $PROJECT_NAME
 ## DESC: environment variables be set prior to calling this function
-function create_initramfs_filelist {
-    if [ -e $PROJECT_DIR/kernel_configs/linux-image-$1.txt ]; then
+function create_project_filelist {
+    if [ -e $PROJECT_DIR/kernel_configs/linux-image-${KERNEL_VER}.txt ]; then
         cat $PROJECT_DIR/${PROJECT_NAME}.base.txt \
-            $PROJECT_DIR/kernel_configs/linux-image-$1.txt \
-            > $TEMP_DIR/initramfs-filelist.txt
+            $PROJECT_DIR/kernel_configs/linux-image-${KERNEL_VER}.txt \
+            > $TEMP_DIR/project-filelist.txt
     else
-        echo "make_release_files.sh: linux-image-$1.txt file does not exist"
-        echo "make_release_files.sh: in ${PROJECT_DIR}/kernel_configs directory"
+        echo "ERROR: linux-image-${KERNEL_VER}.txt file does not exist"
+        echo "ERROR: in ${PROJECT_DIR}/kernel_configs directory"
         exit 1
-    fi
+    fi # if [ -e $PROJECT_DIR/kernel_configs/linux-image-${KERNEL_VER}.txt ]
 } # function create_initramfs_filelist
 
 ## FUNC: create_hostname_file
@@ -124,8 +124,8 @@ function _create_init_script {
 ## REQ:  $PROJECT_NAME - name of the project, also usually the hostname
 ## REQ:  $TEMP_DIR - working directory
 function copy_ssl_pem_files {
-    if [ -e ~/stuff_tars/${PROJECT_NAME}*.key.pem.nopass ]; then
-        cp ~/stuff_tars/${PROJECT_NAME}*.pem* $TEMP_DIR
+    if [ -e ~/stuff_tars/${PROJECT_NAME}.*.key.pem.nopass ]; then
+        cp ~/stuff_tars/${PROJECT_NAME}.*.pem* $TEMP_DIR
     else
         echo "ERROR: missing pigwidgeon SSL keys in ~/stuff_tars"
         exit 1
@@ -146,10 +146,20 @@ function copy_busybox_binary {
     fi # if [ -e ~/stuff_tars/busybox-* ]
 } # function copy_busybox_binary
 
-# now build the file with the correct substitutions performed
-# not needed for personal machines
-#for SEDFILE in $(echo $INPUT_FILES);
-#do
-#    $CAT $PROJECT_DIR/etcfiles/$SEDFILE \
-#        | $SED "{s!:RELEASE_VER:!${RELEASE_VER}!g; }" > $OUTPUT_DIR/$SEDFILE
-#done
+## FUNC: sedify_input_files
+## ARG:  INPUT_FILES - a list of files to sedify
+## REQ:  $TEMP_DIR - temporary directory
+## REQ:  $RELEASE_VER - release version
+## DESC: Enumerates over $INPUT_FILES, passes the files through a sed filter, 
+## DESC: and writes them to $TEMP_DIR
+function sedify_input_files {
+    local INPUT_FILES=$1
+    for SEDFILE in $(echo $INPUT_FILES);
+    do
+        $CAT $PROJECT_DIR/etcfiles/$SEDFILE \
+            | $SED "{s!:RELEASE_VER:!${RELEASE_VER}!g; }" > $TEMP_DIR/$SEDFILE
+    done
+} # function ѕedify_input_files
+
+# vi: set sw=4 ts=4 ft=sh:
+# fin!
