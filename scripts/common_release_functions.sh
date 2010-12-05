@@ -124,8 +124,8 @@ function _create_init_script {
 ## REQ:  $PROJECT_NAME - name of the project, also usually the hostname
 ## REQ:  $TEMP_DIR - working directory
 function copy_ssl_pem_files {
-    if [ -e ~/stuff_tars/${PROJECT_NAME}.*.key.pem.nopass ]; then
-        cp ~/stuff_tars/${PROJECT_NAME}.*.pem* $TEMP_DIR
+    if [ -e ~/stuff_tars/${PROJECT_NAME}.*key.pem.nopass ]; then
+        cp ~/stuff_tars/${PROJECT_NAME}.*pem* $TEMP_DIR
     else
         echo "ERROR: missing pigwidgeon SSL keys in ~/stuff_tars"
         exit 1
@@ -156,8 +156,15 @@ function sedify_input_files {
     local INPUT_FILES=$1
     for SEDFILE in $(echo $INPUT_FILES);
     do
-        $CAT $PROJECT_DIR/etcfiles/$SEDFILE \
-            | $SED "{s!:RELEASE_VER:!${RELEASE_VER}!g; }" > $TEMP_DIR/$SEDFILE
+        FILEBASE=$(echo $SEDFILE | sed 's!.*/\(.*\)$!\1!')
+        echo "- Sedifying ${PROJECT_DIR}/${SEDFILE}"
+        $CAT $PROJECT_DIR/$SEDFILE \
+            | $SED "{
+                s!:RELEASE_VER:!${RELEASE_VER}!g; 
+                s!:KERNEL_VER:!${KERNEL_VER}!g;
+                s!:RELEASE_VER:!${RELEASE_VER}!g;
+                s!:LACK_PASS:!${LACK_PASS}!g;
+            }" > $TEMP_DIR/$FILEBASE
     done
 } # function ѕedify_input_files
 
