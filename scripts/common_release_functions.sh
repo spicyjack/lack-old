@@ -153,7 +153,7 @@ function copy_busybox_binary {
 ## DESC: Enumerates over $INPUT_FILES, passes the files through a sed filter, 
 ## DESC: and writes them to $TEMP_DIR
 function sedify_input_files {
-    local INPUT_FILES=$1
+    local INPUT_FILES="$*"
     for SEDFILE in $(echo $INPUT_FILES);
     do
         FILEBASE=$(echo $SEDFILE | sed 's!.*/\(.*\)$!\1!')
