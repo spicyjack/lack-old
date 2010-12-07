@@ -1,0 +1,284 @@
+--- squashfs-tools-4.1.orig/squashfs-tools/Makefile
++++ squashfs-tools-4.1/squashfs-tools/Makefile
+@@ -33,6 +33,7 @@
+ #XZ_SUPPORT = 1
+ #LZMA_SUPPORT = 1
+ #LZMA_DIR = ../../../LZMA/lzma465
++#LZMA_DIR = /usr
+ 
+ 
+ ############ Building LZO support ##############
+@@ -43,8 +44,9 @@
+ # LZO_SUPPORT line below. If needed, uncomment and set LZO_DIR to the
+ # installation prefix.
+ #
+-#LZO_SUPPORT = 1
++LZO_SUPPORT = 1
+ #LZO_DIR = /usr/local
++LZO_DIR = /usr
+ 
+ 
+ ######## Specifying default compression ########
+@@ -54,6 +56,7 @@
+ # selected to be built
+ #
+ COMP_DEFAULT = gzip
++#COMP_DEFAULT = lzo
+ 
+ ###############################################
+ #  Extended attribute (XATTRs) build options  #
+@@ -219,7 +222,7 @@
+ 	-rm -f *.o mksquashfs unsquashfs
+ 
+ .PHONY: install
+-install: mksquashfs unsquashfs
+-	mkdir -p $(INSTALL_DIR)
+-	cp mksquashfs $(INSTALL_DIR)
+-	cp unsquashfs $(INSTALL_DIR)
++#install: mksquashfs unsquashfs
++	#mkdir -p $(INSTALL_DIR)
++	#cp mksquashfs $(INSTALL_DIR)
++	#cp unsquashfs $(INSTALL_DIR)
+--- squashfs-tools-4.1.orig/debian/copyright
++++ squashfs-tools-4.1/debian/copyright
+@@ -0,0 +1,40 @@
++This package was debianized by Brian Manning <brian@portaboom.com> on
++Mon, 06 Dec 2010 15:12:57 -0800.
++
++It was downloaded from <url://example.com>
++
++Upstream Author(s):
++
++    <put author's name and email here>
++    <likewise for another author>
++
++Copyright:
++
++    <Copyright (C) YYYY Name OfAuthor>
++    <likewise for another author>
++
++License:
++
++    This package is free software; you can redistribute it and/or modify
++    it under the terms of the GNU General Public License as published by
++    the Free Software Foundation; either version 2 of the License, or
++    (at your option) any later version.
++
++    This package is distributed in the hope that it will be useful,
++    but WITHOUT ANY WARRANTY; without even the implied warranty of
++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++    GNU General Public License for more details.
++
++    You should have received a copy of the GNU General Public License
++    along with this package; if not, write to the Free Software
++    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
++
++On Debian systems, the complete text of the GNU General
++Public License can be found in `/usr/share/common-licenses/GPL'.
++
++The Debian packaging is (C) 2010, Brian Manning <brian@portaboom.com> and
++is licensed under the GPL, see above.
++
++
++# Please also look if there are files or directories which have a
++# different copyright/license attached and list them here.
+--- squashfs-tools-4.1.orig/debian/compat
++++ squashfs-tools-4.1/debian/compat
+@@ -0,0 +1 @@
++7
+--- squashfs-tools-4.1.orig/debian/changelog
++++ squashfs-tools-4.1/debian/changelog
+@@ -0,0 +1,6 @@
++squashfs-tools (4.1-1) unstable; urgency=low
++
++  * Initial packaging
++
++ -- Brian Manning <brian@portaboom.com>  Mon, 06 Dec 2010 15:12:57 -0800
++
+--- squashfs-tools-4.1.orig/debian/control
++++ squashfs-tools-4.1/debian/control
+@@ -0,0 +1,15 @@
++Source: squashfs-tools
++Section: admin
++Priority: optional
++Maintainer: Brian Manning <brian@portaboom.com>
++Build-Depends: debhelper (>= 7), libattr1-dev
++Standards-Version: 3.7.3
++Homepage: http://squashfs.sourceforge.net/
++
++Package: squashfs-tools
++Architecture: any
++Depends: ${shlibs:Depends}, ${misc:Depends}
++Description: Squashfs is a compressed read-only filesystem for Linux.
++ Squashfs is intended for general read-only filesystem use, for archival use
++ (i.e. in cases where a .tar.gz file may be used), and in constrained block
++ device/memory systems (e.g. embedded systems) where low overhead is needed.
+--- squashfs-tools-4.1.orig/debian/squashfs-tools.substvars
++++ squashfs-tools-4.1/debian/squashfs-tools.substvars
+@@ -0,0 +1 @@
++shlibs:Depends=libc6 (>= 2.7-1), zlib1g (>= 1:1.1.4)
+--- squashfs-tools-4.1.orig/debian/rules
++++ squashfs-tools-4.1/debian/rules
+@@ -0,0 +1,87 @@
++#!/usr/bin/make -f
++# -*- makefile -*-
++# Sample debian/rules that uses debhelper.
++# This file was originally written by Joey Hess and Craig Small.
++# As a special exception, when this file is copied by dh-make into a
++# dh-make output file, you may use that output file without restriction.
++# This special exception was added by Craig Small in version 0.37 of dh-make.
++
++# Uncomment this to turn on verbose mode.
++#export DH_VERBOSE=1
++
++configure: configure-stamp
++configure-stamp:
++	dh_testdir
++	# Add here commands to configure the package.
++
++	touch configure-stamp
++
++
++build: build-stamp
++
++build-stamp: configure-stamp  
++	dh_testdir
++
++	# Add here commands to compile the package.
++	cd squashfs-tools/;$(MAKE)
++	#docbook-to-man debian/squashfs-tools.sgml > squashfs-tools.1
++
++	touch $@
++
++clean: 
++	dh_testdir
++	dh_testroot
++	rm -f build-stamp configure-stamp
++
++	# Add here commands to clean up after the build process.
++	rm -rf debian/squashfs-tools; rm -f debian/files; rm -f debian/*.log; cd squashfs-tools;$(MAKE) clean
++
++	#dh_clean 
++
++install: build
++	dh_testdir
++	dh_testroot
++	dh_clean -k 
++	dh_installdirs
++
++	# Add here commands to install the package into debian/squashfs-tools.
++	cd squashfs-tools; $(MAKE); cp mksquashfs unsquashfs ../debian/squashfs-tools/usr/bin
++	#$(MAKE) DESTDIR=$(CURDIR)/debian/squashfs-tools install
++
++# Build architecture-independent files here.
++binary-indep: build install
++# We have nothing to do by default.
++
++# Build architecture-dependent files here.
++binary-arch: build install
++	dh_testdir
++	dh_testroot
++	dh_installchangelogs CHANGES
++	dh_installdocs
++	dh_installexamples
++#	dh_install
++#	dh_installmenu
++#	dh_installdebconf	
++#	dh_installlogrotate
++#	dh_installemacsen
++#	dh_installpam
++#	dh_installmime
++#	dh_python
++#	dh_installinit
++#	dh_installcron
++#	dh_installinfo
++	dh_installman
++	dh_link
++	dh_strip
++	dh_compress
++	dh_fixperms
++#	dh_perl
++#	dh_makeshlibs
++	dh_installdeb
++	dh_shlibdeps
++	dh_gencontrol
++	dh_md5sums
++	dh_builddeb
++
++binary: binary-indep binary-arch
++.PHONY: build clean binary-indep binary-arch binary install configure
+--- squashfs-tools-4.1.orig/debian/squashfs-tools.default.ex
++++ squashfs-tools-4.1/debian/squashfs-tools.default.ex
+@@ -0,0 +1,10 @@
++# Defaults for squashfs-tools initscript
++# sourced by /etc/init.d/squashfs-tools
++# installed at /etc/default/squashfs-tools by the maintainer scripts
++
++#
++# This is a POSIX shell fragment
++#
++
++# Additional options that are passed to the Daemon.
++DAEMON_OPTS=""
+--- squashfs-tools-4.1.orig/debian/squashfs-tools.doc-base.EX
++++ squashfs-tools-4.1/debian/squashfs-tools.doc-base.EX
+@@ -0,0 +1,22 @@
++Document: squashfs-tools
++Title: Debian squashfs-tools Manual
++Author: <insert document author here>
++Abstract: This manual describes what squashfs-tools is
++ and how it can be used to
++ manage online manuals on Debian systems.
++Section: unknown
++
++Format: debiandoc-sgml
++Files: /usr/share/doc/squashfs-tools/squashfs-tools.sgml.gz
++
++Format: postscript
++Files: /usr/share/doc/squashfs-tools/squashfs-tools.ps.gz
++
++Format: text
++Files: /usr/share/doc/squashfs-tools/squashfs-tools.text.gz
++
++Format: HTML
++Index: /usr/share/doc/squashfs-tools/html/index.html
++Files: /usr/share/doc/squashfs-tools/html/*.html
++
++
+--- squashfs-tools-4.1.orig/debian/docs
++++ squashfs-tools-4.1/debian/docs
+@@ -0,0 +1,3 @@
++PERFORMANCE.README
++README
++README-4.1
+--- squashfs-tools-4.1.orig/debian/watch.ex
++++ squashfs-tools-4.1/debian/watch.ex
+@@ -0,0 +1,23 @@
++# Example watch control file for uscan
++# Rename this file to "watch" and then you can run the "uscan" command
++# to check for upstream updates and more.
++# See uscan(1) for format
++
++# Compulsory line, this is a version 3 file
++version=3
++
++# Uncomment to examine a Webpage
++# <Webpage URL> <string match>
++#http://www.example.com/downloads.php squashfs-tools-(.*)\.tar\.gz
++
++# Uncomment to examine a Webserver directory
++#http://www.example.com/pub/squashfs-tools-(.*)\.tar\.gz
++
++# Uncommment to examine a FTP server
++#ftp://ftp.example.com/pub/squashfs-tools-(.*)\.tar\.gz debian uupdate
++
++# Uncomment to find new files on sourceforge, for devscripts >= 2.9
++# http://sf.net/squashfs-tools/squashfs-tools-(.*)\.tar\.gz
++
++# Uncomment to find new files on GooglePages
++# http://example.googlepages.com/foo.html squashfs-tools-(.*)\.tar\.gz
+--- squashfs-tools-4.1.orig/debian/dirs
++++ squashfs-tools-4.1/debian/dirs
+@@ -0,0 +1,2 @@
++usr/bin
++usr/sbin
