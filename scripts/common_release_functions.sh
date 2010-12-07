@@ -154,10 +154,14 @@ function copy_busybox_binary {
 ## DESC: and writes them to $TEMP_DIR
 function sedify_input_files {
     local INPUT_FILES="$*"
+    if [ ! -z $INPUT_FILES ]; then
+        echo "- Sedifying files..."
+    fi # if [ ! -z $INPUT_FILES ]
+
     for SEDFILE in $(echo $INPUT_FILES);
     do
         FILEBASE=$(echo $SEDFILE | sed 's!.*/\(.*\)$!\1!')
-        echo "- Sedifying ${PROJECT_DIR}/${SEDFILE}"
+        echo "  -> ${PROJECT_DIR}/${SEDFILE}"
         $CAT $PROJECT_DIR/$SEDFILE \
             | $SED "{
                 s!:RELEASE_VER:!${RELEASE_VER}!g; 

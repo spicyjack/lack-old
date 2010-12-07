@@ -362,7 +362,7 @@ if [ "x$PROJECT_DIR" != "x" ]; then
         exit 1
     fi # if [ ! -d $PROJECT_DIR ]
     echo "found!"
-    echo "  Project directory: ${PROJECT_DIR}"
+    echo "  -> Project directory: ${PROJECT_DIR}"
 fi # if [ "x$PROJECT_DIR" != "x" ]
 
 # if the project name was used, see if it exists
@@ -490,7 +490,7 @@ then
     exit 1
 fi
 echo "found!"
-echo "  ${TEMP_DIR}/${PROJECT_LIST}"
+echo "  -> ${TEMP_DIR}/${PROJECT_LIST}"
 
 # then grab the project specific file, which should have the kernel modules
 # and do some searching and replacing
