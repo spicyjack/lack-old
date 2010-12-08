@@ -154,7 +154,7 @@ function copy_busybox_binary {
 ## DESC: and writes them to $TEMP_DIR
 function sedify_input_files {
     local INPUT_FILES="$*"
-    if [ ! -z $INPUT_FILES ]; then
+    if [ "x${INPUT_FILES}" != "x" ]; then
         echo "- Sedifying files..."
     fi # if [ ! -z $INPUT_FILES ]
 
