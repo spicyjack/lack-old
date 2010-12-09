@@ -6,28 +6,12 @@
 # script that queries a packaging system for a list of files which can then be
 # hacked up to make a filelist for use with gen_init_cpio
 
-#   This program is free software; you can redistribute it and/or modify
-#   it under the terms of the GNU General Public License as published by
-#   the Free Software Foundation; version 2 dated June, 1991.
-#
-#   This program is distributed in the hope that it will be useful,
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#   GNU General Public License for more details.
-#
-#   You should have received a copy of the GNU General Public License
-#   along with this program;  if not, write to the Free Software
-#   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111, USA.
-
 # TODO
 # - generate a list of files from 'dpkg' or a 'find' command run on a specific
-# path
-#   - for all files/directories found, generate an gen_init_cpio entry for that
+#   path
+# - for all files/directories found, generate an gen_init_cpio entry for that
 #   file or directory ([file|dir] target_file source_file mode uid gid)
-#   - for each directory, prepend a comment for that directory that includes
-#   the name of the package, like this:
-#   # perl /usr/lib/perl/5.8.8
-#   - prepend a filelist header, see perl.txt for an example
+# - rename - lackpkgbuild.sh, lackpkg.sh, lackpkgtool.sh
 
 # verify we're not running under dash
 if [ -z $BASH_VERSION ]; then
@@ -69,12 +53,12 @@ cmd_status () {
     if [ $STATUS -ne 0 ]; then
         echo "Command '${COMMAND}' failed with status code: ${STATUS}"
         exit 1
-    fi  
+    fi
 } # cmd_status
 
 dump_header () {
 
-# FIXME 
+# FIXME
 # we know the name of the package.... generate a nicer header that includes
 # the current date and package name
 cat <<'EOHD'
@@ -96,29 +80,29 @@ EOHD
 ### MAIN SCRIPT ###
 
 ### SCRIPT SETUP ###
-# BSD's getopt is simpler than the GNU getopt; we need to detect it 
+# BSD's getopt is simpler than the GNU getopt; we need to detect it
 OSDETECT=$($UNAME -s)
-if [ ${OSDETECT} == "Darwin" ]; then 
+if [ ${OSDETECT} == "Darwin" ]; then
     # this is the BSD part
     echo "WARNING: BSD OS Detected; long switches will not work here..."
     TEMP=$(/usr/bin/getopt hvd:g:p:r:u:sa $*)
 elif [ ${OSDETECT} == "Linux" ]; then
     # and this is the GNU part
     TEMP=$(/usr/bin/getopt -o hvd:g:p:r:u:sa \
-	    --long help,verbose,directory:,package:,regex:,skip-exclude,append \
+        --long help,verbose,directory:,package:,regex:,skip-exclude,append \
         --long gid:,uid: \
         -n "${SCRIPTNAME}" -- "$@")
 else
     echo "Error: Unknown OS Type.  I don't know how to call"
     echo "'getopts' correctly for this operating system.  Exiting..."
     exit 1
-fi 
+fi
 
 # if getopts exited with an error code, then exit the script
 #if [ $? -ne 0 -o $# -eq 0 ] ; then
-if [ $? != 0 ] ; then 
-	echo "Run '${SCRIPTNAME} --help' to see script options" >&2 
-	exit 1
+if [ $? != 0 ] ; then
+    echo "Run '${SCRIPTNAME} --help' to see script options" >&2
+    exit 1
 fi
 
 # Note the quotes around `$TEMP': they are essential!
@@ -134,13 +118,13 @@ ERRORLOOP=1
 # if you change the below switches to something else, make sure you change the
 # getopts call(s) above
 while true ; do
-	case "$1" in
-		-h|--help) # show the script options
-		cat <<-EOF
+    case "$1" in
+        -h|--help) # show the script options
+        cat <<-EOF
 
-	${SCRIPTNAME} [options]
+    ${SCRIPTNAME} [options]
 
-	SCRIPT OPTIONS
+    SCRIPT OPTIONS
     -h|--help           Displays this help message
     -v|--verbose        Nice pretty output messages
     -p|--package        Package to query for a list of files
@@ -160,7 +144,7 @@ while true ; do
         --regex 's!/some/path!/other/path!g' > somepackage.txt
 
 EOF
-		exit 0;;		
+        exit 0;;
         -v|--verbose) # output pretty messages
             VERBOSE=1
             ERRORLOOP=$(($ERRORLOOP - 1));
@@ -170,17 +154,17 @@ EOF
             FUID=$2
             ERRORLOOP=$(($ERRORLOOP - 1));
             shift 2
-            ;;        
+            ;;
         -g|--gid)
             FGID=$2
             ERRORLOOP=$(($ERRORLOOP - 1));
             shift 2
-            ;;        
+            ;;
         -d|--directory)
             PACKAGE_DIR=$2
             ERRORLOOP=$(($ERRORLOOP - 1));
             shift 2
-            ;;        
+            ;;
         -p|--package)
             PACKAGE_NAME=$2
             ERRORLOOP=$(($ERRORLOOP - 1));
@@ -201,10 +185,10 @@ EOF
             ERRORLOOP=$(($ERRORLOOP - 1));
             shift
             ;;
-		--) shift
+        --) shift
             break
             ;;
-	esac
+    esac
     # exit if we loop across getopts too many times
     ERRORLOOP=$(($ERRORLOOP + 1))
     if [ $ERRORLOOP -gt 4 ]; then
@@ -217,37 +201,37 @@ done
 if [ "x$PACKAGE_NAME" == "x" -a "x$PACKAGE_DIR" == "x" ]; then
     echo "ERROR: must pass in a package name via --package"
     echo "ERROR: or a directory name via --directory"
-	echo "Run '${SCRIPTNAME} --help' to see script options"
+    echo "Run '${SCRIPTNAME} --help' to see script options"
     exit 1
 fi
 
 #if [ -n $PACKAGE_NAME -a -n $PACKAGE_DIR ]; then
 #    echo "ERROR: must pass either --package or --directory arguments, not both"
-#	echo "Run '${SCRIPTNAME} --help' to see script options"
+#    echo "Run '${SCRIPTNAME} --help' to see script options"
 #    exit 1
 #fi
 
 ### SCRIPT MAIN LOOP ###
     if [ ! -z $PACKAGE_NAME ]; then
         OUTPUT=$(/usr/bin/dpkg -L $PACKAGE_NAME | sort )
-        cmd_status "dpkg" $? 
-    elif [ ! -z $PACKAGE_DIR ]; then 
+        cmd_status "dpkg" $?
+    elif [ ! -z $PACKAGE_DIR ]; then
         OUTPUT=$(/usr/bin/find $PACKAGE_DIR -type f | sort)
-        cmd_status "find $PACKAGE_DIR -type f" $? 
+        cmd_status "find $PACKAGE_DIR -type f" $?
     fi # if [ ! -z $PACKAGE_NAME ]
 
     # print the recipe header
     if [ "x$APPEND" == "x" ]; then
         dump_header
-    fi 
+    fi
     echo "# ${PACKAGE_NAME}"
 
-    for LINE in $(echo $OUTPUT); 
+    for LINE in $(echo $OUTPUT);
     do
         # check to see if we are skipping excludes
         if [ "x${SKIP_EXCLUDE}" == x ]; then
             # run through the exclusions list
-            if [ $(echo $LINE | grep -cE "${EXCLUDE}") -gt 0 ]; then 
+            if [ $(echo $LINE | grep -cE "${EXCLUDE}") -gt 0 ]; then
                 continue
             fi
         fi # if [ "x${SKIP_EXCLUDE}" = x ]
@@ -258,7 +242,7 @@ fi
         # this makes it easy to use case to decide what to write to the output
         # file
         FILE_TYPE=$($STAT --printf "%F" $LINE)
-        # AUG == access rights in octal, FUID, FGID 
+        # AUG == access rights in octal, FUID, FGID
         STAT_AUG=$($STAT --printf "%a %u %g" $LINE)
         PERMS=$(echo $STAT_AUG | awk '{print $1}')
         # munge the userid/groupid bits
@@ -288,19 +272,33 @@ fi
         case "$FILE_TYPE" in
             "regular file") echo "file $TARGET $SOURCE $PERMS $FUID $FGID";;
             "directory") echo "dir $SOURCE $PERMS $FUID $FGID";;
-            "symbolic link") 
+            "symbolic link")
                 TARGET=$($READLINK -f $SOURCE | $TR -d '\n')
                 echo "slink $SOURCE $TARGET $PERMS $FUID $FGID"
             ;;
-        esac                    
-    done # for LINE in $(echo $OUTPUT); 
+        esac
+    done # for LINE in $(echo $OUTPUT);
 
     # print the vim tag at the bottom so the recipes are formatted nicely when
     # you edit them
-    echo "# vi: set sw=4 ts=4 paste:"
-    
+    echo "# vi: set shiftwidth=4 tabstop=4 paste:"
+
     # exit with the happy
     exit 0
 
-# vi: set filetype=sh sw=4 ts=4:
+### begin license blurb
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; version 2 dated June, 1991.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program;  if not, write to the Free Software
+#   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111, USA.
+
+# vi: set filetype=sh shiftwidth=4 tabstop=4:
 # eof
