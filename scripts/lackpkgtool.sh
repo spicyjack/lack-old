@@ -1,17 +1,11 @@
 #!/bin/sh
 
-# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
-# Copyright (c)2004 by Brian Manning
+# lackpkgtool.sh
+# Copyright (c)2010 by Brian Manning
+# Licensed under the GNU GPL v2; see the bottom of this file for the blurb
 #
 # script that queries a packaging system for a list of files which can then be
 # hacked up to make a filelist for use with gen_init_cpio
-
-# TODO
-# - generate a list of files from 'dpkg' or a 'find' command run on a specific
-#   path
-# - for all files/directories found, generate an gen_init_cpio entry for that
-#   file or directory ([file|dir] target_file source_file mode uid gid)
-# - rename - lackpkgbuild.sh, lackpkg.sh, lackpkgtool.sh
 
 # verify we're not running under dash
 if [ -z $BASH_VERSION ]; then
@@ -205,11 +199,11 @@ if [ "x$PACKAGE_NAME" == "x" -a "x$PACKAGE_DIR" == "x" ]; then
     exit 1
 fi
 
-#if [ -n $PACKAGE_NAME -a -n $PACKAGE_DIR ]; then
-#    echo "ERROR: must pass either --package or --directory arguments, not both"
-#    echo "Run '${SCRIPTNAME} --help' to see script options"
-#    exit 1
-#fi
+if [ -n $PACKAGE_NAME -a -n $PACKAGE_DIR ]; then
+    echo "ERROR: must pass either --package or --directory arguments, not both"
+    echo "Run '${SCRIPTNAME} --help' to see script options"
+    exit 1
+fi
 
 ### SCRIPT MAIN LOOP ###
     if [ ! -z $PACKAGE_NAME ]; then
@@ -286,7 +280,7 @@ fi
     # exit with the happy
     exit 0
 
-### begin license blurb
+# *begin license blurb*
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
 #   the Free Software Foundation; version 2 dated June, 1991.
