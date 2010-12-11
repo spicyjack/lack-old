@@ -7,6 +7,31 @@
 # script that queries a packaging system for a list of files which can then be
 # hacked up to make a filelist for use with gen_init_cpio
 
+# TODO
+# Inputs:
+# - one or more debian packages or gen_init_cpio filelists; multiple
+#   packages or filelists need to be passed in after double-dashes '--';
+#   use $* to pick them up
+#   - multiple packages can be written to individual files or a single file,
+#   select via command line switch (--single/--multiple?)
+#   - http://www.shelldorado.com/goodcoding/cmdargs.html
+# - one or more filelists for converting into squashfs and/or cpio files
+#
+# Outputs:
+# - one or more filelists
+# - one or more squashfs packages
+#
+# Arguments:
+# - TEMPDIR
+# - OUTPUT_DIR
+#
+# Actions:
+# - Write a manifest file of some kind
+#   - package version
+#   - package date
+#   - packaged by
+#   - checksums?
+
 # verify we're not running under dash
 if [ -z $BASH_VERSION ]; then
 #if [ $(readlink /bin/sh | grep -c dash) -gt 0 ]; then
