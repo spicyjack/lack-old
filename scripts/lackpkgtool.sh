@@ -22,7 +22,7 @@
 # - one or more squashfs packages
 #
 # Arguments:
-# - TEMPDIR
+# - WORKDIR
 # - OUTPUT_DIR
 #
 # Actions:
@@ -31,6 +31,10 @@
 #   - package date
 #   - packaged by
 #   - checksums?
+
+# FIXME
+# - we know the name of the package.... generate a nicer header that includes
+# the current date and package name
 
 # verify we're not running under dash
 if [ -z $BASH_VERSION ]; then
@@ -66,7 +70,7 @@ EXCLUDE="${EXCLUDE}|^/\.$|^/boot$|^/usr$|^/usr/share$|^/lib$|^/lib/modules$"
 
 ### FUNCTIONS ###
 # check the status of the last run command; run a shell if it's anything but 0
-cmd_status () {
+function cmd_status () {
     COMMAND=$1
     STATUS=$2
     if [ $STATUS -ne 0 ]; then
@@ -76,7 +80,6 @@ cmd_status () {
 } # cmd_status
 
 dump_header () {
-
 # FIXME
 # we know the name of the package.... generate a nicer header that includes
 # the current date and package name
@@ -96,7 +99,18 @@ EOHD
 
 } # dump_header
 
-### MAIN SCRIPT ###
+function show_examples {
+cat <<'EOU'
+    EXAMPLE OF SCRIPT USAGE:
+
+    ${SCRIPTNAME} --package binutils > binutils.txt
+
+    ${SCRIPTNAME} --directory /tmp/somedirectory > somepackage.txt
+
+    ${SCRIPTNAME} --directory /tmp/somedirectory \
+        --regex 's!/some/path!/other/path!g' > somepackage.txt
+EOU
+} # function show_examples
 
 ### SCRIPT SETUP ###
 # BSD's getopt is simpler than the GNU getopt; we need to detect it
@@ -107,9 +121,12 @@ if [ ${OSDETECT} == "Darwin" ]; then
     TEMP=$(/usr/bin/getopt hvd:g:p:r:u:sa $*)
 elif [ ${OSDETECT} == "Linux" ]; then
     # and this is the GNU part
-    TEMP=$(/usr/bin/getopt -o hvd:g:p:r:u:sa \
-        --long help,verbose,directory:,package:,regex:,skip-exclude,append \
-        --long gid:,uid: \
+    TEMP=$(/usr/bin/getopt -o hvepdlqfcso:w:u:g:rkax: \
+        --long help,verbose,examples \
+        --long package,directory,list \
+        --long squashfs,filelist,cpio,single,output:,workdir: \
+        --long uid:,gid:,all-root \
+        --long skip-exclude,append,regex: \
         -n "${SCRIPTNAME}" -- "$@")
 else
     echo "Error: Unknown OS Type.  I don't know how to call"
@@ -128,11 +145,6 @@ fi
 # read in the $TEMP variable
 eval set -- "$TEMP"
 
-# set a counter for how many times getopts is run; if the loop counter gets too
-# big, that means there was a problem with the getopts call; exit before you
-# run into an endless loop
-ERRORLOOP=1
-
 # read in command line options and set appropriate environment variables
 # if you change the below switches to something else, make sure you change the
 # getopts call(s) above
@@ -143,167 +155,297 @@ while true ; do
 
     ${SCRIPTNAME} [options]
 
-    SCRIPT OPTIONS
+    HELP OPTIONS
     -h|--help           Displays this help message
     -v|--verbose        Nice pretty output messages
-    -p|--package        Package to query for a list of files
-    -d|--directory      Directory containing files to package
-    -s|--skip-exclude   Skip excluding files in the output
-    -a|--append         Append the library files, don't generate a header
-    -r|--regex          Apply the regular expression to destination file
+    -e|--examples       Show examples of script usage
+
+    INPUT TYPES
+    -p|--package        Package names to query for a list of files
+    -d|--directory      Directories containing files to package
+    -l|--list           Filelists used with 'gen_init_cpio' program
+
+    OUTPUT OPTIONS
+    -q|--squashfs       Output squashfs package(s)
+    -f|--filelist       Output filelist(s)
+    -c|--cpio           Create a CPIO file (via gen_init_cpio)
+    -s|--single         Whatever output type, only write one of that type
+    -o|--output         Output filename (for --single) or directory 
+    -w|--workdir        Working directory to use for copying/storing files
+
+    MISC. OPTIONS
+    -u|--uid            Use this UID for all files output
+    -g|--gid            Use this GID for all files output
+    -r|--all-root       Use UID/GID 0 for all files output
+    -k|--skip-exclude   Skip excluding files in the output
+    -a|--append         Append to an existing file, don't create a new file
+    -x|--regex          Apply the regular expression to destination file
     NOTE: Long switches do not work with BSD systems (GNU extension)
-
-    EXAMPLE USAGE:
-
-    ${SCRIPTNAME} --package binutils > binutils.txt
-
-    ${SCRIPTNAME} --directory /tmp/somedirectory > somepackage.txt
-
-    ${SCRIPTNAME} --directory /tmp/somedirectory \
-        --regex 's!/some/path!/other/path!g' > somepackage.txt
 
 EOF
         exit 0;;
         -v|--verbose) # output pretty messages
             VERBOSE=1
-            ERRORLOOP=$(($ERRORLOOP - 1));
             shift
             ;;
-        -u|--uid)
+        -e|--examples) # show usage examples
+            show_examples
+            exit 0
+            ;;
+
+        ### Input options ###
+        -d|--directory) # use directories of files as input
+            INPUT_OPT="directory"
+            shift 1
+            ;;
+        -p|--package) # use package names for input
+            INPUT_OPT="package"
+            shift 1
+            ;;
+        -l|--list) # use lists of packages for input
+            INPUT_OPT="filelist"
+            shift 1
+            ;;
+
+        ### OUTPUT OPTIONS ###
+        -q|--squashfs) # make squashfs file(s)
+            OUTPUT_OPT="squashfs"
+            shift 1
+            ;;
+        -f|--filelist) # make filelist(s)
+            OUTPUT_OPT="filelist"
+            shift 1
+            ;;
+        -c|--cpio) # make cpio file(s)
+            OUTPUT_OPT="cpio"
+            shift 1
+            ;;
+        -s|--single) 
+            # make one large file instead of multiple files for each
+            # filelist/directory/package
+            OUTPUT_OPT="cpio"
+            shift 1
+            ;;
+        -o|--output) # working directory
+            OUTPUT_ARG=$2
+            shift 2
+            ;;
+        -w|--workdir) # working directory
+            WORKDIR=$2
+            shift 2
+            ;;
+
+        ### MISC OPTIONS ###
+        -u|--uid) # user ID to use when creating squashfs files/filelists
             FUID=$2
-            ERRORLOOP=$(($ERRORLOOP - 1));
             shift 2
             ;;
-        -g|--gid)
+        -g|--gid) # group ID to use when creating squashfs files/filelists
             FGID=$2
-            ERRORLOOP=$(($ERRORLOOP - 1));
             shift 2
             ;;
-        -d|--directory)
-            PACKAGE_DIR=$2
-            ERRORLOOP=$(($ERRORLOOP - 1));
-            shift 2
-            ;;
-        -p|--package)
-            PACKAGE_NAME=$2
-            ERRORLOOP=$(($ERRORLOOP - 1));
-            shift 2
-            ;;
-        -r|--regex)
-            REGEX=$2
-            ERRORLOOP=$(($ERRORLOOP - 1));
-            shift 2
+        -a|--all-root) # make all files owned by and grouped by root
+            FGID=0
+            FUID=0
+            ALL_ROOT=1
+            shift 1
             ;;
         -s|--skip|--skip-exclude) # skip excluding of files using grep
             SKIP_EXCLUDE=1
-            ERRORLOOP=$(($ERRORLOOP - 1));
             shift
             ;;
         -a|--append) # don't print the header, it's not needed
             APPEND=1
-            ERRORLOOP=$(($ERRORLOOP - 1));
             shift
             ;;
-        --) shift
+        -r|--regex) # use a regex to substitute strings in filelists
+            REGEX=$2
+            shift 2
+            ;;        
+        --) shift   
+            # everything after here should be a filelist file,
+            # directory names or package names
             break
             ;;
+        *) # something we didn't expect; warn the user
+            echo "ERROR: unknown option '$1'"
+            echo "ERROR: use --help to list script options"
+            exit 1
     esac
-    # exit if we loop across getopts too many times
-    ERRORLOOP=$(($ERRORLOOP + 1))
-    if [ $ERRORLOOP -gt 4 ]; then
-        echo "ERROR: too many getopts passes;" >&2
-        echo "Maybe you have a getopt option with no branch?" >&2
-        exit 1
-    fi # if [ $ERROR_LOOP -gt 3 ];
 done
 
-if [ "x$PACKAGE_NAME" == "x" -a "x$PACKAGE_DIR" == "x" ]; then
-    echo "ERROR: must pass in a package name via --package"
-    echo "ERROR: or a directory name via --directory"
-    echo "Run '${SCRIPTNAME} --help' to see script options"
+if [ -z $@ ]; then
+    echo "ERROR: no packages/directories/filelists to process"
+    echo "ERROR: use the --help switch to see script options"
     exit 1
-fi
-
-if [ -n $PACKAGE_NAME -a -n $PACKAGE_DIR ]; then
-    echo "ERROR: must pass either --package or --directory arguments, not both"
-    echo "Run '${SCRIPTNAME} --help' to see script options"
-    exit 1
-fi
+fi # if [ -z $@ ]; then  
 
 ### SCRIPT MAIN LOOP ###
-    if [ ! -z $PACKAGE_NAME ]; then
-        OUTPUT=$(/usr/bin/dpkg -L $PACKAGE_NAME | sort )
-        cmd_status "dpkg" $?
-    elif [ ! -z $PACKAGE_DIR ]; then
-        OUTPUT=$(/usr/bin/find $PACKAGE_DIR -type f | sort)
-        cmd_status "find $PACKAGE_DIR -type f" $?
-    fi # if [ ! -z $PACKAGE_NAME ]
+# loop across the arguments listed after the double-dashes '--'
+for ARG in $@; 
+do
+    # depending on what the input type will be is what actions we will take
+    case "$INPUT_OPT" in
+        package)
+            OUTPUT=$(/usr/bin/dpkg -L ${ARG} | sort )
+            cmd_status "dpkg -L ${ARG}" $?
+            ;;
+        directory)
+            OUTPUT=$(/usr/bin/find ${ARG} -type f | sort)
+            cmd_status "find ${ARG} -type f" $?
+            ;;
+        filelist)
+            OUTPUT=$(/usr/bin/find ${ARG} -type f | sort)
+            cmd_status "find ${ARG} -type f" $?
+            ;;
+        *) # unknown argument 
+            echo "ERROR: must use --list|--directory|--package arguments"
+            echo "ERROR: to specify what the input to this script is"
+            exit 1
+            ;;
+    esac # case "$INPUT_OPT"
 
-    # print the recipe header
-    if [ "x$APPEND" == "x" ]; then
-        dump_header
-    fi
-    echo "# ${PACKAGE_NAME}"
+    if [ "x$OUTPUT" == "x" ]; then
+        echo "ERROR: OUTPUT variable empty;"
+        echo "ERROR: Perhaps you didn't specify an output type???"
+        exit 1
+    fi # if [ -z $OUTPUT ]; then 
 
-    for LINE in $(echo $OUTPUT);
-    do
-        # check to see if we are skipping excludes
-        if [ "x${SKIP_EXCLUDE}" == x ]; then
-            # run through the exclusions list
-            if [ $(echo $LINE | grep -cE "${EXCLUDE}") -gt 0 ]; then
+    ### no output type specified ###
+    if [ "x${OUTPUT_OPT}" == "x" ]; then
+        echo "ERROR: must use --squashfs|--filelist|--cpio arguments"
+        echo "ERROR: to specify what the output of this script will be"
+        exit 1
+    ### filelist output ###
+    elif [ $OUTPUT_OPT == "filelist" ]; then
+        # print the recipe header
+        if [ "x$APPEND" == "x" ]; then
+            dump_header
+        fi
+        echo "# ${PACKAGE_NAME}"
+
+        for LINE in $(echo $OUTPUT);
+        do
+            # check to see if we are skipping excludes
+            if [ "x${SKIP_EXCLUDE}" == x ]; then
+                # run through the exclusions list
+                if [ $(echo $LINE | grep -cE "${EXCLUDE}") -gt 0 ]; then
+                    continue
+                fi
+            fi # if [ "x${SKIP_EXCLUDE}" = x ]
+            # skip missing files and/or directories
+            if [ ! -e $LINE ]; then
                 continue
             fi
-        fi # if [ "x${SKIP_EXCLUDE}" = x ]
-        # skip missing files and/or directories
-        if [ ! -e $LINE ]; then
-            continue
+            # this makes it easy to use case to decide what to write to the
+            # output file
+            FILE_TYPE=$($STAT --printf "%F" $LINE)
+            # AUG == access rights in octal, FUID, FGID
+            STAT_AUG=$($STAT --printf "%a %u %g" $LINE)
+            PERMS=$(echo $STAT_AUG | awk '{print $1}')
+            # munge the userid/groupid bits
+            if [ -z $FUID ]; then
+                FUID=$(echo $STAT_AUG | awk '{print $2}')
+            fi
+
+            if [ -z $FGID ]; then
+                FGID=$(echo $STAT_AUG | awk '{print $3}')
+            fi
+
+            # check if this is the kernel; we don't need to package it up in
+            # the initramfs file
+            if [ $(echo $LINE | grep -c "vmlinuz") -gt 0 ]; then
+                echo "#file $LINE $LINE $STAT_AUG"
+                continue
+            fi
+
+            # munge the target filename if required
+            SOURCE=$LINE
+            if [ "x$REGEX" != "x" ]; then
+                TARGET=$(echo $LINE | $SED $REGEX)
+            else
+                TARGET=$LINE
+            fi # if [ -n $REGEX ]
+
+            case "$FILE_TYPE" in
+                "regular file") 
+                    echo "file $TARGET $SOURCE $PERMS $FUID $FGID"
+                    ;;
+                "directory") 
+                    echo "dir $SOURCE $PERMS $FUID $FGID"
+                    ;;
+                "symbolic link")
+                    TARGET=$($READLINK -f $SOURCE | $TR -d '\n')
+                    echo "slink $SOURCE $TARGET $PERMS $FUID $FGID"
+                    ;;
+            esac
+        done # for LINE in $(echo $OUTPUT);
+
+        # print the vim tag at the bottom so the recipes are formatted nicely
+        # when you edit them
+        echo "# vi: set shiftwidth=4 tabstop=4 paste:"
+    ### squashfs output ###
+    elif [ $OUTPUT_OPT == "squashfs" ]; then
+        if [ "x$WORKDIR" == "x" ]; then
+            echo "ERROR: --workdir argument needs to be used with --squashfs"
+            exit 1
         fi
-        # this makes it easy to use case to decide what to write to the output
-        # file
-        FILE_TYPE=$($STAT --printf "%F" $LINE)
-        # AUG == access rights in octal, FUID, FGID
-        STAT_AUG=$($STAT --printf "%a %u %g" $LINE)
-        PERMS=$(echo $STAT_AUG | awk '{print $1}')
-        # munge the userid/groupid bits
-        if [ -z $FUID ]; then
-            FUID=$(echo $STAT_AUG | awk '{print $2}')
-        fi
+        if [ ! -d $WORKDIR ]; then
+            echo "ERROR: WORKDIR ${WORKDIR} doesn't exist"
+            exit 1
+        fi # if [ ! -d $WORKDIR ]
+        for LINE in $(echo $OUTPUT);
+        do
+            # skip missing files and/or directories
+            if [ ! -e $LINE ]; then
+                continue
+            fi
+            # this makes it easy to use case to decide what to write to the
+            # output file
+            FILE_TYPE=$($STAT --printf "%F" $LINE)
+            # AUG == access rights in octal, FUID, FGID
+            STAT_AUG=$($STAT --printf "%a %u %g" $LINE)
+            PERMS=$(echo $STAT_AUG | awk '{print $1}')
 
-        if [ -z $FGID ]; then
-            FGID=$(echo $STAT_AUG | awk '{print $3}')
-        fi
+            # munge the target filename if required
+            SOURCE=$LINE
+            if [ "x$REGEX" != "x" ]; then
+                TARGET=$(echo $LINE | $SED $REGEX)
+            else
+                TARGET=$LINE
+            fi # if [ -n $REGEX ]
 
-        # check if this is the kernel; we don't need to package it up in the
-        # initramfs file
-        if [ $(echo $LINE | grep -c "vmlinuz") -gt 0 ]; then
-            echo "#file $LINE $LINE $STAT_AUG"
-            continue
-        fi
+            case "$FILE_TYPE" in
+                "regular file") 
+                    echo "copying ${TARGET} to ${WORKDIR}${TARGET}"
+                    #cp $TARGET "${WORKDIR}${TARGET}"
+                    ;;
+                "directory") 
+                    #mkdir -p $WORKDIR/$TARGET
+                    if [ $TARGET != "./" ]; then
+                        echo "making directory ${WORKDIR}${TARGET}"
+                    fi # if [ $TARGET != "./" ]
+                    ;;
+                "symbolic link")
+                    TARGET=$($READLINK -f $SOURCE | $TR -d '\n')
+                    echo "creating symlink: ${SOURCE} ${WORKDIR}${TARGET}"
+                    #ln -s $SOURCE $WORKDIR/$TARGET
+                    ;;
+            esac
+        done # for LINE in $(echo $OUTPUT);
 
-        # munge the target filename if required
-        SOURCE=$LINE
-        if [ "x$REGEX" != "x" ]; then
-            TARGET=$(echo $LINE | $SED $REGEX)
-        else
-            TARGET=$LINE
-        fi # if [ -n $REGEX ]
+        exit 0
+    elif [ $OUTPUT_OPT == "cpio" ]; then
+        : 
+    else
+        echo "ERROR: unknown output type; OUTPUT_OPT is '${OUTPUT_OPT}'"
+        exit 1
+    fi # if [ $OUTPUT_OPT == "filelist" ]; then 
+    
+done # for $ARG in $@; 
 
-        case "$FILE_TYPE" in
-            "regular file") echo "file $TARGET $SOURCE $PERMS $FUID $FGID";;
-            "directory") echo "dir $SOURCE $PERMS $FUID $FGID";;
-            "symbolic link")
-                TARGET=$($READLINK -f $SOURCE | $TR -d '\n')
-                echo "slink $SOURCE $TARGET $PERMS $FUID $FGID"
-            ;;
-        esac
-    done # for LINE in $(echo $OUTPUT);
-
-    # print the vim tag at the bottom so the recipes are formatted nicely when
-    # you edit them
-    echo "# vi: set shiftwidth=4 tabstop=4 paste:"
-
-    # exit with the happy
-    exit 0
+# exit with the happy
+exit 0
 
 # *begin license blurb*
 #   This program is free software; you can redistribute it and/or modify
