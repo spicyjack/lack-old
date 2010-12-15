@@ -108,6 +108,9 @@ function check_excludes {
     return 0
 } # function check_excludes
 
+## FUNC: dump_filelist_header
+## ARG: none yet, but add one for the name of the package :(
+## DESC: output the header of a filelist
 function dump_filelist_header {
 # FIXME
 # we know the name of the package.... generate a nicer header that includes
@@ -128,6 +131,8 @@ EOHD
 
 } # dump_filelist_header
 
+## FUNC: show_examples
+## DESC: Show some usage examples
 function show_examples {
 cat <<'EOU'
     EXAMPLE OF SCRIPT USAGE:
@@ -142,26 +147,14 @@ EOU
 } # function show_examples
 
 ### SCRIPT SETUP ###
-# BSD's getopt is simpler than the GNU getopt; we need to detect it
-OSDETECT=$($UNAME -s)
-if [ ${OSDETECT} == "Darwin" ]; then
-    # this is the BSD part
-    echo "WARNING: BSD OS Detected; long switches will not work here..."
-    TEMP=$(/usr/bin/getopt hvd:g:p:r:u:sa $*)
-elif [ ${OSDETECT} == "Linux" ]; then
-    # and this is the GNU part
-    TEMP=$(/usr/bin/getopt -o hvepdlqfcso:w:u:g:rkax: \
-        --long help,verbose,examples \
-        --long package,directory,list \
-        --long squashfs,filelist,cpio,single,output:,workdir: \
-        --long uid:,gid:,all-root \
-        --long skip-exclude,append,regex: \
-        -n "${SCRIPTNAME}" -- "$@")
-else
-    echo "Error: Unknown OS Type.  I don't know how to call"
-    echo "'getopts' correctly for this operating system.  Exiting..."
-    exit 1
-fi
+# and this is the GNU part
+TEMP=$(/usr/bin/getopt -o hvepdlqfcs:w:u:g:rkax: \
+    --long help,verbose,examples \
+    --long package,directory,list \
+    --long squashfs,filelist,cpio,single:,workdir: \
+    --long uid:,gid:,all-root \
+    --long skip-exclude,append,regex: \
+    -n "${SCRIPTNAME}" -- "$@")
 
 # if getopts exited with an error code, then exit the script
 #if [ $? -ne 0 -o $# -eq 0 ] ; then
@@ -199,7 +192,6 @@ while true ; do
     -f|--filelist       Output filelist(s)
     -c|--cpio           Create a CPIO file (via gen_init_cpio)
     -s|--single         Write a single output file instead of many files
-    -o|--output         Output filename (for --single) or directory
     -w|--workdir        Working directory to use for copying/storing files
 
     MISC. OPTIONS
@@ -252,11 +244,7 @@ EOF
         -s|--single)
             # make one large file instead of multiple files for each
             # filelist/directory/package
-            SINGLE_OUTFILE=1
-            shift 1
-            ;;
-        -o|--output) # output file (for use with --single) or directory
-            OUTPUT_URI=$2
+            SINGLE_OUTFILE=$2
             shift 2
             ;;
         -w|--workdir) # working directory
@@ -303,7 +291,8 @@ EOF
     esac
 done
 
-if [ -z $@ ]; then
+echo "arguments are: $@"
+if [ "x$@" == "x" ]; then
     echo "ERROR: no packages/directories/filelists to process"
     echo "ERROR: use the --help switch to see script options"
     exit 1
@@ -316,6 +305,7 @@ do
     # depending on what the input type will be is what actions we will take
     case "$INPUT_OPT" in
         package)
+            echo "- Querying package system for package '${CURR_PKG}'"
             PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} | sort )
             PKG_VERSION=$(dpkg-query -s perl \
                 | grep Version | awk '{print $2}')
@@ -360,6 +350,12 @@ do
 
         for LINE in $(echo $PKG_CONTENTS);
         do
+            # check to see if we need to exclude this file
+            # this also skip missing files and/or directories
+            check_excludes $LINE 
+            if [ $? -gt 0 ]; then
+                continue
+            fi
             # this makes it easy to use case to decide what to write to the
             # output file
             FILE_TYPE=$($STAT --printf "%F" $LINE)
@@ -415,6 +411,9 @@ do
             exit 1
         fi # if [ "x$WORKDIR" == "x" ]
 
+        # FIXME add a check here for --single, and verify the output file has
+        # been used as an argument
+        echo "- Copying contents of package '$CURR_PKG' to working directory"
         # create a directory for the squashfs source in $WORKDIR
         SQUASH_SRC="${WORKDIR}/${CURR_PKG}-${PKG_VERSION}"
         if [ ! -d $WORKDIR ]; then
@@ -426,8 +425,10 @@ do
         fi # if [ ! -d $WORKDIR ]
         for LINE in $(echo $PKG_CONTENTS);
         do
-            # skip missing files and/or directories
-            if [ ! -e $LINE ]; then
+            # check to see if we need to exclude this file
+            # this also skip missing files and/or directories
+            check_excludes $LINE 
+            if [ $? -gt 0 ]; then
                 continue
             fi
             # this makes it easy to use case to decide what to write to the
@@ -448,9 +449,10 @@ do
             case "$FILE_TYPE" in
                 "regular file")
                     #echo "copying ${TARGET} to ${WORKDIR}${TARGET}"
-                    $CP -v $TARGET "${SQUASH_SRC}${TARGET}"
+                    $CP $TARGET "${SQUASH_SRC}${TARGET}"
                     ;;
                 "directory")
+                    # skip packaging the toplevel directory
                     if [ $TARGET != "./" ]; then
                         $MKDIR -p "${SQUASH_SRC}${TARGET}"
                         #echo "making directory ${WORKDIR}${TARGET}"
@@ -464,7 +466,7 @@ do
             esac # case "$FILE_TYPE" in
         done # for LINE in $(echo $PKG_CONTENTS);
 
-        exit 0
+    ### CPIO OUTPUT ###
     elif [ $OUTPUT_OPT == "cpio" ]; then
         :
     else
