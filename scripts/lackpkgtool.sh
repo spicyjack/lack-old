@@ -148,11 +148,11 @@ EOU
 
 ### SCRIPT SETUP ###
 # and this is the GNU part
-TEMP=$(/usr/bin/getopt -o hvepdlqfcs:w:u:g:rkax: \
+TEMP=$(/usr/bin/getopt -o hvepdfqocs:w:l:u:g:rkax: \
     --long help,verbose,examples \
-    --long package,directory,list \
-    --long squashfs,filelist,cpio,single:,workdir: \
-    --long uid:,gid:,all-root \
+    --long package,directory,filelist \
+    --long squashfs,output,cpio,single:,workdir: \
+    --long log:,logfile:,uid:,gid:,all-root \
     --long skip-exclude,append,regex: \
     -n "${SCRIPTNAME}" -- "$@")
 
@@ -185,16 +185,17 @@ while true ; do
     INPUT TYPES
     -p|--package        Package names to query for a list of files
     -d|--directory      Directories containing files to package
-    -l|--list           Filelists used with 'gen_init_cpio' program
+    -f|--filelist       Filelists used with 'gen_init_cpio' program
 
     OUTPUT OPTIONS
     -q|--squashfs       Output squashfs package(s)
-    -f|--filelist       Output filelist(s)
+    -o|--outlist        Output filelist(s)
     -c|--cpio           Create a CPIO file (via gen_init_cpio)
     -s|--single         Write a single output file instead of many files
     -w|--workdir        Working directory to use for copying/storing files
 
     MISC. OPTIONS
+    -l|--logfile        Output logs to this file instead of STDOUT
     -u|--uid            Use this UID for all files output
     -g|--gid            Use this GID for all files output
     -r|--all-root       Use UID/GID 0 for all files output
@@ -223,7 +224,7 @@ EOF
             INPUT_OPT="package"
             shift 1
             ;;
-        -l|--list) # use lists of packages for input
+        -f|--filelist) # use lists of packages for input
             INPUT_OPT="filelist"
             shift 1
             ;;
@@ -233,7 +234,7 @@ EOF
             OUTPUT_OPT="squashfs"
             shift 1
             ;;
-        -f|--filelist) # make filelist(s)
+        -o|--outlist) # make filelist(s)
             OUTPUT_OPT="filelist"
             shift 1
             ;;
@@ -253,6 +254,10 @@ EOF
             ;;
 
         ### MISC OPTIONS ###
+        -l|--log|--logfile) # logfile for things that could generate errors
+            LOGFILE=$2
+            shift 2
+            ;;
         -u|--uid) # user ID to use when creating squashfs files/filelists
             FUID=$2
             shift 2
@@ -291,8 +296,7 @@ EOF
     esac
 done
 
-echo "arguments are: $@"
-if [ "x$@" == "x" ]; then
+if [ $(echo $@ | wc -w ) -eq 0 ]; then
     echo "ERROR: no packages/directories/filelists to process"
     echo "ERROR: use the --help switch to see script options"
     exit 1
@@ -411,18 +415,20 @@ do
             exit 1
         fi # if [ "x$WORKDIR" == "x" ]
 
-        # FIXME add a check here for --single, and verify the output file has
-        # been used as an argument
-        echo "- Copying contents of package '$CURR_PKG' to working directory"
         # create a directory for the squashfs source in $WORKDIR
         SQUASH_SRC="${WORKDIR}/${CURR_PKG}-${PKG_VERSION}"
-        if [ ! -d $WORKDIR ]; then
+        if [ "x$SINGLE_OUTFILE" != "x" ]; then
+            SQUASH_SRC="${WORKDIR}/${SINGLE_OUTFILE}"
+        fi # if [ "x$SINGLE_OUTFILE" != "x" ]
+        if [ ! -d $SQUASH_SRC ]; then
             $MKDIR -p $SQUASH_SRC
             if [ $? -gt 0 ]; then
                 echo "ERROR: can't create work directory $SQUASH_SRC"
                 exit 1
             fi # if [ $? -gt 0 ]
         fi # if [ ! -d $WORKDIR ]
+
+        echo "- Copying contents of package '$CURR_PKG' to working directory"
         for LINE in $(echo $PKG_CONTENTS);
         do
             # check to see if we need to exclude this file
@@ -449,7 +455,11 @@ do
             case "$FILE_TYPE" in
                 "regular file")
                     #echo "copying ${TARGET} to ${WORKDIR}${TARGET}"
-                    $CP $TARGET "${SQUASH_SRC}${TARGET}"
+                    if [ "x${LOGFILE}" != "x" ]; then
+                        $CP $TARGET "${SQUASH_SRC}${TARGET}" > $LOGFILE 2>&1 
+                    else
+                        $CP $TARGET "${SQUASH_SRC}${TARGET}" 2>&1 
+                    fi
                     ;;
                 "directory")
                     # skip packaging the toplevel directory
@@ -466,6 +476,11 @@ do
             esac # case "$FILE_TYPE" in
         done # for LINE in $(echo $PKG_CONTENTS);
 
+        # call mksquashfs if we're packaging individual packages
+        if [ "x$SINGLE_OUTFILE" == "x" ]; then
+            echo "- Creating squashfs file ${SQUASH_SRC}.sfs"
+            #mksquashfs "${SQUASH_SRC}${TARGET}" "${SQUASH_SRC}${TARGET}.sfs"
+        fi # if [ "x$SINGLE_OUTFILE" == "x" ]
     ### CPIO OUTPUT ###
     elif [ $OUTPUT_OPT == "cpio" ]; then
         :
@@ -475,6 +490,11 @@ do
     fi # if [ $OUTPUT_OPT == "filelist" ]; then
 
 done # for $CURR_PKG in $@;
+# call mksquashfs if we're packaging a single package
+if [ "x$SINGLE_OUTFILE" != "x" ]; then
+    echo "- Creating squashfs file ${WORKDIR}${SINGLE_OUTFILE}.sfs"
+    #mksquashfs "${SQUASH_SRC}${TARGET}" "${SQUASH_SRC}${TARGET}.sfs"
+fi # if [ "x$SINGLE_OUTFILE" == "x" ]
 
 # exit with the happy
 exit 0
