@@ -46,21 +46,23 @@ if [ -z $BASH_VERSION ]; then
 fi # if [ $(readlink /bin/sh | grep -c dash) -gt 0 ]
 
 # external programs used
-TRUE=$(which true)
-GETOPT=$(which getopt)
-DPKG=$(which dpkg)
-MV=$(which mv)
 CAT=$(which cat)
-RM=$(which rm)
-TR=$(which tr)
-MKTEMP=$(which mktemp)
-READLINK=$(which readlink)
+CP=$(which cp)
+DPKG=$(which dpkg)
+GETOPT=$(which getopt)
 GZIP=$(which gzip)
+MKTEMP=$(which mktemp)
+MKDIR=$(which mkdir)
+MV=$(which mv)
+READLINK=$(which readlink)
+RM=$(which rm)
 SED=$(which sed)
 SCRIPTNAME=$(basename $0)
 STAT=$(which stat)
-UNAME=$(which uname)
 TOUCH=$(which touch)
+TR=$(which tr)
+TRUE=$(which true)
+UNAME=$(which uname)
 
 # local variables
 VERBOSE=0
@@ -69,8 +71,13 @@ EXCLUDE="share/doc|/man|/info|bug"
 EXCLUDE="${EXCLUDE}|^/\.$|^/boot$|^/usr$|^/usr/share$|^/lib$|^/lib/modules$"
 
 ### FUNCTIONS ###
-# check the status of the last run command; run a shell if it's anything but 0
-function cmd_status () {
+
+## FUNC: cmd_status
+## ARG: the command that was run, quoted if it contains spaces
+## ARG: the exit status from the command
+## DESC: check the status of the last run command; exit if the exit status
+## DESC: is anything but 0
+function cmd_status {
     COMMAND=$1
     STATUS=$2
     if [ $STATUS -ne 0 ]; then
@@ -79,7 +86,29 @@ function cmd_status () {
     fi
 } # cmd_status
 
-dump_header () {
+## FUNC: check_excludes
+## ARG: LINE, the current line from the filelist or package list
+## ENV: SKIP_EXCLUDE - if this is set, don't use the contents of $EXCLUDE
+## ENV: EXCLUDE - a regular expression that's fed to the 'grep' command
+## ERR: 0 - the file is to be *INCLUDED* in the output filelist/package
+## ERR: 1 - the file is to be *EXCLUDED* in the output filelist/package
+function check_excludes {
+    local LINE=$1
+    # check to see if we are skipping excludes
+    if [ "x${SKIP_EXCLUDE}" == x ]; then
+        # run through the exclusions list
+        if [ $(echo $LINE | grep -cE "${EXCLUDE}") -gt 0 ]; then
+            return 1
+        fi
+    fi # if [ "x${SKIP_EXCLUDE}" = x ]
+    # skip missing files and/or directories
+    if [ ! -e $LINE ]; then
+        return 1
+    fi
+    return 0
+} # function check_excludes
+
+function dump_filelist_header {
 # FIXME
 # we know the name of the package.... generate a nicer header that includes
 # the current date and package name
@@ -97,7 +126,7 @@ cat <<'EOHD'
 #
 EOHD
 
-} # dump_header
+} # dump_filelist_header
 
 function show_examples {
 cat <<'EOU'
@@ -169,8 +198,8 @@ while true ; do
     -q|--squashfs       Output squashfs package(s)
     -f|--filelist       Output filelist(s)
     -c|--cpio           Create a CPIO file (via gen_init_cpio)
-    -s|--single         Whatever output type, only write one of that type
-    -o|--output         Output filename (for --single) or directory 
+    -s|--single         Write a single output file instead of many files
+    -o|--output         Output filename (for --single) or directory
     -w|--workdir        Working directory to use for copying/storing files
 
     MISC. OPTIONS
@@ -220,14 +249,14 @@ EOF
             OUTPUT_OPT="cpio"
             shift 1
             ;;
-        -s|--single) 
+        -s|--single)
             # make one large file instead of multiple files for each
             # filelist/directory/package
-            OUTPUT_OPT="cpio"
+            SINGLE_OUTFILE=1
             shift 1
             ;;
-        -o|--output) # working directory
-            OUTPUT_ARG=$2
+        -o|--output) # output file (for use with --single) or directory
+            OUTPUT_URI=$2
             shift 2
             ;;
         -w|--workdir) # working directory
@@ -261,8 +290,8 @@ EOF
         -r|--regex) # use a regex to substitute strings in filelists
             REGEX=$2
             shift 2
-            ;;        
-        --) shift   
+            ;;
+        --) shift
             # everything after here should be a filelist file,
             # directory names or package names
             break
@@ -278,65 +307,59 @@ if [ -z $@ ]; then
     echo "ERROR: no packages/directories/filelists to process"
     echo "ERROR: use the --help switch to see script options"
     exit 1
-fi # if [ -z $@ ]; then  
+fi # if [ -z $@ ]; then
 
 ### SCRIPT MAIN LOOP ###
 # loop across the arguments listed after the double-dashes '--'
-for ARG in $@; 
+for CURR_PKG in $@;
 do
     # depending on what the input type will be is what actions we will take
     case "$INPUT_OPT" in
         package)
-            OUTPUT=$(/usr/bin/dpkg -L ${ARG} | sort )
-            cmd_status "dpkg -L ${ARG}" $?
+            PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} | sort )
+            PKG_VERSION=$(dpkg-query -s perl \
+                | grep Version | awk '{print $2}')
+            cmd_status "dpkg -L ${CURR_PKG}" $?
             ;;
         directory)
-            OUTPUT=$(/usr/bin/find ${ARG} -type f | sort)
-            cmd_status "find ${ARG} -type f" $?
+            PKG_CONTENTS=$(/usr/bin/find ${CURR_PKG} -type f | sort)
+            cmd_status "find ${CURR_PKG} -type f" $?
             ;;
         filelist)
-            OUTPUT=$(/usr/bin/find ${ARG} -type f | sort)
-            cmd_status "find ${ARG} -type f" $?
+            PKG_CONTENTS=$(/usr/bin/find ${CURR_PKG} -type f | sort)
+            cmd_status "find ${CURR_PKG} -type f" $?
             ;;
-        *) # unknown argument 
+        *) # unknown argument
             echo "ERROR: must use --list|--directory|--package arguments"
             echo "ERROR: to specify what the input to this script is"
             exit 1
             ;;
     esac # case "$INPUT_OPT"
 
-    if [ "x$OUTPUT" == "x" ]; then
-        echo "ERROR: OUTPUT variable empty;"
-        echo "ERROR: Perhaps you didn't specify an output type???"
+    if [ "x$PKG_CONTENTS" == "x" ]; then
+        echo "ERROR: PKG_CONTENTS variable empty;"
+        echo "ERROR: Perhaps you didn't specify an input type???"
+        echo "ERROR: Run script with --help to see script options"
+        echo "ERROR: Run script with --usage to see script usage examples"
         exit 1
-    fi # if [ -z $OUTPUT ]; then 
+    fi # if [ -z $OUTPUT ]; then
 
-    ### no output type specified ###
+    ### NO OUTPUT TYPE SPECIFIED ###
     if [ "x${OUTPUT_OPT}" == "x" ]; then
         echo "ERROR: must use --squashfs|--filelist|--cpio arguments"
         echo "ERROR: to specify what the output of this script will be"
         exit 1
-    ### filelist output ###
+
+    ### FILELIST OUTPUT ###
     elif [ $OUTPUT_OPT == "filelist" ]; then
         # print the recipe header
         if [ "x$APPEND" == "x" ]; then
-            dump_header
+            dump_filelist_header
         fi
         echo "# ${PACKAGE_NAME}"
 
-        for LINE in $(echo $OUTPUT);
+        for LINE in $(echo $PKG_CONTENTS);
         do
-            # check to see if we are skipping excludes
-            if [ "x${SKIP_EXCLUDE}" == x ]; then
-                # run through the exclusions list
-                if [ $(echo $LINE | grep -cE "${EXCLUDE}") -gt 0 ]; then
-                    continue
-                fi
-            fi # if [ "x${SKIP_EXCLUDE}" = x ]
-            # skip missing files and/or directories
-            if [ ! -e $LINE ]; then
-                continue
-            fi
             # this makes it easy to use case to decide what to write to the
             # output file
             FILE_TYPE=$($STAT --printf "%F" $LINE)
@@ -368,10 +391,10 @@ do
             fi # if [ -n $REGEX ]
 
             case "$FILE_TYPE" in
-                "regular file") 
+                "regular file")
                     echo "file $TARGET $SOURCE $PERMS $FUID $FGID"
                     ;;
-                "directory") 
+                "directory")
                     echo "dir $SOURCE $PERMS $FUID $FGID"
                     ;;
                 "symbolic link")
@@ -379,22 +402,29 @@ do
                     echo "slink $SOURCE $TARGET $PERMS $FUID $FGID"
                     ;;
             esac
-        done # for LINE in $(echo $OUTPUT);
+        done # for LINE in $(echo $PKG_CONTENTS);
 
         # print the vim tag at the bottom so the recipes are formatted nicely
         # when you edit them
         echo "# vi: set shiftwidth=4 tabstop=4 paste:"
-    ### squashfs output ###
+
+    ### SQUASHFS OUTPUT ###
     elif [ $OUTPUT_OPT == "squashfs" ]; then
         if [ "x$WORKDIR" == "x" ]; then
             echo "ERROR: --workdir argument needs to be used with --squashfs"
             exit 1
-        fi
+        fi # if [ "x$WORKDIR" == "x" ]
+
+        # create a directory for the squashfs source in $WORKDIR
+        SQUASH_SRC="${WORKDIR}/${CURR_PKG}-${PKG_VERSION}"
         if [ ! -d $WORKDIR ]; then
-            echo "ERROR: WORKDIR ${WORKDIR} doesn't exist"
-            exit 1
+            $MKDIR -p $SQUASH_SRC
+            if [ $? -gt 0 ]; then
+                echo "ERROR: can't create work directory $SQUASH_SRC"
+                exit 1
+            fi # if [ $? -gt 0 ]
         fi # if [ ! -d $WORKDIR ]
-        for LINE in $(echo $OUTPUT);
+        for LINE in $(echo $PKG_CONTENTS);
         do
             # skip missing files and/or directories
             if [ ! -e $LINE ]; then
@@ -416,33 +446,33 @@ do
             fi # if [ -n $REGEX ]
 
             case "$FILE_TYPE" in
-                "regular file") 
-                    echo "copying ${TARGET} to ${WORKDIR}${TARGET}"
-                    #cp $TARGET "${WORKDIR}${TARGET}"
+                "regular file")
+                    #echo "copying ${TARGET} to ${WORKDIR}${TARGET}"
+                    $CP -v $TARGET "${SQUASH_SRC}${TARGET}"
                     ;;
-                "directory") 
-                    #mkdir -p $WORKDIR/$TARGET
+                "directory")
                     if [ $TARGET != "./" ]; then
-                        echo "making directory ${WORKDIR}${TARGET}"
+                        $MKDIR -p "${SQUASH_SRC}${TARGET}"
+                        #echo "making directory ${WORKDIR}${TARGET}"
                     fi # if [ $TARGET != "./" ]
                     ;;
                 "symbolic link")
                     TARGET=$($READLINK -f $SOURCE | $TR -d '\n')
-                    echo "creating symlink: ${SOURCE} ${WORKDIR}${TARGET}"
-                    #ln -s $SOURCE $WORKDIR/$TARGET
+                    #echo "creating symlink: ${SOURCE} ${WORKDIR}${TARGET}"
+                    ln -s $SOURCE "${SQUASH_SRC}${TARGET}"
                     ;;
-            esac
-        done # for LINE in $(echo $OUTPUT);
+            esac # case "$FILE_TYPE" in
+        done # for LINE in $(echo $PKG_CONTENTS);
 
         exit 0
     elif [ $OUTPUT_OPT == "cpio" ]; then
-        : 
+        :
     else
         echo "ERROR: unknown output type; OUTPUT_OPT is '${OUTPUT_OPT}'"
         exit 1
-    fi # if [ $OUTPUT_OPT == "filelist" ]; then 
-    
-done # for $ARG in $@; 
+    fi # if [ $OUTPUT_OPT == "filelist" ]; then
+
+done # for $CURR_PKG in $@;
 
 # exit with the happy
 exit 0
