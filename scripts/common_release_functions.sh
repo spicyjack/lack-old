@@ -1,14 +1,21 @@
 #!/bin/sh
 
-# script to create the release files for a pigwidgeon release
-# script will be run from the top level 'pigwidgeon' directory
+# Copyright (c)2010 by Brian Manning <brian at portaboom dot com>
+# License: GPL v2 (see licence blurb at the bottom of the file)
+# Get support and more info about this script at:
+# http://code.google.com/p/lack/
+# http://groups.google.com/group/linuxack|linuxack@googlegroups.com
+
+# DO NOT CONTACT THE AUTHOR DIRECTLY; use the mailing list please
+
+# A set of shell functions that help build LACK releases.
 
 # program locations
 CAT=$(which cat)
 SED=$(which sed)
 
 ## FUNC: check_filelist_envvar
-## REQ:  $FILELIST - the filename of the output filelist file
+## ENV:  $FILELIST - the filename of the output filelist file
 ## DESC: Check the $FILELIST environment variable.  Exits the script 
 ## DESC: with an error if the filelist variable is not set
 function check_filelist_envvar {
@@ -121,8 +128,8 @@ function _create_init_script {
 ## DESC: Copy the *.pem files needed for SSL usage
 ## DESC: Exits if it can't find the correct files in the ~/stuff_tars
 ## DESC: directory.  
-## REQ:  $PROJECT_NAME - name of the project, also usually the hostname
-## REQ:  $TEMP_DIR - working directory
+## ENV:  $PROJECT_NAME - name of the project, also usually the hostname
+## ENV:  $TEMP_DIR - working directory
 function copy_ssl_pem_files {
     if [ -e ~/stuff_tars/${PROJECT_NAME}.*key.pem.nopass ]; then
         cp ~/stuff_tars/${PROJECT_NAME}.*pem* $TEMP_DIR
@@ -134,7 +141,7 @@ function copy_ssl_pem_files {
 
 ## FUNC: copy_busybox_binary
 ## ARG:  None
-## REQ:  $TEMP_DIR
+## ENV:  $TEMP_DIR
 ## DESC: Copies the Busybox binary to $TEMP_DIR
 ## DESC: Exits if it can't find the Busybox binary.
 function copy_busybox_binary {
@@ -148,8 +155,8 @@ function copy_busybox_binary {
 
 ## FUNC: sedify_input_files
 ## ARG:  INPUT_FILES - a list of files to sedify
-## REQ:  $TEMP_DIR - temporary directory
-## REQ:  $RELEASE_VER - release version
+## ENV:  $TEMP_DIR - temporary directory
+## ENV:  $RELEASE_VER - release version
 ## DESC: Enumerates over $INPUT_FILES, passes the files through a sed filter, 
 ## DESC: and writes them to $TEMP_DIR
 function sedify_input_files {
@@ -171,6 +178,20 @@ function sedify_input_files {
             }" > $TEMP_DIR/$FILEBASE
     done
 } # function ѕedify_input_files
+
+# *begin license blurb*
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; version 2 dated June, 1991.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program;  if not, write to the Free Software
+#   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111, USA.
 
 # vi: set sw=4 ts=4 ft=sh:
 # fin!

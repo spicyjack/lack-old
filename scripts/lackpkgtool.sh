@@ -1,9 +1,14 @@
 #!/bin/sh
 
 # lackpkgtool.sh
-# Copyright (c)2010 by Brian Manning
-# Licensed under the GNU GPL v2; see the bottom of this file for the blurb
-#
+# Copyright (c)2010 by Brian Manning <brian at portaboom dot com>
+# License: GPL v2 (see licence blurb at the bottom of the file)
+# Get support and more info about this script at:
+# http://code.google.com/p/lack/
+# http://groups.google.com/group/linuxack|linuxack@googlegroups.com
+
+# DO NOT CONTACT THE AUTHOR DIRECTLY; use the mailing list please
+
 # script that queries a packaging system for a list of files which can then be
 # hacked up to make a filelist for use with gen_init_cpio
 
@@ -32,10 +37,6 @@
 #   - packaged by
 #   - checksums?
 
-# FIXME
-# - we know the name of the package.... generate a nicer header that includes
-# the current date and package name
-
 # verify we're not running under dash
 if [ -z $BASH_VERSION ]; then
 #if [ $(readlink /bin/sh | grep -c dash) -gt 0 ]; then
@@ -49,6 +50,7 @@ fi # if [ $(readlink /bin/sh | grep -c dash) -gt 0 ]
 CAT=$(which cat)
 CP=$(which cp)
 DPKG=$(which dpkg)
+DATE=$(which date)
 GETOPT=$(which getopt)
 GZIP=$(which gzip)
 MKTEMP=$(which mktemp)
@@ -64,6 +66,9 @@ TR=$(which tr)
 TRUE=$(which true)
 UNAME=$(which uname)
 
+# handy shortcuts using the above commands
+EPOCH_DATE_CMD="${DATE} +%s"
+
 # local variables
 VERBOSE=0
 # pattern of strings to exclude
@@ -78,9 +83,10 @@ EXCLUDE="${EXCLUDE}|^/\.$|^/boot$|^/usr$|^/usr/share$|^/lib$|^/lib/modules$"
 ## DESC: check the status of the last run command; exit if the exit status
 ## DESC: is anything but 0
 function cmd_status {
-    COMMAND=$1
-    STATUS=$2
-    if [ $STATUS -ne 0 ]; then
+    local COMMAND=$1
+    local STATUS=$2
+    echo "cmd_status '$COMMAND' -> $STATUS"
+    if [ $STATUS -gt 0 ]; then
         echo "Command '${COMMAND}' failed with status code: ${STATUS}"
         exit 1
     fi
@@ -112,11 +118,12 @@ function check_excludes {
 ## ARG: none yet, but add one for the name of the package :(
 ## DESC: output the header of a filelist
 function dump_filelist_header {
+    local PKG_NAME=$1
 # FIXME
 # we know the name of the package.... generate a nicer header that includes
 # the current date and package name
+echo "# name: ${PKG_NAME}"
 cat <<'EOHD'
-# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
 # description: example package with comments
 # depends: _base otherpackage1 otherpackage2
 # helpcommand: /usr/bin/somebin --help
@@ -146,12 +153,13 @@ cat <<'EOU'
 EOU
 } # function show_examples
 
+SCRIPT_START=$(${EPOCH_DATE_CMD})
 ### SCRIPT SETUP ###
 # and this is the GNU part
 TEMP=$(/usr/bin/getopt -o hvepdfqocs:w:l:u:g:rkax: \
     --long help,verbose,examples \
     --long package,directory,filelist \
-    --long squashfs,output,cpio,single:,workdir: \
+    --long squashfs,listout,cpio,single:,workdir: \
     --long log:,logfile:,uid:,gid:,all-root \
     --long skip-exclude,append,regex: \
     -n "${SCRIPTNAME}" -- "$@")
@@ -189,9 +197,9 @@ while true ; do
 
     OUTPUT OPTIONS
     -q|--squashfs       Output squashfs package(s)
-    -o|--outlist        Output filelist(s)
+    -o|--listout        Output filelist(s) suitable for gen_init_cpio
     -c|--cpio           Create a CPIO file (via gen_init_cpio)
-    -s|--single         Write a single output file instead of many files
+    -s|--single         Output only a single file with this name + .sfs
     -w|--workdir        Working directory to use for copying/storing files
 
     MISC. OPTIONS
@@ -202,8 +210,8 @@ while true ; do
     -k|--skip-exclude   Skip excluding files in the output
     -a|--append         Append to an existing file, don't create a new file
     -x|--regex          Apply the regular expression to destination file
-    NOTE: Long switches do not work with BSD systems (GNU extension)
 
+    Use --examples to see examples of script usage.
 EOF
         exit 0;;
         -v|--verbose) # output pretty messages
@@ -310,17 +318,19 @@ do
     case "$INPUT_OPT" in
         package)
             echo "- Querying package system for package '${CURR_PKG}'"
-            PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} | sort )
-            PKG_VERSION=$(dpkg-query -s perl \
+            PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} && sort )
+            #cmd_status "dpkg -L ${CURR_PKG}" $?
+            PKG_VERSION=$(dpkg-query -s ${CURR_PKG} \
                 | grep Version | awk '{print $2}')
-            cmd_status "dpkg -L ${CURR_PKG}" $?
+            #cmd_status "dpkg-query -s ${CURR_PKG}" $?
             ;;
         directory)
             PKG_CONTENTS=$(/usr/bin/find ${CURR_PKG} -type f | sort)
             cmd_status "find ${CURR_PKG} -type f" $?
             ;;
         filelist)
-            PKG_CONTENTS=$(/usr/bin/find ${CURR_PKG} -type f | sort)
+            PKG_CONTENTS=$(cat ${CURR_PKG} | grep -v "^#" \
+                | awk '{print $2}' | sort)
             cmd_status "find ${CURR_PKG} -type f" $?
             ;;
         *) # unknown argument
@@ -348,7 +358,7 @@ do
     elif [ $OUTPUT_OPT == "filelist" ]; then
         # print the recipe header
         if [ "x$APPEND" == "x" ]; then
-            dump_filelist_header
+            dump_filelist_header $CURR_PKG
         fi
         echo "# ${PACKAGE_NAME}"
 
@@ -356,7 +366,7 @@ do
         do
             # check to see if we need to exclude this file
             # this also skip missing files and/or directories
-            check_excludes $LINE 
+            check_excludes $LINE
             if [ $? -gt 0 ]; then
                 continue
             fi
@@ -492,11 +502,24 @@ do
 done # for $CURR_PKG in $@;
 # call mksquashfs if we're packaging a single package
 if [ "x$SINGLE_OUTFILE" != "x" ]; then
-    echo "- Creating squashfs file ${WORKDIR}${SINGLE_OUTFILE}.sfs"
-    #mksquashfs "${SQUASH_SRC}${TARGET}" "${SQUASH_SRC}${TARGET}.sfs"
+    echo "- Creating squashfs file ${WORKDIR}/${SINGLE_OUTFILE}.sfs"
+    mksquashfs "${WORKDIR}/${SINGLE_OUTFILE}" \
+        "${WORKDIR}/${SINGLE_OUTFILE}.sfs"
 fi # if [ "x$SINGLE_OUTFILE" == "x" ]
 
 # exit with the happy
+SCRIPT_END=$(${EPOCH_DATE_CMD})
+SCRIPT_EXECUTION_SECS=$(( ${SCRIPT_END} - ${SCRIPT_START}))
+if [ $SCRIPT_EXECUTION_SECS -gt 60 ]; then
+    SCRIPT_EXECUTION_MINS=$(( $SCRIPT_EXECUTION_SECS / 60))
+    SCRIPT_EXECUTION_MOD=$(( $SCRIPT_EXECUTION_MINS * 60 ))
+    SCRIPT_EXECUTION_SECS=$(( $SCRIPT_EXECUTION_SECS - $SCRIPT_EXECUTION_MOD))
+    echo -n "Total script execution time: ${SCRIPT_EXECUTION_MINS} minutes, "
+    echo "${SCRIPT_EXECUTION_SECS} seconds"
+else
+    echo "Total script execution time: ${SCRIPT_EXECUTION_SECS} seconds"
+fi
+
 exit 0
 
 # *begin license blurb*

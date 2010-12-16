@@ -1,10 +1,12 @@
 #!/bin/sh
 
-# $Id: make_initramfs.sh,v 1.106 2009-08-10 08:38:58 brian Exp $
-# Copyright (c)2006 Brian Manning <elspicyjack at gmail dot com>
+# make_initramfs.sh
+# Copyright (c)2006 Brian Manning <brian at portaboom dot com>
 # License: GPL v2 (see licence blurb at the bottom of the file)
 # Get support and more info about this script at:
-# http://groups.google.com/group/project-naranja
+# http://code.google.com/p/lack/
+# http://groups.google.com/group/linuxack|linuxack@googlegroups.com
+
 # DO NOT CONTACT THE AUTHOR DIRECTLY; use the mailing list please
 
 # script to generate initramfs images based on lists of files you pass to it;
