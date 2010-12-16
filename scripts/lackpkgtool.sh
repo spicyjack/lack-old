@@ -119,10 +119,9 @@ function check_excludes {
 ## DESC: output the header of a filelist
 function dump_filelist_header {
     local PKG_NAME=$1
-# FIXME
 # we know the name of the package.... generate a nicer header that includes
 # the current date and package name
-echo "# name: ${PKG_NAME}"
+    echo "# name: ${PKG_NAME}"
 cat <<'EOHD'
 # description: example package with comments
 # depends: _base otherpackage1 otherpackage2
@@ -156,9 +155,9 @@ EOU
 SCRIPT_START=$(${EPOCH_DATE_CMD})
 ### SCRIPT SETUP ###
 # and this is the GNU part
-TEMP=$(/usr/bin/getopt -o hvepdfqocs:w:l:u:g:rkax: \
+TEMP=$(/usr/bin/getopt -o hvepdfb:qocs:w:l:u:g:rkax: \
     --long help,verbose,examples \
-    --long package,directory,filelist \
+    --long package,directory,filelist,base: \
     --long squashfs,listout,cpio,single:,workdir: \
     --long log:,logfile:,uid:,gid:,all-root \
     --long skip-exclude,append,regex: \
@@ -190,10 +189,11 @@ while true ; do
     -v|--verbose        Nice pretty output messages
     -e|--examples       Show examples of script usage
 
-    INPUT TYPES
+    INPUT OPTIONS
     -p|--package        Package names to query for a list of files
     -d|--directory      Directories containing files to package
     -f|--filelist       Filelists used with 'gen_init_cpio' program
+    -b|--base           Base directory to search for filelist files
 
     OUTPUT OPTIONS
     -q|--squashfs       Output squashfs package(s)
@@ -235,6 +235,10 @@ EOF
         -f|--filelist) # use lists of packages for input
             INPUT_OPT="filelist"
             shift 1
+            ;;
+        -b|--base) # base directory to look for filelists (recipes)
+            BASE_DIR=$2
+            shift 2
             ;;
 
         ### OUTPUT OPTIONS ###
@@ -318,7 +322,7 @@ do
     case "$INPUT_OPT" in
         package)
             echo "- Querying package system for package '${CURR_PKG}'"
-            PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} && sort )
+            PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} | sort )
             #cmd_status "dpkg -L ${CURR_PKG}" $?
             PKG_VERSION=$(dpkg-query -s ${CURR_PKG} \
                 | grep Version | awk '{print $2}')
@@ -329,9 +333,20 @@ do
             cmd_status "find ${CURR_PKG} -type f" $?
             ;;
         filelist)
-            PKG_CONTENTS=$(cat ${CURR_PKG} | grep -v "^#" \
-                | awk '{print $2}' | sort)
-            cmd_status "find ${CURR_PKG} -type f" $?
+            if [ "x${BASE_DIR}" != "x" ]; then
+                FILELIST_FILE=${BASE_DIR}/${CURR_PKG}
+            else
+                FILELIST_FILE=${CURR_PKG}
+            fi
+            if [ -e $FILELIST_FILE ]; then
+                PKG_CONTENTS=$(cat ${FILELIST_FILE} | grep -v "^#" \
+                    | awk '{print $2}' | sort)
+                #cmd_status "find ${FILELIST_FILE} -type f" $?
+            else
+                echo "ERROR: filelist ${FILELIST_FILE} not found!"
+                echo "(Maybe use --base option?)"
+                exit 1
+            fi # if [ -e ${CURR_PKG} ]
             ;;
         *) # unknown argument
             echo "ERROR: must use --list|--directory|--package arguments"
@@ -339,6 +354,8 @@ do
             exit 1
             ;;
     esac # case "$INPUT_OPT"
+    LINE_COUNT=$(echo $PKG_CONTENTS | wc -w)
+    echo "- ${CURR_PKG} has ${LINE_COUNT} files"
 
     if [ "x$PKG_CONTENTS" == "x" ]; then
         echo "ERROR: PKG_CONTENTS variable empty;"
@@ -426,10 +443,14 @@ do
         fi # if [ "x$WORKDIR" == "x" ]
 
         # create a directory for the squashfs source in $WORKDIR
+        # FIXME this only works for Debian packages;
         SQUASH_SRC="${WORKDIR}/${CURR_PKG}-${PKG_VERSION}"
         if [ "x$SINGLE_OUTFILE" != "x" ]; then
             SQUASH_SRC="${WORKDIR}/${SINGLE_OUTFILE}"
         fi # if [ "x$SINGLE_OUTFILE" != "x" ]
+        if [ $(echo ${SQUASH_SRC} | grep -c "/$") -eq 0 ]; then
+            SQUASH_SRC="${SQUASH_SRC}/"
+        fi
         if [ ! -d $SQUASH_SRC ]; then
             $MKDIR -p $SQUASH_SRC
             if [ $? -gt 0 ]; then
@@ -443,7 +464,8 @@ do
         do
             # check to see if we need to exclude this file
             # this also skip missing files and/or directories
-            check_excludes $LINE 
+            echo "Adding file ${LINE} to ${SQUASH_SRC}"
+            check_excludes $LINE
             if [ $? -gt 0 ]; then
                 continue
             fi
@@ -464,24 +486,25 @@ do
 
             case "$FILE_TYPE" in
                 "regular file")
-                    #echo "copying ${TARGET} to ${WORKDIR}${TARGET}"
+                    echo "copying ${TARGET} to ${SQUASH_SRC}${TARGET}"
                     if [ "x${LOGFILE}" != "x" ]; then
-                        $CP $TARGET "${SQUASH_SRC}${TARGET}" > $LOGFILE 2>&1 
+                        eval $CP $TARGET "${SQUASH_SRC}${TARGET}" \
+                            > $LOGFILE 2>&1 
                     else
-                        $CP $TARGET "${SQUASH_SRC}${TARGET}" 2>&1 
+                        eval $CP $TARGET "${SQUASH_SRC}${TARGET}" 2>&1 
                     fi
                     ;;
                 "directory")
                     # skip packaging the toplevel directory
                     if [ $TARGET != "./" ]; then
-                        $MKDIR -p "${SQUASH_SRC}${TARGET}"
+                        eval $MKDIR -p "${SQUASH_SRC}${TARGET}"
                         #echo "making directory ${WORKDIR}${TARGET}"
                     fi # if [ $TARGET != "./" ]
                     ;;
                 "symbolic link")
                     TARGET=$($READLINK -f $SOURCE | $TR -d '\n')
                     #echo "creating symlink: ${SOURCE} ${WORKDIR}${TARGET}"
-                    ln -s $SOURCE "${SQUASH_SRC}${TARGET}"
+                    eval ln -s $SOURCE "${SQUASH_SRC}${TARGET}"
                     ;;
             esac # case "$FILE_TYPE" in
         done # for LINE in $(echo $PKG_CONTENTS);
