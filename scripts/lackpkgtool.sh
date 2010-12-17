@@ -68,14 +68,31 @@ UNAME=$(which uname)
 
 # handy shortcuts using the above commands
 EPOCH_DATE_CMD="${DATE} +%s"
+SCRIPT_START=$(${EPOCH_DATE_CMD})
 
-# local variables
+### LOCAL VARIABLES ###
+# don't be verbose by default
 VERBOSE=0
 # pattern of strings to exclude
 EXCLUDE="share/doc|/man|/info|bug"
 EXCLUDE="${EXCLUDE}|^/\.$|^/boot$|^/usr$|^/usr/share$|^/lib$|^/lib/modules$"
 
 ### FUNCTIONS ###
+
+## FUNC: verbose_msg
+## ARG: the message to be written on STDOUT
+## ENV: VERBOSE, the verbosity level of the script
+## DESC: Check if $VERBOSE is set, and if so, output the message passed in
+function verbose_msg {
+    local MESSAGE=$1
+    if [ $VERBOSE -gt 0 ]; then
+        if [ "x${LOGFILE}" != "x" ]; then
+            echo $MESSAGE >> $LOGFILE
+        else
+            echo $MESSAGE
+        fi # if [ "x${LOGFILE}" != "x" ]
+    fi
+} # verbose_msg
 
 ## FUNC: cmd_status
 ## ARG: the command that was run, quoted if it contains spaces
@@ -85,7 +102,6 @@ EXCLUDE="${EXCLUDE}|^/\.$|^/boot$|^/usr$|^/usr/share$|^/lib$|^/lib/modules$"
 function cmd_status {
     local COMMAND=$1
     local STATUS=$2
-    echo "cmd_status '$COMMAND' -> $STATUS"
     if [ $STATUS -gt 0 ]; then
         echo "Command '${COMMAND}' failed with status code: ${STATUS}"
         exit 1
@@ -152,13 +168,12 @@ cat <<'EOU'
 EOU
 } # function show_examples
 
-SCRIPT_START=$(${EPOCH_DATE_CMD})
 ### SCRIPT SETUP ###
 # and this is the GNU part
-TEMP=$(/usr/bin/getopt -o hvepdfb:qocs:w:l:u:g:rkax: \
+TEMP=$(/usr/bin/getopt -o hvepdfb:o:qtcs:w:l:u:g:rkax: \
     --long help,verbose,examples \
     --long package,directory,filelist,base: \
-    --long squashfs,listout,cpio,single:,workdir: \
+    --long outdir:,squashfs,listout,cpio,single:,workdir: \
     --long log:,logfile:,uid:,gid:,all-root \
     --long skip-exclude,append,regex: \
     -n "${SCRIPTNAME}" -- "$@")
@@ -196,8 +211,9 @@ while true ; do
     -b|--base           Base directory to search for filelist files
 
     OUTPUT OPTIONS
+    -o|--outdir         Output files created to this directory
     -q|--squashfs       Output squashfs package(s)
-    -o|--listout        Output filelist(s) suitable for gen_init_cpio
+    -t|--listout        Output filelist(s) suitable for gen_init_cpio
     -c|--cpio           Create a CPIO file (via gen_init_cpio)
     -s|--single         Output only a single file with this name + .sfs
     -w|--workdir        Working directory to use for copying/storing files
@@ -242,11 +258,16 @@ EOF
             ;;
 
         ### OUTPUT OPTIONS ###
+        -o|--outdir) # base directory to look for filelists (recipes)
+            OUTPUT_DIR=$2
+            shift 2
+            ;;
+
         -q|--squashfs) # make squashfs file(s)
             OUTPUT_OPT="squashfs"
             shift 1
             ;;
-        -o|--outlist) # make filelist(s)
+        -t|--listout) # make filelist(s)
             OUTPUT_OPT="filelist"
             shift 1
             ;;
@@ -318,12 +339,19 @@ fi # if [ -z $@ ]; then
 # loop across the arguments listed after the double-dashes '--'
 for CURR_PKG in $@;
 do
+    verbose_msg "=== Processing package/filelist ${CURR_PKG} ==="
     # depending on what the input type will be is what actions we will take
     case "$INPUT_OPT" in
         package)
             echo "- Querying package system for package '${CURR_PKG}'"
-            PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} | sort )
-            #cmd_status "dpkg -L ${CURR_PKG}" $?
+            if [ "x${LOGFILE}" != "x" ]; then
+                PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} 2>>$LOGFILE)
+                cmd_status "dpkg -L ${CURR_PKG}" $?
+            else
+                PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG})
+                cmd_status "dpkg -L ${CURR_PKG}" $?
+            fi # if [ "x${LOGFILE}" != "x" ]
+            PKG_CONTENTS=$(echo ${PKG_CONTENTS} | sort )
             PKG_VERSION=$(dpkg-query -s ${CURR_PKG} \
                 | grep Version | awk '{print $2}')
             #cmd_status "dpkg-query -s ${CURR_PKG}" $?
@@ -339,6 +367,7 @@ do
                 FILELIST_FILE=${CURR_PKG}
             fi
             if [ -e $FILELIST_FILE ]; then
+                echo "- Parsing contents of ${FILELIST_FILE}"
                 PKG_CONTENTS=$(cat ${FILELIST_FILE} | grep -v "^#" \
                     | awk '{print $2}' | sort)
                 #cmd_status "find ${FILELIST_FILE} -type f" $?
@@ -355,7 +384,7 @@ do
             ;;
     esac # case "$INPUT_OPT"
     LINE_COUNT=$(echo $PKG_CONTENTS | wc -w)
-    echo "- ${CURR_PKG} has ${LINE_COUNT} files"
+    verbose_msg "- ${CURR_PKG} has ${LINE_COUNT} files"
 
     if [ "x$PKG_CONTENTS" == "x" ]; then
         echo "ERROR: PKG_CONTENTS variable empty;"
@@ -464,7 +493,7 @@ do
         do
             # check to see if we need to exclude this file
             # this also skip missing files and/or directories
-            echo "Adding file ${LINE} to ${SQUASH_SRC}"
+            verbose_msg "Adding file ${LINE} to ${SQUASH_SRC}"
             check_excludes $LINE
             if [ $? -gt 0 ]; then
                 continue
@@ -486,12 +515,12 @@ do
 
             case "$FILE_TYPE" in
                 "regular file")
-                    echo "copying ${TARGET} to ${SQUASH_SRC}${TARGET}"
+                    verbose_msg "copying ${TARGET} to ${SQUASH_SRC}${TARGET}"
                     if [ "x${LOGFILE}" != "x" ]; then
                         eval $CP $TARGET "${SQUASH_SRC}${TARGET}" \
-                            > $LOGFILE 2>&1 
+                            >> $LOGFILE 2>&1
                     else
-                        eval $CP $TARGET "${SQUASH_SRC}${TARGET}" 2>&1 
+                        eval $CP $TARGET "${SQUASH_SRC}${TARGET}" 2>&1
                     fi
                     ;;
                 "directory")
