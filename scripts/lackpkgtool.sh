@@ -85,11 +85,12 @@ FGID=100
 
 ### FUNCTIONS ###
 
-## FUNC: verbose_msg
+## FUNC: say
 ## ARG: the message to be written on STDOUT
 ## ENV: VERBOSE, the verbosity level of the script
+## ENV: LOGFILE; if set, writes to that logfile
 ## DESC: Check if $VERBOSE is set, and if so, output the message passed in
-function verbose_msg {
+function say {
     local MESSAGE=$1
     if [ $VERBOSE -gt 0 ]; then
         if [ "x${LOGFILE}" != "x" ]; then
@@ -98,7 +99,7 @@ function verbose_msg {
             echo $MESSAGE
         fi # if [ "x${LOGFILE}" != "x" ]
     fi
-} # verbose_msg
+} # verbose
 
 ## FUNC: cmd_status
 ## ARG: the command that was run, quoted if it contains spaces
@@ -125,6 +126,7 @@ function check_excludes {
     # check to see if we are skipping excludes
     if [ "x${SKIP_EXCLUDE}" == x ]; then
         # run through the exclusions list
+        say "- Checking excludes: ${LINE}"
         if [ $(echo $LINE | grep -cE "${EXCLUDE}") -gt 0 ]; then
             return 1
         fi
@@ -344,7 +346,7 @@ fi # if [ -z $@ ]; then
 # loop across the arguments listed after the double-dashes '--'
 for CURR_PKG in $@;
 do
-    verbose_msg "=== Processing package/filelist ${CURR_PKG} ==="
+    say "=== Processing package/filelist ${CURR_PKG} ==="
     # depending on what the input type will be is what actions we will take
     case "$INPUT_OPT" in
         package)
@@ -362,7 +364,7 @@ do
             #cmd_status "dpkg-query -s ${CURR_PKG}" $?
             ;;
         directory)
-            PKG_CONTENTS=$(/usr/bin/find ${CURR_PKG} -type f | sort)
+            PKG_CONTENTS=$(/usr/bin/find ${CURR_PKG} -type f)
             cmd_status "find ${CURR_PKG} -type f" $?
             ;;
         filelist)
@@ -372,9 +374,9 @@ do
                 FILELIST_FILE=${CURR_PKG}
             fi
             if [ -e $FILELIST_FILE ]; then
-                echo "- Parsing contents of ${FILELIST_FILE}"
+                echo "- Parsing: ${FILELIST_FILE}"
                 PKG_CONTENTS=$(cat ${FILELIST_FILE} | grep -v "^#" \
-                    | awk '{print $2}' | sort)
+                    | awk '{print $2}')
                 #cmd_status "find ${FILELIST_FILE} -type f" $?
             else
                 echo "ERROR: filelist ${FILELIST_FILE} not found!"
@@ -389,7 +391,7 @@ do
             ;;
     esac # case "$INPUT_OPT"
     LINE_COUNT=$(echo $PKG_CONTENTS | wc -w)
-    verbose_msg "- ${CURR_PKG} has ${LINE_COUNT} files"
+    say "- ${CURR_PKG} has ${LINE_COUNT} files"
 
     if [ "x$PKG_CONTENTS" == "x" ]; then
         echo "ERROR: PKG_CONTENTS variable empty;"
@@ -493,7 +495,7 @@ do
             fi # if [ $? -gt 0 ]
         fi # if [ ! -d $WORKDIR ]
 
-        echo "- Copying contents of package '$CURR_PKG' to working directory"
+        echo "- Copying: '$CURR_PKG' to working directory"
         LINE_NUM=1
         for LINE in $(echo $PKG_CONTENTS);
         do
@@ -509,6 +511,7 @@ do
             # AUG == access rights in octal, FUID, FGID
             STAT_AUG=$($STAT --printf "%a %u %g" $LINE)
             PERMS=$(echo $STAT_AUG | awk '{print $1}')
+            say "- line: ${LINE} ${PERMS} ${FUID} ${FGID}"
 
             # munge the target filename if required
             SOURCE=$LINE
@@ -521,8 +524,8 @@ do
             case "$FILE_TYPE" in
                 "regular file")
                     TARGET=$(echo ${SOURCE} | sed 's!^/!!')
-                    PRE=$(printf '%4d cp:' ${LINE_NUM})
-                    verbose_msg "- ${PRE}: ${SOURCE} to ${SQUASH_SRC}${TARGET}"
+                    PRE=$(printf '%5s' ${LINE_NUM})
+                    say "- ${PRE}    cp: ${SOURCE} to ${SQUASH_SRC}${TARGET}"
                     if [ "x${LOGFILE}" != "x" ]; then
                         $CP $SOURCE "${SQUASH_SRC}${TARGET}" \
                             >> $LOGFILE 2>&1
@@ -534,8 +537,8 @@ do
                     # skip packaging the toplevel directory
                     if [ $SOURCE != "./" ]; then
                         SOURCE=$(echo ${SOURCE} | sed 's!^/!!')
-                        PRE=$(printf '%4d mkdir:' ${LINE_NUM})
-                        verbose_msg "- ${PRE}: ${SQUASH_SRC}${SOURCE}"
+                        PRE=$(printf '%5s' ${LINE_NUM})
+                        say "- ${PRE} mkdir: ${SQUASH_SRC}${SOURCE}"
                         if [ "x${LOGFILE}" != "x" ]; then
                             $MKDIR -p "${SQUASH_SRC}${SOURCE}" \
                                 >> $LOGFILE 2>&1
@@ -548,8 +551,8 @@ do
                 "symbolic link")
                     #TARGET=$($READLINK -f $SOURCE | $TR -d '\n')
                     TARGET=$($READLINK -f $SOURCE | sed 's!^/!!')
-                    PRE=$(printf '%4d ln:' ${LINE_NUM})
-                    verbose_msg "- ${PRE}: ${SQUASH_SRC}${TARGET}"
+                    PRE=$(printf '%5s' ${LINE_NUM})
+                    say "- ${PRE}    ln: ${SQUASH_SRC}${TARGET}"
                     #echo "creating symlink: ${SOURCE} ${WORKDIR}${TARGET}"
                     if [ "x${LOGFILE}" != "x" ]; then
                         ln -s $SOURCE "${SQUASH_SRC}${TARGET}" \
