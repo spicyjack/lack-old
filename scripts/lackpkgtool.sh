@@ -76,6 +76,12 @@ VERBOSE=0
 # pattern of strings to exclude
 EXCLUDE="share/doc|/man|/info|bug"
 EXCLUDE="${EXCLUDE}|^/\.$|^/boot$|^/usr$|^/usr/share$|^/lib$|^/lib/modules$"
+# don't make all files owned by root;
+ALL_ROOT=0
+# set the user id based on what's in the environment
+FUID=$EUID
+# 100 is 'users'
+FGID=100
 
 ### FUNCTIONS ###
 
@@ -262,7 +268,6 @@ EOF
             OUTPUT_DIR=$2
             shift 2
             ;;
-
         -q|--squashfs) # make squashfs file(s)
             OUTPUT_OPT="squashfs"
             shift 1
@@ -489,11 +494,11 @@ do
         fi # if [ ! -d $WORKDIR ]
 
         echo "- Copying contents of package '$CURR_PKG' to working directory"
+        LINE_NUM=1
         for LINE in $(echo $PKG_CONTENTS);
         do
             # check to see if we need to exclude this file
             # this also skip missing files and/or directories
-            verbose_msg "Adding file ${LINE} to ${SQUASH_SRC}"
             check_excludes $LINE
             if [ $? -gt 0 ]; then
                 continue
@@ -508,34 +513,53 @@ do
             # munge the target filename if required
             SOURCE=$LINE
             if [ "x$REGEX" != "x" ]; then
-                TARGET=$(echo $LINE | $SED $REGEX)
+                SOURCE=$(echo $LINE | $SED $REGEX)
             else
-                TARGET=$LINE
+                SOURCE=$LINE
             fi # if [ -n $REGEX ]
 
             case "$FILE_TYPE" in
                 "regular file")
-                    verbose_msg "copying ${TARGET} to ${SQUASH_SRC}${TARGET}"
+                    TARGET=$(echo ${SOURCE} | sed 's!^/!!')
+                    PRE=$(printf '%4d cp:' ${LINE_NUM})
+                    verbose_msg "- ${PRE}: ${SOURCE} to ${SQUASH_SRC}${TARGET}"
                     if [ "x${LOGFILE}" != "x" ]; then
-                        eval $CP $TARGET "${SQUASH_SRC}${TARGET}" \
+                        $CP $SOURCE "${SQUASH_SRC}${TARGET}" \
                             >> $LOGFILE 2>&1
                     else
-                        eval $CP $TARGET "${SQUASH_SRC}${TARGET}" 2>&1
+                        $CP $SOURCE "${SQUASH_SRC}${TARGET}"
                     fi
                     ;;
                 "directory")
                     # skip packaging the toplevel directory
-                    if [ $TARGET != "./" ]; then
-                        eval $MKDIR -p "${SQUASH_SRC}${TARGET}"
-                        #echo "making directory ${WORKDIR}${TARGET}"
+                    if [ $SOURCE != "./" ]; then
+                        SOURCE=$(echo ${SOURCE} | sed 's!^/!!')
+                        PRE=$(printf '%4d mkdir:' ${LINE_NUM})
+                        verbose_msg "- ${PRE}: ${SQUASH_SRC}${SOURCE}"
+                        if [ "x${LOGFILE}" != "x" ]; then
+                            $MKDIR -p "${SQUASH_SRC}${SOURCE}" \
+                                >> $LOGFILE 2>&1
+                        else
+                            $MKDIR -p "${SQUASH_SRC}${SOURCE}"
+                        fi
+
                     fi # if [ $TARGET != "./" ]
                     ;;
                 "symbolic link")
-                    TARGET=$($READLINK -f $SOURCE | $TR -d '\n')
+                    #TARGET=$($READLINK -f $SOURCE | $TR -d '\n')
+                    TARGET=$($READLINK -f $SOURCE | sed 's!^/!!')
+                    PRE=$(printf '%4d ln:' ${LINE_NUM})
+                    verbose_msg "- ${PRE}: ${SQUASH_SRC}${TARGET}"
                     #echo "creating symlink: ${SOURCE} ${WORKDIR}${TARGET}"
-                    eval ln -s $SOURCE "${SQUASH_SRC}${TARGET}"
+                    if [ "x${LOGFILE}" != "x" ]; then
+                        ln -s $SOURCE "${SQUASH_SRC}${TARGET}" \
+                            >> $LOGFILE 2>&1
+                    else
+                        ln -s $SOURCE "${SQUASH_SRC}${TARGET}"
+                    fi
                     ;;
             esac # case "$FILE_TYPE" in
+            LINE_NUM=$(( ${LINE_NUM} + 1 ))
         done # for LINE in $(echo $PKG_CONTENTS);
 
         # call mksquashfs if we're packaging individual packages
@@ -554,9 +578,16 @@ do
 done # for $CURR_PKG in $@;
 # call mksquashfs if we're packaging a single package
 if [ "x$SINGLE_OUTFILE" != "x" ]; then
-    echo "- Creating squashfs file ${WORKDIR}/${SINGLE_OUTFILE}.sfs"
-    mksquashfs "${WORKDIR}/${SINGLE_OUTFILE}" \
-        "${WORKDIR}/${SINGLE_OUTFILE}.sfs"
+    MKSQUASHFS_CMD="mksquashfs ${WORKDIR}/${SINGLE_OUTFILE}"
+    MKSQUASHFS_CMD="${MKSQUASHFS_CMD} ${WORKDIR}/${SINGLE_OUTFILE}.sfs"
+    if [ $ALL_ROOT -eq 0 ]; then
+        MKSQUASHFS_CMD="${MKSQUASHFS_CMD} -force-uid $FUID -force-gid $FGID"
+    else 
+        MKSQUASHFS_CMD="${MKSQUASHFS_CMD} -all-root"
+    fi # if [ $ALL_ROOT -eq 0 ];
+    echo "- Running mksquashfs command:"
+    echo "- ${MKSQUASHFS_CMD}"
+    eval ${MKSQUASHFS_CMD}
 fi # if [ "x$SINGLE_OUTFILE" == "x" ]
 
 # exit with the happy
