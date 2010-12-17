@@ -99,7 +99,32 @@ function say {
             echo $MESSAGE
         fi # if [ "x${LOGFILE}" != "x" ]
     fi
-} # verbose
+} # say
+
+## FUNC: run_mksquashfs
+## ARG:  SQUASH_DIR, the directory to compress
+## ENV:  FUID - user ID for files/directories in the output squashfs file
+## ENV:  GUID - group ID for files/directories in the output squashfs file
+## ENV:  ALL_ROOT - all files/directories owned by root in output squashfs file
+## DESC: Runs the 'mksquashfs' command to build a squashfs package
+function run_mksquashfs {
+    local SQUASH_DIR=$1
+    echo "- Creating squashfs file: ${SQUASH_DIR}.sfs"
+    MKSQUASHFS_CMD="mksquashfs ${SQUASH_DIR}"
+    MKSQUASHFS_CMD="${MKSQUASHFS_CMD} ${SQUASH_DIR}.sfs"
+    if [ $ALL_ROOT -eq 0 ]; then
+        MKSQUASHFS_CMD="${MKSQUASHFS_CMD} -force-uid $FUID -force-gid $FGID"
+    else 
+        MKSQUASHFS_CMD="${MKSQUASHFS_CMD} -all-root"
+    fi # if [ $ALL_ROOT -eq 0 ];
+    say "- Running mksquashfs command:"
+    say "- ${MKSQUASHFS_CMD}"
+    if [ "x${LOGFILE}" != "x" ]; then
+        eval ${MKSQUASHFS_CMD} >> $LOGFILE
+    else
+        eval ${MKSQUASHFS_CMD}
+    fi # if [ "x${LOGFILE}" != "x" ]
+} # run_mksquashfs
 
 ## FUNC: cmd_status
 ## ARG: the command that was run, quoted if it contains spaces
@@ -126,7 +151,7 @@ function check_excludes {
     # check to see if we are skipping excludes
     if [ "x${SKIP_EXCLUDE}" == x ]; then
         # run through the exclusions list
-        say "- Checking excludes: ${LINE}"
+        #say "- Checking excludes: ${LINE}"
         if [ $(echo $LINE | grep -cE "${EXCLUDE}") -gt 0 ]; then
             return 1
         fi
@@ -296,6 +321,8 @@ EOF
         ### MISC OPTIONS ###
         -l|--log|--logfile) # logfile for things that could generate errors
             LOGFILE=$2
+            # initialize
+            : > $LOGFILE
             shift 2
             ;;
         -u|--uid) # user ID to use when creating squashfs files/filelists
@@ -484,9 +511,9 @@ do
         if [ "x$SINGLE_OUTFILE" != "x" ]; then
             SQUASH_SRC="${WORKDIR}/${SINGLE_OUTFILE}"
         fi # if [ "x$SINGLE_OUTFILE" != "x" ]
-        if [ $(echo ${SQUASH_SRC} | grep -c "/$") -eq 0 ]; then
-            SQUASH_SRC="${SQUASH_SRC}/"
-        fi
+        #if [ $(echo ${SQUASH_SRC} | grep -c "/$") -eq 0 ]; then
+        #    SQUASH_SRC="${SQUASH_SRC}/"
+        #fi
         if [ ! -d $SQUASH_SRC ]; then
             $MKDIR -p $SQUASH_SRC
             if [ $? -gt 0 ]; then
@@ -496,6 +523,7 @@ do
         fi # if [ ! -d $WORKDIR ]
 
         echo "- Copying: '$CURR_PKG' to working directory"
+
         LINE_NUM=1
         for LINE in $(echo $PKG_CONTENTS);
         do
@@ -511,7 +539,7 @@ do
             # AUG == access rights in octal, FUID, FGID
             STAT_AUG=$($STAT --printf "%a %u %g" $LINE)
             PERMS=$(echo $STAT_AUG | awk '{print $1}')
-            say "- line: ${LINE} ${PERMS} ${FUID} ${FGID}"
+            #say "- line: ${LINE} ${PERMS} ${FUID} ${FGID}"
 
             # munge the target filename if required
             SOURCE=$LINE
@@ -525,12 +553,12 @@ do
                 "regular file")
                     TARGET=$(echo ${SOURCE} | sed 's!^/!!')
                     PRE=$(printf '%5s' ${LINE_NUM})
-                    say "- ${PRE}    cp: ${SOURCE} to ${SQUASH_SRC}${TARGET}"
+                    say "- ${PRE}    cp: ${SOURCE} to ${SQUASH_SRC}/${TARGET}"
                     if [ "x${LOGFILE}" != "x" ]; then
-                        $CP $SOURCE "${SQUASH_SRC}${TARGET}" \
+                        $CP $SOURCE "${SQUASH_SRC}/${TARGET}" \
                             >> $LOGFILE 2>&1
                     else
-                        $CP $SOURCE "${SQUASH_SRC}${TARGET}"
+                        $CP $SOURCE "${SQUASH_SRC}/${TARGET}"
                     fi
                     ;;
                 "directory")
@@ -538,12 +566,12 @@ do
                     if [ $SOURCE != "./" ]; then
                         SOURCE=$(echo ${SOURCE} | sed 's!^/!!')
                         PRE=$(printf '%5s' ${LINE_NUM})
-                        say "- ${PRE} mkdir: ${SQUASH_SRC}${SOURCE}"
+                        say "- ${PRE} mkdir: ${SQUASH_SRC}/${SOURCE}"
                         if [ "x${LOGFILE}" != "x" ]; then
-                            $MKDIR -p "${SQUASH_SRC}${SOURCE}" \
+                            $MKDIR -p "${SQUASH_SRC}/${SOURCE}" \
                                 >> $LOGFILE 2>&1
                         else
-                            $MKDIR -p "${SQUASH_SRC}${SOURCE}"
+                            $MKDIR -p "${SQUASH_SRC}/${SOURCE}"
                         fi
 
                     fi # if [ $TARGET != "./" ]
@@ -552,13 +580,12 @@ do
                     #TARGET=$($READLINK -f $SOURCE | $TR -d '\n')
                     TARGET=$($READLINK -f $SOURCE | sed 's!^/!!')
                     PRE=$(printf '%5s' ${LINE_NUM})
-                    say "- ${PRE}    ln: ${SQUASH_SRC}${TARGET}"
-                    #echo "creating symlink: ${SOURCE} ${WORKDIR}${TARGET}"
+                    say "- ${PRE}    ln: ${SQUASH_SRC}/${TARGET}"
                     if [ "x${LOGFILE}" != "x" ]; then
-                        ln -s $SOURCE "${SQUASH_SRC}${TARGET}" \
+                        ln -s $SOURCE "${SQUASH_SRC}/${TARGET}" \
                             >> $LOGFILE 2>&1
                     else
-                        ln -s $SOURCE "${SQUASH_SRC}${TARGET}"
+                        ln -s $SOURCE "${SQUASH_SRC}/${TARGET}"
                     fi
                     ;;
             esac # case "$FILE_TYPE" in
@@ -567,8 +594,7 @@ do
 
         # call mksquashfs if we're packaging individual packages
         if [ "x$SINGLE_OUTFILE" == "x" ]; then
-            echo "- Creating squashfs file ${SQUASH_SRC}.sfs"
-            #mksquashfs "${SQUASH_SRC}${TARGET}" "${SQUASH_SRC}${TARGET}.sfs"
+            run_mksquashfs $SQUASH_SRC
         fi # if [ "x$SINGLE_OUTFILE" == "x" ]
     ### CPIO OUTPUT ###
     elif [ $OUTPUT_OPT == "cpio" ]; then
@@ -577,23 +603,14 @@ do
         echo "ERROR: unknown output type; OUTPUT_OPT is '${OUTPUT_OPT}'"
         exit 1
     fi # if [ $OUTPUT_OPT == "filelist" ]; then
-
 done # for $CURR_PKG in $@;
+
 # call mksquashfs if we're packaging a single package
 if [ "x$SINGLE_OUTFILE" != "x" ]; then
-    MKSQUASHFS_CMD="mksquashfs ${WORKDIR}/${SINGLE_OUTFILE}"
-    MKSQUASHFS_CMD="${MKSQUASHFS_CMD} ${WORKDIR}/${SINGLE_OUTFILE}.sfs"
-    if [ $ALL_ROOT -eq 0 ]; then
-        MKSQUASHFS_CMD="${MKSQUASHFS_CMD} -force-uid $FUID -force-gid $FGID"
-    else 
-        MKSQUASHFS_CMD="${MKSQUASHFS_CMD} -all-root"
-    fi # if [ $ALL_ROOT -eq 0 ];
-    echo "- Running mksquashfs command:"
-    echo "- ${MKSQUASHFS_CMD}"
-    eval ${MKSQUASHFS_CMD}
+    run_mksquashfs "${WORK_DIR}/${SINGLE_OUTFILE}"
 fi # if [ "x$SINGLE_OUTFILE" == "x" ]
 
-# exit with the happy
+# calculate script execution time, and output pretty statistics
 SCRIPT_END=$(${EPOCH_DATE_CMD})
 SCRIPT_EXECUTION_SECS=$(( ${SCRIPT_END} - ${SCRIPT_START}))
 if [ $SCRIPT_EXECUTION_SECS -gt 60 ]; then
@@ -606,6 +623,7 @@ else
     echo "Total script execution time: ${SCRIPT_EXECUTION_SECS} seconds"
 fi
 
+# exit with the happy
 exit 0
 
 # *begin license blurb*
