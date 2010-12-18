@@ -9,10 +9,18 @@
 
 # DO NOT CONTACT THE AUTHOR DIRECTLY; use the mailing list please
 
-# script that queries a packaging system for a list of files which can then be
-# hacked up to make a filelist for use with gen_init_cpio
+# script that generates either lists of files, or squashfs packages, based on
+# input from the system's packaging tools or a list of files
 
-# TODO
+# FIXME
+# - when generating filelists, use the group/owner ID's of the original source
+# files in the output filelist; right now, that's disabled, as you can't use
+# non-user UID's/GID's due to file ownership issues when copying files
+# - Creating the output squashfs filename is broken for non-dpkg lists of
+# files, as the version number of the package is not available, yet it's
+# encoded into the output filename
+
+# SCRIPT DESIGN
 # Inputs:
 # - one or more debian packages or gen_init_cpio filelists; multiple
 #   packages or filelists need to be passed in after double-dashes '--';
@@ -26,9 +34,8 @@
 # - one or more filelists
 # - one or more squashfs packages
 #
-# Arguments:
-# - WORKDIR
-# - OUTPUT_DIR
+# Script arguments:
+# - WORKDIR - working directory
 #
 # Actions:
 # - Write a manifest file of some kind
@@ -41,8 +48,8 @@
 if [ -z $BASH_VERSION ]; then
 #if [ $(readlink /bin/sh | grep -c dash) -gt 0 ]; then
     # execute this script under bash instead
-    echo "WARNING: this script doesn't run under dash..." >&2
-    echo "WARNING: execute this script with /bin/bash" >&2
+    warn "WARNING: this script doesn't run under dash..." >&2
+    warn "WARNING: execute this script with /bin/bash" >&2
     exit 1
 fi # if [ $(readlink /bin/sh | grep -c dash) -gt 0 ]
 
@@ -86,7 +93,7 @@ FGID=100
 ### FUNCTIONS ###
 
 ## FUNC: say
-## ARG: the message to be written on STDOUT
+## ARG: the message to be written on STDOUT or to $LOGFILE
 ## ENV: VERBOSE, the verbosity level of the script
 ## ENV: LOGFILE; if set, writes to that logfile
 ## DESC: Check if $VERBOSE is set, and if so, output the message passed in
@@ -99,7 +106,15 @@ function say {
             echo $MESSAGE
         fi # if [ "x${LOGFILE}" != "x" ]
     fi
-} # say
+} # function say
+
+## FUNC: warn
+## ARG: the message to be written to STDERR
+## DESC: Write a message to STDERR
+function warn {
+    local MESSAGE=$1
+    echo $MESSAGE >&2
+} # function warn
 
 ## FUNC: run_mksquashfs
 ## ARG:  SQUASH_DIR, the directory to compress
@@ -109,7 +124,7 @@ function say {
 ## DESC: Runs the 'mksquashfs' command to build a squashfs package
 function run_mksquashfs {
     local SQUASH_DIR=$1
-    echo "- Creating squashfs file: ${SQUASH_DIR}.sfs"
+    warn "- Creating squashfs file: ${SQUASH_DIR}.sfs"
     MKSQUASHFS_CMD="mksquashfs ${SQUASH_DIR}"
     MKSQUASHFS_CMD="${MKSQUASHFS_CMD} ${SQUASH_DIR}.sfs"
     if [ $ALL_ROOT -eq 0 ]; then
@@ -135,7 +150,7 @@ function cmd_status {
     local COMMAND=$1
     local STATUS=$2
     if [ $STATUS -gt 0 ]; then
-        echo "Command '${COMMAND}' failed with status code: ${STATUS}"
+        warn "Command '${COMMAND}' failed with status code: ${STATUS}"
         exit 1
     fi
 } # cmd_status
@@ -189,14 +204,15 @@ EOHD
 ## FUNC: show_examples
 ## DESC: Show some usage examples
 function show_examples {
-cat <<'EOU'
-    EXAMPLE OF SCRIPT USAGE:
+cat <<EOU
+    EXAMPLES OF SCRIPT USAGE:
 
-    ${SCRIPTNAME} --package binutils > binutils.txt
+    # Debian package 'perl', all files owned by root
+    ${SCRIPTNAME} --package --listout --all-root -- perl > perl.txt
 
     ${SCRIPTNAME} --directory /tmp/somedirectory > somepackage.txt
 
-    ${SCRIPTNAME} --directory /tmp/somedirectory \
+    ${SCRIPTNAME} --directory /tmp/somedirectory \ 
         --regex 's!/some/path!/other/path!g' > somepackage.txt
 EOU
 } # function show_examples
@@ -214,7 +230,7 @@ TEMP=$(/usr/bin/getopt -o hvepdfb:o:qtcs:w:l:u:g:rkax: \
 # if getopts exited with an error code, then exit the script
 #if [ $? -ne 0 -o $# -eq 0 ] ; then
 if [ $? != 0 ] ; then
-    echo "Run '${SCRIPTNAME} --help' to see script options" >&2
+    warn "Run '${SCRIPTNAME} --help' to see script options" >&2
     exit 1
 fi
 
@@ -357,15 +373,15 @@ EOF
             break
             ;;
         *) # something we didn't expect; warn the user
-            echo "ERROR: unknown option '$1'"
-            echo "ERROR: use --help to list script options"
+            warn "ERROR: unknown option '$1'"
+            warn "ERROR: use --help to list script options"
             exit 1
     esac
 done
 
 if [ $(echo $@ | wc -w ) -eq 0 ]; then
-    echo "ERROR: no packages/directories/filelists to process"
-    echo "ERROR: use the --help switch to see script options"
+    warn "ERROR: no packages/directories/filelists to process"
+    warn "ERROR: use the --help switch to see script options"
     exit 1
 fi # if [ -z $@ ]; then
 
@@ -377,7 +393,7 @@ do
     # depending on what the input type will be is what actions we will take
     case "$INPUT_OPT" in
         package)
-            echo "- Querying package system for package '${CURR_PKG}'"
+            warn "- Querying package system for package '${CURR_PKG}'"
             if [ "x${LOGFILE}" != "x" ]; then
                 PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} 2>>$LOGFILE)
                 cmd_status "dpkg -L ${CURR_PKG}" $?
@@ -401,19 +417,19 @@ do
                 FILELIST_FILE=${CURR_PKG}
             fi
             if [ -e $FILELIST_FILE ]; then
-                echo "- Parsing: ${FILELIST_FILE}"
+                warn "- Parsing: ${FILELIST_FILE}"
                 PKG_CONTENTS=$(cat ${FILELIST_FILE} | grep -v "^#" \
                     | awk '{print $2}')
                 #cmd_status "find ${FILELIST_FILE} -type f" $?
             else
-                echo "ERROR: filelist ${FILELIST_FILE} not found!"
-                echo "(Maybe use --base option?)"
+                warn "ERROR: filelist ${FILELIST_FILE} not found!"
+                warn "(Maybe use --base option?)"
                 exit 1
             fi # if [ -e ${CURR_PKG} ]
             ;;
         *) # unknown argument
-            echo "ERROR: must use --list|--directory|--package arguments"
-            echo "ERROR: to specify what the input to this script is"
+            warn "ERROR: must use --list|--directory|--package arguments"
+            warn "ERROR: to specify what the input to this script is"
             exit 1
             ;;
     esac # case "$INPUT_OPT"
@@ -421,17 +437,17 @@ do
     say "- ${CURR_PKG} has ${LINE_COUNT} files"
 
     if [ "x$PKG_CONTENTS" == "x" ]; then
-        echo "ERROR: PKG_CONTENTS variable empty;"
-        echo "ERROR: Perhaps you didn't specify an input type???"
-        echo "ERROR: Run script with --help to see script options"
-        echo "ERROR: Run script with --usage to see script usage examples"
+        warn "ERROR: PKG_CONTENTS variable empty;"
+        warn "ERROR: Perhaps you didn't specify an input type???"
+        warn "ERROR: Run script with --help to see script options"
+        warn "ERROR: Run script with --usage to see script usage examples"
         exit 1
     fi # if [ -z $OUTPUT ]; then
 
     ### NO OUTPUT TYPE SPECIFIED ###
     if [ "x${OUTPUT_OPT}" == "x" ]; then
-        echo "ERROR: must use --squashfs|--filelist|--cpio arguments"
-        echo "ERROR: to specify what the output of this script will be"
+        warn "ERROR: must use --squashfs|--filelist|--cpio arguments"
+        warn "ERROR: to specify what the output of this script will be"
         exit 1
 
     ### FILELIST OUTPUT ###
@@ -501,7 +517,7 @@ do
     ### SQUASHFS OUTPUT ###
     elif [ $OUTPUT_OPT == "squashfs" ]; then
         if [ "x$WORKDIR" == "x" ]; then
-            echo "ERROR: --workdir argument needs to be used with --squashfs"
+            warn "ERROR: --workdir argument needs to be used with --squashfs"
             exit 1
         fi # if [ "x$WORKDIR" == "x" ]
 
@@ -517,12 +533,12 @@ do
         if [ ! -d $SQUASH_SRC ]; then
             $MKDIR -p $SQUASH_SRC
             if [ $? -gt 0 ]; then
-                echo "ERROR: can't create work directory $SQUASH_SRC"
+                warn "ERROR: can't create work directory $SQUASH_SRC"
                 exit 1
             fi # if [ $? -gt 0 ]
         fi # if [ ! -d $WORKDIR ]
 
-        echo "- Copying: '$CURR_PKG' to working directory"
+        warn "- Copying: '$CURR_PKG' to working directory"
 
         LINE_NUM=1
         for LINE in $(echo $PKG_CONTENTS);
@@ -600,7 +616,7 @@ do
     elif [ $OUTPUT_OPT == "cpio" ]; then
         :
     else
-        echo "ERROR: unknown output type; OUTPUT_OPT is '${OUTPUT_OPT}'"
+        warn "ERROR: unknown output type; OUTPUT_OPT is '${OUTPUT_OPT}'"
         exit 1
     fi # if [ $OUTPUT_OPT == "filelist" ]; then
 done # for $CURR_PKG in $@;
@@ -617,10 +633,10 @@ if [ $SCRIPT_EXECUTION_SECS -gt 60 ]; then
     SCRIPT_EXECUTION_MINS=$(( $SCRIPT_EXECUTION_SECS / 60))
     SCRIPT_EXECUTION_MOD=$(( $SCRIPT_EXECUTION_MINS * 60 ))
     SCRIPT_EXECUTION_SECS=$(( $SCRIPT_EXECUTION_SECS - $SCRIPT_EXECUTION_MOD))
-    echo -n "Total script execution time: ${SCRIPT_EXECUTION_MINS} minutes, "
-    echo "${SCRIPT_EXECUTION_SECS} seconds"
+    warn -n "Total script execution time: ${SCRIPT_EXECUTION_MINS} minutes, "
+    warn "${SCRIPT_EXECUTION_SECS} seconds"
 else
-    echo "Total script execution time: ${SCRIPT_EXECUTION_SECS} seconds"
+    warn "Total script execution time: ${SCRIPT_EXECUTION_SECS} seconds"
 fi
 
 # exit with the happy
