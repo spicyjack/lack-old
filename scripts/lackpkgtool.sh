@@ -81,10 +81,10 @@ SCRIPT_START=$(${EPOCH_DATE_CMD})
 # don't be verbose by default
 VERBOSE=0
 # pattern of strings to exclude
-EXCLUDE="share/doc|/man|/info|bug"
-EXCLUDE="${EXCLUDE}|^/\.$|^/boot$|^/usr$|^/usr/share$|^/lib$|^/lib/modules$"
-# don't make all files owned by root;
-ALL_ROOT=0
+EXCLUDES="share/doc|/man|/info|bug"
+EXCLUDES="${EXCLUDES}|^/\.$|^/boot$|^/usr$|^/usr/share$|^/lib$|^/lib/modules$"
+# make all files owned by root by default
+ALL_ROOT=1
 # set the user id based on what's in the environment
 FUID=$EUID
 # 100 is 'users'
@@ -155,22 +155,30 @@ function cmd_status {
     fi
 } # cmd_status
 
+## FUNC: show_excludes
+## DESC: Show the contents of the EXCLUDES environment variable (set above)
+## DESC: Don't use 'say', we always want to print this
+function show_excludes {
+    echo "EXCLUDES is currently set to:"
+    echo "-> '${EXCLUDES}'"
+} # cmd_status
+
 ## FUNC: check_excludes
 ## ARG: LINE, the current line from the filelist or package list
-## ENV: SKIP_EXCLUDE - if this is set, don't use the contents of $EXCLUDE
-## ENV: EXCLUDE - a regular expression that's fed to the 'grep' command
+## ENV: SKIP_EXCLUDES - if this is set, don't use the contents of $EXCLUDES
+## ENV: EXCLUDES - a regular expression that's fed to the 'grep' command
 ## ERR: 0 - the file is to be *INCLUDED* in the output filelist/package
 ## ERR: 1 - the file is to be *EXCLUDED* in the output filelist/package
 function check_excludes {
     local LINE=$1
     # check to see if we are skipping excludes
-    if [ "x${SKIP_EXCLUDE}" == x ]; then
+    if [ "x${SKIP_EXCLUDES}" == x ]; then
         # run through the exclusions list
         #say "- Checking excludes: ${LINE}"
-        if [ $(echo $LINE | grep -cE "${EXCLUDE}") -gt 0 ]; then
+        if [ $(echo $LINE | grep -cE "${EXCLUDES}") -gt 0 ]; then
             return 1
         fi
-    fi # if [ "x${SKIP_EXCLUDE}" = x ]
+    fi # if [ "x${SKIP_EXCLUDES}" = x ]
     # skip missing files and/or directories
     if [ ! -e $LINE ]; then
         return 1
@@ -208,23 +216,40 @@ cat <<EOU
     EXAMPLES OF SCRIPT USAGE:
 
     # Debian package 'perl', all files owned by root
-    ${SCRIPTNAME} --package --listout --all-root -- perl > perl.txt
+    ${SCRIPTNAME} --package --listout -- perl > perl.txt
 
+    # append to an existing package (no gen_init_cpio file header)
+    ${SCRIPTNAME} --append --package --listout \
+        -- loop-aes-modules-2.6.36.1-lack ndiswrapper-modules-2.6.36.1-lack
+
+    # create individual output squashfs files
+    ${SCRIPTNAME} --package --squashfs --workdir /dev/shm -- perl perl-base
+
+    # create a single output squashfs file
+    ${SCRIPTNAME} --package --squashfs --workdir /dev/shm \
+        --single /dev/shm/perl-combined.sfs -- perl perl-base
+
+    # create a filelist from a directory of files
     ${SCRIPTNAME} --directory /tmp/somedirectory > somepackage.txt
 
+    # create a filelist, and mangle some of the filenames in the filelist
     ${SCRIPTNAME} --directory /tmp/somedirectory \ 
         --regex 's!/some/path!/other/path!g' > somepackage.txt
+
+    # use a different EXCLUDES regex, and show it, then exit
+    ${SCRIPTNAME} --excludes "this|that|somethingelse" --show-excludes
+
 EOU
 } # function show_examples
 
 ### SCRIPT SETUP ###
 # and this is the GNU part
-TEMP=$(/usr/bin/getopt -o hvepdfb:o:qtcs:w:l:u:g:rkax: \
-    --long help,verbose,examples \
+TEMP=$(/usr/bin/getopt -o hvepdfb:o:qtcs:w:l:u:g:kax: \
+    --long help,verbose,examples,show-excludes \
     --long package,directory,filelist,base: \
     --long outdir:,squashfs,listout,cpio,single:,workdir: \
-    --long log:,logfile:,uid:,gid:,all-root \
-    --long skip-exclude,append,regex: \
+    --long log:,append,logfile:,uid:,gid: \
+    --long skip-exclude,excludes:,regex: \
     -n "${SCRIPTNAME}" -- "$@")
 
 # if getopts exited with an error code, then exit the script
@@ -251,7 +276,8 @@ while true ; do
     HELP OPTIONS
     -h|--help           Displays this help message
     -v|--verbose        Nice pretty output messages
-    -e|--examples       Show examples of script usage
+    -e|--examples       Show examples of script usage and exit
+    --show-excludeѕ     Show exclude argument to 'grep' and exit
 
     INPUT OPTIONS
     -p|--package        Package names to query for a list of files
@@ -269,14 +295,16 @@ while true ; do
 
     MISC. OPTIONS
     -l|--logfile        Output logs to this file instead of STDOUT
+    -a|--append         Append to an existing file, don't create a new file
     -u|--uid            Use this UID for all files output
     -g|--gid            Use this GID for all files output
-    -r|--all-root       Use UID/GID 0 for all files output
     -k|--skip-exclude   Skip excluding files in the output
-    -a|--append         Append to an existing file, don't create a new file
+    --excludes          Use this exclude expression instead of the builtin
     -x|--regex          Apply the regular expression to destination file
 
     Use --examples to see examples of script usage.
+
+    All files are owned by 'root.root' unless --uid/--gid are used.
 EOF
         exit 0;;
         -v|--verbose) # output pretty messages
@@ -285,6 +313,10 @@ EOF
             ;;
         -e|--examples) # show usage examples
             show_examples
+            exit 0
+            ;;
+        --show-excludes) # show the excludes used with grep 
+            show_excludes
             exit 0
             ;;
 
@@ -341,27 +373,27 @@ EOF
             : > $LOGFILE
             shift 2
             ;;
+        -a|--append) # don't print the header, it's not needed
+            APPEND=1
+            shift
+            ;;
         -u|--uid) # user ID to use when creating squashfs files/filelists
             FUID=$2
+            ALL_ROOT=0
             shift 2
             ;;
         -g|--gid) # group ID to use when creating squashfs files/filelists
             FGID=$2
+            ALL_ROOT=0
             shift 2
             ;;
-        -a|--all-root) # make all files owned by and grouped by root
-            FGID=0
-            FUID=0
-            ALL_ROOT=1
-            shift 1
-            ;;
         -s|--skip|--skip-exclude) # skip excluding of files using grep
-            SKIP_EXCLUDE=1
+            SKIP_EXCLUDES=1
             shift
             ;;
-        -a|--append) # don't print the header, it's not needed
-            APPEND=1
-            shift
+        --excludes) # use this exclude expression instead of the default
+            EXCLUDES=$2
+            shift 2
             ;;
         -r|--regex) # use a regex to substitute strings in filelists
             REGEX=$2
@@ -386,6 +418,12 @@ if [ $(echo $@ | wc -w ) -eq 0 ]; then
 fi # if [ -z $@ ]; then
 
 ### SCRIPT MAIN LOOP ###
+# reset FUID/FGID if ALL_ROOT is set (default = set)
+if [ $ALL_ROOT -eq 1 ]; then
+    FUID=0
+    FGID=0
+fi # if [ $ALL_ROOT -eq 1 ]
+
 # loop across the arguments listed after the double-dashes '--'
 for CURR_PKG in $@;
 do
@@ -398,10 +436,10 @@ do
                 PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} 2>>$LOGFILE)
                 cmd_status "dpkg -L ${CURR_PKG}" $?
             else
-                PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG})
+                PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} )
                 cmd_status "dpkg -L ${CURR_PKG}" $?
             fi # if [ "x${LOGFILE}" != "x" ]
-            PKG_CONTENTS=$(echo ${PKG_CONTENTS} | sort )
+            #PKG_CONTENTS=$(echo ${PKG_CONTENTS} | sort )
             PKG_VERSION=$(dpkg-query -s ${CURR_PKG} \
                 | grep Version | awk '{print $2}')
             #cmd_status "dpkg-query -s ${CURR_PKG}" $?
@@ -456,7 +494,7 @@ do
         if [ "x$APPEND" == "x" ]; then
             dump_filelist_header $CURR_PKG
         fi
-        echo "# ${PACKAGE_NAME}"
+        echo "# ${CURR_PKG}"
 
         for LINE in $(echo $PKG_CONTENTS);
         do
@@ -609,11 +647,11 @@ do
         done # for LINE in $(echo $PKG_CONTENTS);
 
         # call mksquashfs if we're packaging individual packages
-        if [ "x$SINGLE_OUTFILE" == "x" ]; then
+        if [ "x$SINGLE_OUTFILE" = "x" ]; then
             run_mksquashfs $SQUASH_SRC
         fi # if [ "x$SINGLE_OUTFILE" == "x" ]
     ### CPIO OUTPUT ###
-    elif [ $OUTPUT_OPT == "cpio" ]; then
+    elif [ "x$OUTPUT_OPT" = "xcpio" ]; then
         :
     else
         warn "ERROR: unknown output type; OUTPUT_OPT is '${OUTPUT_OPT}'"
