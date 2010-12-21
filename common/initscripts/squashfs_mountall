@@ -13,6 +13,22 @@ BASENAME="mountall"
 BINARY_OPTS="-r -c"
 MP3_FILELIST="/tmp/foundlist.m3u"
 
+## FUNC: mount_all_squashfs_packages
+## ARG:  PKG_LIST, a list of squashfs packages to copy/mount
+## DESC: Copies and mounts all squashfs (*.sfs) files found on to the ramdisk
+## DESC: mounts the squashfs files, then creates symlink farms so that other
+## DESC: binaries can use the mounted squashfs packages
+function mount_all_squashfs_packages {
+    local PKG_LIST=$1
+    for SFS_FILE in $PKG_LIST; 
+    do
+        SFS_NAME=$(echo ${SFS_FILE} | sed 's/\.$sfs//')
+        cp /mnt/cdrom/portaboom/pkgs/$SFS_FILE /tmp
+        mkdir /tmp $SFS_NAME
+        mount -t squashfs -o loop /tmp/$SFS_FILE /tmp/$SFS_NAME
+    done # for SFS_FILE in $SFS_LIST
+} # function mount_all_squashfs_packages
+
 case "$ACTION" in
   vars)
     # echo out what commandline variables are parsed by this script
@@ -31,15 +47,15 @@ case "$ACTION" in
         if [ $? -eq 0 ]; then
             colorize_nl $S_SUCCESS "$SUCCESS"
             # the mount worked, so run a find on the CD-ROM drive now
-            find /mnt/cdrom -type f -iname "*.mp3" -o -iname "*.ogg" \
-                >> $MP3_FILELIST
+            SFS_LIST=$(find /mnt/cdrom/portaboom/pkgs -type f -iname "*.sfs")
+            mount_all_squashfs_packages "${SFS_LIST}"
         fi
     fi # if [ $? -gt 0 ];
 
     colorize_nl $S_TIP "$BASENAME: Checking for Disk/Thumbdrive Devices..."
-    for DISK in hda hdb hdc hdd sda sdb sdc sdd sde sdf sdg; do
+    for DISK in sda sdb sdc sdd sde sdf sdg hda hdb hdc hdd; do
         # skip testing the CD-ROM device
-        if [ "x$DISK" = "x$CDROM_DEV" ]; then 
+        if [ "x$DISK" = "x$CDROM_DEV" ]; then
             continue
         fi
         # skip devices that are already mounted for whatever reason
@@ -58,8 +74,9 @@ case "$ACTION" in
                     /mnt/$MNT_POINT >> $BOOT_LOG 2>&1 
                 if [ $? -eq 0 ]; then
                     colorize_nl $S_SUCCESS "$SUCCESS"
-                    find /mnt/$MNT_POINT -type f \
-                        -iname "*.mp3" -o -iname "*.ogg" >> $MP3_FILELIST
+                    SFS_LIST=$(find /mnt/${MNT_POINT} \
+                        -type f -iname "*.sfs")
+                    mount_all_squashfs_packages "${SFS_LIST}"
                 else
                     colorize_nl $S_FAILURE "$FAILED"
                 fi
