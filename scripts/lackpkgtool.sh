@@ -13,9 +13,9 @@
 # input from the system's packaging tools or a list of files
 
 # FIXME
-# - when generating filelists, use the group/owner ID's of the original source
-# files in the output filelist; right now, that's disabled, as you can't use
-# non-user UID's/GID's due to file ownership issues when copying files
+# - Test the behavior of squashfs when it finds an existing squashfs file;
+# does it append new files, even if they are the same as the
+# existing files in the squashfs archive?
 # - Creating the output squashfs filename is broken for non-dpkg lists of
 # files, as the version number of the package is not available, yet it's
 # encoded into the output filename
@@ -116,17 +116,40 @@ function warn {
     echo $MESSAGE >&2
 } # function warn
 
+## FUNC: check_squashfile_exists
+## ARG:  SQUASH_ARG, the squashfs file to check for
+## DESC: Check to see if a squashfile exists; handle an existing squashfile
+## DESC: depending on whether '--append' or '--overwrite' was set
+function check_squashfile_exists {
+    local SQUASH_ARG=$1
+    warn "- Checking for existing squashfs file: ${SQUASH_ARG}.sfs"
+    if [ -e "${SQUASH_ARG}.sfs" ]; then
+        if [ $OVERWRITE -eq 1 ]; then
+            warn "- Deleting existing squashfs file: ${SQUASH_ARG}.sfs"
+            rm $SQUASH_ARG.sfs
+            return 0
+        elif [ $APPEND -eq 1 ]; then
+            warn "- Appending to existing squashfs file: ${SQUASH_ARG}.sfs"
+            return 0
+        fi
+        echo "ERROR: existing squashfs file found, and --append/--overwrite"
+        echo "ERROR: options not specified"
+        echo "ERROR: squashfs file: ${SQUASH_ARG}.sfs"
+        exit 1
+    fi # if [ "x${LOGFILE}" != "x" ]
+} # run_mksquashfs
+
 ## FUNC: run_mksquashfs
-## ARG:  SQUASH_DIR, the directory to compress
+## ARG:  SQUASH_ARG, the directory to compress
 ## ENV:  FUID - user ID for files/directories in the output squashfs file
 ## ENV:  GUID - group ID for files/directories in the output squashfs file
 ## ENV:  ALL_ROOT - all files/directories owned by root in output squashfs file
 ## DESC: Runs the 'mksquashfs' command to build a squashfs package
 function run_mksquashfs {
-    local SQUASH_DIR=$1
-    warn "- Creating squashfs file: ${SQUASH_DIR}.sfs"
-    MKSQUASHFS_CMD="mksquashfs ${SQUASH_DIR}"
-    MKSQUASHFS_CMD="${MKSQUASHFS_CMD} ${SQUASH_DIR}.sfs"
+    local SQUASH_ARG=$1
+    warn "- Creating squashfs file: ${SQUASH_ARG}.sfs"
+    MKSQUASHFS_CMD="mksquashfs ${SQUASH_ARG}"
+    MKSQUASHFS_CMD="${MKSQUASHFS_CMD} ${SQUASH_ARG}.sfs"
     if [ $ALL_ROOT -eq 0 ]; then
         MKSQUASHFS_CMD="${MKSQUASHFS_CMD} -force-uid $FUID -force-gid $FGID"
     else 
@@ -212,21 +235,23 @@ EOHD
 ## FUNC: show_examples
 ## DESC: Show some usage examples
 function show_examples {
+# note some of the lines below have extra whitespace at the end, this is to
+# make the lines format correctly when output to a terminal
 cat <<EOU
     EXAMPLES OF SCRIPT USAGE:
 
-    # Debian package 'perl', all files owned by root
+    # create a filelist of the Debian package 'perl'
     ${SCRIPTNAME} --package --listout -- perl > perl.txt
 
     # append to an existing package (no gen_init_cpio file header)
-    ${SCRIPTNAME} --append --package --listout \
+    ${SCRIPTNAME} --append --package --listout \ 
         -- loop-aes-modules-2.6.36.1-lack ndiswrapper-modules-2.6.36.1-lack
 
     # create individual output squashfs files
     ${SCRIPTNAME} --package --squashfs --workdir /dev/shm -- perl perl-base
 
     # create a single output squashfs file
-    ${SCRIPTNAME} --package --squashfs --workdir /dev/shm \
+    ${SCRIPTNAME} --package --squashfs --workdir /dev/shm \ 
         --single /dev/shm/perl-combined.sfs -- perl perl-base
 
     # create a filelist from a directory of files
@@ -236,7 +261,7 @@ cat <<EOU
     ${SCRIPTNAME} --directory /tmp/somedirectory \ 
         --regex 's!/some/path!/other/path!g' > somepackage.txt
 
-    # use a different EXCLUDES regex, and show it, then exit
+    # use a different EXCLUDES regex, display it on STDOUT, then exit
     ${SCRIPTNAME} --excludes "this|that|somethingelse" --show-excludes
 
 EOU
@@ -244,11 +269,11 @@ EOU
 
 ### SCRIPT SETUP ###
 # and this is the GNU part
-TEMP=$(/usr/bin/getopt -o hvepdfb:o:qtcs:w:l:u:g:kax: \
+TEMP=$(/usr/bin/getopt -o hvepdfb:o:qtcs:w:xal:u:g:kr: \
     --long help,verbose,examples,show-excludes \
     --long package,directory,filelist,base: \
-    --long outdir:,squashfs,listout,cpio,single:,workdir: \
-    --long log:,append,logfile:,uid:,gid: \
+    --long outdir:,squashfs,listout,cpio,single:,workdir:,overwrite,append \
+    --long log:,logfile:,uid:,gid: \
     --long skip-exclude,excludes:,regex: \
     -n "${SCRIPTNAME}" -- "$@")
 
@@ -292,15 +317,16 @@ while true ; do
     -c|--cpio           Create a CPIO file (via gen_init_cpio)
     -s|--single         Output only a single file with this name + .sfs
     -w|--workdir        Working directory to use for copying/storing files
+    -x|--overwrite      Overwrite any existing output files
+    -a|--append         Append to an existing file, don't create a new file
 
     MISC. OPTIONS
     -l|--logfile        Output logs to this file instead of STDOUT
-    -a|--append         Append to an existing file, don't create a new file
     -u|--uid            Use this UID for all files output
     -g|--gid            Use this GID for all files output
     -k|--skip-exclude   Skip excluding files in the output
     --excludes          Use this exclude expression instead of the builtin
-    -x|--regex          Apply the regular expression to destination file
+    -r|--regex          Apply the regular expression to destination file
 
     Use --examples to see examples of script usage.
 
@@ -340,6 +366,8 @@ EOF
 
         ### OUTPUT OPTIONS ###
         -o|--outdir) # base directory to look for filelists (recipes)
+            echo "Not implemented yet :("
+            exit 1
             OUTPUT_DIR=$2
             shift 2
             ;;
@@ -365,6 +393,14 @@ EOF
             WORKDIR=$2
             shift 2
             ;;
+        -x|--overwrite) # overwrite any existing files
+            OVERWRITE=1
+            shift
+            ;;
+        -a|--append) # append to existing files
+            APPEND=1
+            shift
+            ;;
 
         ### MISC OPTIONS ###
         -l|--log|--logfile) # logfile for things that could generate errors
@@ -372,10 +408,6 @@ EOF
             # initialize
             : > $LOGFILE
             shift 2
-            ;;
-        -a|--append) # don't print the header, it's not needed
-            APPEND=1
-            shift
             ;;
         -u|--uid) # user ID to use when creating squashfs files/filelists
             FUID=$2
@@ -406,14 +438,20 @@ EOF
             ;;
         *) # something we didn't expect; warn the user
             warn "ERROR: unknown option '$1'"
-            warn "ERROR: use --help to list script options"
+            warn "ERROR: use --help to see all script options"
             exit 1
     esac
 done
 
 if [ $(echo $@ | wc -w ) -eq 0 ]; then
     warn "ERROR: no packages/directories/filelists to process"
-    warn "ERROR: use the --help switch to see script options"
+    warn "ERROR: use the --help switch to see all script options"
+    exit 1
+fi # if [ -z $@ ]; then
+
+if [ $OVERWRITE -eq 1 -a $APPEND -eq 1 ]; then
+    warn "ERROR: --append and --overwrite are mutually exclusive options!"
+    warn "ERROR: use the --help switch to see all script options"
     exit 1
 fi # if [ -z $@ ]; then
 
@@ -457,6 +495,11 @@ do
             if [ -e $FILELIST_FILE ]; then
                 warn "- Parsing: ${FILELIST_FILE}"
                 PKG_CONTENTS=$(cat ${FILELIST_FILE} | grep -v "^#" \
+                    | awk '{print $2}')
+                #cmd_status "find ${FILELIST_FILE} -type f" $?
+            elif [ -e "${FILELIST_FILE}.txt" ]; then
+                warn "- Parsing: ${FILELIST_FILE}.txt"
+                PKG_CONTENTS=$(cat ${FILELIST_FILE}.txt | grep -v "^#" \
                     | awk '{print $2}')
                 #cmd_status "find ${FILELIST_FILE} -type f" $?
             else
@@ -576,7 +619,7 @@ do
             fi # if [ $? -gt 0 ]
         fi # if [ ! -d $WORKDIR ]
 
-        warn "- Copying: '$CURR_PKG' to working directory"
+        warn "- Copying: '${CURR_PKG}' to ${SQUASH_SRC}"
 
         LINE_NUM=1
         for LINE in $(echo $PKG_CONTENTS);
@@ -648,7 +691,8 @@ do
 
         # call mksquashfs if we're packaging individual packages
         if [ "x$SINGLE_OUTFILE" = "x" ]; then
-            run_mksquashfs $SQUASH_SRC
+            check_squashfile_exists $SQUASH_SRC
+            run_mksquashfs "${SQUASH_SRC}"
         fi # if [ "x$SINGLE_OUTFILE" == "x" ]
     ### CPIO OUTPUT ###
     elif [ "x$OUTPUT_OPT" = "xcpio" ]; then
@@ -661,7 +705,8 @@ done # for $CURR_PKG in $@;
 
 # call mksquashfs if we're packaging a single package
 if [ "x$SINGLE_OUTFILE" != "x" ]; then
-    run_mksquashfs "${WORK_DIR}/${SINGLE_OUTFILE}"
+    check_squashfile_exists "${WORKDIR}/${SINGLE_OUTFILE}"
+    run_mksquashfs "${WORKDIR}/${SINGLE_OUTFILE}"
 fi # if [ "x$SINGLE_OUTFILE" == "x" ]
 
 # calculate script execution time, and output pretty statistics
