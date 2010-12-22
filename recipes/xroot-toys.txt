@@ -9,6 +9,8 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 #
+# games directory
+dir /usr/games 0755 0 0
 # xphoon
 file /usr/games/xphoon /usr/games/xphoon 755 0 0
 # floatbg

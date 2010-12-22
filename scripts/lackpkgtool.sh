@@ -89,6 +89,10 @@ ALL_ROOT=1
 FUID=$EUID
 # 100 is 'users'
 FGID=100
+# don't append by default
+APPEND=0
+# don't overwrite by default
+OVERWRITE=0
 
 ### FUNCTIONS ###
 
@@ -388,6 +392,11 @@ EOF
             # filelist/directory/package
             SINGLE_OUTFILE=$2
             shift 2
+            if [ $(echo ${SINGLE_OUTFILE} | grep -c "^/") -gt 0 ]; then
+                warn "WARN: --single argument starts with a slash '/'"
+                warn "WARN: this is probably not what you want, as this path"
+                warn "WARN: will be created under WORKDIR -> ${WORKDIR}"
+            fi
             ;;
         -w|--workdir) # working directory
             WORKDIR=$2
@@ -449,7 +458,7 @@ if [ $(echo $@ | wc -w ) -eq 0 ]; then
     exit 1
 fi # if [ -z $@ ]; then
 
-if [ $OVERWRITE -eq 1 -a $APPEND -eq 1 ]; then
+if [ $OVERWRITE -eq 1 ] && [ $APPEND -eq 1 ]; then
     warn "ERROR: --append and --overwrite are mutually exclusive options!"
     warn "ERROR: use the --help switch to see all script options"
     exit 1
@@ -465,10 +474,10 @@ fi # if [ $ALL_ROOT -eq 1 ]
 # loop across the arguments listed after the double-dashes '--'
 for CURR_PKG in $@;
 do
-    say "=== Processing package/filelist ${CURR_PKG} ==="
     # depending on what the input type will be is what actions we will take
     case "$INPUT_OPT" in
         package)
+            say "=== Processing package '${CURR_PKG}' ==="
             warn "- Querying package system for package '${CURR_PKG}'"
             if [ "x${LOGFILE}" != "x" ]; then
                 PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} 2>>$LOGFILE)
@@ -492,6 +501,7 @@ do
             else
                 FILELIST_FILE=${CURR_PKG}
             fi
+            say "=== Processing filelist '${CURR_PKG}' ==="
             if [ -e $FILELIST_FILE ]; then
                 warn "- Parsing: ${FILELIST_FILE}"
                 PKG_CONTENTS=$(cat ${FILELIST_FILE} | grep -v "^#" \
@@ -527,7 +537,7 @@ do
 
     ### NO OUTPUT TYPE SPECIFIED ###
     if [ "x${OUTPUT_OPT}" == "x" ]; then
-        warn "ERROR: must use --squashfs|--filelist|--cpio arguments"
+        warn "ERROR: must use one of: --squashfs|--filelist|--cpio"
         warn "ERROR: to specify what the output of this script will be"
         exit 1
 
@@ -605,6 +615,7 @@ do
         # create a directory for the squashfs source in $WORKDIR
         # FIXME this only works for Debian packages;
         SQUASH_SRC="${WORKDIR}/${CURR_PKG}-${PKG_VERSION}"
+        # if $SINGLE_OUTFILE is set, use a single directory for all files
         if [ "x$SINGLE_OUTFILE" != "x" ]; then
             SQUASH_SRC="${WORKDIR}/${SINGLE_OUTFILE}"
         fi # if [ "x$SINGLE_OUTFILE" != "x" ]
@@ -612,6 +623,7 @@ do
         #    SQUASH_SRC="${SQUASH_SRC}/"
         #fi
         if [ ! -d $SQUASH_SRC ]; then
+            say "- Creating working directory: ${SQUASH_SRC}"
             $MKDIR -p $SQUASH_SRC
             if [ $? -gt 0 ]; then
                 warn "ERROR: can't create work directory $SQUASH_SRC"
@@ -649,21 +661,25 @@ do
             case "$FILE_TYPE" in
                 "regular file")
                     TARGET=$(echo ${SOURCE} | sed 's!^/!!')
-                    PRE=$(printf '%5s' ${LINE_NUM})
-                    say "- ${PRE}    cp: ${SOURCE} to ${SQUASH_SRC}/${TARGET}"
+                    PRE=$(printf '% 5s cp:' ${LINE_NUM})
+                    say "- ${PRE} ${SOURCE} to ${SQUASH_SRC}/${TARGET}"
                     if [ "x${LOGFILE}" != "x" ]; then
                         $CP $SOURCE "${SQUASH_SRC}/${TARGET}" \
                             >> $LOGFILE 2>&1
+                        cmd_status "${CP} ${SOURCE} ${SQUASH_SRC}/${TARGET}" \
+                            $?
                     else
                         $CP $SOURCE "${SQUASH_SRC}/${TARGET}"
-                    fi
+                        cmd_status "${CP} ${SOURCE} ${SQUASH_SRC}/${TARGET}" \
+                            $?
+                    fi # if [ "x${LOGFILE}" != "x" ]
                     ;;
                 "directory")
                     # skip packaging the toplevel directory
                     if [ $SOURCE != "./" ]; then
                         SOURCE=$(echo ${SOURCE} | sed 's!^/!!')
-                        PRE=$(printf '%5s' ${LINE_NUM})
-                        say "- ${PRE} mkdir: ${SQUASH_SRC}/${SOURCE}"
+                        PRE=$(printf '% 5s mkdir:' ${LINE_NUM})
+                        say "- ${PRE} ${SQUASH_SRC}/${SOURCE}"
                         if [ "x${LOGFILE}" != "x" ]; then
                             $MKDIR -p "${SQUASH_SRC}/${SOURCE}" \
                                 >> $LOGFILE 2>&1
@@ -676,8 +692,8 @@ do
                 "symbolic link")
                     #TARGET=$($READLINK -f $SOURCE | $TR -d '\n')
                     TARGET=$($READLINK -f $SOURCE | sed 's!^/!!')
-                    PRE=$(printf '%5s' ${LINE_NUM})
-                    say "- ${PRE}    ln: ${SQUASH_SRC}/${TARGET}"
+                    PRE=$(printf '% 5s ln:' ${LINE_NUM})
+                    say "- ${PRE} ${SQUASH_SRC}/${TARGET}"
                     if [ "x${LOGFILE}" != "x" ]; then
                         ln -s $SOURCE "${SQUASH_SRC}/${TARGET}" \
                             >> $LOGFILE 2>&1
@@ -689,7 +705,8 @@ do
             LINE_NUM=$(( ${LINE_NUM} + 1 ))
         done # for LINE in $(echo $PKG_CONTENTS);
 
-        # call mksquashfs if we're packaging individual packages
+        # call mksquashfs if we're packaging individual packages,
+        # i.e. $SINGLE_OUTFILE is not set
         if [ "x$SINGLE_OUTFILE" = "x" ]; then
             check_squashfile_exists $SQUASH_SRC
             run_mksquashfs "${SQUASH_SRC}"
@@ -705,8 +722,8 @@ done # for $CURR_PKG in $@;
 
 # call mksquashfs if we're packaging a single package
 if [ "x$SINGLE_OUTFILE" != "x" ]; then
-    check_squashfile_exists "${WORKDIR}/${SINGLE_OUTFILE}"
-    run_mksquashfs "${WORKDIR}/${SINGLE_OUTFILE}"
+    check_squashfile_exists $SINGLE_OUTFILE
+    run_mksquashfs $SINGLE_OUTFILE
 fi # if [ "x$SINGLE_OUTFILE" == "x" ]
 
 # calculate script execution time, and output pretty statistics
