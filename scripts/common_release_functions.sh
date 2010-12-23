@@ -10,6 +10,14 @@
 
 # A set of shell functions that help build LACK releases.
 
+# FIXME
+# - go through portaboom's initramfs.cfg and pull out commonly used code
+# - change the individual environment variable checkers to be one single
+# environment variable checker
+# - grab the tap-functions library and use it
+# - return 0/1 for success/failure in all functions, and set environment
+# variables as appropriate/documented
+
 # program locations
 CAT=$(which cat)
 SED=$(which sed)
