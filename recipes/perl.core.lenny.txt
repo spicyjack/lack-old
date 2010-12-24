@@ -10,6 +10,7 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # perl-base
+dir /usr/bin 0755 0 0
 file /usr/bin/perl /usr/bin/perl 0755 0 0
 file /usr/bin/perl5.10.0 /usr/bin/perl5.10.0 0755 0 0
 dir /usr/lib/perl 0755 0 0

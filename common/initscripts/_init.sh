@@ -1,14 +1,16 @@
 #!/bin/sh
 
-# $Id: _init.sh,v 1.53 2009-08-01 05:57:33 brian Exp $
 # Copyright (c)2003 Brian Manning (elspicyjack at gmail dot com)
 # PLEASE DO NOT E-MAIL THE AUTHOR ABOUT THIS SOFTWARE
-# The proper venue for questions is the Antlinux mailing list at:
-# http://groups.google.com/group/antlinux or <antlinux@googlegroups.com>
+# The proper venue for questions is the LACK mailing list at:
+# http://groups.google.com/group/linuxack or <linuxack@googlegroups.com>
 #
 # License terms at the bottom of this file
 
-# System bootstrapping script.  This script will
+# System bootstrapping script for stand-alone systems, i.e. you will
+# switch_root and exec /sbin/init in the new root partition.  
+#
+# This script will
 # 1) boot the system
 # 2) Run the symlinked scripts in /etc/boot in SYSV init order
 # 3) The scripts in /etc/boot are supposed to do things like mount encrypted

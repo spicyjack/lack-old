@@ -15,6 +15,7 @@ file /etc/X11/app-defaults/Xvidtune /etc/X11/app-defaults/Xvidtune 644 0 0
 #dir /usr/share/menu 755 0 0
 #file /usr/share/menu/x11-xserver-utils /usr/share/menu/x11-xserver-utils 644 0 0
 # /usr/bin
+dir /usr/bin 0755 0 0
 file /usr/bin/iceauth /usr/bin/iceauth 755 0 0
 file /usr/bin/sessreg /usr/bin/sessreg 755 0 0
 file /usr/bin/showrgb /usr/bin/showrgb 755 0 0
@@ -68,6 +69,7 @@ file /usr/bin/mkfontscale /usr/bin/mkfontscale 755 0 0
 file /usr/bin/ucs2any /usr/bin/ucs2any 755 0 0
 file /usr/bin/fonttosfnt /usr/bin/fonttosfnt 755 0 0
 # /usr/sbin xfonts-utils
+dir /usr/sbin 0755 0 0
 file /usr/sbin/update-fonts-alias /usr/sbin/update-fonts-alias 755 0 0
 file /usr/sbin/update-fonts-dir /usr/sbin/update-fonts-dir 755 0 0
 file /usr/sbin/update-fonts-scale /usr/sbin/update-fonts-scale 755 0 0

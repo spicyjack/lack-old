@@ -3,11 +3,11 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 # make sure you get busybox in each project's specific initramfs file list now
-file /bin/busybox /tmp/busybox-1.18.0.git-x86 0755 0 0
+file /bin/busybox :TEMP_DIR:/busybox-1.18.0.git-x86 0755 0 0
 # busybox getopt hides in /bin
 slink /usr/bin/getopt /bin/getopt 0755 0 0
 # /etc
-file /etc/hostname :TEMP_DIR:/hostname.lack 0644 0 0
+file /etc/hostname :TEMP_DIR:/hostname 0644 0 0
 file /etc/issue.lack :TEMP_DIR:/issue.lack 0644 0 0
 slink /etc/issue.nogetty /etc/issue.lack 0644 0 0
 slink /etc/issue /etc/issue.lack 0644 0 0
@@ -21,6 +21,10 @@ file /sbin/modprobe /sbin/modprobe 0755 0 0
 # /usr/bin
 # a script that runs nslookup
 file /usr/bin/host :BUILD_BASE:/common/scripts/host.sh 0755 0 0
+# shellinabox certs
+dir /etc/ssl 0755 0 0
+dir /etc/ssl/certs 0755 0 0
+file /etc/ssl/certs/certificate.pem :TEMP_DIR:/certificate.pem 0644 0 0
 # the main /init script is created in make_initramfs.sh; no need to include it
 # here
 # get the full set of init helper scripts

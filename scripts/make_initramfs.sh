@@ -1,10 +1,12 @@
 #!/bin/sh
 
-# $Id: make_initramfs.sh,v 1.106 2009-08-10 08:38:58 brian Exp $
-# Copyright (c)2006 Brian Manning <elspicyjack at gmail dot com>
+# make_initramfs.sh
+# Copyright (c)2006 Brian Manning <brian at portaboom dot com>
 # License: GPL v2 (see licence blurb at the bottom of the file)
 # Get support and more info about this script at:
-# http://groups.google.com/group/project-naranja
+# http://code.google.com/p/lack/
+# http://groups.google.com/group/linuxack|linuxack@googlegroups.com
+
 # DO NOT CONTACT THE AUTHOR DIRECTLY; use the mailing list please
 
 # script to generate initramfs images based on lists of files you pass to it;
@@ -44,6 +46,7 @@ HARDLINK_INITRD=0 # don't hardlink the initramfs to the initrd file
 BUILD_BASE="/home/demo/src/lack-hg"
 # the list of files output and fed to gen_init_cpio
 FILELIST="initramfs-filelist.txt"
+PROJECT_LIST="project-filelist.txt"
 
 # helper functions
 
@@ -343,6 +346,7 @@ fi
 # the variable is hardcoded at the top of this script
 echo -n "- Checking for build base directory (${BUILD_BASE}); "
 if [ ! -d $BUILD_BASE ]; then
+    echo
     echo "ERROR: build base directory doesn't exist"
     echo "(${BUILD_BASE})"
     exit 1
@@ -354,19 +358,22 @@ if [ "x$PROJECT_DIR" != "x" ]; then
     echo -n "- Checking for project directory; "
 
     if [ ! -d $PROJECT_DIR ]; then
-        echo "ERROR: --project-dir specified, but $PROJECT_DIR does not exist"
+        echo
+        echo "ERROR: --project-dir specified, but directory does not exist"
+        echo "ERROR: tested directory: ${PROJECT_DIR}"
         exit 1
     fi # if [ ! -d $PROJECT_DIR ]
     echo "found!"
-    echo "  Project directory: ${PROJECT_DIR}"
+    echo "  -> Project directory: ${PROJECT_DIR}"
 fi # if [ "x$PROJECT_DIR" != "x" ]
 
 # if the project name was used, see if it exists
 if [ "x$PROJECT_NAME" != "x" ]; then
-    echo -n "- Checking for project '${PROJECT_DIR}' in base dir; "
+    echo -n "- Checking for project '${PROJECT_NAME}' in base dir; "
     if [ ! -d $BUILD_BASE/builds/$PROJECT_NAME ]; then
-        echo "ERROR: --project specified, but project directory "
-        echo "ERROR: $BUILD_BASE/builds/$PROJECT_NAME does not exist"
+        echo
+        echo "ERROR: --project specified, but project directory does not exist"
+        echo "ERROR: tested directory: ${BUILD_BASE}/builds/${PROJECT_NAME}"
         exit 1
     fi # if [ ! -d $BUILD_BASE/builds/$PROJECT_NAME ]
     echo "found!"
@@ -382,14 +389,17 @@ if [ ! $DRY_RUN ]; then
     # set up an error flag
     GENINITCPIO_ERROR=0
     if [ ! -e "/usr/src/linux/usr/gen_init_cpio" ]; then
+        echo
         echo "Huh. gen_init_cpio doesn't exist"
         GENINITCPIO_ERROR=1
     elif [ ! -x "/usr/src/linux/usr/gen_init_cpio" ]; then
+        echo
         echo "Huh. gen_init_cpio is not executable (mode 755)"
         GENINITCPIO_ERROR=1
     fi # if [ ! -x "/usr/src/linux/usr/gen_init_cpio" ]
 
     if [ $GENINITCPIO_ERROR -eq 1 ]; then
+        echo
         echo "  (Please check gen_init_cpio file in /usr/src/linux/usr)" >&2
         echo "Can't build initramfs image... Exiting." >&2 
         exit 1
@@ -404,7 +414,7 @@ echo "- Created temporary directory '${TEMP_DIR}'"
 ### EXPORTS
 # export things that were set up either in getopts or hardcoded into this
 # script
-export BUILD_BASE PROJECT_DIR TEMP_DIR FILELIST
+export BUILD_BASE PROJECT_DIR TEMP_DIR FILELIST PROJECT_LIST
 
 # SOURCE! call set_vars to source the project file 
 set_vars $PROJECT_DIR
@@ -472,27 +482,25 @@ do
 done 
 
 # verify the initramfs recipe file exists
-echo -n "- Checking for $FILELIST file in project directory; "
-if [ ! -r $PROJECT_DIR/$FILELIST ]; 
+echo -n "- Checking for $PROJECT_LIST file in $TEMP_DIR; "
+if [ ! -r $TEMP_DIR/$PROJECT_LIST ]; 
 then
     # nope; delete the output file and exit
-    echo "ERROR: $FILELIST file does not exist in"
-    echo "${PROJECT_DIR} directory"
-    rm -rf $TEMP_DIR
+    echo
+    echo "ERROR: ${PROJECT_LIST} file does not exist in ${TEMP_DIR}"
+    #rm -rf $TEMP_DIR
     exit 1
 fi
 echo "found!"
-echo "  ${PROJECT_DIR}/$FILELIST"
-
+echo "  -> ${TEMP_DIR}/${PROJECT_LIST}"
 
 # then grab the project specific file, which should have the kernel modules
 # and do some searching and replacing
-sedify $PROJECT_DIR/$FILELIST $TEMP_DIR/$FILELIST
+sedify $TEMP_DIR/$PROJECT_LIST $TEMP_DIR/$FILELIST
 
 # include the list of files that we just generated as part of the initramfs
 # image for future reference and debugging/troubleshooting
-echo -n "file /boot/${FILELIST}.gz " \
-    >> $TEMP_DIR/$FILELIST
+echo -n "file /boot/${FILELIST}.gz " >> $TEMP_DIR/$FILELIST
 echo "${TEMP_DIR}/${FILELIST}.gz 0644 0 0" >> $TEMP_DIR/$FILELIST
 
 # compress the file list
