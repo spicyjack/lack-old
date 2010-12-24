@@ -44,14 +44,6 @@
 #   - packaged by
 #   - checksums?
 
-# verify we're not running under dash
-if [ -z $BASH_VERSION ]; then
-#if [ $(readlink /bin/sh | grep -c dash) -gt 0 ]; then
-    # execute this script under bash instead
-    warn "WARNING: this script doesn't run under dash..." >&2
-    warn "WARNING: execute this script with /bin/bash" >&2
-    exit 1
-fi # if [ $(readlink /bin/sh | grep -c dash) -gt 0 ]
 
 # external programs used
 CAT=$(which cat)
@@ -270,6 +262,15 @@ cat <<EOU
 
 EOU
 } # function show_examples
+
+# verify we're not running under dash
+if [ -z $BASH_VERSION ]; then
+#if [ $(readlink /bin/sh | grep -c dash) -gt 0 ]; then
+    # execute this script under bash instead
+    warn "WARNING: this script doesn't run under dash..."
+    warn "WARNING: execute this script with /bin/bash"
+    exit 1
+fi # if [ $(readlink /bin/sh | grep -c dash) -gt 0 ]
 
 ### SCRIPT SETUP ###
 # and this is the GNU part
