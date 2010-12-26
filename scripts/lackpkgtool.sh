@@ -212,8 +212,8 @@ function dump_filelist_header {
     local PKG_NAME=$1
 # we know the name of the package.... generate a nicer header that includes
 # the current date and package name
-    echo "# name: ${PKG_NAME}"
-cat <<'EOHD'
+cat <<EOHD
+# name: ${PKG_NAME}
 # description: example package with comments
 # depends: _base otherpackage1 otherpackage2
 # helpcommand: /usr/bin/somebin --help
@@ -225,7 +225,6 @@ cat <<'EOHD'
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 EOHD
-
 } # dump_filelist_header
 
 ## FUNC: show_examples
@@ -545,7 +544,7 @@ do
     ### FILELIST OUTPUT ###
     elif [ $OUTPUT_OPT == "filelist" ]; then
         # print the recipe header
-        if [ "x$APPEND" == "x" ]; then
+        if [ $APPEND -eq 0 ]; then
             dump_filelist_header $CURR_PKG
         fi
         echo "# ${CURR_PKG}"
