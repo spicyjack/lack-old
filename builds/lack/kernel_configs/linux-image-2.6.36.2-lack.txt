@@ -3552,4 +3552,15 @@ file /lib/modules/2.6.36.2-lack/modules.ofmap /lib/modules/2.6.36.2-lack/modules
 #file /boot/vmlinuz-2.6.36.2-lack /boot/vmlinuz-2.6.36.2-lack 644 0 0
 file /boot/config-2.6.36.2-lack /boot/config-2.6.36.2-lack 644 0 0
 file /boot/System.map-2.6.36.2-lack /boot/System.map-2.6.36.2-lack 644 0 0
+# loop-aes-modules-2.6.36.2-lack
+dir /lib/modules/2.6.36.2-lack 755 0 0
+dir /lib/modules/2.6.36.2-lack/updates 755 0 0
+file /lib/modules/2.6.36.2-lack/updates/loop_serpent.ko /lib/modules/2.6.36.2-lack/updates/loop_serpent.ko 644 0 0
+file /lib/modules/2.6.36.2-lack/updates/loop_twofish.ko /lib/modules/2.6.36.2-lack/updates/loop_twofish.ko 644 0 0
+file /lib/modules/2.6.36.2-lack/updates/loop.ko /lib/modules/2.6.36.2-lack/updates/loop.ko 644 0 0
+file /lib/modules/2.6.36.2-lack/updates/loop_blowfish.ko /lib/modules/2.6.36.2-lack/updates/loop_blowfish.ko 644 0 0
+# ndiswrapper-modules-2.6.36.2-lack
+dir /lib/modules/2.6.36.2-lack 755 0 0
+dir /lib/modules/2.6.36.2-lack/misc 755 0 0
+file /lib/modules/2.6.36.2-lack/misc/ndiswrapper.ko /lib/modules/2.6.36.2-lack/misc/ndiswrapper.ko 644 0 0
 # vi: set shiftwidth=4 tabstop=4 paste:

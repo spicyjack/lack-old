@@ -188,12 +188,12 @@ function _create_init_script {
 ## ERR:  '1' if copying the SSL PEM files failed
 ## DESC: Copy the *.pem files needed for SSL usage
 function copy_host_ssl_pem_files {
-    if [ -e ~/stuff_tars/${PROJECT_NAME}.*key.pem.nopass ]; then
-        cp ~/stuff_tars/${PROJECT_NAME}.*pem* $TEMP_DIR
+    if [ -e ~/hostkeys/${PROJECT_NAME}.*key.pem.nopass ]; then
+        cp ~/hostkeys/${PROJECT_NAME}.*pem* $TEMP_DIR
     else
-        echo "ERROR: missing ${PROJECT_NAME} SSL keys in ~/stuff_tars"
+        echo "ERROR: missing ${PROJECT_NAME} SSL keys in ~/hostkeys"
         return 1
-    fi # if [ -e ~/stuff_tars/${PROJECT_NAME}.*key.pem.nopass ]
+    fi # if [ -e ~/hostkeys/${PROJECT_NAME}.*key.pem.nopass ]
     return 0
 } # function copy_host_ssl_pem_files
 
@@ -204,13 +204,13 @@ function copy_host_ssl_pem_files {
 ## ERR:  '1' if copying the SSL PEM files failed
 ## DESC: Copy the LACK SSL PEM files needed for SSL usage
 function copy_lack_ssl_pem_file {
-    if [ -e ~/stuff_tars/lack.googlecode.com.key-cert.pem ]; then
-        cp ~/stuff_tars/lack.googlecode.com.key-cert.pem \
+    if [ -e ~/hostkeys/lack.googlecode.com.key-cert.pem ]; then
+        cp ~/hostkeys/lack.googlecode.com.key-cert.pem \
             $TEMP_DIR/certificate.pem
     else
-        echo "ERROR: missing LACK SSL key/cert file in ${HOME}/stuff_tars"
+        echo "ERROR: missing LACK SSL key/cert file in ${HOME}/hostkeys"
         return 1
-    fi # if [ -e ~/stuff_tars/lack.googlecode.com.key-cert.pem ]
+    fi # if [ -e ~/hostkeys/lack.googlecode.com.key-cert.pem ]
     return 0
 } # function copy_host_ssl_pem_file
 
@@ -223,11 +223,13 @@ function copy_lack_ssl_pem_file {
 ## DESC: Exits if it can't find the Busybox binary.
 function copy_busybox_binary {
     if [ -e ~/busybox-*-x86 ]; then
-        cp ~/busybox-*-x86 $TEMP_DIR
+        BUSYBOX_BIN=$(ls ~/busybox-*-x86)
+        echo "Copying Busybox binary '${BUSYBOX_BIN}' to ${TEMP_DIR}"
+        cp $BUSYBOX_BIN $TEMP_DIR
     else
         echo "ERROR: missing busybox binary in ~"
         return 1
-    fi # if [ -e ~/stuff_tars/busybox-* ]
+    fi # if [ -e ~/hostkeys/busybox-* ]
     return 0
 } # function copy_busybox_binary
 
@@ -273,6 +275,8 @@ function sync_perl_gtk2_source {
             echo "ERROR: git is required to sync perl-Gtk2 examples"
             return 1
         fi # if [ -z $GIT ]
+        # don't create a directory for gtk2-perl source; git will do this for
+        # us
         echo "Cloning perl-Gtk2 source for 'examples' and 'gtk-demo'..."
         git clone git://git.gnome.org/perl-Gtk2 $PERL_GTK2_SRC
         check_return_status "Running 'git clone' for Perl-Gtk2 source" $?
