@@ -9,6 +9,7 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 #
+dir /etc 755 0 0
 file /etc/pam.conf /etc/pam.conf 644 0 0
 dir /etc/pam.d 755 0 0
 file /etc/pam.d/other /etc/pam.d/other 644 0 0
@@ -27,6 +28,7 @@ file /etc/security/time.conf /etc/security/time.conf 644 0 0
 file /etc/security/namespace.conf /etc/security/namespace.conf 644 0 0
 file /etc/security/namespace.init /etc/security/namespace.init 755 0 0
 # /lib
+dir /lib 0755 0 0
 file /lib/libpam.so.0.81.12 /lib/libpam.so.0.81.12 644 0 0
 file /lib/libpam_misc.so.0.81.3 /lib/libpam_misc.so.0.81.3 644 0 0
 file /lib/libpamc.so.0.81.0 /lib/libpamc.so.0.81.0 644 0 0
@@ -79,12 +81,16 @@ slink /lib/security/pam_unix_passwd.so /lib/security/pam_unix.so 777 0 0
 slink /lib/security/pam_unix_auth.so /lib/security/pam_unix.so 777 0 0
 slink /lib/security/pam_unix_acct.so /lib/security/pam_unix.so 777 0 0
 # /sbin
+dir /sbin 0755 0 0
 #file /sbin/unix_chkpwd /sbin/unix_chkpwd 2755 0 42
 #file /sbin/unix_update /sbin/unix_update 755 0 0
 file /sbin/pam_tally /sbin/pam_tally 755 0 0
 # /usr/sbin
+dir /usr 0755 0 0
+dir /usr/sbin 0755 0 0
 file /usr/sbin/pam_getenv /usr/sbin/pam_getenv 755 0 0
 # /usr/share/pam
+dir /usr/share 755 0 0
 dir /usr/share/pam 755 0 0
 file /usr/share/pam/common-account /usr/share/pam/common-account 644 0 0
 file /usr/share/pam/common-auth /usr/share/pam/common-auth 644 0 0

@@ -235,27 +235,30 @@ function show_examples {
 cat <<EOU
     EXAMPLES OF SCRIPT USAGE:
 
+    ### CREATING FILELISTS
     # create a filelist of the Debian package 'perl'
-    ${SCRIPTNAME} --package --listout -- perl > perl.txt
+    ${SCRIPTNAME} --package --listout -- linux-image > linux-image.txt
 
     # append to an existing package (no gen_init_cpio file header)
     ${SCRIPTNAME} --append --package --listout \ 
-        -- loop-aes-modules-2.6.36.1-lack ndiswrapper-modules-2.6.36.1-lack
+        -- loop-aes-modules ndiswrapper-modules >> linux-image.txt
 
+    # create a filelist from a directory of files
+    ${SCRIPTNAME} --directory --listout /tmp/somedirectory > somepackage.txt
+
+    # create a filelist, and mangle some of the filenames in the filelist
+    ${SCRIPTNAME} --directory --listout -- /tmp/somedirectory \ 
+        --regex 's!/some/path!/other/path!g' > somepackage.txt
+
+    ### CREATING SQUASHFS ARCHIVES
     # create individual output squashfs files
     ${SCRIPTNAME} --package --squashfs --workdir /dev/shm -- perl perl-base
 
-    # create a single output squashfs file
+    # create a single output squashfs file, output to --workdir
     ${SCRIPTNAME} --package --squashfs --workdir /dev/shm \ 
-        --single /dev/shm/perl-combined.sfs -- perl perl-base
+        --single perl-combined.sfs -- perl perl-base
 
-    # create a filelist from a directory of files
-    ${SCRIPTNAME} --directory /tmp/somedirectory > somepackage.txt
-
-    # create a filelist, and mangle some of the filenames in the filelist
-    ${SCRIPTNAME} --directory /tmp/somedirectory \ 
-        --regex 's!/some/path!/other/path!g' > somepackage.txt
-
+    ### MISC EXAMPLES
     # use a different EXCLUDES regex, display it on STDOUT, then exit
     ${SCRIPTNAME} --excludes "this|that|somethingelse" --show-excludes
 
@@ -693,12 +696,14 @@ do
                     #TARGET=$($READLINK -f $SOURCE | $TR -d '\n')
                     TARGET=$($READLINK -f $SOURCE | sed 's!^/!!')
                     PRE=$(printf '% 5s ln:' ${LINE_NUM})
-                    say "- ${PRE} ${SQUASH_SRC}/${TARGET}"
+                    LN_COMMAND="${SQUASH_SRC}/${TARGET} ${SQUASH_SRC}${SOURCE}"
+                    say "- ${PRE} ${LN_COMMAND}"
                     if [ "x${LOGFILE}" != "x" ]; then
-                        ln -s $SOURCE "${SQUASH_SRC}/${TARGET}" \
+                        ln -s "${SQUASH_SRC}/${TARGET}" \
+                            ${SQUASH_SRC}/${SOURCE} \
                             >> $LOGFILE 2>&1
                     else
-                        ln -s $SOURCE "${SQUASH_SRC}/${TARGET}"
+                        ln -s "${SQUASH_SRC}/${TARGET}" ${SQUASH_SRC}/${SOURCE}
                     fi
                     ;;
             esac # case "$FILE_TYPE" in
