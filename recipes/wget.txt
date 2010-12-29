@@ -1,3 +1,5 @@
 # $Id: wget.txt,v 1.1 2006-10-13 21:47:59 brian Exp $
 # wget /usr/bin
+dir /usr 0755 0 0
+dir /usr/bin 0755 0 0
 file /usr/bin/wget /usr/bin/wget 0755 0 0

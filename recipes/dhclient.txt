@@ -13,14 +13,19 @@
 # of a config file perhaps?
 #
 # dhclient /var/lib 
+dir /etc 0755 0 0
+dir /etc/network 0755 0 0
 dir /etc/network/if-down.d 0755 0 0
 dir /etc/network/if-post-down.d 0755 0 0
 dir /etc/network/if-pre-up.d 0755 0 0
 dir /etc/network/if-up.d 0755 0 0
 # dhclient /var/lib 
+dir /var 0755 0 0
+dir /var/lib 0755 0 0
 dir /var/lib/dhcp 0755 0 0
 slink /var/lib/dhcp3 /var/lib/dhcp 0755 0 0
 # dhclient /sbin
+dir /sbin 0755 0 0
 file /sbin/dhclient /sbin/dhclient 0755 0 0
 file /sbin/dhclient-script :BUILD_BASE:/common/scripts/dhclient-script 0755 0 0
 slink /etc/dhclient-script /sbin/dhclient-script 0755 0 0

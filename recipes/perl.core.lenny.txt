@@ -10,9 +10,11 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # perl-base
+dir /usr 0755 0 0
 dir /usr/bin 0755 0 0
 file /usr/bin/perl /usr/bin/perl 0755 0 0
 file /usr/bin/perl5.10.0 /usr/bin/perl5.10.0 0755 0 0
+dir /usr/lib 0755 0 0
 dir /usr/lib/perl 0755 0 0
 dir /usr/lib/perl/5.10.0 0755 0 0
 dir /usr/lib/perl/5.10.0/B 0755 0 0
@@ -74,6 +76,7 @@ file /usr/lib/perl/5.10.0/lib.pm /usr/lib/perl/5.10.0/lib.pm 0644 0 0
 file /usr/lib/perl/5.10.0/Config.pm /usr/lib/perl/5.10.0/Config.pm 0644 0 0
 file /usr/lib/perl/5.10.0/Errno.pm /usr/lib/perl/5.10.0/Errno.pm 0644 0 0
 file /usr/lib/perl/5.10.0/POSIX.pm /usr/lib/perl/5.10.0/POSIX.pm 0644 0 0
+dir /usr/share 0755 0 0
 dir /usr/share/perl 0755 0 0
 dir /usr/share/perl/5.10.0 0755 0 0
 dir /usr/share/perl/5.10.0/IPC 0755 0 0
