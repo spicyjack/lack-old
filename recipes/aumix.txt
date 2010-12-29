@@ -9,17 +9,21 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 #
+dir /usr 0755 0 0
+dir /usr/bin 0755 0 0
 file /usr/bin/aumix /usr/bin/aumix 755 0 0
 file /usr/bin/mute /usr/bin/mute 755 0 0
 file /usr/bin/xaumix /usr/bin/xaumix 755 0 0
 #dir /usr/share/pixmaps 755 0 0
 #file /usr/share/pixmaps/icon_aumix.xpm /usr/share/pixmaps/icon_aumix.xpm 644 0 0
+dir /usr/share 0755 0 0
 dir /usr/share/aumix 755 0 0
 file /usr/share/aumix/fadein.set /usr/share/aumix/fadein.set 644 0 0
 file /usr/share/aumix/fadeout.set /usr/share/aumix/fadeout.set 644 0 0
 file /usr/share/aumix/ansi /usr/share/aumix/ansi 644 0 0
 file /usr/share/aumix/vt100 /usr/share/aumix/vt100 644 0 0
 file /usr/share/aumix/xterm /usr/share/aumix/xterm 644 0 0
+dir /usr/share/locale 0755 0 0
 dir /usr/share/locale/de 755 0 0
 dir /usr/share/locale/de/LC_MESSAGES 755 0 0
 file /usr/share/locale/de/LC_MESSAGES/aumix.mo /usr/share/locale/de/LC_MESSAGES/aumix.mo 644 0 0
@@ -64,8 +68,11 @@ dir /usr/share/locale/zh_CN/LC_MESSAGES 755 0 0
 file /usr/share/locale/zh_CN/LC_MESSAGES/aumix.mo /usr/share/locale/zh_CN/LC_MESSAGES/aumix.mo 644 0 0
 #dir /usr/share/menu 755 0 0
 #file /usr/share/menu/aumix /usr/share/menu/aumix 644 0 0
+dir /var 755 0 0
+dir /var/lock 755 0 0
 dir /var/lock/aumix 755 0 0
 # libgpm2
+dir /usr/lib 0755 0 0
 file /usr/lib/libgpm.so.2.0.0 /usr/lib/libgpm.so.2.0.0 644 0 0
 slink /usr/lib/libgpm.so.2 /usr/lib/libgpm.so.2.0.0 777 0 0
 # vi: set sw=4 ts=4 paste:

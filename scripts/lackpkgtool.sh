@@ -251,12 +251,18 @@ cat <<EOU
         --regex 's!/some/path!/other/path!g' > somepackage.txt
 
     ### CREATING SQUASHFS ARCHIVES
-    # create individual output squashfs files
+    # create individual output squashfs files from installed Debian packages
     ${SCRIPTNAME} --package --squashfs --workdir /dev/shm -- perl perl-base
 
-    # create a single output squashfs file, output to --workdir
+    # create a single output squashfs file from an installed Debian package, 
+    # output to --workdir
     ${SCRIPTNAME} --package --squashfs --workdir /dev/shm \ 
         --single perl-combined.sfs -- perl perl-base
+
+    # create a single output squashfs file from one or more filellists
+    ${SCRIPTNAME} --filelist --squashfs --workdir /dev/shm \
+        --base /path/to/recipes --single debug-tools.2010.362.1 \
+        -- debug-tools lspci.lenny
 
     ### MISC EXAMPLES
     # use a different EXCLUDES regex, display it on STDOUT, then exit
@@ -694,16 +700,14 @@ do
                     ;;
                 "symbolic link")
                     #TARGET=$($READLINK -f $SOURCE | $TR -d '\n')
-                    TARGET=$($READLINK -f $SOURCE | sed 's!^/!!')
+                    #TARGET=$($READLINK -f $SOURCE | sed 's!^/!!')
+                    TARGET=$($READLINK -f $SOURCE)
                     PRE=$(printf '% 5s ln:' ${LINE_NUM})
-                    LN_COMMAND="${SQUASH_SRC}/${TARGET} ${SQUASH_SRC}${SOURCE}"
-                    say "- ${PRE} ${LN_COMMAND}"
+                    say "- ${PRE} ${TARGET} ${SQUASH_SRC}/${SOURCE}" 
                     if [ "x${LOGFILE}" != "x" ]; then
-                        ln -s "${SQUASH_SRC}/${TARGET}" \
-                            ${SQUASH_SRC}/${SOURCE} \
-                            >> $LOGFILE 2>&1
+                        ln -s $TARGET ${SQUASH_SRC}/${SOURCE} >> $LOGFILE 2>&1
                     else
-                        ln -s "${SQUASH_SRC}/${TARGET}" ${SQUASH_SRC}/${SOURCE}
+                        ln -s $TARGET ${SQUASH_SRC}/${SOURCE}
                     fi
                     ;;
             esac # case "$FILE_TYPE" in

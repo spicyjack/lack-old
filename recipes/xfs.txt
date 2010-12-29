@@ -1,4 +1,8 @@
 # $Id: xfs.txt,v 1.1 2006-10-12 06:15:43 brian Exp $
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
 # xfs /sbin
+dir /sbin 0755 0 0
 file /sbin/mkfs.xfs /sbin/mkfs.xfs 0755 0 0
 file /sbin/fsck.xfs /sbin/fsck.xfs 0755 0 0

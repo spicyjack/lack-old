@@ -1,6 +1,7 @@
 # $Id: extfs-common.txt,v 1.2 2006-12-21 17:21:20 brian Exp $
 # depends: _base
 # extfs-common /lib
+dir /lib 0755 0 0
 file /lib/libcom_err.so.2.1 /lib/libcom_err.so.2.1 0644 0 0
 slink /lib/libcom_err.so.2 /lib/libcom_err.so.2.1 0644 0 0
 file /lib/libe2p.so.2.3 /lib/libe2p.so.2.3 0644 0 0
