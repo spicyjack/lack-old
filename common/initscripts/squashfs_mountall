@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 # $Id: mountall,v 1.4 2009-06-26 07:31:22 brian Exp $
 # Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
@@ -17,7 +17,7 @@ BINARY_OPTS="-r -c"
 ## DESC: Copies and mounts all squashfs (*.sfs) files found on to the ramdisk
 ## DESC: mounts the squashfs files, then creates symlink farms so that other
 ## DESC: binaries can use the mounted squashfs packages
-function mount_all_squashfs_packages {
+mount_all_squashfs_packages () {
     local MOUNT_PATH=$1
     local PKG_LIST=$2
     for SFS_FILE in $PKG_LIST;
@@ -65,13 +65,14 @@ case "$ACTION" in
         # we only care about the exit code; redirect output to /dev/null
         /sbin/udevadm info --query=name --name=${DISK} >/dev/null 2>&1
         if [ $? -eq 0 ]; then
+            # FIXME this makes no sense; grep -v after grep?
             PARTITIONS=$(cat /proc/partitions | /bin/grep ${DISK} \
-                | grep -v "${DISK}$" | /usr/bin/awk '{print $4}')
+                /usr/bin/awk '{print $4}')
             for MNT_POINT in $(echo ${PARTITIONS}); do
                 mkdir /mnt/$MNT_POINT
                 colorize $S_TIP "$BASENAME: Mounting /dev/${MNT_POINT}"
                 $BINARY -t auto -o ro /dev/$MNT_POINT \
-                    /mnt/$MNT_POINT >> $BOOT_LOG 2>&1 
+                    /mnt/$MNT_POINT >> $BOOT_LOG 2>&1
                 if [ $? -eq 0 ]; then
                     colorize_nl $S_SUCCESS "$SUCCESS"
                     SFS_LIST=$(find /mnt/${MNT_POINT} \
