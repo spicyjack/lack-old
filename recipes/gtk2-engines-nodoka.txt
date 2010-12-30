@@ -10,6 +10,8 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # gtk2-engines-nodoka
+dir /usr 0755 0 0
+dir /usr/share 0755 0 0
 dir /usr/share/themes 755 0 0
 dir /usr/share/themes/Nodoka 755 0 0
 dir /usr/share/themes/Nodoka/gtk-2.0 755 0 0

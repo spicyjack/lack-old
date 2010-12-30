@@ -11,7 +11,6 @@ BINARY=/bin/mount
 [ -x "$BINARY" ] || exit 1
 BASENAME="mountall"
 BINARY_OPTS="-r -c"
-MP3_FILELIST="/tmp/foundlist.m3u"
 
 ## FUNC: mount_all_squashfs_packages
 ## ARG:  PKG_LIST, a list of squashfs packages to copy/mount
@@ -19,11 +18,12 @@ MP3_FILELIST="/tmp/foundlist.m3u"
 ## DESC: mounts the squashfs files, then creates symlink farms so that other
 ## DESC: binaries can use the mounted squashfs packages
 function mount_all_squashfs_packages {
-    local PKG_LIST=$1
-    for SFS_FILE in $PKG_LIST; 
+    local MOUNT_PATH=$1
+    local PKG_LIST=$2
+    for SFS_FILE in $PKG_LIST;
     do
         SFS_NAME=$(echo ${SFS_FILE} | sed 's/\.$sfs//')
-        cp /mnt/cdrom/portaboom/pkgs/$SFS_FILE /tmp
+        cp ${MOUNT_PATH}/portaboom/pkgs/$SFS_FILE /tmp
         mkdir /tmp $SFS_NAME
         mount -t squashfs -o loop /tmp/$SFS_FILE /tmp/$SFS_NAME
     done # for SFS_FILE in $SFS_LIST
@@ -48,7 +48,7 @@ case "$ACTION" in
             colorize_nl $S_SUCCESS "$SUCCESS"
             # the mount worked, so run a find on the CD-ROM drive now
             SFS_LIST=$(find /mnt/cdrom/portaboom/pkgs -type f -iname "*.sfs")
-            mount_all_squashfs_packages "${SFS_LIST}"
+            mount_all_squashfs_packages "/mnt/cdrom" "${SFS_LIST}"
         fi
     fi # if [ $? -gt 0 ];
 
@@ -76,7 +76,8 @@ case "$ACTION" in
                     colorize_nl $S_SUCCESS "$SUCCESS"
                     SFS_LIST=$(find /mnt/${MNT_POINT} \
                         -type f -iname "*.sfs")
-                    mount_all_squashfs_packages "${SFS_LIST}"
+                    mount_all_squashfs_packages "/mnt/${MNT_POINT}" \
+                        "${SFS_LIST}"
                 else
                     colorize_nl $S_FAILURE "$FAILED"
                 fi
@@ -88,7 +89,7 @@ case "$ACTION" in
     PATH=/bin:/sbin:/usr/bin:/usr/sbin
     #colorize $S_TIP "Unmounting all filesystems"
     echo "Unmounting all device-backed filesystems"
-    for MOUNT in $(cat /proc/mounts | awk '{print $1}' | grep "^/dev");
+    for MOUNT in $(cat /proc/mounts | grep "squash" | awk '{print $1}' );
     do
         echo " - $MOUNT"
         /bin/umount $MOUNT

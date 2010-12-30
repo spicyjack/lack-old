@@ -9,6 +9,8 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 #
+dir /usr 0755 0 0
+dir /usr/bin 0755 0 0
 file /usr/bin/koi8rxterm /usr/bin/koi8rxterm 755 0 0
 file /usr/bin/lxterm /usr/bin/lxterm 755 0 0
 file /usr/bin/resize /usr/bin/resize 755 0 0

@@ -9,6 +9,8 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 #
+dir /usr 0755 0 0
+dir /usr/lib 0755 0 0
 file /usr/lib/libdirect-1.0.so.0.1.0 /usr/lib/libdirect-1.0.so.0.1.0 644 0 0
 file /usr/lib/libdirectfb-1.0.so.0.1.0 /usr/lib/libdirectfb-1.0.so.0.1.0 644 0 0
 file /usr/lib/libfusion-1.0.so.0.1.0 /usr/lib/libfusion-1.0.so.0.1.0 644 0 0

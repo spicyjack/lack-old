@@ -10,6 +10,8 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # /etc
+dir /etc 755 0 0
+dir /etc/X11 755 0 0
 dir /etc/X11/xinit 755 0 0
 file /etc/X11/xinit/xinitrc /etc/X11/xinit/xinitrc 644 0 0
 file /etc/X11/xinit/xserverrc /etc/X11/xinit/xserverrc 755 0 0
@@ -19,6 +21,8 @@ dir /bin 0755 0 0
 file /bin/fake-tempfile.sh :BUILD_BASE:/common/scripts/fake-tempfile.sh 755 0 0
 slink /bin/tempfile /bin/fake-tempfile.sh 755 0 0
 # /usr/bin
+dir /usr 0755 0 0
+dir /usr/bin 0755 0 0
 file /usr/bin/startx /usr/bin/startx 755 0 0
 file /usr/bin/xinit /usr/bin/xinit 755 0 0
 file /usr/bin/mcookie /usr/bin/mcookie 755 0 0

@@ -1,4 +1,4 @@
-# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# name: stow
 # description: example package with comments
 # depends: _base otherpackage1 otherpackage2
 # helpcommand: /usr/bin/somebin --help
@@ -9,9 +9,8 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 #
-# libstdc++6
+# stow
 dir /usr 755 0 0
-dir /usr/lib 755 0 0
-file /usr/lib/libstdc++.so.6.0.10 /usr/lib/libstdc++.so.6.0.10 644 0 0
-slink /usr/lib/libstdc++.so.6 /usr/lib/libstdc++.so.6.0.10 777 0 0
-# vi: set sw=4 ts=4 paste:
+dir /usr/bin 755 0 0
+file /usr/bin/stow /usr/bin/stow 755 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:

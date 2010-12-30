@@ -10,6 +10,8 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # libpng
+dir /usr 0755 0 0
+dir /usr/lib 0755 0 0
 file /usr/lib/libpng12.so.0.27.0 /usr/lib/libpng12.so.0.27.0 644 0 0
 slink /usr/lib/libpng12.so.0 /usr/lib/libpng12.so.0.27.0 777 0 0
 # libjpeg62

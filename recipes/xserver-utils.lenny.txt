@@ -10,11 +10,14 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # /etc/X11
+dir /etc 0755 0 0
+dir /etc/X11 0755 0 0
 dir /etc/X11/app-defaults 755 0 0
 file /etc/X11/app-defaults/Xvidtune /etc/X11/app-defaults/Xvidtune 644 0 0
 #dir /usr/share/menu 755 0 0
 #file /usr/share/menu/x11-xserver-utils /usr/share/menu/x11-xserver-utils 644 0 0
 # /usr/bin
+dir /usr 0755 0 0
 dir /usr/bin 0755 0 0
 file /usr/bin/iceauth /usr/bin/iceauth 755 0 0
 file /usr/bin/sessreg /usr/bin/sessreg 755 0 0
@@ -39,6 +42,7 @@ file /usr/bin/xtrapreset /usr/bin/xtrapreset 755 0 0
 file /usr/bin/xtrapstats /usr/bin/xtrapstats 755 0 0
 file /usr/bin/xvidtune /usr/bin/xvidtune 755 0 0
 # /usr/share xfonts-utils
+dir /usr/share 755 0 0
 dir /usr/share/aclocal 755 0 0
 file /usr/share/aclocal/fontutil.m4 /usr/share/aclocal/fontutil.m4 644 0 0
 dir /usr/share/fonts 755 0 0

@@ -10,6 +10,7 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # x11-common
+dir /etc 755 0 0
 dir /etc/X11 755 0 0
 file /etc/X11/rgb.txt /etc/X11/rgb.txt 644 0 0
 file /etc/X11/Xsession /etc/X11/Xsession 755 0 0
@@ -25,6 +26,8 @@ dir /etc/X11/Xresources 755 0 0
 file /etc/X11/Xresources/x11-common /etc/X11/Xresources/x11-common 644 0 0
 dir /etc/init.d 755 0 0
 file /etc/init.d/x11-common /etc/init.d/x11-common 755 0 0
+dir /usr 755 0 0
+dir /usr/share 755 0 0
 dir /usr/share/X11 755 0 0
 dir /usr/include 755 0 0
 dir /usr/include/X11 755 0 0

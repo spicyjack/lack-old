@@ -74,7 +74,9 @@ SCRIPT_START=$(${EPOCH_DATE_CMD})
 VERBOSE=0
 # pattern of strings to exclude
 EXCLUDES="share/doc|/man|/info|bug"
-EXCLUDES="${EXCLUDES}|^/\.$|^/boot$|^/usr$|^/usr/share$|^/lib$|^/lib/modules$"
+EXCLUDES="${EXCLUDES}|^/\.$|^/boot$|^/lib/modules$"
+# we need all the extra directories now when making squashfs packages
+#EXCLUDES="${EXCLUDES}|^/\.$|^/boot$|^/usr$|^/usr/share$|^/lib$|^/lib/modules$"
 # make all files owned by root by default
 ALL_ROOT=1
 # set the user id based on what's in the environment
@@ -260,8 +262,8 @@ cat <<EOU
         --single perl-combined.sfs -- perl perl-base
 
     # create a single output squashfs file from one or more filellists
-    ${SCRIPTNAME} --filelist --squashfs --workdir /dev/shm \
-        --base /path/to/recipes --single debug-tools.2010.362.1 \
+    ${SCRIPTNAME} --filelist --squashfs --workdir /dev/shm \ 
+        --base /path/to/recipes --single debug-tools.2010.362.1 \ 
         -- debug-tools lspci.lenny
 
     ### MISC EXAMPLES
