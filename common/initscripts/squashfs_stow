@@ -7,7 +7,7 @@
 # picks up things like colorize()
 source $ANT_FUNCTIONS
 
-PATH=/sbin:/bin  # No remote fs at start
+#PATH=/sbin:/bin  # No remote fs at start
 ACTION=$1
 BASENAME="squashfs_stow"
 
@@ -31,12 +31,15 @@ case "$ACTION" in
     colorize $S_TIP "${BASENAME}: Initial stow of perl + stow..."
     PERL_PATH=$(/bin/ls -d /pkgs/perl*)
     # this should get us just the perl directory
-    PERL_PKG=$(basename /pkgs/perl∗)
+    PERL_PKG=$(basename /pkgs/perl*)
     # some gymnastics required in order to set up the environment so stow can
     # run
     cd /pkgs
     PERL5LIB=${PERL_PATH}/usr/lib/perl:${PERL_PATH}/usr/share/perl \
         ${PERL_PATH}/usr/bin/perl ${PERL_PATH}/usr/bin/stow -t / $PERL_PKG
+    # FIXME 
+    # - document how to use lack_functions
+    # - add the name of the command that was run to these cmd_status calls
     cmd_status $?
     colorize_nl $S_SUCCESS "$SUCCESS"
     for STOW_PKG in $(find /pkgs -maxdepth 1 -type d);

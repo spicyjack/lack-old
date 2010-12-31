@@ -20,6 +20,7 @@ BINARY_OPTS="-r -c"
 mount_all_squashfs_packages () {
     local MOUNT_PATH=$1
     local PKG_LIST=$2
+    colorize_nl $S_TIP "$BASENAME: Mounting all squashfs files in ${MOUNT_PATH}"
     for SFS_FILE in $PKG_LIST;
     do
         SFS_NAME=$(basename ${SFS_FILE} | sed 's/\.sfs$//')
@@ -29,7 +30,13 @@ mount_all_squashfs_packages () {
         fi
         #mount -t squashfs -o loop /tmp/$SFS_FILE /pkgs/$SFS_NAME
         #mount -t squashfs -o loop ${MOUNT_PATH}/${SFS_FILE} /pkgs/$SFS_NAME
+        colorize $S_TIP "$BASENAME: - ${SFS_NAME}"
         mount -t squashfs -o loop ${SFS_FILE} /pkgs/$SFS_NAME
+        if [ $? -eq 0 ]; then
+            colorize_nl $S_SUCCESS "$SUCCESS"
+        else
+            colorize_nl $S_FAILURE "$FAILED"
+        fi
     done # for SFS_FILE in $SFS_LIST
 } # function mount_all_squashfs_packages
 
@@ -48,12 +55,14 @@ case "$ACTION" in
         colorize_nl "$BASENAME: skipping CD-ROM mounting"
     else
         colorize $S_TIP "$BASENAME: Mounting /dev/$CDROM_DEV "
-        $BINARY -t iso9660 -o ro /dev/$CDROM_DEV /mnt/cdrom
+        $BINARY -t iso9660 -o ro /dev/$CDROM_DEV /mnt/cdrom 2>/dev/null
         if [ $? -eq 0 ]; then
             colorize_nl $S_SUCCESS "$SUCCESS"
             # the mount worked, so run a find on the CD-ROM drive now
             SFS_LIST=$(find /mnt/cdrom/portaboom/pkgs -type f -iname "*.sfs")
             mount_all_squashfs_packages "/mnt/cdrom" "${SFS_LIST}"
+        else
+            colorize_nl $S_FAILURE "$FAILED"
         fi
     fi # if [ $? -gt 0 ];
 
