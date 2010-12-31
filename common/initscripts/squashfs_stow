@@ -17,7 +17,7 @@ stow_package () {
     PKG=$(basename ${PACKAGE_PATH})
     /usr/bin/perl /usr/bin/stow -t / $PKG
     cmd_status $?
-    colorize_nl $S_INFO "- stowed: $PKG"
+    colorize_nl $S_TIP "${BASENAME}: stowed - $PKG"
 } # stow_package
 case "$ACTION" in
   vars)
@@ -37,7 +37,7 @@ case "$ACTION" in
     cd /pkgs
     PERL5LIB=${PERL_PATH}/usr/lib/perl:${PERL_PATH}/usr/share/perl \
         ${PERL_PATH}/usr/bin/perl ${PERL_PATH}/usr/bin/stow -t / $PERL_PKG
-    # FIXME 
+    # FIXME
     # - document how to use lack_functions
     # - add the name of the command that was run to these cmd_status calls
     cmd_status $?
