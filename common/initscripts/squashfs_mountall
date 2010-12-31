@@ -22,10 +22,14 @@ mount_all_squashfs_packages () {
     local PKG_LIST=$2
     for SFS_FILE in $PKG_LIST;
     do
-        SFS_NAME=$(echo ${SFS_FILE} | sed 's/\.$sfs//')
-        cp ${MOUNT_PATH}/portaboom/pkgs/$SFS_FILE /tmp
-        mkdir /tmp $SFS_NAME
-        mount -t squashfs -o loop /tmp/$SFS_FILE /tmp/$SFS_NAME
+        SFS_NAME=$(basename ${SFS_FILE} | sed 's/\.sfs$//')
+        #cp ${MOUNT_PATH}/portaboom/pkgs/$SFS_FILE /tmp
+        if [ ! -d /pkgs/$SFS_NAME ]; then
+            mkdir /pkgs/$SFS_NAME
+        fi
+        #mount -t squashfs -o loop /tmp/$SFS_FILE /pkgs/$SFS_NAME
+        #mount -t squashfs -o loop ${MOUNT_PATH}/${SFS_FILE} /pkgs/$SFS_NAME
+        mount -t squashfs -o loop ${SFS_FILE} /pkgs/$SFS_NAME
     done # for SFS_FILE in $SFS_LIST
 } # function mount_all_squashfs_packages
 
@@ -36,6 +40,7 @@ case "$ACTION" in
     exit 0
   ;;
   start)
+    mkdir /pkgs
     colorize_nl $S_TIP "$BASENAME: Checking for CD-ROM Devices..."
     CDROM_DEV=$(/sbin/udevadm info --query=name --name=cdrom)
     if [ $? -gt 0 ]; then
@@ -65,11 +70,15 @@ case "$ACTION" in
         # we only care about the exit code; redirect output to /dev/null
         /sbin/udevadm info --query=name --name=${DISK} >/dev/null 2>&1
         if [ $? -eq 0 ]; then
-            # FIXME this makes no sense; grep -v after grep?
+            # get a list of partitions that we can try to mount
             PARTITIONS=$(cat /proc/partitions | /bin/grep ${DISK} \
-                /usr/bin/awk '{print $4}')
+                | /usr/bin/awk '{print $4}')
+            # enumerate through the list of partitions to try and mount
             for MNT_POINT in $(echo ${PARTITIONS}); do
-                mkdir /mnt/$MNT_POINT
+                # don't create a directory if one already exists
+                if [ ! -d /mnt/$MNT_POINT ]; then
+                    mkdir /mnt/$MNT_POINT
+                fi
                 colorize $S_TIP "$BASENAME: Mounting /dev/${MNT_POINT}"
                 $BINARY -t auto -o ro /dev/$MNT_POINT \
                     /mnt/$MNT_POINT >> $BOOT_LOG 2>&1
@@ -77,6 +86,7 @@ case "$ACTION" in
                     colorize_nl $S_SUCCESS "$SUCCESS"
                     SFS_LIST=$(find /mnt/${MNT_POINT} \
                         -type f -iname "*.sfs")
+                    # try and mount all of the packages we find
                     mount_all_squashfs_packages "/mnt/${MNT_POINT}" \
                         "${SFS_LIST}"
                 else
