@@ -284,12 +284,12 @@ fi # if [ $(readlink /bin/sh | grep -c dash) -gt 0 ]
 
 ### SCRIPT SETUP ###
 # and this is the GNU part
-TEMP=$(/usr/bin/getopt -o hvepdfb:o:qtcs:w:xal:u:g:kr: \
-    --long help,verbose,examples,show-excludes \
-    --long package,directory,filelist,base: \
+TEMP=$(/usr/bin/getopt -o hvepdfb:o:qtcs:w:xal:u:g:r: \
+    --long help,verbose,examples,\
+    --long package,directory,filelist,basepath: \
     --long outdir:,squashfs,listout,cpio,single:,workdir:,overwrite,append \
-    --long log:,logfile:,uid:,gid: \
-    --long skip-exclude,excludes:,regex: \
+    --long show-excludes,excludes:,skip-excludes \
+    --long log:,logfile:,uid:,gid:,regex: \
     -n "${SCRIPTNAME}" -- "$@")
 
 # if getopts exited with an error code, then exit the script
@@ -317,16 +317,16 @@ while true ; do
     -h|--help           Displays this help message
     -v|--verbose        Nice pretty output messages
     -e|--examples       Show examples of script usage and exit
-    --show-excludeѕ     Show exclude argument to 'grep' and exit
 
     INPUT OPTIONS
     -p|--package        Package names to query for a list of files
     -d|--directory      Directories containing files to package
     -f|--filelist       Filelists used with 'gen_init_cpio' program
-    -b|--base           Base directory to search for filelist files
+    -b|--basepath       Base path(s) to search for filelist files
+                        Multiple directories are separated with a colon ':'
 
     OUTPUT OPTIONS
-    -o|--outdir         Output files created to this directory
+    -o|--outdir         Output files created to this directory (broken)
     -q|--squashfs       Output squashfs package(s)
     -t|--listout        Output filelist(s) suitable for gen_init_cpio
     -c|--cpio           Create a CPIO file (via gen_init_cpio)
@@ -335,12 +335,16 @@ while true ; do
     -x|--overwrite      Overwrite any existing output files
     -a|--append         Append to an existing file, don't create a new file
 
+    EXCLUDING FILE OPTIONS
+    --show-excludeѕ     Show exclude argument to 'grep' and exit
+    --excludes          Use this exclude expression instead of the builtin
+    --skip-excludes     Don't use the excludes list when creating
+                        filelists/squashfs packages
+
     MISC. OPTIONS
     -l|--logfile        Output logs to this file instead of STDOUT
     -u|--uid            Use this UID for all files output
     -g|--gid            Use this GID for all files output
-    -k|--skip-exclude   Skip excluding files in the output
-    --excludes          Use this exclude expression instead of the builtin
     -r|--regex          Apply the regular expression to destination file
 
     Use --examples to see examples of script usage.
@@ -374,8 +378,9 @@ EOF
             INPUT_OPT="filelist"
             shift 1
             ;;
-        -b|--base) # base directory to look for filelists (recipes)
-            BASE_DIR=$2
+        -b|--base|--basepath|--basepaths)
+            # base directory to look for filelists (recipes)
+            BASE_PATHS=$(echo ${2} | tr ':' ' ')
             shift 2
             ;;
 
@@ -507,25 +512,54 @@ do
             cmd_status "find ${CURR_PKG} -type f" $?
             ;;
         filelist)
-            if [ "x${BASE_DIR}" != "x" ]; then
-                FILELIST_FILE=${BASE_DIR}/${CURR_PKG}
-            else
+            # unset FILELIST_FILE; if the filelist is missing, we want to be
+            # notified about it, and having the FILELIST_FILE variable set
+            # due to a previous loop will bypass checks for it being empty
+            unset FILELIST_FILE
+            # go through all of the permutations of paths/filenames
+            if [ "x${BASE_PATHS}" != "x" ]; then
+                for CHECK_PATH in $(echo ${BASE_PATHS});
+                do
+                    # we need to eval here so the tilde '~' is expanded if
+                    # used
+                    eval CHECK_FILE="${CHECK_PATH}/${CURR_PKG}.txt"
+                    say "- Checking for filelist ${CHECK_FILE}"
+                    if [ -s $CHECK_FILE ]; then
+                        FILELIST_FILE=$CHECK_FILE
+                        say "- Found: ${CHECK_FILE}"
+                        # first file found winѕ, break out of this loop
+                        break
+                    fi # if [ -e ${CHECK_PATH}/${CURR_PKG}.txt ]
+                    # we need to eval here so the tilde '~' is expanded if
+                    # used
+                    eval CHECK_FILE="${CHECK_PATH}/${CURR_PKG}"
+                    say "- Checking for filelist ${CHECK_FILE}"
+                    if [ -s $CHECK_FILE ]; then
+                        FILELIST_FILE=$CHECK_FILE
+                        say "- Found: ${CHECK_FILE}"
+                        # first file found winѕ, break out of this loop
+                        break
+                    fi # if [ -e ${CHECK_PATH}/${CURR_PKG} ]
+                done
+            fi # if [ "x${BASE_PATHS}" != "x" ]
+
+            # if the above didn't come up with the full path to a filelist
+            # file, assume the filelist we're looking for is in $PWD
+            if [ "x${FILELIST_FILE}" = "x" ]; then
+                say "- Using filelist file ${PWD}/${CURR_PKG}"
                 FILELIST_FILE=${CURR_PKG}
-            fi
-            say "=== Processing filelist '${CURR_PKG}' ==="
-            if [ -e $FILELIST_FILE ]; then
+            fi # if [ "x${FILELIST_FILE}" = "x" ]
+
+            # process the filelist file that was found
+            say "- Processing filelist file: ${FILELIST_FILE}"
+            if [ -s $FILELIST_FILE ]; then
                 warn "- Parsing: ${FILELIST_FILE}"
                 PKG_CONTENTS=$(cat ${FILELIST_FILE} | grep -v "^#" \
                     | awk '{print $2}')
                 #cmd_status "find ${FILELIST_FILE} -type f" $?
-            elif [ -e "${FILELIST_FILE}.txt" ]; then
-                warn "- Parsing: ${FILELIST_FILE}.txt"
-                PKG_CONTENTS=$(cat ${FILELIST_FILE}.txt | grep -v "^#" \
-                    | awk '{print $2}')
-                #cmd_status "find ${FILELIST_FILE} -type f" $?
             else
                 warn "ERROR: filelist ${FILELIST_FILE} not found!"
-                warn "(Maybe use --base option?)"
+                warn "(Maybe use --basepath option?)"
                 exit 1
             fi # if [ -e ${CURR_PKG} ]
             ;;

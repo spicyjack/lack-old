@@ -1,23 +1,9 @@
 #!/bin/sh
 
 # $Id: ant_functions.sh,v 1.8 2009-08-01 07:06:37 brian Exp $
-# Copyright (c)2004 Brian Manning <elspicyjack at gmail dot com> 
+# Copyright (c)2004 Brian Manning <elspicyjack at gmail dot com>
 
-# Essential functions for booting/running an Antlinux install
-
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA 
+# Essential functions for booting/running a LACK install
 
 # TODO
 # - detect whether or not we should be using ANSI color strings or not
@@ -62,21 +48,21 @@ T_TIP="${CONCEALED};${F_BLK};${B_WHT}"
 
 colorize () {
 # colorize some text; $1 == color tag(s), $2 == text to colorize
-	$BB echo -n "${START}${1}${END}${2}${START};${NONE}${END}"
+    $BB echo -n "${START}${1}${END}${2}${START};${NONE}${END}"
 } # colorize()
 
 colorize_nl () {
 # same as colorize(), but with a newline added at the end
     colorize "${1}" "${2}"
     $BB echo
-} # colorize_nl() 
+} # colorize_nl()
 
 pause_prompt () {
 # function to pause script execution and prompt for user input to continue
     if [ "x${PAUSE_PROMPT}" != "x" ]; then
         echo -n " -PAUSED-  Hit <ENTER> to continue..."
         read ANSWER
-    fi # if [ "x${PAUSE_SCRIPT}" != "x" ]; then 
+    fi # if [ "x${PAUSE_SCRIPT}" != "x" ]; then
 } # function script_pause ()
 
 cmd_status () {
@@ -103,7 +89,7 @@ want_shell () {
             $BB stty sane
             $BB echo; $BB echo
             colorize_nl $S_SUCCESS "Running /bin/sh (NetBSD ash Shell)"
-            exec /bin/sh 
+            exec /bin/sh
             exit 1 # shouldn't get here
         fi # if [ "${ANSWER}" = "y" -o "${ANSWER}" = "Y" ];
     fi # if [ $DEBUG ]
@@ -117,7 +103,7 @@ file_parse () {
     # or PARSED will get overwritten with each failure, which could happen
     # after the successful grep
     PARSED=''
-    if [ $DEBUG ]; then 
+    if [ $DEBUG ]; then
         $BB echo "-> file_parse - searching file ${PARSE_FILE}"
         $BB echo "-> file_parse - for search string '${SEARCH_STRING}'";
     fi # if [ $DEBUG ]
@@ -127,12 +113,12 @@ file_parse () {
         $BB echo $LINE | $BB grep "^${SEARCH_STRING}=" > /dev/null
         if [ $? -eq 0 ]; then
             if [ $DEBUG ]; then
-                $BB echo "-> found ${SEARCH_STRING} for ${LINE}"; 
+                $BB echo "-> found ${SEARCH_STRING} for ${LINE}";
             fi # if [ $DEBUG ]
             PARSED=$(${BB} expr "${LINE}" : '.*=\(.*\)')
             if [ $DEBUG ]; then $BB echo "-> setting PARSED to '${PARSED}'"; fi
             break
-        fi  
+        fi
     done
     if [ $DEBUG ]; then echo "-> parsed string is ${PARSED}"; fi
 } # cmdline_parse()
@@ -149,16 +135,16 @@ get_pid () {
     BINARY=$1
     CHILD_PID=$(/bin/ps | /bin/grep ${BINARY} | /bin/grep -v grep \
         | /usr/bin/awk '{print $1}')
-} # get_pid () 
+} # get_pid ()
 
 get_hostname () {
 # get the hostname from the file set in the initramfs image
     if [ -e "/etc/hostname" ]; then
         HOSTNAME=$(/bin/cat /etc/hostname)
-    else 
+    else
         colorize_nl $S_FAILURE "ERROR: missing '/etc/hostname' file"
     fi
-} # get_hostname () 
+} # get_hostname ()
 
 get_kernel_version () {
 # grab the kernel version and export it into the environment as shell
@@ -175,4 +161,19 @@ get_kernel_version () {
         | /usr/bin/cut -d'.' -f 3)
 } # get_kernel_version()
 
+# *** begin license blurb ***
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, version 2 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
+
 # vi: set sw=4 ts=4 ft=sh :
+# fin!
