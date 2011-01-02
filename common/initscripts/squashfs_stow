@@ -40,9 +40,9 @@ case "$ACTION" in
     # FIXME
     # - document how to use lack_functions
     # - add the name of the command that was run to these cmd_status calls
-    cmd_status $?
+    cmd_status $? "stowing of perl + stow"
     colorize_nl $S_SUCCESS "$SUCCESS"
-    for STOW_PKG in $(find /pkgs -maxdepth 1 -type d);
+    for STOW_PKG in $(find /pkgs -maxdepth 1 -type d | grep -v '^/pkgs$');
     do
         stow_package $STOW_PKG
     done

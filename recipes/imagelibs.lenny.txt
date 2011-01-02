@@ -18,6 +18,6 @@ slink /usr/lib/libpng12.so.0 /usr/lib/libpng12.so.0.27.0 777 0 0
 file /usr/lib/libjpeg.so.62.0.0 /usr/lib/libjpeg.so.62.0.0 644 0 0
 slink /usr/lib/libjpeg.so.62 /usr/lib/libjpeg.so.62.0.0 777 0 0
 # libxpm4
-file /usr/lib/libXpm.so.4.11.0 /usr/lib/libXpm.so.4.11.0 644 0 0
-slink /usr/lib/libXpm.so.4 /usr/lib/libXpm.so.4.11.0 777 0 0
+#file /usr/lib/libXpm.so.4.11.0 /usr/lib/libXpm.so.4.11.0 644 0 0
+#slink /usr/lib/libXpm.so.4 /usr/lib/libXpm.so.4.11.0 777 0 0
 # vi: set sw=4 ts=4 paste:
