@@ -51,7 +51,7 @@ PROJECT_LIST="project-filelist.txt"
 # helper functions
 
 # set the script parameters from initramfs.cfg or a user-specified file
-function set_vars() 
+function set_vars()
 {
     local PROJECT_DIR=$1
     # $1 is the name of the build to set up for
@@ -61,7 +61,7 @@ function set_vars()
         echo "Checked ${PROJECT_DIR}"
         exit 1
     fi
-   
+
     # verify a project name was used; we need one to know which initramfs
     # package file to go get
     if [ $VARSFILE ]; then
@@ -69,45 +69,35 @@ function set_vars()
             # source in the environment variables; this could be a potential
             # hazard if the sourced file contains malicious scripting
             source $VARSFILE
-        else 
+        else
             echo "ERROR: --varsfile $VARSFILE does not exist in $PWD"
             exit 1
         fi # if [ -e $VARSFILE ];
-    else 
+    else
         source $PROJECT_DIR/initramfs.cfg
     fi # if [ $VARSFILE ];
 } # function set_vars
 
-# check the status of the last run command; run a shell if it's anything but 0
-cmd_status () {
-    COMMAND=$1
-    STATUS=$2
-    if [ $STATUS -ne 0 ]; then
-        echo "Command '${COMMAND}' failed with status code: ${STATUS}"
-        exit 1 
-    fi  
-} # cmd_status
+## FUNC: check_return_status
+## ARG:  Returned exit status code of that function
+## ARG:  Name of the function/command we're checking the return status of
+## DESC: Verifies the function exited with an exit status code (0), and
+## DESC: exits the script if any other status code is found.
+function check_return_status {
+    local EXIT_STATUS=$1
+    local STATUS_MSG=$2
 
-# find the first filename that hasn't already been taken
-function find_first_free_filename()
-{
-    SEARCHDIR=$1
-    TESTNAME=$2
-    FILE_COUNTER=1
-    FILE_DATE=$(TZ=GMT date +%Y.%j | tr -d '\n')
-    while [ -f $SEARCHDIR/$TESTNAME.$FILE_DATE.$FILE_COUNTER.cpio.gz ];
-    do
-        echo "Exists: $SEARCHDIR/$TESTNAME.$FILE_DATE.$FILE_COUNTER.cpio.gz"
-        # increment the file counter in order to try and find a free filename
-        FILE_COUNTER=$(($FILE_COUNTER + 1))
-    done
-    echo "- Output file: $SEARCHDIR/$TESTNAME.$FILE_DATE.$FILE_COUNTER.cpio.gz"
-
-    OUTPUT_FILE=$SEARCHDIR/$TESTNAME.$FILE_DATE.$FILE_COUNTER.cpio.gz
-} # function find_first_free_filename()
+    if [ $EXIT_STATUS -gt 0 ]; then
+        if [ "x${STATUS_MSG}" = "x" ]; then
+            STATUS_MSG="unknown command"
+        fi
+        echo "ERROR: '${STATUS_MSG}' returned an exit code of ${EXIT_STATUS}"
+        exit 1
+    fi # if [ $STATUS_CODE -gt 0 ]
+} # function check_return_status
 
 # cat the source file, filter it with sed, then append it to the destination
-function sedify () 
+function sedify ()
 {
     local SOURCE_FILE=$1
     local DEST_FILE=$2
@@ -117,12 +107,12 @@ function sedify ()
         s!:PROJECT_NAME:!${PROJECT_NAME}!g;
         s!:PROJECT_DIR:!${PROJECT_DIR}!g;
         s!:BUILD_BASE:!${BUILD_BASE}!g;
-        s!:VERSION:!${KERNEL_VER}!g; 
-        s!:TEMP_DIR:!${TEMP_DIR}!g; 
+        s!:VERSION:!${KERNEL_VER}!g;
+        s!:TEMP_DIR:!${TEMP_DIR}!g;
         }" >> $DEST_FILE
 } # function sedify ()
 
-function show_vars() 
+function show_vars()
 {
     echo "variables:"
     echo "BUILD_BASE=${BUILD_BASE}"
@@ -145,14 +135,14 @@ cat <<-EOF
   SCRIPT OPTIONS
   -b|--base         Base directory for project files and recipes
   -d|--project-dir  Base directory for the project files, if different from
-                    --base option 
+                    --base option
   -p|--project      Name of the project to build an initramfs image for
                     This is usually the project's subdirectory underneath
                     the --base directory
 
-  -h|--help         Displays script options 
+  -h|--help         Displays script options
   -e|--examples     Displays examples of script usage
-  -H|--longhelp     Displays script options, environment vars and examples 
+  -H|--longhelp     Displays script options, environment vars and examples
   -n|--dry-run      Builds filelists but does not run 'gen_init_cpio'
 
   -f|--varsfile     File to read in to set script environment variables
@@ -169,35 +159,35 @@ cat <<-EOF
 
     The '--varsfile' option should specify a shell script with specific
     environment variables set; since it's a shell script that's sourced by
-    this script, it could be a *POTENTIAL* *SECURITY* *HAZARD*.  
-    
+    this script, it could be a *POTENTIAL* *SECURITY* *HAZARD*.
+
     The script needs the following environment variables defined (either
     inside the script itself, or in an external file that gets sourced with
     --varsfile) in order to function correctly:
 
-    BUILD_BASE: 
+    BUILD_BASE:
         the path containing the project files and recipe files; set globally
         above, but can be overridden on a per-project basis
-    KERNEL_VER: 
+    KERNEL_VER:
         the kernel version number, used in specifying the kernel module
         directory to add kernel modules from, as well as being part of the
         name of the output initramfs file (initramfs-KERNEL_VER.cpio.gz)
-    PROJECT_NAME: 
+    PROJECT_NAME:
         directory to append to BUILD_BASE in order to find initramfs filelist,
         project configuration file and support scripts
     PROJECT_DIR: directory to look in for initramfs filelist, project
         configuration file and support scripts
-    PACKAGES: 
+    PACKAGES:
         a quoted, whitespace-separated list of packages to include in the
         final initramfs image; each package's recipe is used when building the
         initramfs image.  The list can span multiple lines without using a
         backslash '\\' character, as long as the entire list is enclosed in
         quotes.  The packages should be listed in order that you want them to
         appear in the ramdisk image.
-    OUTPUT_FILE: 
+    OUTPUT_FILE:
         file to write the initramfs image to
 EOF
-} # function show_longhelp () 
+} # function show_longhelp ()
 
 function show_examples () {
 cat <<-EOF
@@ -221,7 +211,7 @@ cat <<-EOF
     sh make_initramfs.sh --varsfile projectvars.txt --nohardlink --keepfiles
 
 EOF
-} # function show_examples () 
+} # function show_examples ()
 
 ### BEGIN SCRIPT ###
 # run getopt
@@ -230,14 +220,11 @@ TEMP=$(${GETOPT} -o hHenp:d:f:sb:o:qlk \
 --long varsfile:,showvars,base:,output:,quiet,hardlink \
 --long keeplist,keepfiles,keep \
 -n "${SCRIPTNAME}" -- "$@")
-cmd_status $GETOPT $?
+check_return_status $? $GETOPT
 
 # Note the quotes around `$TEMP': they are essential!
 # read in the $TEMP variable
 eval set -- "$TEMP"
-
-# ERRORLOOP is used to see if getopt has looped too many times
-ERRORLOOP=1
 
 # read in command line options and set appropriate environment variables
 # if you change the below switches to something else, make sure you change the
@@ -262,73 +249,60 @@ while $TRUE; do
             echo -n "Use '--longhelp' to see all help options, including "
             echo "environment variables "
             exit 0;;
-		-p|--project|--profile) # name of the project to use when 
-            # creating an initramfs image 
-			PROJECT_NAME=$2
-            ERRORLOOP=$(($ERRORLOOP - 1));
+        -p|--project|--profile) # name of the project to use when
+            # creating an initramfs image
+            PROJECT_NAME=$2
             shift 2
-	    	;; # --project
+            ;; # --project
         -n|--dry-run) # don't create the initramfs image, only filelists
-        	DRY_RUN=1
-            ERRORLOOP=$(($ERRORLOOP - 1));
+            DRY_RUN=1
             shift
-		    ;; # --dryrun
+            ;; # --dryrun
         -f|--varsfile) # read in environment variables from this file
             VARSFILE=$2
-            ERRORLOOP=$(($ERRORLOOP - 1));
             shift 2
-		    ;; # --verbose
+            ;; # --verbose
         -s|--showvars) # list variables after reading them in
-        	SHOWVARS=1
-            ERRORLOOP=$(($ERRORLOOP - 1));
+            SHOWVARS=1
             shift
-		    ;; # --quiet
-		-b|--base) # base directory for project files and recipes
-			BUILD_BASE=$2
-            ERRORLOOP=$(($ERRORLOOP - 1));
+            ;; # --quiet
+        -b|--base) # base directory for project files and recipes
+            BUILD_BASE=$2
             shift 2
-    		;; # --base
-		-d|--project-dir) # project directory, outside of the base dir above
-			PROJECT_DIR=$2
-            ERRORLOOP=$(($ERRORLOOP - 1));
+            ;; # --base
+        -d|--project-dir) # project directory, outside of the base dir above
+            PROJECT_DIR=$2
             shift 2
-    		;; # --project-dir
-		-o|--output) # filename to write the initramfs file to; defaults to 
+            ;; # --project-dir
+        -o|--output) # filename to write the initramfs file to; defaults to
             # /boot/initramfs-$KERNEL_VER.cpio.gz if not specified
-			OUTPUT_FILE=$2
+            OUTPUT_FILE=$2
             export OUTPUT_FILE
-            ERRORLOOP=$(($ERRORLOOP - 1));
             shift 2
-	    	;; # --output
+            ;; # --output
         -q|--quiet) # don't output anything (unless there's an error)
-        	QUIET=0
-            ERRORLOOP=$(($ERRORLOOP - 1));
+            QUIET=0
             shift
-		    ;; # --quiet
+            ;; # --quiet
         -l|--hardlink) # hardlink the new initramfs file to initrd for the
                     # update-grub script to work properly
-        	HARDLINK_INITRD=1
-            ERRORLOOP=$(($ERRORLOOP - 1));
+            HARDLINK_INITRD=1
             shift
-		    ;; # --initrd
-        -k|--keepfiles|--keeplist|--keep) # keep the initramfs file list 
-        	KEEP_TEMP_DIR=1
-            ERRORLOOP=$(($ERRORLOOP - 1));
+            ;; # --initrd
+        -k|--keepfiles|--keeplist|--keep) # keep the initramfs file list
+            KEEP_TEMP_DIR=1
             shift
-		    ;; # --keep
+            ;; # --keep
         --) shift
             break
-		    ;; # --
-    esac
-    # exit if we loop across getopts too many times
-    ERRORLOOP=$(($ERRORLOOP + 1))
-    if [ $ERRORLOOP -gt 4 ]; then
-        echo "ERROR: too many getopts passes;" >&2
-        echo "Maybe you have a getopt option with no branch?" >&2
-        exit 1
-    fi # if [ $ERROR_LOOP -gt 3 ];
-
-done
+            ;; # --
+        *) # we shouldn't get here; die gracefully
+            echo "ERROR: unknown option '$1'" >&2
+            echo "ERROR: use --help to see all script options" >&2
+            exit 1
+            ;;
+    esac # case "$1"
+done # while $TRUE
 
 # see if we just list variables and then exit
 if [ $SHOWVARS ]; then
@@ -340,7 +314,7 @@ fi # if [ $SHOWVARS ]; then
 if [ "x$PROJECT_NAME" != "x" -a "x$PROJECT_DIR" != "x" ]; then
     echo "ERROR: can't set --project and --project-dir at the same time"
     exit 1
-fi 
+fi
 
 # verify the build directory exists
 # the variable is hardcoded at the top of this script
@@ -401,14 +375,14 @@ if [ ! $DRY_RUN ]; then
     if [ $GENINITCPIO_ERROR -eq 1 ]; then
         echo
         echo "  (Please check gen_init_cpio file in /usr/src/linux/usr)" >&2
-        echo "Can't build initramfs image... Exiting." >&2 
+        echo "Can't build initramfs image... Exiting." >&2
         exit 1
     fi # if [ $GENINITCPIO_ERROR -eq 1 ]
     echo "found!"
 fi # if [ ! $DRY_RUN ]; then
 
 # create a temp directory
-TEMP_DIR=$(${MKTEMP} -d /tmp/tmp-initramfs.XXXXX) 
+TEMP_DIR=$(${MKTEMP} -d /tmp/tmp-initramfs.XXXXX)
 echo "- Created temporary directory '${TEMP_DIR}'"
 
 ### EXPORTS
@@ -416,15 +390,15 @@ echo "- Created temporary directory '${TEMP_DIR}'"
 # script
 export BUILD_BASE PROJECT_DIR TEMP_DIR FILELIST PROJECT_LIST
 
-# SOURCE! call set_vars to source the project file 
+# SOURCE! call set_vars to source the project file
 set_vars $PROJECT_DIR
 
 # verify the output file can be written to
 # $OUTPUT_FILE was either set in a profile or using --output
 if [ "x$OUTPUT_FILE" != "x" ]; then
     $TOUCH $OUTPUT_FILE
-    cmd_status $TOUCH $?
-else 
+    check_return_status $? $TOUCH
+else
     echo "=-=-=-=-=-=-=-=-=-=-=-=-=-="
     echo "ERROR: output file not set"
     echo "=-=-=-=-=-=-=-=-=-=-=-=-=-="
@@ -459,7 +433,7 @@ do
     if [ -r $PROJECT_DIR/recipes/$RECIPE.txt ]; then
         # project-specific recpie exists
         RECIPE_DIR="$PROJECT_DIR/recipes"
-    else 
+    else
         if [ -r $BUILD_BASE/recipes/$RECIPE.txt ]; then
             # recipe exists in LACK recipes directory
             RECIPE_DIR="$BUILD_BASE/recipes"
@@ -479,11 +453,11 @@ do
     fi # if [ -r $PROJECT_DIR/recipes/$RECIPE.txt ]
     # then do some searching and replacing; write the output file to FILELIST
     sedify $RECIPE_DIR/$RECIPE.txt $TEMP_DIR/$FILELIST
-done 
+done
 
 # verify the initramfs recipe file exists
 echo -n "- Checking for $PROJECT_LIST file in $TEMP_DIR; "
-if [ ! -r $TEMP_DIR/$PROJECT_LIST ]; 
+if [ ! -r $TEMP_DIR/$PROJECT_LIST ];
 then
     # nope; delete the output file and exit
     echo
@@ -529,25 +503,25 @@ if [ $DRY_RUN ]; then
             @line = split(q( ), $_);
             if ( $line[0] eq q(dir) ) {
                 # $line[1] should be the name of the directory
-                print qq(WARN: missing directory : ) . $line[1] 
+                print qq(WARN: missing directory : ) . $line[1]
                     . qq(, line $counter\n)
                     unless ( -d $line[1] );
             } elsif ( $line[0] eq q(file) ) {
-                print qq(WARN: missing file: ) . $line[2] 
+                print qq(WARN: missing file: ) . $line[2]
                     . qq(, line $counter\n)
                     unless ( -e $line[2] );
             } elsif ( $line[0] eq q(slink) ) {
-                print qq(WARN: missing symlink source: ) 
+                print qq(WARN: missing symlink source: )
                     . $line[2] . qq(, line $counter\n)
                     unless ( -e $line[2] );
             } else {
-                print qq(WARN: unknown filetype: ) . $line[0] 
+                print qq(WARN: unknown filetype: ) . $line[0]
                     . qq(, line: $counter\n);
             } # if ( $line[0] eq q(dir) )
         } # while ( <> )
 EOPS)
     echo "Running perl script on $TEMP_DIR/$FILELIST"
-    cat $TEMP_DIR/$FILELIST | perl -e "$PERL_SCRIPT" 
+    cat $TEMP_DIR/$FILELIST | perl -e "$PERL_SCRIPT"
 
     # barks if the file is missing
     echo "- initramfs output directory is: ${TEMP_DIR}"
@@ -555,10 +529,10 @@ EOPS)
 else
     # run the gen_init_cpio command, output to $OUTPUT_FILE
     eval $EXTRA_CMDS /usr/src/linux/usr/gen_init_cpio $TEMP_DIR/$FILELIST \
-        | $GZIP -c -9 > $OUTPUT_FILE      
+        | $GZIP -c -9 > $OUTPUT_FILE
     if [ -z $KEEP_TEMP_DIR ]; then
         rm -rf $TEMP_DIR
-    else 
+    else
         echo "initramfs temporary directory is: ${TEMP_DIR}"
         echo "Please delete it manually"
     fi # if [ -z $KEEP_TEMP_DIR ]; then

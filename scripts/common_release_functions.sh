@@ -43,18 +43,22 @@ function warn {
 } # function warn
 
 ## FUNC: check_return_status
-## ARG:  Name of the function we're checking the return status of
 ## ARG:  Returned exit status code of that function
+## ARG:  Name of the function/command we're checking the return status of
 ## DESC: Verifies the function exited with an exit status code (0), and
 ## DESC: exits the script if any other status code is found.
 function check_return_status {
-    local MESSAGE=$1
-    local EXIT_STATUS=$2
+    local EXIT_STATUS=$1
+    local STATUS_MSG=$2
 
     if [ $EXIT_STATUS -gt 0 ]; then
-        echo "ERROR: '${MESSAGE}' returned an exit code of ${EXIT_STATUS}"
+        if [ "x${STATUS_MSG}" = "x" ]; then
+            STATUS_MSG="unknown command"
+        fi
+        echo "ERROR: '${STATUS_MSG}' returned an exit code of ${EXIT_STATUS}"
         exit 1
     fi # if [ $STATUS_CODE -gt 0 ]
+    return 0
 } # function check_return_status
 
 ## FUNC: check_empty_envvar
@@ -173,10 +177,10 @@ function _create_init_script {
         s!:BUILD_BASE:!${BUILD_BASE}!g;
         s!:VERSION:!${KERNEL_VER}!g;
         }" >> $TEMP_DIR/init.sh
-    check_return_status "Creating the init script in TEMP_DIR" $?
+    check_return_status $? "Creating the init script in TEMP_DIR"
     # add the init script to the filelist
     echo "file /init /${TEMP_DIR}/init.sh 0755 0 0" >> $TEMP_DIR/$FILELIST
-    check_return_status "Creating the init script in TEMP_DIR" $?
+    check_return_status $? "Creating the init script in TEMP_DIR"
     return 0
 } # function _create_init_script
 
@@ -256,7 +260,8 @@ function sedify_input_files {
                 s!:RELEASE_VER:!${RELEASE_VER}!g;
                 s!:LACK_PASS:!${LACK_PASS}!g;
             }" > $TEMP_DIR/$FILEBASE
-        check_return_status "Run /bin/sed on ${SEDFILE}" $?
+        # check the return status after every sed call
+        check_return_status $? "Run /bin/sed on ${SEDFILE}"
     done
 } # function ѕedify_input_files
 
@@ -279,16 +284,39 @@ function sync_perl_gtk2_source {
         # us
         echo "Cloning perl-Gtk2 source for 'examples' and 'gtk-demo'..."
         git clone git://git.gnome.org/perl-Gtk2 $PERL_GTK2_SRC
-        check_return_status "Running 'git clone' for Perl-Gtk2 source" $?
+        check_return_status $? "Running 'git clone' for Perl-Gtk2 source"
     else
         echo "- Running 'git pull' on perl-Gtk2 source..."
         cd $PERL_GTK2_SRC
         git pull
-        check_return_status "Running 'git pull' for Perl-Gtk2 source" $?
+        check_return_status $? "Running 'git pull' for Perl-Gtk2 source"
     fi # if [ ! -d "/tmp/gtk2-perl-examples" ];
     return 0
 } # function sync_perl_gtk2_source
 
+## FUNC: find_first_free_filename
+## ARG:  SEARCHDIR - directory to search for/create new file in
+## ARG:  TESTNAME - filename to use when testing for new files
+## SETS: OUTPUT_FILE - name of the new file that was created
+## DESC: Enumerates over $INPUT_FILES, passes the files through a sed filter,
+## DESC: and writes them to $TEMP_DIR
+# find the first filename that hasn't already been taken
+function find_first_free_filename()
+{
+    SEARCHDIR=$1
+    TESTNAME=$2
+    FILE_COUNTER=1
+    FILE_DATE=$(TZ=GMT date +%Y.%j | tr -d '\n')
+    while [ -f $SEARCHDIR/$TESTNAME.$FILE_DATE.$FILE_COUNTER.cpio.gz ];
+    do
+        echo "- Exists: $SEARCHDIR/$TESTNAME.$FILE_DATE.$FILE_COUNTER.cpio.gz"
+        # increment the file counter in order to try and find a free filename
+        FILE_COUNTER=$(($FILE_COUNTER + 1))
+    done
+    echo "- Output file: $SEARCHDIR/$TESTNAME.$FILE_DATE.$FILE_COUNTER.cpio.gz"
+
+    OUTPUT_FILE=$SEARCHDIR/$TESTNAME.$FILE_DATE.$FILE_COUNTER.cpio.gz
+} # function find_first_free_filename()
 # *begin license blurb*
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
