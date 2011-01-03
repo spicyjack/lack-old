@@ -98,10 +98,14 @@ case "$ACTION" in
                     /mnt/$MNT_POINT >> $LOGFILE 2>&1
                 if [ $? -eq 0 ]; then
                     colorize_nl $S_SUCCESS "$SUCCESS"
-                    SFS_LIST=$(find /mnt/${MNT_POINT} \
+                    # FIXME
+                    # - this doesn't adhere to the list of directories to
+                    # search, this is catching everything on the drive :(
+                    SFS_LIST=$(find /mnt/${MNT_POINT}/portaboom/pkgs \
                         -type f -iname "*.sfs")
                     # try and mount all of the packages we find
-                    mount_all_squashfs_packages "/mnt/${MNT_POINT}" \
+                    mount_all_squashfs_packages \
+                        "/mnt/${MNT_POINT}/portaboom/pkgs" \
                         "${SFS_LIST}"
                 else
                     colorize_nl $S_FAILURE "$FAILED"
