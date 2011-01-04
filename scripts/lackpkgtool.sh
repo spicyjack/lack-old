@@ -496,10 +496,12 @@ do
             say "=== Processing package '${CURR_PKG}' ==="
             warn "- Querying package system for package '${CURR_PKG}'"
             if [ "x${LOGFILE}" != "x" ]; then
-                PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} 2>>$LOGFILE)
+                PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} 2>>$LOGFILE \
+                    | sed 's/ /\\ /g')
                 cmd_status "dpkg -L ${CURR_PKG}" $?
             else
-                PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} )
+                PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} \
+                    | sed 's/ /\\ /')
                 cmd_status "dpkg -L ${CURR_PKG}" $?
             fi # if [ "x${LOGFILE}" != "x" ]
             #PKG_CONTENTS=$(echo ${PKG_CONTENTS} | sort )
@@ -588,6 +590,8 @@ do
 
     ### FILELIST OUTPUT ###
     elif [ $OUTPUT_OPT == "filelist" ]; then
+        warn "== PACKAGE CONTENTS =="
+        warn "$PKG_CONTENTS"
         # print the recipe header
         if [ $APPEND -eq 0 ]; then
             dump_filelist_header $CURR_PKG
