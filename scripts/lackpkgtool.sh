@@ -709,7 +709,8 @@ do
                     PRE=$(printf '% 5s cp:' ${LINE_NUM})
                     say "- ${PRE} ${SOURCE} to ${SQUASH_SRC}/${TARGET}"
                     if [ "x${LOGFILE}" != "x" ]; then
-                        $CP $SOURCE "${SQUASH_SRC}/${TARGET}" \
+                        # --preserve=all
+                        $CP --preserve=all $SOURCE "${SQUASH_SRC}/${TARGET}" \
                             >> $LOGFILE 2>&1
                         cmd_status "${CP} ${SOURCE} ${SQUASH_SRC}/${TARGET}" \
                             $?
