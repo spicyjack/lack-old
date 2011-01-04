@@ -9,7 +9,10 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 #
+dir /usr 0755 0 0
+dir /usr/lib 0755 0 0
 file /usr/lib/libasound.so.2.0.0 /usr/lib/libasound.so.2.0.0 644 0 0
+dir /usr/share 0755 0 0
 dir /usr/share/alsa 755 0 0
 dir /usr/share/alsa/cards 755 0 0
 file /usr/share/alsa/cards/TRID4DWAVENX.conf /usr/share/alsa/cards/TRID4DWAVENX.conf 644 0 0

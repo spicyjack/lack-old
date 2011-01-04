@@ -9,7 +9,8 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 #
-dir /usr/share/initramfs-tools 755 0 0
+dir /usr 755 0 0
+dir /usr/share 755 0 0
 dir /usr/share/initramfs-tools/hooks 755 0 0
 file /usr/share/initramfs-tools/hooks/udev /usr/share/initramfs-tools/hooks/udev 755 0 0
 dir /usr/share/initramfs-tools/scripts 755 0 0
@@ -17,11 +18,14 @@ dir /usr/share/initramfs-tools/scripts/init-premount 755 0 0
 file /usr/share/initramfs-tools/scripts/init-premount/udev /usr/share/initramfs-tools/scripts/init-premount/udev 755 0 0
 dir /usr/share/initramfs-tools/scripts/init-bottom 755 0 0
 file /usr/share/initramfs-tools/scripts/init-bottom/udev /usr/share/initramfs-tools/scripts/init-bottom/udev 755 0 0
+dir /usr/lib 755 0 0
 dir /usr/lib/hotplug 755 0 0
 dir /usr/lib/hotplug/firmware 755 0 0
+dir /sbin 755 0 0
 file /sbin/udevd /sbin/udevd 755 0 0
 file /sbin/udevadm /sbin/udevadm 755 0 0
-# /etc/modprobe.d is in _basedirs.txt
+dir /etc 0755 0 0
+dir /etc/modprobe.d 0755 0 0
 file /etc/modprobe.d/pnp-hotplug /etc/modprobe.d/pnp-hotplug 644 0 0
 file /etc/modprobe.d/display_class /etc/modprobe.d/display_class 644 0 0
 file /etc/modprobe.d/blacklist /etc/modprobe.d/blacklist 644 0 0
@@ -43,6 +47,7 @@ file /etc/udev/rules.d/75-cd-aliases-generator.rules /etc/udev/rules.d/75-cd-ali
 file /etc/udev/rules.d/95-late.rules /etc/udev/rules.d/95-late.rules 644 0 0
 file /etc/udev/rules.d/60-persistent-storage-tape.rules /etc/udev/rules.d/60-persistent-storage-tape.rules 644 0 0
 file /etc/scsi_id.config /etc/scsi_id.config 644 0 0
+dir /lib 755 0 0
 dir /lib/udev 755 0 0
 dir /lib/udev/devices 755 0 0
 file /lib/udev/write_cd_rules /lib/udev/write_cd_rules 755 0 0

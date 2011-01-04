@@ -10,6 +10,8 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # ttf-dejavu-core
+dir /usr 755 0 0
+dir /usr/share 755 0 0
 dir /usr/share/fonts 755 0 0
 dir /usr/share/fonts/truetype 755 0 0
 dir /usr/share/fonts/truetype/ttf-dejavu 755 0 0
@@ -19,6 +21,7 @@ file /usr/share/fonts/truetype/ttf-dejavu/DejaVuSansMono-Bold.ttf /usr/share/fon
 file /usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf /usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf 644 0 0
 file /usr/share/fonts/truetype/ttf-dejavu/DejaVuSerif.ttf /usr/share/fonts/truetype/ttf-dejavu/DejaVuSerif.ttf 644 0 0
 file /usr/share/fonts/truetype/ttf-dejavu/DejaVuSerif-Bold.ttf /usr/share/fonts/truetype/ttf-dejavu/DejaVuSerif-Bold.ttf 644 0 0
+dir /etc 755 0 0
 dir /etc/defoma 755 0 0
 dir /etc/defoma/hints 755 0 0
 file /etc/defoma/hints/ttf-dejavu-core.hints /etc/defoma/hints/ttf-dejavu-core.hints 644 0 0

@@ -9,7 +9,11 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 # x11-xkb-utils
+dir /var 0755 0 0
+dir /var/lib 0755 0 0
 dir /var/lib/xkb 755 0 0
+dir /usr 0755 0 0
+dir /usr/bin 0755 0 0
 file /usr/bin/setxkbmap /usr/bin/setxkbmap 755 0 0
 file /usr/bin/xkbbell /usr/bin/xkbbell 755 0 0
 file /usr/bin/xkbcomp /usr/bin/xkbcomp 755 0 0
@@ -18,8 +22,11 @@ file /usr/bin/xkbprint /usr/bin/xkbprint 755 0 0
 file /usr/bin/xkbvleds /usr/bin/xkbvleds 755 0 0
 file /usr/bin/xkbwatch /usr/bin/xkbwatch 755 0 0
 # xkb-data
+dir /etc 755 0 0
+dir /etc/X11 755 0 0
 dir /etc/X11/xkb 755 0 0
 file /etc/X11/xkb/base.xml /etc/X11/xkb/base.xml 644 0 0
+dir /usr/share 755 0 0
 dir /usr/share/X11 755 0 0
 dir /usr/share/X11/xkb 755 0 0
 dir /usr/share/X11/xkb/compat 755 0 0

@@ -10,13 +10,17 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # games directory
+dir /usr 0755 0 0
 dir /usr/games 0755 0 0
 # xphoon
 file /usr/games/xphoon /usr/games/xphoon 755 0 0
 # floatbg
+dir /usr/bin 0755 0 0
 file /usr/bin/floatbg /usr/bin/floatbg 755 0 0
 # xfireworks
 file /usr/games/xfireworks /usr/games/xfireworks 755 0 0
+dir /etc 755 0 0
+dir /etc/X11 755 0 0
 dir /etc/X11/xfireworks 755 0 0
 file /etc/X11/xfireworks/xfireworks.conf /etc/X11/xfireworks/xfireworks.conf 644 0 0
 # vi: set sw=4 ts=4 paste:

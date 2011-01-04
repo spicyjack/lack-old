@@ -1,0 +1,414 @@
+# name: zenity
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# zenity
+dir /usr 0755 0 0
+dir /usr/bin 755 0 0
+file /usr/bin/zenity /usr/bin/zenity 755 0 0
+file /usr/bin/gdialog /usr/bin/gdialog 755 0 0
+dir /usr/share 0755 0 0
+dir /usr/share/zenity 755 0 0
+file /usr/share/zenity/zenity.glade /usr/share/zenity/zenity.glade 644 0 0
+dir /usr/share/zenity/clothes 755 0 0
+file /usr/share/zenity/clothes/monk.png /usr/share/zenity/clothes/monk.png 644 0 0
+file /usr/share/zenity/clothes/gnome-tshirt.png /usr/share/zenity/clothes/gnome-tshirt.png 644 0 0
+file /usr/share/zenity/clothes/sunglasses.png /usr/share/zenity/clothes/sunglasses.png 644 0 0
+file /usr/share/zenity/clothes/surfboard.png /usr/share/zenity/clothes/surfboard.png 644 0 0
+file /usr/share/zenity/clothes/hawaii-shirt.png /usr/share/zenity/clothes/hawaii-shirt.png 644 0 0
+file /usr/share/zenity/zenity.png /usr/share/zenity/zenity.png 644 0 0
+file /usr/share/zenity/zenity-calendar.png /usr/share/zenity/zenity-calendar.png 644 0 0
+file /usr/share/zenity/zenity-list.png /usr/share/zenity/zenity-list.png 644 0 0
+file /usr/share/zenity/zenity-file.png /usr/share/zenity/zenity-file.png 644 0 0
+file /usr/share/zenity/zenity-progress.png /usr/share/zenity/zenity-progress.png 644 0 0
+file /usr/share/zenity/zenity-text.png /usr/share/zenity/zenity-text.png 644 0 0
+file /usr/share/zenity/zenity-scale.png /usr/share/zenity/zenity-scale.png 644 0 0
+file /usr/share/zenity/zenity-entry.png /usr/share/zenity/zenity-entry.png 644 0 0
+file /usr/share/zenity/zenity-notification.png /usr/share/zenity/zenity-notification.png 644 0 0
+dir /usr/share/locale 755 0 0
+dir /usr/share/locale/am 755 0 0
+dir /usr/share/locale/am/LC_MESSAGES 755 0 0
+file /usr/share/locale/am/LC_MESSAGES/zenity.mo /usr/share/locale/am/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/ar 755 0 0
+dir /usr/share/locale/ar/LC_MESSAGES 755 0 0
+file /usr/share/locale/ar/LC_MESSAGES/zenity.mo /usr/share/locale/ar/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/as 755 0 0
+dir /usr/share/locale/as/LC_MESSAGES 755 0 0
+file /usr/share/locale/as/LC_MESSAGES/zenity.mo /usr/share/locale/as/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/az 755 0 0
+dir /usr/share/locale/az/LC_MESSAGES 755 0 0
+file /usr/share/locale/az/LC_MESSAGES/zenity.mo /usr/share/locale/az/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/be 755 0 0
+dir /usr/share/locale/be/LC_MESSAGES 755 0 0
+file /usr/share/locale/be/LC_MESSAGES/zenity.mo /usr/share/locale/be/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/be@latin 755 0 0
+dir /usr/share/locale/be@latin/LC_MESSAGES 755 0 0
+file /usr/share/locale/be@latin/LC_MESSAGES/zenity.mo /usr/share/locale/be@latin/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/bg 755 0 0
+dir /usr/share/locale/bg/LC_MESSAGES 755 0 0
+file /usr/share/locale/bg/LC_MESSAGES/zenity.mo /usr/share/locale/bg/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/bn 755 0 0
+dir /usr/share/locale/bn/LC_MESSAGES 755 0 0
+file /usr/share/locale/bn/LC_MESSAGES/zenity.mo /usr/share/locale/bn/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/bn_IN 755 0 0
+dir /usr/share/locale/bn_IN/LC_MESSAGES 755 0 0
+file /usr/share/locale/bn_IN/LC_MESSAGES/zenity.mo /usr/share/locale/bn_IN/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/bs 755 0 0
+dir /usr/share/locale/bs/LC_MESSAGES 755 0 0
+file /usr/share/locale/bs/LC_MESSAGES/zenity.mo /usr/share/locale/bs/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/ca 755 0 0
+dir /usr/share/locale/ca/LC_MESSAGES 755 0 0
+file /usr/share/locale/ca/LC_MESSAGES/zenity.mo /usr/share/locale/ca/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/cs 755 0 0
+dir /usr/share/locale/cs/LC_MESSAGES 755 0 0
+file /usr/share/locale/cs/LC_MESSAGES/zenity.mo /usr/share/locale/cs/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/cy 755 0 0
+dir /usr/share/locale/cy/LC_MESSAGES 755 0 0
+file /usr/share/locale/cy/LC_MESSAGES/zenity.mo /usr/share/locale/cy/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/da 755 0 0
+dir /usr/share/locale/da/LC_MESSAGES 755 0 0
+file /usr/share/locale/da/LC_MESSAGES/zenity.mo /usr/share/locale/da/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/de 755 0 0
+dir /usr/share/locale/de/LC_MESSAGES 755 0 0
+file /usr/share/locale/de/LC_MESSAGES/zenity.mo /usr/share/locale/de/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/dz 755 0 0
+dir /usr/share/locale/dz/LC_MESSAGES 755 0 0
+file /usr/share/locale/dz/LC_MESSAGES/zenity.mo /usr/share/locale/dz/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/el 755 0 0
+dir /usr/share/locale/el/LC_MESSAGES 755 0 0
+file /usr/share/locale/el/LC_MESSAGES/zenity.mo /usr/share/locale/el/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/en_CA 755 0 0
+dir /usr/share/locale/en_CA/LC_MESSAGES 755 0 0
+file /usr/share/locale/en_CA/LC_MESSAGES/zenity.mo /usr/share/locale/en_CA/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/en_GB 755 0 0
+dir /usr/share/locale/en_GB/LC_MESSAGES 755 0 0
+file /usr/share/locale/en_GB/LC_MESSAGES/zenity.mo /usr/share/locale/en_GB/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/es 755 0 0
+dir /usr/share/locale/es/LC_MESSAGES 755 0 0
+file /usr/share/locale/es/LC_MESSAGES/zenity.mo /usr/share/locale/es/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/et 755 0 0
+dir /usr/share/locale/et/LC_MESSAGES 755 0 0
+file /usr/share/locale/et/LC_MESSAGES/zenity.mo /usr/share/locale/et/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/eu 755 0 0
+dir /usr/share/locale/eu/LC_MESSAGES 755 0 0
+file /usr/share/locale/eu/LC_MESSAGES/zenity.mo /usr/share/locale/eu/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/fa 755 0 0
+dir /usr/share/locale/fa/LC_MESSAGES 755 0 0
+file /usr/share/locale/fa/LC_MESSAGES/zenity.mo /usr/share/locale/fa/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/fi 755 0 0
+dir /usr/share/locale/fi/LC_MESSAGES 755 0 0
+file /usr/share/locale/fi/LC_MESSAGES/zenity.mo /usr/share/locale/fi/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/fr 755 0 0
+dir /usr/share/locale/fr/LC_MESSAGES 755 0 0
+file /usr/share/locale/fr/LC_MESSAGES/zenity.mo /usr/share/locale/fr/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/ga 755 0 0
+dir /usr/share/locale/ga/LC_MESSAGES 755 0 0
+file /usr/share/locale/ga/LC_MESSAGES/zenity.mo /usr/share/locale/ga/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/gl 755 0 0
+dir /usr/share/locale/gl/LC_MESSAGES 755 0 0
+file /usr/share/locale/gl/LC_MESSAGES/zenity.mo /usr/share/locale/gl/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/gu 755 0 0
+dir /usr/share/locale/gu/LC_MESSAGES 755 0 0
+file /usr/share/locale/gu/LC_MESSAGES/zenity.mo /usr/share/locale/gu/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/he 755 0 0
+dir /usr/share/locale/he/LC_MESSAGES 755 0 0
+file /usr/share/locale/he/LC_MESSAGES/zenity.mo /usr/share/locale/he/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/hi 755 0 0
+dir /usr/share/locale/hi/LC_MESSAGES 755 0 0
+file /usr/share/locale/hi/LC_MESSAGES/zenity.mo /usr/share/locale/hi/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/hr 755 0 0
+dir /usr/share/locale/hr/LC_MESSAGES 755 0 0
+file /usr/share/locale/hr/LC_MESSAGES/zenity.mo /usr/share/locale/hr/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/hu 755 0 0
+dir /usr/share/locale/hu/LC_MESSAGES 755 0 0
+file /usr/share/locale/hu/LC_MESSAGES/zenity.mo /usr/share/locale/hu/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/id 755 0 0
+dir /usr/share/locale/id/LC_MESSAGES 755 0 0
+file /usr/share/locale/id/LC_MESSAGES/zenity.mo /usr/share/locale/id/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/is 755 0 0
+dir /usr/share/locale/is/LC_MESSAGES 755 0 0
+file /usr/share/locale/is/LC_MESSAGES/zenity.mo /usr/share/locale/is/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/it 755 0 0
+dir /usr/share/locale/it/LC_MESSAGES 755 0 0
+file /usr/share/locale/it/LC_MESSAGES/zenity.mo /usr/share/locale/it/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/ja 755 0 0
+dir /usr/share/locale/ja/LC_MESSAGES 755 0 0
+file /usr/share/locale/ja/LC_MESSAGES/zenity.mo /usr/share/locale/ja/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/ka 755 0 0
+dir /usr/share/locale/ka/LC_MESSAGES 755 0 0
+file /usr/share/locale/ka/LC_MESSAGES/zenity.mo /usr/share/locale/ka/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/kn 755 0 0
+dir /usr/share/locale/kn/LC_MESSAGES 755 0 0
+file /usr/share/locale/kn/LC_MESSAGES/zenity.mo /usr/share/locale/kn/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/ko 755 0 0
+dir /usr/share/locale/ko/LC_MESSAGES 755 0 0
+file /usr/share/locale/ko/LC_MESSAGES/zenity.mo /usr/share/locale/ko/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/ku 755 0 0
+dir /usr/share/locale/ku/LC_MESSAGES 755 0 0
+file /usr/share/locale/ku/LC_MESSAGES/zenity.mo /usr/share/locale/ku/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/lt 755 0 0
+dir /usr/share/locale/lt/LC_MESSAGES 755 0 0
+file /usr/share/locale/lt/LC_MESSAGES/zenity.mo /usr/share/locale/lt/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/lv 755 0 0
+dir /usr/share/locale/lv/LC_MESSAGES 755 0 0
+file /usr/share/locale/lv/LC_MESSAGES/zenity.mo /usr/share/locale/lv/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/mg 755 0 0
+dir /usr/share/locale/mg/LC_MESSAGES 755 0 0
+file /usr/share/locale/mg/LC_MESSAGES/zenity.mo /usr/share/locale/mg/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/mi 755 0 0
+dir /usr/share/locale/mi/LC_MESSAGES 755 0 0
+file /usr/share/locale/mi/LC_MESSAGES/zenity.mo /usr/share/locale/mi/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/mk 755 0 0
+dir /usr/share/locale/mk/LC_MESSAGES 755 0 0
+file /usr/share/locale/mk/LC_MESSAGES/zenity.mo /usr/share/locale/mk/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/ml 755 0 0
+dir /usr/share/locale/ml/LC_MESSAGES 755 0 0
+file /usr/share/locale/ml/LC_MESSAGES/zenity.mo /usr/share/locale/ml/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/mn 755 0 0
+dir /usr/share/locale/mn/LC_MESSAGES 755 0 0
+file /usr/share/locale/mn/LC_MESSAGES/zenity.mo /usr/share/locale/mn/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/mr 755 0 0
+dir /usr/share/locale/mr/LC_MESSAGES 755 0 0
+file /usr/share/locale/mr/LC_MESSAGES/zenity.mo /usr/share/locale/mr/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/ms 755 0 0
+dir /usr/share/locale/ms/LC_MESSAGES 755 0 0
+file /usr/share/locale/ms/LC_MESSAGES/zenity.mo /usr/share/locale/ms/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/nb 755 0 0
+dir /usr/share/locale/nb/LC_MESSAGES 755 0 0
+file /usr/share/locale/nb/LC_MESSAGES/zenity.mo /usr/share/locale/nb/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/ne 755 0 0
+dir /usr/share/locale/ne/LC_MESSAGES 755 0 0
+file /usr/share/locale/ne/LC_MESSAGES/zenity.mo /usr/share/locale/ne/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/nl 755 0 0
+dir /usr/share/locale/nl/LC_MESSAGES 755 0 0
+file /usr/share/locale/nl/LC_MESSAGES/zenity.mo /usr/share/locale/nl/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/nn 755 0 0
+dir /usr/share/locale/nn/LC_MESSAGES 755 0 0
+file /usr/share/locale/nn/LC_MESSAGES/zenity.mo /usr/share/locale/nn/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/oc 755 0 0
+dir /usr/share/locale/oc/LC_MESSAGES 755 0 0
+file /usr/share/locale/oc/LC_MESSAGES/zenity.mo /usr/share/locale/oc/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/or 755 0 0
+dir /usr/share/locale/or/LC_MESSAGES 755 0 0
+file /usr/share/locale/or/LC_MESSAGES/zenity.mo /usr/share/locale/or/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/pa 755 0 0
+dir /usr/share/locale/pa/LC_MESSAGES 755 0 0
+file /usr/share/locale/pa/LC_MESSAGES/zenity.mo /usr/share/locale/pa/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/pl 755 0 0
+dir /usr/share/locale/pl/LC_MESSAGES 755 0 0
+file /usr/share/locale/pl/LC_MESSAGES/zenity.mo /usr/share/locale/pl/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/pt 755 0 0
+dir /usr/share/locale/pt/LC_MESSAGES 755 0 0
+file /usr/share/locale/pt/LC_MESSAGES/zenity.mo /usr/share/locale/pt/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/pt_BR 755 0 0
+dir /usr/share/locale/pt_BR/LC_MESSAGES 755 0 0
+file /usr/share/locale/pt_BR/LC_MESSAGES/zenity.mo /usr/share/locale/pt_BR/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/ro 755 0 0
+dir /usr/share/locale/ro/LC_MESSAGES 755 0 0
+file /usr/share/locale/ro/LC_MESSAGES/zenity.mo /usr/share/locale/ro/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/ru 755 0 0
+dir /usr/share/locale/ru/LC_MESSAGES 755 0 0
+file /usr/share/locale/ru/LC_MESSAGES/zenity.mo /usr/share/locale/ru/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/rw 755 0 0
+dir /usr/share/locale/rw/LC_MESSAGES 755 0 0
+file /usr/share/locale/rw/LC_MESSAGES/zenity.mo /usr/share/locale/rw/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/sk 755 0 0
+dir /usr/share/locale/sk/LC_MESSAGES 755 0 0
+file /usr/share/locale/sk/LC_MESSAGES/zenity.mo /usr/share/locale/sk/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/sl 755 0 0
+dir /usr/share/locale/sl/LC_MESSAGES 755 0 0
+file /usr/share/locale/sl/LC_MESSAGES/zenity.mo /usr/share/locale/sl/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/sq 755 0 0
+dir /usr/share/locale/sq/LC_MESSAGES 755 0 0
+file /usr/share/locale/sq/LC_MESSAGES/zenity.mo /usr/share/locale/sq/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/sr 755 0 0
+dir /usr/share/locale/sr/LC_MESSAGES 755 0 0
+file /usr/share/locale/sr/LC_MESSAGES/zenity.mo /usr/share/locale/sr/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/sr@Latn 755 0 0
+dir /usr/share/locale/sr@Latn/LC_MESSAGES 755 0 0
+file /usr/share/locale/sr@Latn/LC_MESSAGES/zenity.mo /usr/share/locale/sr@Latn/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/sv 755 0 0
+dir /usr/share/locale/sv/LC_MESSAGES 755 0 0
+file /usr/share/locale/sv/LC_MESSAGES/zenity.mo /usr/share/locale/sv/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/ta 755 0 0
+dir /usr/share/locale/ta/LC_MESSAGES 755 0 0
+file /usr/share/locale/ta/LC_MESSAGES/zenity.mo /usr/share/locale/ta/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/te 755 0 0
+dir /usr/share/locale/te/LC_MESSAGES 755 0 0
+file /usr/share/locale/te/LC_MESSAGES/zenity.mo /usr/share/locale/te/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/th 755 0 0
+dir /usr/share/locale/th/LC_MESSAGES 755 0 0
+file /usr/share/locale/th/LC_MESSAGES/zenity.mo /usr/share/locale/th/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/tr 755 0 0
+dir /usr/share/locale/tr/LC_MESSAGES 755 0 0
+file /usr/share/locale/tr/LC_MESSAGES/zenity.mo /usr/share/locale/tr/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/ug 755 0 0
+dir /usr/share/locale/ug/LC_MESSAGES 755 0 0
+file /usr/share/locale/ug/LC_MESSAGES/zenity.mo /usr/share/locale/ug/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/uk 755 0 0
+dir /usr/share/locale/uk/LC_MESSAGES 755 0 0
+file /usr/share/locale/uk/LC_MESSAGES/zenity.mo /usr/share/locale/uk/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/vi 755 0 0
+dir /usr/share/locale/vi/LC_MESSAGES 755 0 0
+file /usr/share/locale/vi/LC_MESSAGES/zenity.mo /usr/share/locale/vi/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/xh 755 0 0
+dir /usr/share/locale/xh/LC_MESSAGES 755 0 0
+file /usr/share/locale/xh/LC_MESSAGES/zenity.mo /usr/share/locale/xh/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/zh_CN 755 0 0
+dir /usr/share/locale/zh_CN/LC_MESSAGES 755 0 0
+file /usr/share/locale/zh_CN/LC_MESSAGES/zenity.mo /usr/share/locale/zh_CN/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/zh_HK 755 0 0
+dir /usr/share/locale/zh_HK/LC_MESSAGES 755 0 0
+file /usr/share/locale/zh_HK/LC_MESSAGES/zenity.mo /usr/share/locale/zh_HK/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/locale/zh_TW 755 0 0
+dir /usr/share/locale/zh_TW/LC_MESSAGES 755 0 0
+file /usr/share/locale/zh_TW/LC_MESSAGES/zenity.mo /usr/share/locale/zh_TW/LC_MESSAGES/zenity.mo 644 0 0
+dir /usr/share/gnome 755 0 0
+dir /usr/share/gnome/help 755 0 0
+dir /usr/share/gnome/help/zenity 755 0 0
+dir /usr/share/gnome/help/zenity/C 755 0 0
+file /usr/share/gnome/help/zenity/C/legal.xml /usr/share/gnome/help/zenity/C/legal.xml 644 0 0
+file /usr/share/gnome/help/zenity/C/zenity.xml /usr/share/gnome/help/zenity/C/zenity.xml 644 0 0
+dir /usr/share/gnome/help/zenity/C/figures 755 0 0
+file /usr/share/gnome/help/zenity/C/figures/zenity-calendar-screenshot.png /usr/share/gnome/help/zenity/C/figures/zenity-calendar-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/C/figures/zenity-entry-screenshot.png /usr/share/gnome/help/zenity/C/figures/zenity-entry-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/C/figures/zenity-error-screenshot.png /usr/share/gnome/help/zenity/C/figures/zenity-error-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/C/figures/zenity-fileselection-screenshot.png /usr/share/gnome/help/zenity/C/figures/zenity-fileselection-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/C/figures/zenity-information-screenshot.png /usr/share/gnome/help/zenity/C/figures/zenity-information-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/C/figures/zenity-list-screenshot.png /usr/share/gnome/help/zenity/C/figures/zenity-list-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/C/figures/zenity-notification-screenshot.png /usr/share/gnome/help/zenity/C/figures/zenity-notification-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/C/figures/zenity-progress-screenshot.png /usr/share/gnome/help/zenity/C/figures/zenity-progress-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/C/figures/zenity-question-screenshot.png /usr/share/gnome/help/zenity/C/figures/zenity-question-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/C/figures/zenity-text-screenshot.png /usr/share/gnome/help/zenity/C/figures/zenity-text-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/C/figures/zenity-warning-screenshot.png /usr/share/gnome/help/zenity/C/figures/zenity-warning-screenshot.png 644 0 0
+dir /usr/share/gnome/help/zenity/bg 755 0 0
+file /usr/share/gnome/help/zenity/bg/zenity.xml /usr/share/gnome/help/zenity/bg/zenity.xml 644 0 0
+dir /usr/share/gnome/help/zenity/bg/figures 755 0 0
+file /usr/share/gnome/help/zenity/bg/figures/zenity-calendar-screenshot.png /usr/share/gnome/help/zenity/bg/figures/zenity-calendar-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/bg/figures/zenity-entry-screenshot.png /usr/share/gnome/help/zenity/bg/figures/zenity-entry-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/bg/figures/zenity-error-screenshot.png /usr/share/gnome/help/zenity/bg/figures/zenity-error-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/bg/figures/zenity-fileselection-screenshot.png /usr/share/gnome/help/zenity/bg/figures/zenity-fileselection-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/bg/figures/zenity-information-screenshot.png /usr/share/gnome/help/zenity/bg/figures/zenity-information-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/bg/figures/zenity-list-screenshot.png /usr/share/gnome/help/zenity/bg/figures/zenity-list-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/bg/figures/zenity-notification-screenshot.png /usr/share/gnome/help/zenity/bg/figures/zenity-notification-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/bg/figures/zenity-progress-screenshot.png /usr/share/gnome/help/zenity/bg/figures/zenity-progress-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/bg/figures/zenity-question-screenshot.png /usr/share/gnome/help/zenity/bg/figures/zenity-question-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/bg/figures/zenity-text-screenshot.png /usr/share/gnome/help/zenity/bg/figures/zenity-text-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/bg/figures/zenity-warning-screenshot.png /usr/share/gnome/help/zenity/bg/figures/zenity-warning-screenshot.png 644 0 0
+dir /usr/share/gnome/help/zenity/en_GB 755 0 0
+file /usr/share/gnome/help/zenity/en_GB/zenity.xml /usr/share/gnome/help/zenity/en_GB/zenity.xml 644 0 0
+dir /usr/share/gnome/help/zenity/en_GB/figures 755 0 0
+file /usr/share/gnome/help/zenity/en_GB/figures/zenity-calendar-screenshot.png /usr/share/gnome/help/zenity/en_GB/figures/zenity-calendar-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/en_GB/figures/zenity-entry-screenshot.png /usr/share/gnome/help/zenity/en_GB/figures/zenity-entry-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/en_GB/figures/zenity-error-screenshot.png /usr/share/gnome/help/zenity/en_GB/figures/zenity-error-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/en_GB/figures/zenity-fileselection-screenshot.png /usr/share/gnome/help/zenity/en_GB/figures/zenity-fileselection-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/en_GB/figures/zenity-information-screenshot.png /usr/share/gnome/help/zenity/en_GB/figures/zenity-information-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/en_GB/figures/zenity-list-screenshot.png /usr/share/gnome/help/zenity/en_GB/figures/zenity-list-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/en_GB/figures/zenity-notification-screenshot.png /usr/share/gnome/help/zenity/en_GB/figures/zenity-notification-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/en_GB/figures/zenity-progress-screenshot.png /usr/share/gnome/help/zenity/en_GB/figures/zenity-progress-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/en_GB/figures/zenity-question-screenshot.png /usr/share/gnome/help/zenity/en_GB/figures/zenity-question-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/en_GB/figures/zenity-text-screenshot.png /usr/share/gnome/help/zenity/en_GB/figures/zenity-text-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/en_GB/figures/zenity-warning-screenshot.png /usr/share/gnome/help/zenity/en_GB/figures/zenity-warning-screenshot.png 644 0 0
+dir /usr/share/gnome/help/zenity/es 755 0 0
+file /usr/share/gnome/help/zenity/es/zenity.xml /usr/share/gnome/help/zenity/es/zenity.xml 644 0 0
+dir /usr/share/gnome/help/zenity/es/figures 755 0 0
+file /usr/share/gnome/help/zenity/es/figures/zenity-calendar-screenshot.png /usr/share/gnome/help/zenity/es/figures/zenity-calendar-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/es/figures/zenity-entry-screenshot.png /usr/share/gnome/help/zenity/es/figures/zenity-entry-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/es/figures/zenity-error-screenshot.png /usr/share/gnome/help/zenity/es/figures/zenity-error-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/es/figures/zenity-fileselection-screenshot.png /usr/share/gnome/help/zenity/es/figures/zenity-fileselection-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/es/figures/zenity-information-screenshot.png /usr/share/gnome/help/zenity/es/figures/zenity-information-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/es/figures/zenity-list-screenshot.png /usr/share/gnome/help/zenity/es/figures/zenity-list-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/es/figures/zenity-notification-screenshot.png /usr/share/gnome/help/zenity/es/figures/zenity-notification-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/es/figures/zenity-progress-screenshot.png /usr/share/gnome/help/zenity/es/figures/zenity-progress-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/es/figures/zenity-question-screenshot.png /usr/share/gnome/help/zenity/es/figures/zenity-question-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/es/figures/zenity-text-screenshot.png /usr/share/gnome/help/zenity/es/figures/zenity-text-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/es/figures/zenity-warning-screenshot.png /usr/share/gnome/help/zenity/es/figures/zenity-warning-screenshot.png 644 0 0
+dir /usr/share/gnome/help/zenity/fr 755 0 0
+file /usr/share/gnome/help/zenity/fr/zenity.xml /usr/share/gnome/help/zenity/fr/zenity.xml 644 0 0
+dir /usr/share/gnome/help/zenity/fr/figures 755 0 0
+file /usr/share/gnome/help/zenity/fr/figures/zenity-calendar-screenshot.png /usr/share/gnome/help/zenity/fr/figures/zenity-calendar-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/fr/figures/zenity-entry-screenshot.png /usr/share/gnome/help/zenity/fr/figures/zenity-entry-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/fr/figures/zenity-error-screenshot.png /usr/share/gnome/help/zenity/fr/figures/zenity-error-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/fr/figures/zenity-fileselection-screenshot.png /usr/share/gnome/help/zenity/fr/figures/zenity-fileselection-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/fr/figures/zenity-information-screenshot.png /usr/share/gnome/help/zenity/fr/figures/zenity-information-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/fr/figures/zenity-list-screenshot.png /usr/share/gnome/help/zenity/fr/figures/zenity-list-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/fr/figures/zenity-notification-screenshot.png /usr/share/gnome/help/zenity/fr/figures/zenity-notification-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/fr/figures/zenity-progress-screenshot.png /usr/share/gnome/help/zenity/fr/figures/zenity-progress-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/fr/figures/zenity-question-screenshot.png /usr/share/gnome/help/zenity/fr/figures/zenity-question-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/fr/figures/zenity-text-screenshot.png /usr/share/gnome/help/zenity/fr/figures/zenity-text-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/fr/figures/zenity-warning-screenshot.png /usr/share/gnome/help/zenity/fr/figures/zenity-warning-screenshot.png 644 0 0
+dir /usr/share/gnome/help/zenity/oc 755 0 0
+file /usr/share/gnome/help/zenity/oc/zenity.xml /usr/share/gnome/help/zenity/oc/zenity.xml 644 0 0
+dir /usr/share/gnome/help/zenity/oc/figures 755 0 0
+file /usr/share/gnome/help/zenity/oc/figures/zenity-calendar-screenshot.png /usr/share/gnome/help/zenity/oc/figures/zenity-calendar-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/oc/figures/zenity-entry-screenshot.png /usr/share/gnome/help/zenity/oc/figures/zenity-entry-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/oc/figures/zenity-error-screenshot.png /usr/share/gnome/help/zenity/oc/figures/zenity-error-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/oc/figures/zenity-fileselection-screenshot.png /usr/share/gnome/help/zenity/oc/figures/zenity-fileselection-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/oc/figures/zenity-information-screenshot.png /usr/share/gnome/help/zenity/oc/figures/zenity-information-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/oc/figures/zenity-list-screenshot.png /usr/share/gnome/help/zenity/oc/figures/zenity-list-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/oc/figures/zenity-notification-screenshot.png /usr/share/gnome/help/zenity/oc/figures/zenity-notification-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/oc/figures/zenity-progress-screenshot.png /usr/share/gnome/help/zenity/oc/figures/zenity-progress-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/oc/figures/zenity-question-screenshot.png /usr/share/gnome/help/zenity/oc/figures/zenity-question-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/oc/figures/zenity-text-screenshot.png /usr/share/gnome/help/zenity/oc/figures/zenity-text-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/oc/figures/zenity-warning-screenshot.png /usr/share/gnome/help/zenity/oc/figures/zenity-warning-screenshot.png 644 0 0
+dir /usr/share/gnome/help/zenity/ru 755 0 0
+file /usr/share/gnome/help/zenity/ru/zenity.xml /usr/share/gnome/help/zenity/ru/zenity.xml 644 0 0
+dir /usr/share/gnome/help/zenity/ru/figures 755 0 0
+file /usr/share/gnome/help/zenity/ru/figures/zenity-calendar-screenshot.png /usr/share/gnome/help/zenity/ru/figures/zenity-calendar-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/ru/figures/zenity-entry-screenshot.png /usr/share/gnome/help/zenity/ru/figures/zenity-entry-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/ru/figures/zenity-error-screenshot.png /usr/share/gnome/help/zenity/ru/figures/zenity-error-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/ru/figures/zenity-fileselection-screenshot.png /usr/share/gnome/help/zenity/ru/figures/zenity-fileselection-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/ru/figures/zenity-information-screenshot.png /usr/share/gnome/help/zenity/ru/figures/zenity-information-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/ru/figures/zenity-list-screenshot.png /usr/share/gnome/help/zenity/ru/figures/zenity-list-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/ru/figures/zenity-notification-screenshot.png /usr/share/gnome/help/zenity/ru/figures/zenity-notification-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/ru/figures/zenity-progress-screenshot.png /usr/share/gnome/help/zenity/ru/figures/zenity-progress-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/ru/figures/zenity-question-screenshot.png /usr/share/gnome/help/zenity/ru/figures/zenity-question-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/ru/figures/zenity-text-screenshot.png /usr/share/gnome/help/zenity/ru/figures/zenity-text-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/ru/figures/zenity-warning-screenshot.png /usr/share/gnome/help/zenity/ru/figures/zenity-warning-screenshot.png 644 0 0
+dir /usr/share/gnome/help/zenity/sv 755 0 0
+file /usr/share/gnome/help/zenity/sv/zenity.xml /usr/share/gnome/help/zenity/sv/zenity.xml 644 0 0
+dir /usr/share/gnome/help/zenity/sv/figures 755 0 0
+file /usr/share/gnome/help/zenity/sv/figures/zenity-calendar-screenshot.png /usr/share/gnome/help/zenity/sv/figures/zenity-calendar-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/sv/figures/zenity-entry-screenshot.png /usr/share/gnome/help/zenity/sv/figures/zenity-entry-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/sv/figures/zenity-error-screenshot.png /usr/share/gnome/help/zenity/sv/figures/zenity-error-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/sv/figures/zenity-fileselection-screenshot.png /usr/share/gnome/help/zenity/sv/figures/zenity-fileselection-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/sv/figures/zenity-information-screenshot.png /usr/share/gnome/help/zenity/sv/figures/zenity-information-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/sv/figures/zenity-list-screenshot.png /usr/share/gnome/help/zenity/sv/figures/zenity-list-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/sv/figures/zenity-notification-screenshot.png /usr/share/gnome/help/zenity/sv/figures/zenity-notification-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/sv/figures/zenity-progress-screenshot.png /usr/share/gnome/help/zenity/sv/figures/zenity-progress-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/sv/figures/zenity-question-screenshot.png /usr/share/gnome/help/zenity/sv/figures/zenity-question-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/sv/figures/zenity-text-screenshot.png /usr/share/gnome/help/zenity/sv/figures/zenity-text-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/sv/figures/zenity-warning-screenshot.png /usr/share/gnome/help/zenity/sv/figures/zenity-warning-screenshot.png 644 0 0
+dir /usr/share/gnome/help/zenity/uk 755 0 0
+file /usr/share/gnome/help/zenity/uk/zenity.xml /usr/share/gnome/help/zenity/uk/zenity.xml 644 0 0
+dir /usr/share/gnome/help/zenity/uk/figures 755 0 0
+file /usr/share/gnome/help/zenity/uk/figures/zenity-calendar-screenshot.png /usr/share/gnome/help/zenity/uk/figures/zenity-calendar-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/uk/figures/zenity-entry-screenshot.png /usr/share/gnome/help/zenity/uk/figures/zenity-entry-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/uk/figures/zenity-error-screenshot.png /usr/share/gnome/help/zenity/uk/figures/zenity-error-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/uk/figures/zenity-fileselection-screenshot.png /usr/share/gnome/help/zenity/uk/figures/zenity-fileselection-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/uk/figures/zenity-information-screenshot.png /usr/share/gnome/help/zenity/uk/figures/zenity-information-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/uk/figures/zenity-list-screenshot.png /usr/share/gnome/help/zenity/uk/figures/zenity-list-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/uk/figures/zenity-notification-screenshot.png /usr/share/gnome/help/zenity/uk/figures/zenity-notification-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/uk/figures/zenity-progress-screenshot.png /usr/share/gnome/help/zenity/uk/figures/zenity-progress-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/uk/figures/zenity-question-screenshot.png /usr/share/gnome/help/zenity/uk/figures/zenity-question-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/uk/figures/zenity-text-screenshot.png /usr/share/gnome/help/zenity/uk/figures/zenity-text-screenshot.png 644 0 0
+file /usr/share/gnome/help/zenity/uk/figures/zenity-warning-screenshot.png /usr/share/gnome/help/zenity/uk/figures/zenity-warning-screenshot.png 644 0 0
+dir /usr/share/omf 755 0 0
+dir /usr/share/omf/zenity 755 0 0
+file /usr/share/omf/zenity/zenity-C.omf /usr/share/omf/zenity/zenity-C.omf 644 0 0
+file /usr/share/omf/zenity/zenity-bg.omf /usr/share/omf/zenity/zenity-bg.omf 644 0 0
+file /usr/share/omf/zenity/zenity-en_GB.omf /usr/share/omf/zenity/zenity-en_GB.omf 644 0 0
+file /usr/share/omf/zenity/zenity-es.omf /usr/share/omf/zenity/zenity-es.omf 644 0 0
+file /usr/share/omf/zenity/zenity-fr.omf /usr/share/omf/zenity/zenity-fr.omf 644 0 0
+file /usr/share/omf/zenity/zenity-oc.omf /usr/share/omf/zenity/zenity-oc.omf 644 0 0
+file /usr/share/omf/zenity/zenity-ru.omf /usr/share/omf/zenity/zenity-ru.omf 644 0 0
+file /usr/share/omf/zenity/zenity-sv.omf /usr/share/omf/zenity/zenity-sv.omf 644 0 0
+file /usr/share/omf/zenity/zenity-uk.omf /usr/share/omf/zenity/zenity-uk.omf 644 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:

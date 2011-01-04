@@ -34,35 +34,35 @@ case "$ACTION" in
     exit 0
   ;;
   start)
-	colorize $S_TIP "${BASENAME}: Starting ${DESC}"
+    colorize $S_TIP "${BASENAME}: Starting ${DESC}"
     # mute all the channels on startup?
     if [ $MUTE -eq 0 ]; then
         # nope
-    	$BINARY
+        $BINARY
         cmd_status $?
         colorize_nl $S_SUCCESS "$SUCCESS"
     else
         # yep
-    	$BINARY --mute
+        $BINARY --mute
         cmd_status $?
         colorize_nl $S_SUCCESS "$SUCCESS"
     fi # if [ "x$USE_WGET" != "x" ]
-	;;
+    ;;
   stop)
-	PATH=/bin:/sbin:/usr/bin:/usr/sbin
-	colorize $S_TIP "${BASENAME}: Stopping ${DESC}"
+    PATH=/bin:/sbin:/usr/bin:/usr/sbin
+    colorize $S_TIP "${BASENAME}: Stopping ${DESC}"
     $BINARY --mute
     cmd_status $?
     colorize_nl $S_SUCCESS "$SUCCESS"
-	;;
+    ;;
   restart|force-reload)
- 	$0 stop
- 	$0 start
-	;;
+     $0 stop
+     $0 start
+    ;;
   *)
-	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
-	exit 3
-	;;
+    echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+    exit 3
+    ;;
 esac
 
 :

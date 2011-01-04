@@ -105,9 +105,9 @@ dir /etc/start 0755 0 0
 slink /etc/start/00loadfont /etc/init.d/loadfont 0755 0 0
 slink /etc/start/01remount-rootfs /etc/init.d/remount-rootfs 0755 0 0
 slink /etc/start/02bb-install /etc/init.d/bb-install 0755 0 0
-slink /etc/start/03hostname /etc/init.d/hostname 0755 0 0
 slink /etc/start/05procfs /etc/init.d/procfs 0755 0 0
 slink /etc/start/06sysfs /etc/init.d/sysfs 0755 0 0
+slink /etc/start/07hostname /etc/init.d/hostname 0755 0 0
 slink /etc/start/10udev /etc/init.d/udev 0755 0 0
 slink /etc/start/15syslogd /etc/init.d/syslogd 0755 0 0
 slink /etc/start/16klogd /etc/init.d/klogd 0755 0 0

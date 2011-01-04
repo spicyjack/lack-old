@@ -44,14 +44,6 @@
 #   - packaged by
 #   - checksums?
 
-# verify we're not running under dash
-if [ -z $BASH_VERSION ]; then
-#if [ $(readlink /bin/sh | grep -c dash) -gt 0 ]; then
-    # execute this script under bash instead
-    warn "WARNING: this script doesn't run under dash..." >&2
-    warn "WARNING: execute this script with /bin/bash" >&2
-    exit 1
-fi # if [ $(readlink /bin/sh | grep -c dash) -gt 0 ]
 
 # external programs used
 CAT=$(which cat)
@@ -82,7 +74,9 @@ SCRIPT_START=$(${EPOCH_DATE_CMD})
 VERBOSE=0
 # pattern of strings to exclude
 EXCLUDES="share/doc|/man|/info|bug"
-EXCLUDES="${EXCLUDES}|^/\.$|^/boot$|^/usr$|^/usr/share$|^/lib$|^/lib/modules$"
+EXCLUDES="${EXCLUDES}|^/\.$|^/boot$|^/lib/modules$"
+# we need all the extra directories now when making squashfs packages
+#EXCLUDES="${EXCLUDES}|^/\.$|^/boot$|^/usr$|^/usr/share$|^/lib$|^/lib/modules$"
 # make all files owned by root by default
 ALL_ROOT=1
 # set the user id based on what's in the environment
@@ -220,8 +214,8 @@ function dump_filelist_header {
     local PKG_NAME=$1
 # we know the name of the package.... generate a nicer header that includes
 # the current date and package name
-    echo "# name: ${PKG_NAME}"
-cat <<'EOHD'
+cat <<EOHD
+# name: ${PKG_NAME}
 # description: example package with comments
 # depends: _base otherpackage1 otherpackage2
 # helpcommand: /usr/bin/somebin --help
@@ -233,7 +227,6 @@ cat <<'EOHD'
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 EOHD
-
 } # dump_filelist_header
 
 ## FUNC: show_examples
@@ -244,41 +237,59 @@ function show_examples {
 cat <<EOU
     EXAMPLES OF SCRIPT USAGE:
 
+    ### CREATING FILELISTS
     # create a filelist of the Debian package 'perl'
-    ${SCRIPTNAME} --package --listout -- perl > perl.txt
+    ${SCRIPTNAME} --package --listout -- linux-image > linux-image.txt
 
     # append to an existing package (no gen_init_cpio file header)
     ${SCRIPTNAME} --append --package --listout \ 
-        -- loop-aes-modules-2.6.36.1-lack ndiswrapper-modules-2.6.36.1-lack
-
-    # create individual output squashfs files
-    ${SCRIPTNAME} --package --squashfs --workdir /dev/shm -- perl perl-base
-
-    # create a single output squashfs file
-    ${SCRIPTNAME} --package --squashfs --workdir /dev/shm \ 
-        --single /dev/shm/perl-combined.sfs -- perl perl-base
+        -- loop-aes-modules ndiswrapper-modules >> linux-image.txt
 
     # create a filelist from a directory of files
-    ${SCRIPTNAME} --directory /tmp/somedirectory > somepackage.txt
+    ${SCRIPTNAME} --directory --listout /tmp/somedirectory > somepackage.txt
 
     # create a filelist, and mangle some of the filenames in the filelist
-    ${SCRIPTNAME} --directory /tmp/somedirectory \ 
+    ${SCRIPTNAME} --directory --listout -- /tmp/somedirectory \ 
         --regex 's!/some/path!/other/path!g' > somepackage.txt
 
+    ### CREATING SQUASHFS ARCHIVES
+    # create individual output squashfs files from installed Debian packages
+    ${SCRIPTNAME} --package --squashfs --workdir /dev/shm -- perl perl-base
+
+    # create a single output squashfs file from an installed Debian package, 
+    # output to --workdir
+    ${SCRIPTNAME} --package --squashfs --workdir /dev/shm \ 
+        --single perl-combined.sfs -- perl perl-base
+
+    # create a single output squashfs file from one or more filellists
+    ${SCRIPTNAME} --filelist --squashfs --workdir /dev/shm \ 
+        --base /path/to/recipes --single debug-tools.2010.362.1 \ 
+        -- debug-tools lspci.lenny
+
+    ### MISC EXAMPLES
     # use a different EXCLUDES regex, display it on STDOUT, then exit
     ${SCRIPTNAME} --excludes "this|that|somethingelse" --show-excludes
 
 EOU
 } # function show_examples
 
+# verify we're not running under dash
+if [ -z $BASH_VERSION ]; then
+#if [ $(readlink /bin/sh | grep -c dash) -gt 0 ]; then
+    # execute this script under bash instead
+    warn "WARNING: this script doesn't run under dash..."
+    warn "WARNING: execute this script with /bin/bash"
+    exit 1
+fi # if [ $(readlink /bin/sh | grep -c dash) -gt 0 ]
+
 ### SCRIPT SETUP ###
 # and this is the GNU part
-TEMP=$(/usr/bin/getopt -o hvepdfb:o:qtcs:w:xal:u:g:kr: \
-    --long help,verbose,examples,show-excludes \
-    --long package,directory,filelist,base: \
+TEMP=$(/usr/bin/getopt -o hvepdfb:o:qtcs:w:xal:u:g:r: \
+    --long help,verbose,examples,\
+    --long package,directory,filelist,basepath: \
     --long outdir:,squashfs,listout,cpio,single:,workdir:,overwrite,append \
-    --long log:,logfile:,uid:,gid: \
-    --long skip-exclude,excludes:,regex: \
+    --long show-excludes,excludes:,skip-excludes \
+    --long log:,logfile:,uid:,gid:,regex: \
     -n "${SCRIPTNAME}" -- "$@")
 
 # if getopts exited with an error code, then exit the script
@@ -306,16 +317,16 @@ while true ; do
     -h|--help           Displays this help message
     -v|--verbose        Nice pretty output messages
     -e|--examples       Show examples of script usage and exit
-    --show-excludeѕ     Show exclude argument to 'grep' and exit
 
     INPUT OPTIONS
     -p|--package        Package names to query for a list of files
     -d|--directory      Directories containing files to package
     -f|--filelist       Filelists used with 'gen_init_cpio' program
-    -b|--base           Base directory to search for filelist files
+    -b|--basepath       Base path(s) to search for filelist files
+                        Multiple directories are separated with a colon ':'
 
     OUTPUT OPTIONS
-    -o|--outdir         Output files created to this directory
+    -o|--outdir         Output files created to this directory (broken)
     -q|--squashfs       Output squashfs package(s)
     -t|--listout        Output filelist(s) suitable for gen_init_cpio
     -c|--cpio           Create a CPIO file (via gen_init_cpio)
@@ -324,12 +335,16 @@ while true ; do
     -x|--overwrite      Overwrite any existing output files
     -a|--append         Append to an existing file, don't create a new file
 
+    EXCLUDING FILE OPTIONS
+    --show-excludeѕ     Show exclude argument to 'grep' and exit
+    --excludes          Use this exclude expression instead of the builtin
+    --skip-excludes     Don't use the excludes list when creating
+                        filelists/squashfs packages
+
     MISC. OPTIONS
     -l|--logfile        Output logs to this file instead of STDOUT
     -u|--uid            Use this UID for all files output
     -g|--gid            Use this GID for all files output
-    -k|--skip-exclude   Skip excluding files in the output
-    --excludes          Use this exclude expression instead of the builtin
     -r|--regex          Apply the regular expression to destination file
 
     Use --examples to see examples of script usage.
@@ -363,8 +378,9 @@ EOF
             INPUT_OPT="filelist"
             shift 1
             ;;
-        -b|--base) # base directory to look for filelists (recipes)
-            BASE_DIR=$2
+        -b|--base|--basepath|--basepaths)
+            # base directory to look for filelists (recipes)
+            BASE_PATHS=$(echo ${2} | tr ':' ' ')
             shift 2
             ;;
 
@@ -496,25 +512,54 @@ do
             cmd_status "find ${CURR_PKG} -type f" $?
             ;;
         filelist)
-            if [ "x${BASE_DIR}" != "x" ]; then
-                FILELIST_FILE=${BASE_DIR}/${CURR_PKG}
-            else
+            # unset FILELIST_FILE; if the filelist is missing, we want to be
+            # notified about it, and having the FILELIST_FILE variable set
+            # due to a previous loop will bypass checks for it being empty
+            unset FILELIST_FILE
+            # go through all of the permutations of paths/filenames
+            if [ "x${BASE_PATHS}" != "x" ]; then
+                for CHECK_PATH in $(echo ${BASE_PATHS});
+                do
+                    # we need to eval here so the tilde '~' is expanded if
+                    # used
+                    eval CHECK_FILE="${CHECK_PATH}/${CURR_PKG}.txt"
+                    say "- Checking for filelist ${CHECK_FILE}"
+                    if [ -s $CHECK_FILE ]; then
+                        FILELIST_FILE=$CHECK_FILE
+                        say "- Found: ${CHECK_FILE}"
+                        # first file found winѕ, break out of this loop
+                        break
+                    fi # if [ -e ${CHECK_PATH}/${CURR_PKG}.txt ]
+                    # we need to eval here so the tilde '~' is expanded if
+                    # used
+                    eval CHECK_FILE="${CHECK_PATH}/${CURR_PKG}"
+                    say "- Checking for filelist ${CHECK_FILE}"
+                    if [ -s $CHECK_FILE ]; then
+                        FILELIST_FILE=$CHECK_FILE
+                        say "- Found: ${CHECK_FILE}"
+                        # first file found winѕ, break out of this loop
+                        break
+                    fi # if [ -e ${CHECK_PATH}/${CURR_PKG} ]
+                done
+            fi # if [ "x${BASE_PATHS}" != "x" ]
+
+            # if the above didn't come up with the full path to a filelist
+            # file, assume the filelist we're looking for is in $PWD
+            if [ "x${FILELIST_FILE}" = "x" ]; then
+                say "- Using filelist file ${PWD}/${CURR_PKG}"
                 FILELIST_FILE=${CURR_PKG}
-            fi
-            say "=== Processing filelist '${CURR_PKG}' ==="
-            if [ -e $FILELIST_FILE ]; then
+            fi # if [ "x${FILELIST_FILE}" = "x" ]
+
+            # process the filelist file that was found
+            say "- Processing filelist file: ${FILELIST_FILE}"
+            if [ -s $FILELIST_FILE ]; then
                 warn "- Parsing: ${FILELIST_FILE}"
                 PKG_CONTENTS=$(cat ${FILELIST_FILE} | grep -v "^#" \
                     | awk '{print $2}')
                 #cmd_status "find ${FILELIST_FILE} -type f" $?
-            elif [ -e "${FILELIST_FILE}.txt" ]; then
-                warn "- Parsing: ${FILELIST_FILE}.txt"
-                PKG_CONTENTS=$(cat ${FILELIST_FILE}.txt | grep -v "^#" \
-                    | awk '{print $2}')
-                #cmd_status "find ${FILELIST_FILE} -type f" $?
             else
                 warn "ERROR: filelist ${FILELIST_FILE} not found!"
-                warn "(Maybe use --base option?)"
+                warn "(Maybe use --basepath option?)"
                 exit 1
             fi # if [ -e ${CURR_PKG} ]
             ;;
@@ -544,13 +589,18 @@ do
     ### FILELIST OUTPUT ###
     elif [ $OUTPUT_OPT == "filelist" ]; then
         # print the recipe header
-        if [ "x$APPEND" == "x" ]; then
+        if [ $APPEND -eq 0 ]; then
             dump_filelist_header $CURR_PKG
         fi
         echo "# ${CURR_PKG}"
 
+        # PKG_CONTENTS should be a list of files, directories and/or symlinks
         for LINE in $(echo $PKG_CONTENTS);
         do
+            if [ ! -e $LINE ]; then
+                warn "WARN: File ${LINE} does not exist on the filesystem"
+                continue
+            fi # if [ ! -e $LINE ]; then
             # check to see if we need to exclude this file
             # this also skip missing files and/or directories
             check_excludes $LINE
@@ -636,6 +686,10 @@ do
         LINE_NUM=1
         for LINE in $(echo $PKG_CONTENTS);
         do
+            if [ ! -e $LINE ]; then
+                warn "WARN: File ${LINE} does not exist on the filesystem"
+                continue
+            fi # if [ ! -e $LINE ]; then
             # check to see if we need to exclude this file
             # this also skip missing files and/or directories
             check_excludes $LINE
@@ -664,7 +718,8 @@ do
                     PRE=$(printf '% 5s cp:' ${LINE_NUM})
                     say "- ${PRE} ${SOURCE} to ${SQUASH_SRC}/${TARGET}"
                     if [ "x${LOGFILE}" != "x" ]; then
-                        $CP $SOURCE "${SQUASH_SRC}/${TARGET}" \
+                        # --preserve=all
+                        $CP --preserve=all $SOURCE "${SQUASH_SRC}/${TARGET}" \
                             >> $LOGFILE 2>&1
                         cmd_status "${CP} ${SOURCE} ${SQUASH_SRC}/${TARGET}" \
                             $?
@@ -691,14 +746,15 @@ do
                     ;;
                 "symbolic link")
                     #TARGET=$($READLINK -f $SOURCE | $TR -d '\n')
-                    TARGET=$($READLINK -f $SOURCE | sed 's!^/!!')
+                    #TARGET=$($READLINK -f $SOURCE | sed 's!^/!!')
+                    TARGET=$($READLINK -f $SOURCE)
+                    SOURCE=$(echo ${SOURCE} | sed 's!^/!!')
                     PRE=$(printf '% 5s ln:' ${LINE_NUM})
-                    say "- ${PRE} ${SQUASH_SRC}/${TARGET}"
+                    say "- ${PRE} ${TARGET} ${SQUASH_SRC}/${SOURCE}" 
                     if [ "x${LOGFILE}" != "x" ]; then
-                        ln -s $SOURCE "${SQUASH_SRC}/${TARGET}" \
-                            >> $LOGFILE 2>&1
+                        ln -s $TARGET ${SQUASH_SRC}/${SOURCE} >> $LOGFILE 2>&1
                     else
-                        ln -s $SOURCE "${SQUASH_SRC}/${TARGET}"
+                        ln -s $TARGET ${SQUASH_SRC}/${SOURCE}
                     fi
                     ;;
             esac # case "$FILE_TYPE" in

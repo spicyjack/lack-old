@@ -10,6 +10,7 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # gtk-chtheme
+dir /usr 755 0 0
 dir /usr/bin 755 0 0
 file /usr/bin/gtk-chtheme /usr/bin/gtk-chtheme 755 0 0
 #dir /usr/share/pixmaps 755 0 0

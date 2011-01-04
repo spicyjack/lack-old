@@ -10,6 +10,8 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # libx11-data
+dir /usr 0755 0 0
+dir /usr/share 0755 0 0
 dir /usr/share/X11 755 0 0
 dir /usr/share/X11/locale 755 0 0
 dir /usr/share/X11/locale/armscii-8 755 0 0

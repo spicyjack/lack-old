@@ -10,6 +10,7 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # libsdl-image1.2
+dir /usr 755 0 0
 dir /usr/lib 755 0 0
 file /usr/lib/libSDL_image-1.2.so.0.1.5 /usr/lib/libSDL_image-1.2.so.0.1.5 644 0 0
 slink /usr/lib/libSDL_image-1.2.so.0 /usr/lib/libSDL_image-1.2.so.0.1.5 777 0 0

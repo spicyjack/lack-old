@@ -10,6 +10,7 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # mrxvt
+dir /usr 755 0 0
 dir /usr/bin 755 0 0
 file /usr/bin/mrxvt-full /usr/bin/mrxvt-full 755 0 0
 slink /usr/bin/mrxvt /usr/bin/mrxvt-full 755 0 0

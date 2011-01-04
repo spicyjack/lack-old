@@ -1,0 +1,65 @@
+#! /bin/sh
+
+# squashfs_stow
+# Copyright (c)2010 Brian Manning <brian at portaboom dot com>
+# stow squashfs files mounted in /pkgs
+
+# picks up things like colorize()
+source $ANT_FUNCTIONS
+
+#PATH=/sbin:/bin  # No remote fs at start
+ACTION=$1
+BASENAME="squashfs_stow"
+
+stow_package () {
+    local PACKAGE_PATH=$1
+    cd /pkgs
+    PKG=$(basename ${PACKAGE_PATH})
+    /usr/bin/perl /usr/bin/stow -t / $PKG
+    cmd_status $?
+    colorize_nl $S_TIP "${BASENAME}: stowed - $PKG"
+} # stow_package
+case "$ACTION" in
+  vars)
+    # echo out what commandline variables are parsed by this script
+    echo "${BASENAME}:"
+    exit 0
+  ;;
+  start)
+    OLD_DIR=$PWD
+    colorize_nl $S_TIP "${BASENAME}: Stowing all mounted squashfs archives..."
+    colorize $S_TIP "${BASENAME}: Initial stow of perl + stow..."
+    PERL_PATH=$(/bin/ls -d /pkgs/perl*)
+    # this should get us just the perl directory
+    PERL_PKG=$(basename /pkgs/perl*)
+    # some gymnastics required in order to set up the environment so stow can
+    # run
+    cd /pkgs
+    PERL5LIB=${PERL_PATH}/usr/lib/perl:${PERL_PATH}/usr/share/perl \
+        ${PERL_PATH}/usr/bin/perl ${PERL_PATH}/usr/bin/stow -t / $PERL_PKG
+    # FIXME
+    # - document how to use lack_functions
+    # - add the name of the command that was run to these cmd_status calls
+    cmd_status $? "stowing of perl + stow"
+    colorize_nl $S_SUCCESS "$SUCCESS"
+    for STOW_PKG in $(find /pkgs -maxdepth 1 -type d | grep -v '^/pkgs$');
+    do
+        stow_package $STOW_PKG
+    done
+    cd $OLD_DIR
+    ;;
+  stop)
+    PATH=/bin:/sbin:/usr/bin:/usr/sbin
+    colorize $S_TIP "${BASENAME}: Stopping ${DESC}"
+    ;;
+  restart|force-reload)
+     $0 stop
+     $0 start
+    ;;
+  *)
+    echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+    exit 3
+    ;;
+esac
+
+:

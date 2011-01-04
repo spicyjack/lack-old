@@ -10,9 +10,12 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # /usr/bin
+dir /usr 0755 0 0
+dir /usr/bin 0755 0 0
 file /usr/bin/synclient /usr/bin/synclient 755 0 0
 file /usr/bin/syndaemon /usr/bin/syndaemon 755 0 0
 # /usr/lib
+dir /usr/lib 0755 0 0
 dir /usr/lib/xorg 755 0 0
 dir /usr/lib/xorg/modules 755 0 0
 dir /usr/lib/xorg/modules/input 755 0 0
@@ -21,6 +24,7 @@ file /usr/lib/xorg/modules/input/kbd_drv.so /usr/lib/xorg/modules/input/kbd_drv.
 file /usr/lib/xorg/modules/input/mouse_drv.so /usr/lib/xorg/modules/input/mouse_drv.so 644 0 0
 file /usr/lib/xorg/modules/input/synaptics_drv.so /usr/lib/xorg/modules/input/synaptics_drv.so 644 0 0
 # /usr/share
+dir /usr/share 755 0 0
 dir /usr/share/hal 755 0 0
 dir /usr/share/hal/fdi 755 0 0
 dir /usr/share/hal/fdi/policy 755 0 0

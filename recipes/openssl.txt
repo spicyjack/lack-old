@@ -10,11 +10,14 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # openssl /usr/lib
+dir /usr 0755 0 0
+dir /usr/lib 0755 0 0
 file /usr/lib/libcrypto.so.0.9.8 /usr/lib/libcrypto.so.0.9.8 0644 0 0
 file /usr/lib/libssl.so.0.9.8 /usr/lib/libssl.so.0.9.8 0644 0 0
 # openssl /usr/lib/ssl
 dir /usr/lib/ssl 0755 0 0
 file /usr/lib/ssl/openssl.cnf /usr/lib/ssl/openssl.cnf 0644 0 0
 # openssl /usr
+dir /usr/bin 0755 0 0
 file /usr/bin/openssl /usr/bin/openssl 0755 0 0
 # vi: set sw=4 ts=4 paste:

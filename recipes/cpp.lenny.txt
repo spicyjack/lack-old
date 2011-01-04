@@ -10,11 +10,14 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # cpp-4.3
+dir /usr 0755 0 0
+dir /usr/lib 755 0 0
 dir /usr/lib/gcc 755 0 0
 dir /usr/lib/gcc/i486-linux-gnu 755 0 0
 dir /usr/lib/gcc/i486-linux-gnu/4.3 755 0 0
 file /usr/lib/gcc/i486-linux-gnu/4.3/cc1 /usr/lib/gcc/i486-linux-gnu/4.3/cc1 755 0 0
 slink /usr/bin/cc1 /usr/lib/gcc/i486-linux-gnu/4.3/cc1 755 0 0
+dir /usr/bin 0755 0 0
 file /usr/bin/cpp-4.3 /usr/bin/cpp-4.3 755 0 0
 slink /usr/bin/i486-linux-gnu-cpp-4.3 /usr/bin/cpp-4.3 777 0 0
 # cpp

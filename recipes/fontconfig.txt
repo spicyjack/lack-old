@@ -10,6 +10,7 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # fontconfig-config
+dir /etc 755 0 0
 dir /etc/fonts 755 0 0
 file /etc/fonts/fonts.dtd /etc/fonts/fonts.dtd 644 0 0
 file /etc/fonts/fonts.conf /etc/fonts/fonts.conf 644 0 0

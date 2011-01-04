@@ -29,9 +29,9 @@ TEMP=$(/usr/bin/getopt -o hvl:c:m \
 
 # if getopts exited with an error code, then exit the script
 #if [ $? -ne 0 -o $# -eq 0 ] ; then
-if [ $? != 0 ] ; then 
-	echo "Run '${SCRIPTNAME} --help' to see script options" >&2 
-	exit 1
+if [ $? != 0 ] ; then
+    echo "Run '${SCRIPTNAME} --help' to see script options" >&2
+    exit 1
 fi
 
 # Note the quotes around `$TEMP': they are essential!
@@ -43,11 +43,11 @@ eval set -- "$TEMP"
 # getopts call(s) above
 ERRORLOOP=1
 while true ; do
-	case "$1" in
-		-h|--help) # show the script options
-		cat <<-EOF
+    case "$1" in
+        -h|--help) # show the script options
+        cat <<-EOF
 
-	${SCRIPTNAME} [options]
+    ${SCRIPTNAME} [options]
 
     SCRIPT OPTIONS
     -h|--help       Displays this help message
@@ -58,7 +58,7 @@ while true ; do
     -m|--mute       Mute all channels
 
 EOF
-		exit 0;;		
+        exit 0;;
         -v|--verbose) # output pretty messages
             VERBOSE=1
             shift;;
@@ -73,9 +73,9 @@ EOF
             CHANNELS=$2
             ERRORLOOP=$(($ERRORLOOP - 1));
             shift 2;;
-		--) shift; # delimiter for other options (not used)
+        --) shift; # delimiter for other options (not used)
             break;;
-	esac
+    esac
     # exit if we loop across getopts too many times
     ERRORLOOP=$(($ERRORLOOP + 1))
     if [ $ERRORLOOP -gt 4 ]; then
@@ -93,8 +93,6 @@ if [ "x$CHANNELS" == "x" ]; then
     CHANNELS=$ALSA_CHANNELS
 fi # if [ "x$CHANNELS" == "x" ];
 
-
-
 # kill all copies of this script?
 if [ "x$VOL_LEVEL" != "x" ]; then
     PERCENT_CHECK=$(echo $VOL_LEVEL | grep -c '%$')
@@ -106,15 +104,15 @@ if [ "x$VOL_LEVEL" != "x" ]; then
     do
         # verbose amixer output?
         if [ $VERBOSE -eq 1 ]; then
-            AMIXER_CMD="amixer set"
+            AMIXER_CMD="/usr/bin/amixer set"
             echo "Mixer command: ${AMIXER_CMD} set ${MIX_CHANNEL} ${VOL_LEVEL}"
-        else 
-            AMIXER_CMD="amixer -q set"
+        else
+            AMIXER_CMD="/usr/bin/amixer -q set"
         fi
         # run the actual command
         if [ $MUTE_ALL -eq 1 ]; then
             $AMIXER_CMD "${MIX_CHANNEL}" $VOL_LEVEL off
-        else 
+        else
             $AMIXER_CMD "${MIX_CHANNEL}" $VOL_LEVEL on
         fi # if [ $MUTE_ALL -eq 1 ]
         if [ $? -ne 0 ]; then

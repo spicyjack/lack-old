@@ -10,9 +10,12 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # xorg pci ID's
+dir /usr 0755 0 0
+dir /usr/share 0755 0 0
 dir /usr/share/xserver-xorg 755 0 0
 dir /usr/share/xserver-xorg/pci 755 0 0
 # xorg modules
+dir /usr/lib 755 0 0
 dir /usr/lib/xorg 755 0 0
 dir /usr/lib/xorg/modules 755 0 0
 dir /usr/lib/xorg/modules/drivers 755 0 0
