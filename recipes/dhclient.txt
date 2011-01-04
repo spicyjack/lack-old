@@ -22,8 +22,8 @@ dir /etc/network/if-up.d 0755 0 0
 # dhclient /var/lib 
 dir /var 0755 0 0
 dir /var/lib 0755 0 0
-dir /var/lib/dhcp 0755 0 0
-slink /var/lib/dhcp3 /var/lib/dhcp 0755 0 0
+dir /var/lib/dhcp3 0755 0 0
+slink /var/lib/dhcp /var/lib/dhcp3 0755 0 0
 # dhclient /sbin
 dir /sbin 0755 0 0
 file /sbin/dhclient /sbin/dhclient 0755 0 0
