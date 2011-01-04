@@ -594,8 +594,13 @@ do
         fi
         echo "# ${CURR_PKG}"
 
+        # PKG_CONTENTS should be a list of files, directories and/or symlinks
         for LINE in $(echo $PKG_CONTENTS);
         do
+            if [ ! -e $LINE ]; then
+                warn "WARN: File ${LINE} does not exist on the filesystem"
+                continue
+            fi # if [ ! -e $LINE ]; then
             # check to see if we need to exclude this file
             # this also skip missing files and/or directories
             check_excludes $LINE
@@ -681,6 +686,10 @@ do
         LINE_NUM=1
         for LINE in $(echo $PKG_CONTENTS);
         do
+            if [ ! -e $LINE ]; then
+                warn "WARN: File ${LINE} does not exist on the filesystem"
+                continue
+            fi # if [ ! -e $LINE ]; then
             # check to see if we need to exclude this file
             # this also skip missing files and/or directories
             check_excludes $LINE
@@ -709,7 +718,8 @@ do
                     PRE=$(printf '% 5s cp:' ${LINE_NUM})
                     say "- ${PRE} ${SOURCE} to ${SQUASH_SRC}/${TARGET}"
                     if [ "x${LOGFILE}" != "x" ]; then
-                        $CP $SOURCE "${SQUASH_SRC}/${TARGET}" \
+                        # --preserve=all
+                        $CP --preserve=all $SOURCE "${SQUASH_SRC}/${TARGET}" \
                             >> $LOGFILE 2>&1
                         cmd_status "${CP} ${SOURCE} ${SQUASH_SRC}/${TARGET}" \
                             $?
@@ -738,6 +748,7 @@ do
                     #TARGET=$($READLINK -f $SOURCE | $TR -d '\n')
                     #TARGET=$($READLINK -f $SOURCE | sed 's!^/!!')
                     TARGET=$($READLINK -f $SOURCE)
+                    SOURCE=$(echo ${SOURCE} | sed 's!^/!!')
                     PRE=$(printf '% 5s ln:' ${LINE_NUM})
                     say "- ${PRE} ${TARGET} ${SQUASH_SRC}/${SOURCE}" 
                     if [ "x${LOGFILE}" != "x" ]; then
