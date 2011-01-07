@@ -1,7 +1,7 @@
 #! /bin/sh
 
 # $Id: keyprompt,v 1.16 2009-08-01 07:06:37 brian Exp $
-# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+# Copyright (c)2007 Brian Manning <brian at portaboom dot com>
 
 # this script starts the console and webserver prompts; it runs external
 # scripts to take care of these things
@@ -9,7 +9,10 @@
 # FIXME
 # - allow for changing the HTTP port via /proc/cmdline or a config file
 
-source $ANT_FUNCTIONS
+if ! [ -e $LACK_FUNCTIONS ]; then
+    LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
+fi # if ! [ -e $LACK_FUNCTIONS ]
+source $LACK_FUNCTIONS
 PATH=/sbin:/bin:/usr/bin  # No remote fs at start
 DESC="Console key prompt"
 BASENAME="keyprompt"

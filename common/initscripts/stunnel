@@ -1,9 +1,12 @@
 #! /bin/sh
 
 # $Id: stunnel,v 1.11 2009-08-01 00:51:37 brian Exp $
-# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+# Copyright (c)2007 Brian Manning <brian at portaboom dot com>
 
-source $ANT_FUNCTIONS
+if ! [ -e $LACK_FUNCTIONS ]; then
+    LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
+fi # if ! [ -e $LACK_FUNCTIONS ]
+source $LACK_FUNCTIONS
 PATH=/sbin:/bin  # No remote fs at start
 ACTION=$1
 BINARY="/usr/bin/stunnel"

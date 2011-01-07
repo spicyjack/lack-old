@@ -1,16 +1,19 @@
 #! /bin/sh
 
 # $Id: sysfs,v 1.12 2008-01-31 19:59:22 brian Exp $
-# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+# Copyright (c)2007 Brian Manning <brian at portaboom dot com>
 # PLEASE DO NOT E-MAIL THE AUTHOR ABOUT THIS SOFTWARE
 # The proper venue for questions is the Antlinux mailing list at:
-# http://groups.google.com/group/antlinux or <antlinux@googlegroups.com>
+# http://groups.google.com/linuxack or <linuxack.googlegroups.com>
 
 # this file will get touched if we're running in debug mode; this script will
 # have already been run
 if [ -e /var/run/debug ]; then exit 0; fi
 
-source $ANT_FUNCTIONS
+if ! [ -e $LACK_FUNCTIONS ]; then
+    LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
+fi # if ! [ -e $LACK_FUNCTIONS ]
+source $LACK_FUNCTIONS
 ACTION=$1
 BINARY=/bin/mount
 [ -x "$BINARY" ] || exit 1

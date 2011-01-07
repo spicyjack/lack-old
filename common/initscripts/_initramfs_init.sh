@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright (c)2003 Brian Manning (elspicyjack at gmail dot com)
+# Copyright (c)2003 Brian Manning (brian at portaboom dot com)
 # PLEASE DO NOT E-MAIL THE AUTHOR ABOUT THIS SOFTWARE
 # The proper venue for questions is the LACK mailing list at:
 # http://groups.google.com/group/linuxack or <linuxack@googlegroups.com>
@@ -49,7 +49,10 @@ DEBUG_BOOT_LOG="/var/log/debugboot.log"
 
 # source the functions script.  this is where colorize(), cmd_status(),
 # want_shell() and file_parse() is coming from
-source $ANT_FUNCTIONS
+if ! [ -e $LACK_FUNCTIONS ]; then
+    LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
+fi # if ! [ -e $LACK_FUNCTIONS ]
+source $LACK_FUNCTIONS
 
 # show the header first
 $BB clear

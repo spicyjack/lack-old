@@ -1,9 +1,12 @@
 #! /bin/sh
 
 # $Id: rootvol,v 1.19 2008-11-14 08:58:08 brian Exp $
-# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+# Copyright (c)2007 Brian Manning <brian at portaboom dot com>
 
-source $ANT_FUNCTIONS
+if ! [ -e $LACK_FUNCTIONS ]; then
+    LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
+fi # if ! [ -e $LACK_FUNCTIONS ]
+source $LACK_FUNCTIONS
 BASENAME="rootvol"
 PATH=/sbin:/bin  # No remote fs at start
 ACTION=$1

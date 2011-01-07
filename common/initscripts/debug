@@ -1,12 +1,15 @@
 #! /bin/sh
 
 # $Id: debug,v 1.1 2009-08-02 03:36:18 brian Exp $
-# Copyright (c)2009 Brian Manning <elspicyjack at gmail dot com>
+# Copyright (c)2009 Brian Manning <brian at portaboom dot com>
 
 # a debugging script; to be used to dump the environment at a specified time
 
 # picks up things like colorize()
-source $ANT_FUNCTIONS
+if ! [ -e $LACK_FUNCTIONS ]; then
+    LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
+fi # if ! [ -e $LACK_FUNCTIONS ]
+source $LACK_FUNCTIONS
 
 ACTION=$1
 BASENAME="debugging"

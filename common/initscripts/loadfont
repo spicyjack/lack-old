@@ -1,9 +1,12 @@
 #!/bin/sh
 
 # $Id: loadfont,v 1.4 2008-10-07 07:56:56 brian Exp $
-# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+# Copyright (c)2007 Brian Manning <brian at portaboom dot com>
 
-source $ANT_FUNCTIONS
+if ! [ -e $LACK_FUNCTIONS ]; then
+    LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
+fi # if ! [ -e $LACK_FUNCTIONS ]
+source $LACK_FUNCTIONS
 PATH=/sbin:/bin  # No remote fs at start
 ACTION=$1
 BASENAME="loadfont"

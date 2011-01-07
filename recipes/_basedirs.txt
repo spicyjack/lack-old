@@ -7,10 +7,11 @@ dir /bin 0755 0 0
 dir /boot 0755 0 0
 dir /dev 0755 0 0
 dir /etc 0755 0 0
-dir /etc/X11 0755 0 0
 dir /etc/init.d 0755 0 0
 dir /etc/modprobe.d 755 0 0
 dir /etc/network 0755 0 0
+dir /etc/scripts 0755 0 0
+dir /etc/X11 0755 0 0
 dir /home 0755 0 0
 dir /home/lack 0755 1000 1000
 dir /lib 0755 0 0
@@ -48,7 +49,7 @@ slink /bin/bash /bin/fake-bash.sh 0755 0 0
 slink /usr/bin/host /usr/bin/nslookup 0755 0 0
 # _basedirs /etc
 slink /etc/mtab /proc/mounts 0755 0 0
-file /etc/ant_functions.sh :BUILD_BASE:/common/initscripts/ant_functions.sh 0755 0 0
+file /etc/scripts/lack_functions.sh :BUILD_BASE:/common/initscripts/lack_functions.sh 0755 0 0
 # the below two files should be provided by the specific project's initramfs
 # file listing
 file /etc/ld.so.conf :BUILD_BASE:/common/etcfiles/ld.so.conf 0644 0 0

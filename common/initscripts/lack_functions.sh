@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# $Id: ant_functions.sh,v 1.8 2009-08-01 07:06:37 brian Exp $
-# Copyright (c)2004 Brian Manning <elspicyjack at gmail dot com>
+# $Id: lack_functions.sh,v 1.8 2009-08-01 07:06:37 brian Exp $
+# Copyright (c)2004 Brian Manning <brian at portaboom dot com>
 
 # Essential functions for booting/running a LACK install
 
@@ -12,7 +12,7 @@
 # specified
 
 # initialize some variable defaults
-PATH="${PATH}:/bin:/sbin:/usr/bin:/usr/sbin"
+#PATH="${PATH}:/bin:/sbin:/usr/bin:/usr/sbin"
 # this should already be set by the time this script is called; if it's not
 # exported somewhere else, then uncomment the next line
 #BB="/bin/busybox"

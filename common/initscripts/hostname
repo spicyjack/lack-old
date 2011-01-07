@@ -1,10 +1,13 @@
 #! /bin/sh
 
 # $Id: hostname,v 1.3 2009-07-16 00:23:49 brian Exp $
-# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+# Copyright (c)2007 Brian Manning <brian at portaboom dot com>
 
 # picks up things like colorize()
-source $ANT_FUNCTIONS
+if ! [ -e $LACK_FUNCTIONS ]; then
+    LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
+fi # if ! [ -e $LACK_FUNCTIONS ]
+source $LACK_FUNCTIONS
 
 PATH=/sbin:/bin  # No remote fs at start
 ACTION=$1

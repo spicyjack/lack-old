@@ -1,10 +1,13 @@
 #! /bin/sh
 
 # $Id: mountall,v 1.4 2009-06-26 07:31:22 brian Exp $
-# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+# Copyright (c)2007 Brian Manning <brian at portaboom dot com>
 
 # picks up things like colorize()
-source $ANT_FUNCTIONS
+if ! [ -e $LACK_FUNCTIONS ]; then
+    LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
+fi # if ! [ -e $LACK_FUNCTIONS ]
+source $LACK_FUNCTIONS
 
 ACTION=$1
 BINARY=/bin/mount

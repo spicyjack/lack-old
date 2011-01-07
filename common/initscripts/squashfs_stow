@@ -5,7 +5,10 @@
 # stow squashfs files mounted in /pkgs
 
 # picks up things like colorize()
-source $ANT_FUNCTIONS
+if ! [ -e $LACK_FUNCTIONS ]; then
+    LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
+fi # if ! [ -e $LACK_FUNCTIONS ]
+source $LACK_FUNCTIONS
 
 #PATH=/sbin:/bin  # No remote fs at start
 ACTION=$1

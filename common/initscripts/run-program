@@ -1,9 +1,12 @@
 #!/bin/sh
 
 # $Id: run_program,v 1.17 2009-07-12 00:42:40 brian Exp $
-# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+# Copyright (c)2007 Brian Manning <brian at portaboom dot com>
 
-source $ANT_FUNCTIONS
+if ! [ -e $LACK_FUNCTIONS ]; then
+    LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
+fi # if ! [ -e $LACK_FUNCTIONS ]
+source $LACK_FUNCTIONS
 ACTION=$1
 BASENAME="run-program"
 DESC="Running special run requests from /proc/cmdline"

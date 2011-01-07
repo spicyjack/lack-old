@@ -1,9 +1,12 @@
 #! /bin/sh
 
 # $Id: kernel_modules,v 1.14 2009-07-16 00:23:49 brian Exp $
-# Copyright (c)2007 Brian Manning <elspicyjack at gmail dot com>
+# Copyright (c)2007 Brian Manning <brian at portaboom dot com>
 
-source $ANT_FUNCTIONS
+if ! [ -e $LACK_FUNCTIONS ]; then
+    LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
+fi # if ! [ -e $LACK_FUNCTIONS ]
+source $LACK_FUNCTIONS
 PATH=/sbin:/bin  # No remote fs at start
 ACTION=$1
 BINARY=/sbin/modprobe
