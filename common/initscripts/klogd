@@ -2,8 +2,9 @@
 
 # $Id: klogd,v 1.13 2009-05-13 07:34:26 brian Exp $
 # Copyright (c)2008 Brian Manning <brian at portaboom dot com>
+
 # PLEASE DO NOT E-MAIL THE AUTHOR ABOUT THIS SOFTWARE
-# The proper venue for questions is the Antlinux mailing list at:
+# The proper venue for questions is the LACK mailing list at:
 # http://groups.google.com/linuxack or <linuxack.googlegroups.com>
 
 # this file will get touched if we're running in debug mode; this script will
@@ -16,6 +17,7 @@ if ! [ -e $LACK_FUNCTIONS ]; then
     LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
 fi # if ! [ -e $LACK_FUNCTIONS ]
 source $LACK_FUNCTIONS
+
 ACTION=$1
 BINARY=/sbin/klogd
 [ -x "$BINARY" ] || exit 1
@@ -34,7 +36,7 @@ case "$1" in
   start)
 	colorize $S_TIP "${BASENAME}: Starting $DESC;"
 	$BINARY $BINARY_OPTS
-    cmd_status $?
+    check_exit_status $? $BASENAME
     # get_pid sets $CHILD_PID
     get_pid $BINARY
     write_child_pid $BASENAME $CHILD_PID
@@ -48,7 +50,7 @@ case "$1" in
 	colorize $S_TIP "${BASENAME}: Stopping $DESC "
     echo -n "(PID=${KLOGD_PID});"
     /bin/kill -TERM $KLOGD_PID
-    cmd_status $?
+    check_exit_status $? $BASENAME
     colorize_nl "$S_SUCCESS" "$SUCCESS"
 	;;
   restart|force-reload)
@@ -61,4 +63,6 @@ case "$1" in
 	;;
 esac
 
-:
+exit 0
+# vi: set shiftwidth=4 tabstop=4 filetype=sh :
+# конец!

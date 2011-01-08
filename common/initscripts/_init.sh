@@ -50,7 +50,7 @@ export ANT_FUNCTIONS="/etc/ant_functions.sh"
 export BB="/bin/busybox"
 DEBUG_BOOT_LOG="/var/log/debugboot.log"
 
-# source the functions script.  this is where colorize(), cmd_status(),
+# source the functions script.  this is where colorize(), check_exit_status(),
 # want_shell() and file_parse() is coming from
 if ! [ -e $LACK_FUNCTIONS ]; then
     LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
@@ -106,7 +106,7 @@ for INITSCRIPT in /etc/start/*; do
         colorize_nl $S_TIP "- Running 'sh -x $INITSCRIPT start'"
     	sh -x $INITSCRIPT start 2>&1 >> $DEBUG_BOOT_LOG
     fi	
-    cmd_status $? $INITSCRIPT
+    check_exit_status $? $INITSCRIPT
     # was a pause asked for?
     pause_prompt
 done
@@ -128,7 +128,7 @@ fi
 # system's init binary
 for INITSCRIPT in /etc/stop/*; do
     sh $INITSCRIPT stop
-    cmd_status $? $INITSCRIPT
+    check_exit_status $? $INITSCRIPT
 done
 
 colorize_nl $S_INFO "=== End :PROJECT_NAME: /init script ==="
@@ -144,10 +144,11 @@ want_shell # DEBUG=X on /proc/cmdline
 exec switch_root -c /dev/console /mnt/rootvol /sbin/init
 # we lost busybox builtins when we unmounted /proc; do this the long way
 if [ $? -gt 0 ]; then colorize_nl $S_FAILURE "switch_root failed!"
-    # call cmd_status with a non-zero status code; this will cause the script
-    # to exit to a shell; don't prompt the user if they want to continue, once
-    # we go past here, we'll get a kernel panic
-    cmd_status 1 "switch_root" fi
+    # call check_exit_status with a non-zero status code; this will cause the
+    # script to exit to a shell; don't prompt the user if they want to
+    # continue, once we go past here, we'll get a kernel panic
+    check_exit_status 1 "switch_root" 
+fi
 
 ## END INIT SCRIPT!
 # once we get past here, the system's /sbin/init binary should have taken
@@ -168,4 +169,5 @@ if [ $? -gt 0 ]; then colorize_nl $S_FAILURE "switch_root failed!"
 # this program; if not, write to the Free Software Foundation, Inc., 59 Temple
 # Place, Suite 330, Boston, MA  02111-1307 USA
 
-# end of line
+# vi: set shiftwidth=4 tabstop=4 filetype=sh :
+# конец!

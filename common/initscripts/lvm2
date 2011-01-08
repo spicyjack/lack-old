@@ -2,12 +2,17 @@
 
 # $Id: lvm2,v 1.12 2008-01-25 01:36:04 brian Exp $
 # Copyright (c)2007 Brian Manning <brian at portaboom dot com>
+
+# PLEASE DO NOT E-MAIL THE AUTHOR ABOUT THIS SOFTWARE
+# The proper venue for questions is the LACK mailing list at:
+# http://groups.google.com/linuxack or <linuxack.googlegroups.com>
+
 if ! [ -e $LACK_FUNCTIONS ]; then
     LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
 fi # if ! [ -e $LACK_FUNCTIONS ]
 source $LACK_FUNCTIONS
+
 BASENAME="lvm2"
-PATH=/sbin:/bin  # No remote fs at start
 ACTION=$1
 DESC="Logical Volume Manager"
 
@@ -24,7 +29,7 @@ case "$ACTION" in
         # scan for volumes first
     	colorize $S_TIP "${BASENAME}: scanning for logical volumes;"
         /sbin/vgscan >> $BOOT_LOG 2>&1
-        cmd_status $?
+        check_exit_status $? $CHECK_EXIT_STATUS
         colorize_nl $S_SUCCESS "$SUCCESS"
 
         # now activate volumes
@@ -40,7 +45,7 @@ case "$ACTION" in
             colorize $S_TIP "${BASENAME}: enabling all volume groups;"
             /sbin/vgchange -ay --ignorelockingfailure >> $BOOT_LOG 2>&1
         fi
-        cmd_status $?
+        check_exit_status $? $BASENAME
         colorize_nl $S_SUCCESS "$SUCCESS"
     else
         colorize $S_INFO "${BASENAME}: 'volgrp=no' parameter found "
@@ -62,4 +67,6 @@ case "$ACTION" in
 	;;
 esac
 
-:
+exit 0
+# vi: set shiftwidth=4 tabstop=4 filetype=sh :
+# конец!

@@ -3,10 +3,15 @@
 # $Id: miscfs,v 1.4 2009-06-19 07:57:49 brian Exp $
 # Copyright (c)2007 Brian Manning <brian at portaboom dot com>
 
+# PLEASE DO NOT E-MAIL THE AUTHOR ABOUT THIS SOFTWARE
+# The proper venue for questions is the LACK mailing list at:
+# http://groups.google.com/linuxack or <linuxack.googlegroups.com>
+
 if ! [ -e $LACK_FUNCTIONS ]; then
     LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
 fi # if ! [ -e $LACK_FUNCTIONS ]
 source $LACK_FUNCTIONS
+
 ACTION=$1
 BINARY=/bin/mount
 [ -x "$BINARY" ] || exit 1
@@ -24,13 +29,13 @@ case "$ACTION" in
     #mkdir /dev/pts
     $BINARY devpts /dev/pts -t devpts -o rw,noexec,nosuid,gid=5,mode=620 \
         >> $BOOT_LOG 2>&1
-    cmd_status $? "$BINARY devpts /dev/pts -t devpts"
+    check_exit_status $? "$BINARY devpts /dev/pts -t devpts"
     colorize_nl $S_SUCCESS "$SUCCESS"
 	colorize $S_TIP "$BASENAME: Mounting /dev/shm (tmpfs);"
     # apparently udev is creating these
     #mkdir /dev/shm
     $BINARY tmpfs /dev/shm -t tmpfs -o rw,nosuid,nodev >> $BOOT_LOG 2>&1
-    cmd_status $? "mount tmpfs /dev/shm -t tmpfs -o rw,nosuid,nodev"
+    check_exit_status $? "mount tmpfs /dev/shm -t tmpfs -o rw,nosuid,nodev"
     colorize_nl $S_SUCCESS "$SUCCESS"
 	colorize_nl $S_TIP "$BASENAME: Checking for /proc/bus/usb directory"
     KEY_TIMER=0
@@ -49,21 +54,21 @@ case "$ACTION" in
     done # while [ ! -d /proc/bus ]
 	colorize $S_TIP "$BASENAME: Mounting usbfs on /proc/bus/usb"
     $BINARY usbfs /proc/bus/usb -t usbfs -o rw >> $BOOT_LOG 2>&1
-    cmd_status $? "mount usbfs /proc/bus/usb -t usbfs -o rw"
+    check_exit_status $? "mount usbfs /proc/bus/usb -t usbfs -o rw"
     colorize_nl $S_SUCCESS "$SUCCESS"
 	;;
   stop)
     colorize $S_TIP "$BASENAME: Unmounting /proc/bus/usb;"
     /bin/umount /proc/bus/usb
-    cmd_status $?
+    check_exit_status $?
     colorize_nl $S_SUCCESS "$SUCCESS"
     colorize $S_TIP "$BASENAME: Unmounting /dev/pts;"
     /bin/umount /dev/pts
-    cmd_status $?
+    check_exit_status $? "Unmounting /dev/pts"
     colorize_nl $S_SUCCESS "$SUCCESS"
     colorize $S_TIP "$BASENAME: Unmounting /dev/shm;"
     /bin/umount /dev/shm
-    cmd_status $?
+    check_exit_status $? "Unmounting /dev/shm"
     colorize_nl $S_SUCCESS "$SUCCESS"
 	;;
   restart|force-reload)
@@ -76,4 +81,6 @@ case "$ACTION" in
 	;;
 esac
 
-:
+exit 0
+# vi: set shiftwidth=4 tabstop=4 filetype=sh :
+# конец!

@@ -47,7 +47,7 @@ export ANT_FUNCTIONS="/etc/ant_functions.sh"
 export BB="/bin/busybox"
 DEBUG_BOOT_LOG="/var/log/debugboot.log"
 
-# source the functions script.  this is where colorize(), cmd_status(),
+# source the functions script.  this is where colorize(), check_exit_status(),
 # want_shell() and file_parse() is coming from
 if ! [ -e $LACK_FUNCTIONS ]; then
     LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
@@ -103,7 +103,7 @@ for INITSCRIPT in /etc/start/*; do
         colorize_nl $S_TIP "- Running 'sh -x $INITSCRIPT start'"
         sh -x $INITSCRIPT start 2>&1 >> $DEBUG_BOOT_LOG
     fi
-    cmd_status $? $INITSCRIPT
+    check_exit_status $? $INITSCRIPT
     # was a pause asked for?
     pause_prompt
 done
@@ -129,4 +129,5 @@ exec $BB init < dev/console > dev/console 2>&1
 # this program; if not, write to the Free Software Foundation, Inc., 59 Temple
 # Place, Suite 330, Boston, MA  02111-1307 USA
 
-# end of line
+# vi: set shiftwidth=4 tabstop=4 filetype=sh :
+# конец!

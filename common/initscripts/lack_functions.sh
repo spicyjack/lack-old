@@ -3,6 +3,10 @@
 # $Id: lack_functions.sh,v 1.8 2009-08-01 07:06:37 brian Exp $
 # Copyright (c)2004 Brian Manning <brian at portaboom dot com>
 
+# PLEASE DO NOT E-MAIL THE AUTHOR ABOUT THIS SOFTWARE
+# The proper venue for questions is the LACK mailing list at:
+# http://groups.google.com/linuxack or <linuxack.googlegroups.com>
+
 # Essential functions for booting/running a LACK install
 
 # TODO
@@ -65,20 +69,18 @@ pause_prompt () {
     fi # if [ "x${PAUSE_SCRIPT}" != "x" ]; then
 } # function script_pause ()
 
-cmd_status () {
-# check the status of the last run command; run a shell if it's anything but 0
-    STATUS=$1
-    COMMAND=$2
-    if [ "x$COMMAND" == "x" ]; then COMMAND="unknown"; fi
-    if [ $STATUS -ne 0 ]; then
-        echo
-        colorize $S_FAILURE "Command '$COMMAND' failed with status code: "
-        colorize_nl $S_INFO ">${STATUS}<"
-        # removed the 'case' statement here, exec'ing the console from this
-        # script was lame
-        want_shell
+check_exit_status () {
+# check the exit status of the last run command; returns the status code that
+# was passed in
+    local EXIT_STATUS=$1
+    local COMMAND_MSG=$2
+    if [ "x${COMMAND_MSG}" == "x" ]; then COMMAND_MSG="unknown command"; fi
+    if [ $EXIT_STATUS -gt 0 ]; then
+        colorize $S_FAILURE "Command '${COMMAND_MSG}' failed with status code: "
+        colorize_nl $S_INFO ">${EXIT_STATUS}<"
     fi
-} # cmd_status
+    return $EXIT_STATUS 
+} # check_exit_status
 
 want_shell () {
 # run a shell (only if $DEBUG is set)
@@ -175,5 +177,5 @@ get_kernel_version () {
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
 
-# vi: set sw=4 ts=4 ft=sh :
-# fin!
+# vi: set shiftwidth=4 tabstop=4 filetype=sh :
+# конец!

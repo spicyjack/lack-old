@@ -2,6 +2,9 @@
 
 # $Id: debug,v 1.1 2009-08-02 03:36:18 brian Exp $
 # Copyright (c)2009 Brian Manning <brian at portaboom dot com>
+# PLEASE DO NOT E-MAIL THE AUTHOR ABOUT THIS SOFTWARE
+# The proper venue for questions is the LACK mailing list at:
+# http://groups.google.com/linuxack or <linuxack.googlegroups.com>
 
 # a debugging script; to be used to dump the environment at a specified time
 
@@ -33,7 +36,6 @@ case "$ACTION" in
     /bin/netstat
 	;;
   stop)
-	PATH=/bin:/sbin:/usr/bin:/usr/sbin
     :
 	;;
   restart|force-reload)
@@ -46,4 +48,6 @@ case "$ACTION" in
 	;;
 esac
 
-:
+exit 0
+# vi: set shiftwidth=4 tabstop=4 filetype=sh :
+# конец!

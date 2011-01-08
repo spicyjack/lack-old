@@ -8,6 +8,7 @@ if ! [ -e $LACK_FUNCTIONS ]; then
     LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
 fi # if ! [ -e $LACK_FUNCTIONS ]
 source $LACK_FUNCTIONS
+
 # parse out the device to wipe
 file_parse "/proc/cmdline" "blankdev"
 export BLANK_DEV=$PARSED
@@ -17,7 +18,6 @@ export CONFIRM_BLANK=$PARSED
 # driver settle time, in seconds
 export SETTLE_TIME=3
 
-PATH=/sbin:/bin:/usr/bin  # No remote fs at start
 ACTION=$1
 BINARY=/bin/dd
 [ -x "$BINARY" ] || exit 1
@@ -78,11 +78,12 @@ case "$ACTION" in
     	colorize_nl $S_TIP "Blanking $BLANK_DEV"
 	    colorize_nl $S_SUCCESS "$BINARY $BINARY_OPTS"
     	$BINARY $BINARY_OPTS >> /var/log/boot.log 2>&1
-        cmd_status $?
-        colorize $S_TIP "Blanking hard drive:"
-        colorize_nl $S_SUCCESS "$SUCCESS"
-        colorize_nl $S_FAILURE "Rebooting machine in 5 seconds..."
-        sleep 5
+        check_exit_status $? "${BASENAME}"
+        if [ $? -eq 0 ]; then
+            colorize_nl $S_SUCCESS "The master boot record was erased!"
+            colorize_nl $S_FAILURE "Rebooting machine in 5 seconds..."
+            sleep 5
+        fi
     else 
         colorize_nl $S_FAILURE "String [Y|y] not entered;"
         colorize_nl $S_FAILURE "Rebooting machine in 15 seconds..."
@@ -91,7 +92,6 @@ case "$ACTION" in
     reboot -f
 	;;
   stop)
-	PATH=/bin:/sbin:/usr/bin:/usr/sbin
 	colorize $S_TIP "Stopping $DESC"
 	;;
   restart|force-reload)
@@ -104,4 +104,6 @@ case "$ACTION" in
 	;;
 esac
 
-:
+exit 0
+# vi: set shiftwidth=4 tabstop=4 filetype=sh :
+# конец!
