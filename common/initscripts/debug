@@ -1,7 +1,8 @@
-#! /bin/sh
+#!/bin/sh
 
 # $Id: debug,v 1.1 2009-08-02 03:36:18 brian Exp $
 # Copyright (c)2009 Brian Manning <brian at portaboom dot com>
+
 # PLEASE DO NOT E-MAIL THE AUTHOR ABOUT THIS SOFTWARE
 # The proper venue for questions is the LACK mailing list at:
 # http://groups.google.com/linuxack or <linuxack.googlegroups.com>
@@ -24,28 +25,28 @@ case "$ACTION" in
     exit 0
   ;;
   start)
-	colorize_nl $S_INFO "${BASENAME}: Dumping debug info: environment"
+    colorize_nl $S_INFO "${BASENAME}: Dumping debug info: environment"
     set
-	colorize_nl $S_INFO "${BASENAME}: Dumping debug info: /proc/cmdline"
+    colorize_nl $S_INFO "${BASENAME}: Dumping debug info: /proc/cmdline"
     cat /proc/cmdline
-	colorize_nl $S_INFO "${BASENAME}: Dumping debug info: modules"
-    /sbin/lsmod 
+    colorize_nl $S_INFO "${BASENAME}: Dumping debug info: modules"
+    /sbin/lsmod
     colorize_nl $S_INFO "${BASENAME}: Dumping debug info: network"
     /sbin/ifconfig
     colorize_nl $S_INFO "${BASENAME}: Dumping debug info: routing"
     /bin/netstat
-	;;
+    ;;
   stop)
     :
-	;;
+    ;;
   restart|force-reload)
- 	$0 stop
- 	$0 start
-	;;
+     $0 stop
+     $0 start
+    ;;
   *)
-	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
-	exit 3
-	;;
+    echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+    exit 3
+    ;;
 esac
 
 exit 0

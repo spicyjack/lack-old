@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 # $Id: klogd,v 1.13 2009-05-13 07:34:26 brian Exp $
 # Copyright (c)2008 Brian Manning <brian at portaboom dot com>
@@ -34,8 +34,8 @@ case "$1" in
     exit 0
   ;;
   start)
-	colorize $S_TIP "${BASENAME}: Starting $DESC;"
-	$BINARY $BINARY_OPTS
+    colorize $S_TIP "${BASENAME}: Starting $DESC;"
+    $BINARY $BINARY_OPTS
     check_exit_status $? $BASENAME
     # get_pid sets $CHILD_PID
     get_pid $BINARY
@@ -43,24 +43,24 @@ case "$1" in
     colorize "$S_SUCCESS" "$SUCCESS"
     echo -n " (PID=${CHILD_PID}, "
     echo "loglevel='${KERNEL_LOG_LEVEL}')"
-	;;
+    ;;
   stop)
-	PATH=/bin:/sbin:/usr/bin:/usr/sbin
+    PATH=/bin:/sbin:/usr/bin:/usr/sbin
     KLOGD_PID=$(cat /var/run/${BASENAME}.pid)
-	colorize $S_TIP "${BASENAME}: Stopping $DESC "
+    colorize $S_TIP "${BASENAME}: Stopping $DESC "
     echo -n "(PID=${KLOGD_PID});"
     /bin/kill -TERM $KLOGD_PID
     check_exit_status $? $BASENAME
     colorize_nl "$S_SUCCESS" "$SUCCESS"
-	;;
+    ;;
   restart|force-reload)
- 	$0 stop
- 	$0 start
-	;;
+     $0 stop
+     $0 start
+    ;;
   *)
-	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
-	exit 3
-	;;
+    echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+    exit 3
+    ;;
 esac
 
 exit 0

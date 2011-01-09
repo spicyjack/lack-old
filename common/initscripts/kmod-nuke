@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 # $Id: _initscript_stub.sh,v 1.7 2009-07-23 22:05:47 brian Exp $
 # Copyright (c)2007 Brian Manning <brian at portaboom dot com>
@@ -27,22 +27,22 @@ case "$ACTION" in
     exit 0
   ;;
   start)
-	colorize $S_TIP "${BASENAME}: Nuking ${DESC}"
-	$BINARY $BINARY_OPTS /lib/modules
+    colorize $S_TIP "${BASENAME}: Nuking ${DESC}"
+    $BINARY $BINARY_OPTS /lib/modules
     check_exit_status $? $BASENAME
     colorize_nl $S_SUCCESS "$SUCCESS"
-	;;
+    ;;
   stop)
     : # NOOP
-	;;
+    ;;
   restart|force-reload)
- 	$0 stop
- 	$0 start
-	;;
+     $0 stop
+     $0 start
+    ;;
   *)
-	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
-	exit 3
-	;;
+    echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+    exit 3
+    ;;
 esac
 
 exit 0

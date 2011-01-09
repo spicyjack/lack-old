@@ -8,7 +8,7 @@
 # License terms at the bottom of this file
 
 # System bootstrapping script for stand-alone systems, i.e. you will
-# switch_root and exec /sbin/init in the new root partition.  
+# switch_root and exec /sbin/init in the new root partition.
 #
 # This script will
 # 1) boot the system
@@ -18,7 +18,7 @@
 # passed in from /proc/cmdline)
 # 4) The call to switch_root that is run at the end of this script should
 # transfer control to the /sbin/init binary found on that freshly-mounted
-# filesystem. 
+# filesystem.
 
 # begin busybox setup; from here on down, you need to use the full path to
 # busybox, along with the name of the module you want to run, as the busybox
@@ -29,7 +29,7 @@
 # need to use the full path to the binary in any script called from here, as
 # the busybox applet will be run if there is no path to the binary
 
-# TODO 
+# TODO
 # - detect if the script output is going to a serial console or not, and adjust
 # calls to colorize() accordingly
 # - create a script parameter called $LOG_COMMAND, and have $LOG_COMMAND be
@@ -37,7 +37,7 @@
 # print the command output to the screen or a logfile and the screen at the
 # same time
 
-## EXPORTS 
+## EXPORTS
 # set a serial port for use in the subscripts for writing output so users
 # connected to serial console can see what's happening
 # FIXME sed/awk this out of /proc/cmdline, the 'console' tags
@@ -64,7 +64,7 @@ colorize_nl $S_INFO "=== Begin :PROJECT_NAME: /init script: PID is ${$} ==="
 # are we debugging?
 if [ $DEBUG ]; then
     colorize_nl $S_INFO "=== DEBUG environment variable currently: $DEBUG ==="
-    # yep, we are; 
+    # yep, we are;
     # set up enough of the environment (filesystems, mice, keyboards) so
     # that the user can respond to questions we ask of them :)
     $BB sh /etc/init.d/loadfont start
@@ -99,13 +99,13 @@ fi # if [ "x$DEBUG" != "x" ];
 # then add bbinit to your initscript list in your <project>_base.txt file
 for INITSCRIPT in /etc/start/*; do
     if [ "x$DEBUG" = "x" ]; then
-    	# no debugging, the default
-    	sh $INITSCRIPT start 2>>$BOOT_LOG
+        # no debugging, the default
+        sh $INITSCRIPT start 2>>$BOOT_LOG
     else
-    	# debugging, turn on sh -x
+        # debugging, turn on sh -x
         colorize_nl $S_TIP "- Running 'sh -x $INITSCRIPT start'"
-    	sh -x $INITSCRIPT start 2>&1 >> $DEBUG_BOOT_LOG
-    fi	
+        sh -x $INITSCRIPT start 2>&1 >> $DEBUG_BOOT_LOG
+    fi
     check_exit_status $? $INITSCRIPT
     # was a pause asked for?
     pause_prompt
@@ -147,7 +147,7 @@ if [ $? -gt 0 ]; then colorize_nl $S_FAILURE "switch_root failed!"
     # call check_exit_status with a non-zero status code; this will cause the
     # script to exit to a shell; don't prompt the user if they want to
     # continue, once we go past here, we'll get a kernel panic
-    check_exit_status 1 "switch_root" 
+    check_exit_status 1 "switch_root"
 fi
 
 ## END INIT SCRIPT!

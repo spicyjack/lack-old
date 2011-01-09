@@ -1,7 +1,8 @@
 #!/bin/sh
 
-# $Id: usb_modules,v 1.5 2009-05-07 07:22:12 brian Exp $
+# $Id: usb-modules,v 1.5 2009-05-07 07:22:12 brian Exp $
 # Copyright (c)2007 Brian Manning <brian at portaboom dot com>
+
 # PLEASE DO NOT E-MAIL THE AUTHOR ABOUT THIS SOFTWARE
 # The proper venue for questions is the Antlinux mailing list at:
 # http://groups.google.com/linuxack or <linuxack.googlegroups.com>
@@ -14,6 +15,7 @@ if ! [ -e $LACK_FUNCTIONS ]; then
     LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
 fi # if ! [ -e $LACK_FUNCTIONS ]
 source $LACK_FUNCTIONS
+
 ACTION=$1
 BINARY="/sbin/modprobe"
 BASENAME="usb-modules"
@@ -26,27 +28,29 @@ case "$ACTION" in
     exit 0
   ;;
   start)
-	colorize_nl $S_TIP "${BASENAME}: $DESC"
+    colorize_nl $S_TIP "${BASENAME}: $DESC"
     for MODULE in usbcore ehci-hcd uhci-hcd usbhid hid;
     do
-	    colorize_nl $S_TIP "  - $MODULE"
-    	$BINARY $BINARY_OPTS $MODULE >> $BOOT_LOG 2>&1
-    	#$BINARY $BINARY_OPTS $MODULE
-        cmd_status $?
+        colorize_nl $S_TIP "  - $MODULE"
+        $BINARY $BINARY_OPTS $MODULE >> $BOOT_LOG 2>&1
+        #$BINARY $BINARY_OPTS $MODULE
+        check_exit_status $? $BASENAME
     done
-	;;
+    ;;
   stop)
     # noop
     :
-	;;
+    ;;
   restart|force-reload)
     # noop
     :
-	;;
+    ;;
   *)
-	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
-	exit 3
-	;;
+    echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+    exit 3
+    ;;
 esac
 
-:
+exit 0
+# vi: set shiftwidth=4 tabstop=4 filetype=sh :
+# конец!

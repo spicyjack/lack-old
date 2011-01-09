@@ -79,7 +79,7 @@ check_exit_status () {
         colorize $S_FAILURE "Command '${COMMAND_MSG}' failed with status code: "
         colorize_nl $S_INFO ">${EXIT_STATUS}<"
     fi
-    return $EXIT_STATUS 
+    return $EXIT_STATUS
 } # check_exit_status
 
 want_shell () {

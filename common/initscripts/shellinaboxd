@@ -1,7 +1,11 @@
-#! /bin/sh
+#!/bin/sh
 
 # $Id: shellinaboxd,v 1.2 2009-07-28 23:07:39 brian Exp $
 # Copyright (c)2007 Brian Manning <brian at portaboom dot com>
+
+# PLEASE DO NOT E-MAIL THE AUTHOR ABOUT THIS SOFTWARE
+# The proper venue for questions is the LACK mailing list at:
+# http://groups.google.com/linuxack or <linuxack.googlegroups.com>
 
 # picks up things like colorize()
 if ! [ -e $LACK_FUNCTIONS ]; then
@@ -9,19 +13,20 @@ if ! [ -e $LACK_FUNCTIONS ]; then
 fi # if ! [ -e $LACK_FUNCTIONS ]
 source $LACK_FUNCTIONS
 
-PATH=/sbin:/bin:/usr/bin  # No remote fs at start
 ACTION=$1
 BINARY=/usr/bin/shellinaboxd
 [ -x "$BINARY" ] || exit 1
 BASENAME=$(/usr/bin/basename $BINARY)
 DESC="shellinaboxd"
+
 # set up some defaults
 if [ "x$SIAB_PID" == "x" ]; then SIAB_PID="/var/run/shellinabox.pid"; fi
 if [ "x$SIAB_PORT" == "x" ]; then SIAB_PORT="4200"; fi
 if [ "x$SIAB_CSS" == "x" ]; then SIAB_CSS="/etc/shellinabox/color.css"; fi
 # build the commandline
 OPTS="--cert=/etc/ssl/certs --background=$SIAB_PID --port=$SIAB_PORT"
-OPTS="${OPTS} --user-css Dark:+/etc/shellinabox/white-on-black.css;Color:+/etc/shellinabox/color.css"
+OPTS="${OPTS} --user-css Dark:+/etc/shellinabox/white-on-black.css;"
+OPTS="${OPTS}Color:+/etc/shellinabox/color.css"
 
 case "$ACTION" in
   vars)
@@ -30,31 +35,31 @@ case "$ACTION" in
     exit 0
   ;;
   start)
-	colorize $S_TIP "${BASENAME}: Starting ${DESC}"
-	$BINARY $OPTS >> $BOOT_LOG 2>&1
-    cmd_status $?
+    colorize $S_TIP "${BASENAME}: Starting ${DESC}"
+    $BINARY $OPTS >> $BOOT_LOG 2>&1
+    check_exit_status $? $BASENAME
     colorize_nl $S_SUCCESS "$SUCCESS"
-	;;
+    ;;
   stop)
-    PATH=/bin:/sbin:/usr/bin:/usr/sbin
     colorize $S_TIP "${BASENAME}: Stopping ${DESC}"
     kill -TERM $(cat $SIAB_PID)
-    cmd_status $?
+    check_exit_status $? $BASENAME
     colorize_nl $S_SUCCESS "$SUCCESS"
-    colorize $S_TIP "${BASENAME}: Removing PID file" 
+    colorize $S_TIP "${BASENAME}: Removing PID file"
     /bin/rm $SIAB_PID
-    cmd_status $?
+    check_exit_status $? $BASENAME
     colorize_nl $S_SUCCESS "$SUCCESS"
-
-	;;
+    ;;
   restart|force-reload)
- 	$0 stop
- 	$0 start
-	;;
+     $0 stop
+     $0 start
+    ;;
   *)
-	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
-	exit 3
-	;;
+    echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+    exit 3
+    ;;
 esac
 
-:
+exit 0
+# vi: set shiftwidth=4 tabstop=4 filetype=sh :
+# конец!

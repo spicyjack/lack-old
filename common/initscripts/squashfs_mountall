@@ -3,6 +3,10 @@
 # $Id: mountall,v 1.4 2009-06-26 07:31:22 brian Exp $
 # Copyright (c)2007 Brian Manning <brian at portaboom dot com>
 
+# PLEASE DO NOT E-MAIL THE AUTHOR ABOUT THIS SOFTWARE
+# The proper venue for questions is the LACK mailing list at:
+# http://groups.google.com/linuxack or <linuxack.googlegroups.com>
+
 # picks up things like colorize()
 if ! [ -e $LACK_FUNCTIONS ]; then
     LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
@@ -12,7 +16,7 @@ source $LACK_FUNCTIONS
 ACTION=$1
 BINARY=/bin/mount
 [ -x "$BINARY" ] || exit 1
-BASENAME="mountall"
+BASENAME="squashfs_mountall"
 # if the boot log is not set, then use a default logfile of /var/log/messages
 if [ "x$BOOT_LOG" = "x" ]; then
     LOGFILE="/var/log/messages"
@@ -35,11 +39,13 @@ mount_all_squashfs_packages () {
         #cp ${MOUNT_PATH}/portaboom/pkgs/$SFS_FILE /tmp
         if [ ! -d /pkgs/$SFS_NAME ]; then
             mkdir /pkgs/$SFS_NAME
+            check_exit_status $? "${BASENAME}: mkdir /pkgs/${SFS_NAME}"
         fi
         #mount -t squashfs -o loop /tmp/$SFS_FILE /pkgs/$SFS_NAME
         #mount -t squashfs -o loop ${MOUNT_PATH}/${SFS_FILE} /pkgs/$SFS_NAME
         colorize $S_TIP "$BASENAME: - ${SFS_NAME}"
         mount -t squashfs -o loop ${SFS_FILE} /pkgs/$SFS_NAME
+        check_exit_status $? "${BASENAME}: mount /pkgs/${SFS_NAME}"
         if [ $? -eq 0 ]; then
             colorize_nl $S_SUCCESS "$SUCCESS"
         else
@@ -95,10 +101,12 @@ case "$ACTION" in
                 # don't create a directory if one already exists
                 if [ ! -d /mnt/$MNT_POINT ]; then
                     mkdir /mnt/$MNT_POINT
+                    check_exit_status $? "${BASENAME}: mkdir /mnt/${MNT_POINT}"
                 fi
                 colorize $S_TIP "$BASENAME: Mounting /dev/${MNT_POINT}"
                 $BINARY -t auto -o ro /dev/$MNT_POINT \
                     /mnt/$MNT_POINT >> $LOGFILE 2>&1
+                check_exit_status $? "${BASENAME}: mounting /dev/${MNT_POINT}"
                 if [ $? -eq 0 ]; then
                     colorize_nl $S_SUCCESS "$SUCCESS"
                     # FIXME
@@ -118,13 +126,13 @@ case "$ACTION" in
     done # for DISK in hda hdb hdc hdd sda sdb sdc sdd sde sdf sdg
     ;; # start)
   stop)
-    PATH=/bin:/sbin:/usr/bin:/usr/sbin
     #colorize $S_TIP "Unmounting all filesystems"
     echo "Unmounting all device-backed filesystems"
     for MOUNT in $(cat /proc/mounts | grep "squash" | awk '{print $1}' );
     do
         echo " - $MOUNT"
         /bin/umount $MOUNT
+        check_exit_status $? "${BASENAME}: umount ${MOUNT}"
     done
     ;; # stop)
   restart|force-reload)
@@ -132,9 +140,11 @@ case "$ACTION" in
      $0 start
     ;;
   *)
-    echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+    echo "Usage: ${BASENAME} {start|stop|restart|force-reload}" >&2
     exit 3
     ;;
 esac
 
-:
+exit 0
+# vi: set shiftwidth=4 tabstop=4 filetype=sh :
+# конец!

@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 # $Id: miscfs,v 1.4 2009-06-19 07:57:49 brian Exp $
 # Copyright (c)2007 Brian Manning <brian at portaboom dot com>
@@ -24,20 +24,20 @@ case "$ACTION" in
     exit 0
   ;;
   start)
-	colorize $S_TIP "$BASENAME: Mounting /dev/pts (devpts);"
+    colorize $S_TIP "$BASENAME: Mounting /dev/pts (devpts);"
     # apparently udev is creating these
     #mkdir /dev/pts
     $BINARY devpts /dev/pts -t devpts -o rw,noexec,nosuid,gid=5,mode=620 \
         >> $BOOT_LOG 2>&1
     check_exit_status $? "$BINARY devpts /dev/pts -t devpts"
     colorize_nl $S_SUCCESS "$SUCCESS"
-	colorize $S_TIP "$BASENAME: Mounting /dev/shm (tmpfs);"
+    colorize $S_TIP "$BASENAME: Mounting /dev/shm (tmpfs);"
     # apparently udev is creating these
     #mkdir /dev/shm
     $BINARY tmpfs /dev/shm -t tmpfs -o rw,nosuid,nodev >> $BOOT_LOG 2>&1
     check_exit_status $? "mount tmpfs /dev/shm -t tmpfs -o rw,nosuid,nodev"
     colorize_nl $S_SUCCESS "$SUCCESS"
-	colorize_nl $S_TIP "$BASENAME: Checking for /proc/bus/usb directory"
+    colorize_nl $S_TIP "$BASENAME: Checking for /proc/bus/usb directory"
     KEY_TIMER=0
     # start a throbber loop
     while [ ! -d /proc/bus/usb ];
@@ -52,11 +52,11 @@ case "$ACTION" in
         esac
         sleep 1s
     done # while [ ! -d /proc/bus ]
-	colorize $S_TIP "$BASENAME: Mounting usbfs on /proc/bus/usb"
+    colorize $S_TIP "$BASENAME: Mounting usbfs on /proc/bus/usb"
     $BINARY usbfs /proc/bus/usb -t usbfs -o rw >> $BOOT_LOG 2>&1
     check_exit_status $? "mount usbfs /proc/bus/usb -t usbfs -o rw"
     colorize_nl $S_SUCCESS "$SUCCESS"
-	;;
+    ;;
   stop)
     colorize $S_TIP "$BASENAME: Unmounting /proc/bus/usb;"
     /bin/umount /proc/bus/usb
@@ -70,15 +70,15 @@ case "$ACTION" in
     /bin/umount /dev/shm
     check_exit_status $? "Unmounting /dev/shm"
     colorize_nl $S_SUCCESS "$SUCCESS"
-	;;
+    ;;
   restart|force-reload)
     $0 stop
     $0 start
-	;;
+    ;;
   *)
-	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
-	exit 3
-	;;
+    echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+    exit 3
+    ;;
 esac
 
 exit 0

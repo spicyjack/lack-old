@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 # $Id: icecast2,v 1.5 2009-03-20 09:10:36 brian Exp $
 # Copyright (c)2007 Brian Manning <brian at portaboom dot com>
@@ -29,8 +29,8 @@ case "$ACTION" in
     start)
         IFS_UP=$(/bin/ip address | /bin/grep UP | /usr/bin/wc -l)
         if [ $IFS_UP -gt 0 ]; then
-    	    colorize $S_TIP "Starting $DESC"
-	        su -s /bin/sh -c "$BINARY $BINARY_OPTS" icecast2 >>$BOOT_LOG 2&>1
+            colorize $S_TIP "Starting $DESC"
+            su -s /bin/sh -c "$BINARY $BINARY_OPTS" icecast2 >>$BOOT_LOG 2&>1
             check_exit_status $? $BASENAME
             colorize_nl $S_SUCCESS "$SUCCESS"
             # don't know why something here is writing this file...
@@ -38,21 +38,21 @@ case "$ACTION" in
         else
             colorize $S_INFO "Not starting $DESC; no network interfaces up"
         fi
-	    ;;
+        ;;
     stop)
-	    colorize $S_TIP "Stopping $DESC"
+        colorize $S_TIP "Stopping $DESC"
         kill -TERM $(cat /var/run/icecast.pid)
         check_exit_status $? $BASENAME
         colorize_nl $S_SUCCESS "$SUCCESS"
-	    ;;
+        ;;
     restart|force-reload)
- 	    $0 stop
- 	    $0 start
-	    ;;
+         $0 stop
+         $0 start
+        ;;
     *)
-	    echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
-	    exit 3
-	    ;;
+        echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+        exit 3
+        ;;
 esac
 
 exit 0

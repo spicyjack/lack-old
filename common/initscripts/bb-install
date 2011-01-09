@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 # $Id: bb_install,v 1.2 2008-01-31 19:59:22 brian Exp $
 # Copyright (c)2007 Brian Manning <brian at portaboom dot com>
@@ -30,25 +30,25 @@ case "$ACTION" in
     exit 0
   ;;
   start)
-	colorize $S_TIP "$BASENAME: $DESC;"
-	$BINARY $BINARY_OPTS >> $BOOT_LOG 2>&1
+    colorize $S_TIP "$BASENAME: $DESC;"
+    $BINARY $BINARY_OPTS >> $BOOT_LOG 2>&1
     check_exit_status $? "${BASENAME}"
     if [ $? -eq 0 ]; then
         colorize_nl $S_SUCCESS "$SUCCESS"
     fi
-	;;
+    ;;
   stop)
     # noop
     :
-	;;
+    ;;
   restart|force-reload)
     # noop
     :
-	;;
+    ;;
   *)
-	echo "Usage: $SCRIPTNAME {start|stop|restart|force-reload}" >&2
-	exit 3
-	;;
+    echo "Usage: $SCRIPTNAME {start|stop|restart|force-reload}" >&2
+    exit 3
+    ;;
 esac
 
 exit 0

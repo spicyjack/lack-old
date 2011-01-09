@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 # $Id: kernel_modules,v 1.14 2009-07-16 00:23:49 brian Exp $
 # Copyright (c)2007 Brian Manning <brian at portaboom dot com>
@@ -11,6 +11,7 @@ if ! [ -e $LACK_FUNCTIONS ]; then
     LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
 fi # if ! [ -e $LACK_FUNCTIONS ]
 source $LACK_FUNCTIONS
+
 ACTION=$1
 BINARY=/sbin/modprobe
 [ -x "$BINARY" ] || exit 0
@@ -30,28 +31,28 @@ case "$ACTION" in
     exit 0
   ;;
   start)
-	colorize_nl $S_TIP "${BASENAME}: $DESC"
-    for MODULE in $(cat $MODULES_FILE | grep -v "^#"); 
+    colorize_nl $S_TIP "${BASENAME}: $DESC"
+    for MODULE in $(cat $MODULES_FILE | grep -v "^#");
     do
-	    colorize_nl $S_TIP "  - $MODULE"
-    	$BINARY $BINARY_OPTS $MODULE >> $BOOT_LOG 2>&1
+        colorize_nl $S_TIP "  - $MODULE"
+        $BINARY $BINARY_OPTS $MODULE >> $BOOT_LOG 2>&1
         check_exit_status $? $BASENAME
     done
-	colorize $S_TIP "${BASENAME}: All kernel modules in /etc/modules loaded;"
+    colorize $S_TIP "${BASENAME}: All kernel modules in /etc/modules loaded;"
     colorize_nl $S_SUCCESS "${SUCCESS}"
-	;;
+    ;;
   stop)
     # noop
     :
-	;;
+    ;;
   restart|force-reload)
     # noop
     :
-	;;
+    ;;
   *)
-	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
-	exit 3
-	;;
+    echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+    exit 3
+    ;;
 esac
 
 exit 0

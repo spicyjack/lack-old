@@ -1,7 +1,12 @@
-#! /bin/sh
+#!/bin/sh
 
 # squashfs_stow
 # Copyright (c)2010 Brian Manning <brian at portaboom dot com>
+
+# PLEASE DO NOT E-MAIL THE AUTHOR ABOUT THIS SOFTWARE
+# The proper venue for questions is the LACK mailing list at:
+# http://groups.google.com/linuxack or <linuxack.googlegroups.com>
+
 # stow squashfs files mounted in /pkgs
 
 # picks up things like colorize()
@@ -10,7 +15,6 @@ if ! [ -e $LACK_FUNCTIONS ]; then
 fi # if ! [ -e $LACK_FUNCTIONS ]
 source $LACK_FUNCTIONS
 
-#PATH=/sbin:/bin  # No remote fs at start
 ACTION=$1
 BASENAME="squashfs_stow"
 
@@ -19,7 +23,7 @@ stow_package () {
     cd /pkgs
     PKG=$(basename ${PACKAGE_PATH})
     /usr/bin/perl /usr/bin/stow -t / $PKG
-    cmd_status $?
+    check_exit_status $? "${BASENAME}: stowing ${PKG}"
     colorize_nl $S_TIP "${BASENAME}: stowed - $PKG"
 } # stow_package
 case "$ACTION" in
@@ -40,10 +44,7 @@ case "$ACTION" in
     cd /pkgs
     PERL5LIB=${PERL_PATH}/usr/lib/perl:${PERL_PATH}/usr/share/perl \
         ${PERL_PATH}/usr/bin/perl ${PERL_PATH}/usr/bin/stow -t / $PERL_PKG
-    # FIXME
-    # - document how to use lack_functions
-    # - add the name of the command that was run to these cmd_status calls
-    cmd_status $? "stowing of perl + stow"
+    check_exit_status $? "stowing of perl + stow"
     colorize_nl $S_SUCCESS "$SUCCESS"
     for STOW_PKG in $(find /pkgs -maxdepth 1 -type d | grep -v '^/pkgs$');
     do
@@ -52,7 +53,6 @@ case "$ACTION" in
     cd $OLD_DIR
     ;;
   stop)
-    PATH=/bin:/sbin:/usr/bin:/usr/sbin
     colorize $S_TIP "${BASENAME}: Stopping ${DESC}"
     ;;
   restart|force-reload)
@@ -65,4 +65,6 @@ case "$ACTION" in
     ;;
 esac
 
-:
+exit 0
+# vi: set shiftwidth=4 tabstop=4 filetype=sh :
+# конец!

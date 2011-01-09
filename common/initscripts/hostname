@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 # $Id: hostname,v 1.3 2009-07-16 00:23:49 brian Exp $
 # Copyright (c)2007 Brian Manning <brian at portaboom dot com>
@@ -28,24 +28,24 @@ case "$ACTION" in
   ;;
   start)
     get_hostname # from ant_functions
-	colorize $S_TIP "$DESC $HOSTNAME"
-	$BINARY $HOSTNAME
+    colorize $S_TIP "$DESC $HOSTNAME"
+    $BINARY $HOSTNAME
     check_exit_status $? $BASENAME
     colorize_nl $S_SUCCESS "$SUCCESS"
-	;;
+    ;;
   stop)
-	colorize $INFO "Stopping $DESC"
+    colorize $INFO "Stopping $DESC"
     check_exit_status $? $BASENAME
     colorize_nl $S_SUCCESS "$SUCCESS"
-	;;
+    ;;
   restart|force-reload)
- 	$0 stop
- 	$0 start
-	;;
+     $0 stop
+     $0 start
+    ;;
   *)
-	echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
-	exit 3
-	;;
+    echo "Usage: $BASENAME {start|stop|restart|force-reload}" >&2
+    exit 3
+    ;;
 esac
 
 exit 0

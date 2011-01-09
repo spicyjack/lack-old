@@ -15,7 +15,7 @@ source $LACK_FUNCTIONS
 PATH=/sbin:/bin  # No remote fs at start
 ACTION=$1
 BASENAME="loadfont"
-DESC="'lode-lat1u-16' font from GoboLinux" 
+DESC="'lode-lat1u-16' font from GoboLinux"
 
 case "$ACTION" in
   vars)
@@ -28,19 +28,19 @@ case "$ACTION" in
     $BB gunzip -c /etc/lode-lat1u-16.psf.gz | $BB loadfont
     check_exit_status $? $BASENAME
     colorize_nl $S_SUCCESS "$SUCCESS"
-	;;
+    ;;
   stop)
     # noop
     :
-	;;
+    ;;
   restart|force-reload)
     # noop
     :
-	;;
+    ;;
   *)
-	echo "Usage: $SCRIPTNAME {start|stop|restart|force-reload}" >&2
-	exit 3
-	;;
+    echo "Usage: $SCRIPTNAME {start|stop|restart|force-reload}" >&2
+    exit 3
+    ;;
 esac
 
 exit 0

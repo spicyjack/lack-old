@@ -1,7 +1,11 @@
-#! /bin/sh
+#!/bin/sh
 
 # $Id: mountall,v 1.4 2009-06-26 07:31:22 brian Exp $
 # Copyright (c)2007 Brian Manning <brian at portaboom dot com>
+
+# PLEASE DO NOT E-MAIL THE AUTHOR ABOUT THIS SOFTWARE
+# The proper venue for questions is the LACK mailing list at:
+# http://groups.google.com/linuxack or <linuxack.googlegroups.com>
 
 # picks up things like colorize()
 if ! [ -e $LACK_FUNCTIONS ]; then
@@ -42,7 +46,7 @@ case "$ACTION" in
     colorize_nl $S_TIP "$BASENAME: Checking for Disk/Thumbdrive Devices..."
     for DISK in hda hdb hdc hdd sda sdb sdc sdd sde sdf sdg; do
         # skip testing the CD-ROM device
-        if [ "x$DISK" = "x$CDROM_DEV" ]; then 
+        if [ "x$DISK" = "x$CDROM_DEV" ]; then
             continue
         fi
         # skip devices that are already mounted for whatever reason
@@ -58,7 +62,7 @@ case "$ACTION" in
                 mkdir /mnt/$MNT_POINT
                 colorize $S_TIP "$BASENAME: Mounting /dev/${MNT_POINT}"
                 $BINARY -t auto -o ro /dev/$MNT_POINT \
-                    /mnt/$MNT_POINT >> $BOOT_LOG 2>&1 
+                    /mnt/$MNT_POINT >> $BOOT_LOG 2>&1
                 if [ $? -eq 0 ]; then
                     colorize_nl $S_SUCCESS "$SUCCESS"
                     find /mnt/$MNT_POINT -type f \
@@ -71,7 +75,6 @@ case "$ACTION" in
     done # for DISK in hda hdb hdc hdd sda sdb sdc sdd sde sdf sdg
     ;; # start)
   stop)
-    PATH=/bin:/sbin:/usr/bin:/usr/sbin
     #colorize $S_TIP "Unmounting all filesystems"
     echo "Unmounting all device-backed filesystems"
     for MOUNT in $(cat /proc/mounts | awk '{print $1}' | grep "^/dev");
@@ -90,4 +93,6 @@ case "$ACTION" in
     ;;
 esac
 
-:
+exit 0
+# vi: set shiftwidth=4 tabstop=4 filetype=sh :
+# конец!
