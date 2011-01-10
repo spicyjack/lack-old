@@ -40,13 +40,16 @@ SCRIPTNAME=$(basename $0)
 # some defaults
 QUIET=1 # 0 = no output, 1 = some output, 2 = noisy
 # 0 = don't hardlink, 1 hardlink
-HARDLINK_INITRD=0 # don't hardlink the initramfs to the initrd file
+LACK_HARDLINK_INITRD=0 # don't hardlink the initramfs to the initrd file
 # this is the top level directory; all of the paths created below start from
-# this directory and then work down the directory tree
-BUILD_BASE="/home/demo/src/lack-hg"
+# this directory and then work down the directory tree; this variable can be
+# overridden with the --basedir switch
+BUILD_BASE="/home/lack/src/lack.hg"
 # the list of files output and fed to gen_init_cpio
 FILELIST="initramfs-filelist.txt"
 PROJECT_LIST="project-filelist.txt"
+# default working directory
+LACK_WORK_DIR="/tmp"
 
 # helper functions
 
@@ -104,7 +107,7 @@ function sedify ()
 
     $CAT $SOURCE_FILE | $SED \
         "{
-        s!:PROJECT_NAME:!${PROJECT_NAME}!g;
+        s!:LACK_PROJECT_NAME:!${LACK_PROJECT_NAME}!g;
         s!:PROJECT_DIR:!${PROJECT_DIR}!g;
         s!:BUILD_BASE:!${BUILD_BASE}!g;
         s!:VERSION:!${KERNEL_VER}!g;
@@ -117,7 +120,7 @@ function show_vars()
     echo "variables:"
     echo "BUILD_BASE=${BUILD_BASE}"
     echo "KERNEL_VER=${KERNEL_VER}"
-    echo "PROJECT_NAME=${PROJECT_NAME}"
+    echo "LACK_PROJECT_NAME=${LACK_PROJECT_NAME}"
     echo "PROJECT_DIR=${PROJECT_DIR}"
     echo "PACKAGES='${PACKAGES}'"
     echo "OUTPUT_FILE=${OUTPUT_FILE}"
@@ -126,19 +129,18 @@ function show_vars()
 function show_help () {
 cat <<-EOF
 
-  $SCRIPTNAME [options] --base --project
+  $SCRIPTNAME [options] --basedir --project
 
   -or-
 
-  $SCRIPTNAME [options] --base --project-dir
+  $SCRIPTNAME [options] --basedir --projectdir
 
   SCRIPT OPTIONS
-  -b|--base         Base directory for project files and recipes
-  -d|--project-dir  Base directory for the project files, if different from
-                    --base option
+  -b|--basedir      Base directory for project files and recipes
+  -d|--projectdir   Directory for the project files, if not in --basedir
   -p|--project      Name of the project to build an initramfs image for
-                    This is usually the project's subdirectory underneath
-                    the --base directory
+                    Subdirectory under --basedir; use --projectdir if the
+                    project directory is not in --basedir
 
   -h|--help         Displays script options
   -e|--examples     Displays examples of script usage
@@ -151,6 +153,7 @@ cat <<-EOF
   -q|--quiet        No script output (unless an error occurs)
   -l|--hardlink     Create hardlink from 'initrd' to initramfs file
   -k|--keepfiles    Don't delete the created initramfs filelist/init.sh script
+  -w|--workdir      Directory to use for working files (default: /tmp)
 EOF
 } # function show_help ()
 
@@ -172,9 +175,9 @@ cat <<-EOF
         the kernel version number, used in specifying the kernel module
         directory to add kernel modules from, as well as being part of the
         name of the output initramfs file (initramfs-KERNEL_VER.cpio.gz)
-    PROJECT_NAME:
-        directory to append to BUILD_BASE in order to find initramfs filelist,
-        project configuration file and support scripts
+    LACK_PROJECT_NAME:
+        directory to append to BUILD_BASE in order to find initramfs
+        filelist, project configuration file and support scripts
     PROJECT_DIR: directory to look in for initramfs filelist, project
         configuration file and support scripts
     PACKAGES:
@@ -195,10 +198,10 @@ cat <<-EOF
     Normal usage:
 
     # project directory is underneath base directory
-    sh $SCRIPTNAME --base /path/to/base --project projectname
+    sh $SCRIPTNAME --basedir /path/to/base --project projectname
 
     # project directory somewhere else on the disk
-    sh $SCRIPTNAME --base /path/to/base --project-dir /path/to/project/dir
+    sh $SCRIPTNAME --basedir /path/to/base --projectdir /path/to/project/dir
 
     Output all of the important environment variables for a profile; you
     can edit these and then use them in place of a built-in profile;
@@ -215,10 +218,10 @@ EOF
 
 ### BEGIN SCRIPT ###
 # run getopt
-TEMP=$(${GETOPT} -o hHenp:d:f:sb:o:qlk \
---long help,longhelp,examples,dry-run,project:,project-dir: \
+TEMP=$(${GETOPT} -o hHenp:d:f:sb:o:qlkw: \
+--long help,longhelp,examples,dry-run,project:,projectdir: \
 --long varsfile:,showvars,base:,output:,quiet,hardlink \
---long keeplist,keepfiles,keep \
+--long keeplist,keepfiles,keep,workdir: \
 -n "${SCRIPTNAME}" -- "$@")
 check_return_status $? $GETOPT
 
@@ -251,7 +254,7 @@ while $TRUE; do
             exit 0;;
         -p|--project|--profile) # name of the project to use when
             # creating an initramfs image
-            PROJECT_NAME=$2
+            LACK_PROJECT_NAME=$2
             shift 2
             ;; # --project
         -n|--dry-run) # don't create the initramfs image, only filelists
@@ -266,14 +269,14 @@ while $TRUE; do
             SHOWVARS=1
             shift
             ;; # --quiet
-        -b|--base) # base directory for project files and recipes
+        -b|--basedir) # base directory for project files and recipes
             BUILD_BASE=$2
             shift 2
-            ;; # --base
-        -d|--project-dir) # project directory, outside of the base dir above
+            ;; # --basedir
+        -d|--projectdir) # project directory, outside of the base dir above
             PROJECT_DIR=$2
             shift 2
-            ;; # --project-dir
+            ;; # --projectdir
         -o|--output) # filename to write the initramfs file to; defaults to
             # /boot/initramfs-$KERNEL_VER.cpio.gz if not specified
             OUTPUT_FILE=$2
@@ -286,13 +289,18 @@ while $TRUE; do
             ;; # --quiet
         -l|--hardlink) # hardlink the new initramfs file to initrd for the
                     # update-grub script to work properly
-            HARDLINK_INITRD=1
+            LACK_HARDLINK_INITRD=1
             shift
             ;; # --initrd
         -k|--keepfiles|--keeplist|--keep) # keep the initramfs file list
             KEEP_TEMP_DIR=1
             shift
             ;; # --keep
+        -w|--workdir) # working directory; defaults to /tmp
+            LACK_WORK_DIR=$2
+            export LACK_WORK_DIR
+            shift 2
+            ;; # --workdir
         --) shift
             break
             ;; # --
@@ -311,8 +319,8 @@ if [ $SHOWVARS ]; then
 fi # if [ $SHOWVARS ]; then
 
 # can't set both $PROJECT and $PROJECT_DIR
-if [ "x$PROJECT_NAME" != "x" -a "x$PROJECT_DIR" != "x" ]; then
-    echo "ERROR: can't set --project and --project-dir at the same time"
+if [ "x$LACK_PROJECT_NAME" != "x" -a "x$PROJECT_DIR" != "x" ]; then
+    echo "ERROR: can't set --project and --projectdir at the same time"
     exit 1
 fi
 
@@ -333,7 +341,7 @@ if [ "x$PROJECT_DIR" != "x" ]; then
 
     if [ ! -d $PROJECT_DIR ]; then
         echo
-        echo "ERROR: --project-dir specified, but directory does not exist"
+        echo "ERROR: --projectdir specified, but directory does not exist"
         echo "ERROR: tested directory: ${PROJECT_DIR}"
         exit 1
     fi # if [ ! -d $PROJECT_DIR ]
@@ -342,20 +350,19 @@ if [ "x$PROJECT_DIR" != "x" ]; then
 fi # if [ "x$PROJECT_DIR" != "x" ]
 
 # if the project name was used, see if it exists
-if [ "x$PROJECT_NAME" != "x" ]; then
-    echo -n "- Checking for project '${PROJECT_NAME}' in base dir; "
-    if [ ! -d $BUILD_BASE/builds/$PROJECT_NAME ]; then
+if [ "x$LACK_PROJECT_NAME" != "x" ]; then
+    echo -n "- Checking for project '${LACK_PROJECT_NAME}' in base dir; "
+    if [ ! -d $BUILD_BASE/builds/$LACK_PROJECT_NAME ]; then
         echo
         echo "ERROR: --project specified, but project directory does not exist"
-        echo "ERROR: tested directory: ${BUILD_BASE}/builds/${PROJECT_NAME}"
+        echo "ERROR: directory: ${BUILD_BASE}/builds/${LACK_PROJECT_NAME}"
         exit 1
-    fi # if [ ! -d $BUILD_BASE/builds/$PROJECT_NAME ]
+    fi # if [ ! -d $BUILD_BASE/builds/$LACK_PROJECT_NAME ]
     echo "found!"
     # the project directory was passed in and it's valid
     # set it
-    PROJECT_DIR=$BUILD_BASE/builds/$PROJECT_NAME
+    PROJECT_DIR=$BUILD_BASE/builds/$LACK_PROJECT_NAME
 fi
-
 
 # no sense in running if gen_init_cpio doesn't exist
 if [ ! $DRY_RUN ]; then
@@ -382,7 +389,7 @@ if [ ! $DRY_RUN ]; then
 fi # if [ ! $DRY_RUN ]; then
 
 # create a temp directory
-TEMP_DIR=$(${MKTEMP} -d /tmp/tmp-initramfs.XXXXX)
+TEMP_DIR=$(${MKTEMP} -d ${LACK_WORK_DIR}/initramfs.XXXXX)
 echo "- Created temporary directory '${TEMP_DIR}'"
 
 ### EXPORTS
@@ -408,10 +415,12 @@ else
 fi # if [ -n $OUTPUT_FILE ]
 
 # create the project /init script and put it in the temporary directory
-echo "# Begin $FILELIST; to make changes to this list, " >> $TEMP_DIR/$FILELIST
+echo "# Begin $FILELIST; to make changes to this list, " \
+    >> $TEMP_DIR/$FILELIST
 echo "# edit the source .txt file." >> $TEMP_DIR/$FILELIST
 echo "# Filelist generated on $RFC_2822_DATE" >> $TEMP_DIR/$FILELIST
-echo "# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" >> $TEMP_DIR/$FILELIST
+echo "# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" \
+    >> $TEMP_DIR/$FILELIST
 
 # create the new init.sh script, which will be appended to
 # moved to the individual project files; some projects don't need the full
@@ -427,9 +436,9 @@ echo "# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" >> $TEMP_DIR/$FILELIST
 for RECIPE in $(echo ${PACKAGES});
 do
     # verify the recipe file exists
-    # check in $PROJECT_DIR first; note this works even if $PROJECT_DIR is not
-    # defined; if it's not defined, it will fail, and the check in $BUILD_BASE
-    # will then be done
+    # check in $PROJECT_DIR first; note this works even if
+    # $PROJECT_DIR is not defined; if it's not defined, it will fail, and
+    # the check in $BUILD_BASE will then be done
     if [ -r $PROJECT_DIR/recipes/$RECIPE.txt ]; then
         # project-specific recpie exists
         RECIPE_DIR="$PROJECT_DIR/recipes"
@@ -451,7 +460,8 @@ do
             exit 1
         fi
     fi # if [ -r $PROJECT_DIR/recipes/$RECIPE.txt ]
-    # then do some searching and replacing; write the output file to FILELIST
+    # then do some searching and replacing; write the output file to
+    # FILELIST
     sedify $RECIPE_DIR/$RECIPE.txt $TEMP_DIR/$FILELIST
 done
 
@@ -536,13 +546,13 @@ else
         echo "initramfs temporary directory is: ${TEMP_DIR}"
         echo "Please delete it manually"
     fi # if [ -z $KEEP_TEMP_DIR ]; then
-    if [ $HARDLINK_INITRD -gt 0 ]; then
+    if [ $LACK_HARDLINK_INITRD -gt 0 ]; then
         echo "Hardlinking $OUTPUT_FILE to initrd file"
         if [ -r /boot/initrd-$KERNEL_VER.gz ]; then
             rm /boot/initrd-$KERNEL_VER.gz
         fi #if [ -r /boot/initrd-$KERNEL_VER.gz ]
         ln $OUTPUT_FILE /boot/initrd-$KERNEL_VER.gz
-    fi # if [ $HARDLINK_INITRD -gt 0 ]
+    fi # if [ $LACK_HARDLINK_INITRD -gt 0 ]
 fi # if [ $DRY_RUN ];
 
 # if we got here, everything worked
