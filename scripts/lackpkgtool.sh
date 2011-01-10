@@ -167,8 +167,9 @@ function run_mksquashfs {
 ## DESC: check the status of the last run command; exit if the exit status
 ## DESC: is anything but 0
 function check_exit_status {
-    local COMMAND=$1
-    local STATUS=$2
+    local STATUS=$1
+    local COMMAND=$2
+
     if [ $STATUS -gt 0 ]; then
         warn "Command '${COMMAND}' failed with status code: ${STATUS}"
         exit 1
@@ -497,20 +498,20 @@ do
             if [ "x${LOGFILE}" != "x" ]; then
                 PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} 2>>$LOGFILE \
                     | sed 's/ /\\ /g')
-                check_exit_status "dpkg -L ${CURR_PKG}" $?
+                check_exit_status $? "dpkg -L ${CURR_PKG}"
             else
                 PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} \
                     | sed 's/ /\\ /')
-                check_exit_status "dpkg -L ${CURR_PKG}" $?
+                check_exit_status $? "dpkg -L ${CURR_PKG}"
             fi # if [ "x${LOGFILE}" != "x" ]
             #PKG_CONTENTS=$(echo ${PKG_CONTENTS} | sort )
             PKG_VERSION=$(dpkg-query -s ${CURR_PKG} \
                 | grep Version | awk '{print $2}')
-            #check_exit_status "dpkg-query -s ${CURR_PKG}" $?
+            #check_exit_status $? "dpkg-query -s ${CURR_PKG}"
             ;;
         directory)
             PKG_CONTENTS=$(/usr/bin/find ${CURR_PKG} -type f)
-            check_exit_status "find ${CURR_PKG} -type f" $?
+            check_exit_status $? "find ${CURR_PKG} -type f"
             ;;
         filelist)
             # unset FILELIST_FILE; if the filelist is missing, we want to be
@@ -557,7 +558,7 @@ do
                 warn "- Parsing: ${FILELIST_FILE}"
                 PKG_CONTENTS=$(cat ${FILELIST_FILE} | grep -v "^#" \
                     | awk '{print $2}')
-                #check_exit_status "find ${FILELIST_FILE} -type f" $?
+                #check_exit_status $? "find ${FILELIST_FILE} -type f"
             else
                 warn "ERROR: filelist ${FILELIST_FILE} not found!"
                 warn "(Maybe use --basepath option?)"
@@ -724,14 +725,12 @@ do
                         # --preserve=all
                         $CP --preserve=all $SOURCE "${SQUASH_SRC}/${TARGET}" \
                             >> $LOGFILE 2>&1
-                        check_exit_status \
-                            "${CP} ${SOURCE} ${SQUASH_SRC}/${TARGET}" \
-                            $?
+                        check_exit_status $? \
+                            "${CP} ${SOURCE} ${SQUASH_SRC}/${TARGET}"
                     else
                         $CP $SOURCE "${SQUASH_SRC}/${TARGET}"
-                        check_exit_status \
-                            "${CP} ${SOURCE} ${SQUASH_SRC}/${TARGET}" \
-                            $?
+                        check_exit_status $? \
+                            "${CP} ${SOURCE} ${SQUASH_SRC}/${TARGET}"
                     fi # if [ "x${LOGFILE}" != "x" ]
                     ;;
                 "directory")
