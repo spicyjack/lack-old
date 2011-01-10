@@ -44,7 +44,6 @@
 #   - packaged by
 #   - checksums?
 
-
 # external programs used
 CAT=$(which cat)
 CP=$(which cp)
@@ -150,7 +149,7 @@ function run_mksquashfs {
     MKSQUASHFS_CMD="${MKSQUASHFS_CMD} ${SQUASH_ARG}.sfs"
     if [ $ALL_ROOT -eq 0 ]; then
         MKSQUASHFS_CMD="${MKSQUASHFS_CMD} -force-uid $FUID -force-gid $FGID"
-    else 
+    else
         MKSQUASHFS_CMD="${MKSQUASHFS_CMD} -all-root"
     fi # if [ $ALL_ROOT -eq 0 ];
     say "- Running mksquashfs command:"
@@ -162,19 +161,19 @@ function run_mksquashfs {
     fi # if [ "x${LOGFILE}" != "x" ]
 } # run_mksquashfs
 
-## FUNC: cmd_status
+## FUNC: check_exit_status
 ## ARG: the command that was run, quoted if it contains spaces
 ## ARG: the exit status from the command
 ## DESC: check the status of the last run command; exit if the exit status
 ## DESC: is anything but 0
-function cmd_status {
+function check_exit_status {
     local COMMAND=$1
     local STATUS=$2
     if [ $STATUS -gt 0 ]; then
         warn "Command '${COMMAND}' failed with status code: ${STATUS}"
         exit 1
     fi
-} # cmd_status
+} # check_exit_status
 
 ## FUNC: show_excludes
 ## DESC: Show the contents of the EXCLUDES environment variable (set above)
@@ -182,7 +181,7 @@ function cmd_status {
 function show_excludes {
     echo "EXCLUDES is currently set to:"
     echo "-> '${EXCLUDES}'"
-} # cmd_status
+} # check_exit_status
 
 ## FUNC: check_excludes
 ## ARG: LINE, the current line from the filelist or package list
@@ -498,20 +497,20 @@ do
             if [ "x${LOGFILE}" != "x" ]; then
                 PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} 2>>$LOGFILE \
                     | sed 's/ /\\ /g')
-                cmd_status "dpkg -L ${CURR_PKG}" $?
+                check_exit_status "dpkg -L ${CURR_PKG}" $?
             else
                 PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} \
                     | sed 's/ /\\ /')
-                cmd_status "dpkg -L ${CURR_PKG}" $?
+                check_exit_status "dpkg -L ${CURR_PKG}" $?
             fi # if [ "x${LOGFILE}" != "x" ]
             #PKG_CONTENTS=$(echo ${PKG_CONTENTS} | sort )
             PKG_VERSION=$(dpkg-query -s ${CURR_PKG} \
                 | grep Version | awk '{print $2}')
-            #cmd_status "dpkg-query -s ${CURR_PKG}" $?
+            #check_exit_status "dpkg-query -s ${CURR_PKG}" $?
             ;;
         directory)
             PKG_CONTENTS=$(/usr/bin/find ${CURR_PKG} -type f)
-            cmd_status "find ${CURR_PKG} -type f" $?
+            check_exit_status "find ${CURR_PKG} -type f" $?
             ;;
         filelist)
             # unset FILELIST_FILE; if the filelist is missing, we want to be
@@ -558,7 +557,7 @@ do
                 warn "- Parsing: ${FILELIST_FILE}"
                 PKG_CONTENTS=$(cat ${FILELIST_FILE} | grep -v "^#" \
                     | awk '{print $2}')
-                #cmd_status "find ${FILELIST_FILE} -type f" $?
+                #check_exit_status "find ${FILELIST_FILE} -type f" $?
             else
                 warn "ERROR: filelist ${FILELIST_FILE} not found!"
                 warn "(Maybe use --basepath option?)"
@@ -725,11 +724,13 @@ do
                         # --preserve=all
                         $CP --preserve=all $SOURCE "${SQUASH_SRC}/${TARGET}" \
                             >> $LOGFILE 2>&1
-                        cmd_status "${CP} ${SOURCE} ${SQUASH_SRC}/${TARGET}" \
+                        check_exit_status \
+                            "${CP} ${SOURCE} ${SQUASH_SRC}/${TARGET}" \
                             $?
                     else
                         $CP $SOURCE "${SQUASH_SRC}/${TARGET}"
-                        cmd_status "${CP} ${SOURCE} ${SQUASH_SRC}/${TARGET}" \
+                        check_exit_status \
+                            "${CP} ${SOURCE} ${SQUASH_SRC}/${TARGET}" \
                             $?
                     fi # if [ "x${LOGFILE}" != "x" ]
                     ;;
@@ -754,7 +755,7 @@ do
                     TARGET=$($READLINK -f $SOURCE)
                     SOURCE=$(echo ${SOURCE} | sed 's!^/!!')
                     PRE=$(printf '% 5s ln:' ${LINE_NUM})
-                    say "- ${PRE} ${TARGET} ${SQUASH_SRC}/${SOURCE}" 
+                    say "- ${PRE} ${TARGET} ${SQUASH_SRC}/${SOURCE}"
                     if [ "x${LOGFILE}" != "x" ]; then
                         ln -s $TARGET ${SQUASH_SRC}/${SOURCE} >> $LOGFILE 2>&1
                     else
