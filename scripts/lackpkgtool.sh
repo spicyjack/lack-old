@@ -556,6 +556,11 @@ do
             say "- Processing filelist file: ${FILELIST_FILE}"
             if [ -s $FILELIST_FILE ]; then
                 warn "- Parsing: ${FILELIST_FILE}"
+                # FIXME 
+                # - this doesn't catch symlinks in filelist files
+                # - this also breaks if the source and destination files are
+                # different
+                #PKG_CONTENTS=$(cat ${FILELIST_FILE})
                 PKG_CONTENTS=$(cat ${FILELIST_FILE} | grep -v "^#" \
                     | awk '{print $2}')
                 #check_exit_status $? "find ${FILELIST_FILE} -type f"
