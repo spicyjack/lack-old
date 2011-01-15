@@ -37,25 +37,25 @@ sub dialog_move {
     # grab the current starting position
     if ( $move_direction eq q(center) ) {
         while ( $current_x != $start_x && $current_y != $start_y ) {
-            # move the current x and y 
+            # move the current x and y
             # if current == start, don't increment/decrement value
-            if ( $current_x < $start_x ) { 
-                $current_x ++; 
+            if ( $current_x < $start_x ) {
+                $current_x ++;
             } elsif ( $current_x > $start_x ) {
-                $current_x --; 
+                $current_x --;
             }
-            if ( $current_y < $start_y ) { 
-                $current_y++; 
+            if ( $current_y < $start_y ) {
+                $current_y++;
             } elsif ( $current_y > $start_y ) {
-                $current_y--; 
+                $current_y--;
             }
-            $toplevel->move($current_x, $current_y); 
+            $toplevel->move($current_x, $current_y);
         } # while ( $current_x != $start_x && $current_y != $start_y )
     } else {
         $theta += 0.5;
         print qq(moving dialog: theta is $theta\n);
         if ( $theta < 360 ) {
-            # generate the new x and y 
+            # generate the new x and y
             # absolute value of the sine/cosine of the angle
             my $new_x = int(abs($rho * cos(deg2rad($theta))));
             my $new_y = int(abs($rho * sin(deg2rad($theta))));
@@ -77,8 +77,8 @@ sub launch_terminal {
 
     # flag for moving the dialog; 0 == don't move, 1 == move
     if ( $move_dialog == 0 ) {
-        return TRUE; 
-    } # if ( $move_dialog == 0 ) 
+        return TRUE;
+    } # if ( $move_dialog == 0 )
 
     # check for the start_term.sh script first; throw up a message
     # dialog if it's not found when the user clicks on the button, don't
@@ -89,7 +89,7 @@ sub launch_terminal {
             system( q(/etc/scripts/start_term.sh &) );
             #system( q(touch /tmp/start_term.pid) );
             $move_dialog = 0;
-        } 
+        }
     } else {
         # show the user a modal dialog to let them know something's wrong
         my $dialog = Gtk2::MessageDialog->new(
@@ -120,11 +120,11 @@ sub check_terminal {
     my $b_term_label = ${$controls}[1];
     if ( -e q(/tmp/start_term.pid) ) {
         $b_term->set_sensitive(FALSE);
-        $b_term_label->set_markup_with_mnemonic( 
+        $b_term_label->set_markup_with_mnemonic(
             q(<span color="DimGrey">_Launch a Terminal Window</span>));
     } else {
         $b_term->set_sensitive(TRUE);
-        $b_term_label->set_markup_with_mnemonic( 
+        $b_term_label->set_markup_with_mnemonic(
             q(<span color="Black">_Launch a Terminal Window</span>));
     } # if ( -e q(/tmp/start_term.pid) )
     return TRUE;
@@ -153,7 +153,7 @@ $b_term->add($b_term_label);
 
 # connect the button's 'click' signal to an action
 my $launch_timeout_source_id;
-$b_term->signal_connect (clicked => sub { 
+$b_term->signal_connect (clicked => sub {
     #print qq(setting move_dialog to 1\n);
     $move_dialog = 1; } );
 # pack the button, expand == false, fill == FALSE, 5 pixels padding
