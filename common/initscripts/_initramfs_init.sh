@@ -41,17 +41,13 @@
 export SERIAL_PORT="/dev/ttyS0"
 # log file to write messages to
 export BOOT_LOG="/var/log/boot.log"
-# common functions used by all scripts
-export ANT_FUNCTIONS="/etc/ant_functions.sh"
 # path to busybox
 export BB="/bin/busybox"
 DEBUG_BOOT_LOG="/var/log/debugboot.log"
 
-# source the functions script.  this is where colorize(), check_exit_status(),
-# want_shell() and file_parse() is coming from
-if ! [ -e $LACK_FUNCTIONS ]; then
-    LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
-fi # if ! [ -e $LACK_FUNCTIONS ]
+# Source the common functions script.  This is where things like colorize(),
+# check_exit_status(), want_shell() and file_parse() is coming from
+export LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
 source $LACK_FUNCTIONS
 
 # show the header first
