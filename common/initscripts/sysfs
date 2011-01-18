@@ -33,13 +33,11 @@ case "$ACTION" in
     colorize $S_TIP "$BASENAME: Mounting $DESC;"
     $BINARY $BINARY_OPTS >> $BOOT_LOG 2>&1
     check_exit_status $? $BASENAME
-    colorize_nl $S_SUCCESS "$SUCCESS"
     ;;
   stop)
     colorize $S_TIP "$BASENAME: Unmounting $DESC;"
     /bin/umount /sys
     check_exit_status $? $BASENAME
-    colorize_nl $S_SUCCESS "$SUCCESS"
     ;;
   restart|force-reload)
     $0 stop

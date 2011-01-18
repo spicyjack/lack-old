@@ -60,19 +60,16 @@ case "$ACTION" in
         # nope
         $BINARY --url $STREAM_URL &
         check_exit_status $? "${BASENAME}: mpg123 ${STREAM_URL}"
-        colorize_nl $S_SUCCESS "$SUCCESS"
     else
         # yep
         $BINARY --url $STREAM_URL --use-wget &
         check_exit_status $? "${BASENAME}: wget/mpg123 ${STREAM_URL}"
-        colorize_nl $S_SUCCESS "$SUCCESS"
     fi # if [ "x$USE_WGET" != "x" ]
     ;;
   stop)
     colorize $S_TIP "${BASENAME}: Stopping ${DESC}"
     $BINARY --killall
     check_exit_status $? "${BASENAME}: mpg123 ${STREAM_URL}"
-    colorize_nl $S_SUCCESS "$SUCCESS"
     ;;
   restart|force-reload)
      $0 stop

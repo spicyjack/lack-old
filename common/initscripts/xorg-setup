@@ -29,15 +29,13 @@ case "$ACTION" in
     # runtime
     colorize $S_TIP "${BASENAME}: Creating 'fonts.dir'"
     /usr/sbin/update-fonts-dir -7 misc
-    check_exit_status $? $BASENAME
-    colorize_nl $S_SUCCESS "$SUCCESS"
+    check_exit_status $? "${BASENAME}: Creating 'fonts.dir'"
     colorize $S_TIP "${BASENAME}: Creating 'fonts.alias'"
     /usr/sbin/update-fonts-alias misc
-    check_exit_status $? $BASENAME
-    colorize_nl $S_SUCCESS "$SUCCESS"
+    check_exit_status $? "${BASENAME}: Creating 'fonts.alias'"
     ;;
   stop)
-    colorize $S_TIP "${BASENAME}: Stopping ${DESC}"
+    colorize_nl $S_TIP "${BASENAME}: Stopping ${DESC}"
     :
     ;;
   restart|force-reload)

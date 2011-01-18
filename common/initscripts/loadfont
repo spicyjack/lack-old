@@ -27,7 +27,6 @@ case "$ACTION" in
     colorize $S_TIP "${BASENAME}: Loading ${DESC};"
     $BB gunzip -c /etc/lode-lat1u-16.psf.gz | $BB loadfont
     check_exit_status $? $BASENAME
-    colorize_nl $S_SUCCESS "$SUCCESS"
     ;;
   stop)
     # noop

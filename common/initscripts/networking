@@ -28,19 +28,16 @@ loopback_up () {
     colorize $S_TIP "$BASENAME: Enabling ethernet interface 'lo'"
     /bin/ip link set lo up
     check_exit_status $? $BASENAME
-    colorize_nl $S_SUCCESS "$SUCCESS"
 } # loopback_up ()
 
 dhcp_up () {
     colorize $S_TIP "$BASENAME: Enabling ethernet interface 'eth0'"
     /bin/ip link set eth0 up
     check_exit_status $? $BASENAME
-    colorize_nl $S_SUCCESS "$SUCCESS"
     colorize $S_TIP "$BASENAME: Starting $DESC"
     #$BINARY $BINARY_OPTS >> $BOOT_LOG 2>&1
     /sbin/udhcpc -i eth0 -p /var/run/udhcpc.eth0.pid >> $BOOT_LOG 2>&1
     check_exit_status $? $BASENAME
-    colorize_nl $S_SUCCESS "$SUCCESS"
 } # dhcp_up ()
 
 dhcp_down () {
@@ -49,7 +46,6 @@ dhcp_down () {
     echo -n "(PID = $UDHCPC_PID) "
     kill -TERM $(cat /var/run/udhcpc.eth0.pid)
     check_exit_status $? $BASENAME
-    colorize_nl $S_SUCCESS "$SUCCESS"
 } # dhcp_up ()
 
 case "$ACTION" in

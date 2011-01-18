@@ -29,9 +29,7 @@ case "$ACTION" in
         # scan for volumes first
         colorize $S_TIP "${BASENAME}: scanning for logical volumes;"
         /sbin/vgscan >> $BOOT_LOG 2>&1
-        check_exit_status $? $CHECK_EXIT_STATUS
-        colorize_nl $S_SUCCESS "$SUCCESS"
-
+        check_exit_status $? "${BASENAME}: scanning for logical volumes;"
         # now activate volumes
         if [ "x$VOL_GRP" != "x" ]; then
             # activate a specific volume
@@ -39,14 +37,14 @@ case "$ACTION" in
             colorize $S_TIP "${BASENAME}: enabling volume group ${VOL_GRP};"
             /sbin/vgchange -ay --ignorelockingfailure $VOL_GRP \
                 >> $BOOT_LOG 2>&1
+            check_exit_status $? "$BASENAME: enabling volume group ${VOL_GRP}"
         else
             # activate all volumes, the root= parameter should point to the
             # exact root device
             colorize $S_TIP "${BASENAME}: enabling all volume groups;"
             /sbin/vgchange -ay --ignorelockingfailure >> $BOOT_LOG 2>&1
+            check_exit_status $? "$BASENAME: enabling all volume groups"
         fi
-        check_exit_status $? $BASENAME
-        colorize_nl $S_SUCCESS "$SUCCESS"
     else
         colorize $S_INFO "${BASENAME}: 'volgrp=no' parameter found "
         colorize_nl $S_INFO "in /proc/cmdline"

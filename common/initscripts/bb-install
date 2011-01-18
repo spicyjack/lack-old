@@ -33,9 +33,6 @@ case "$ACTION" in
     colorize $S_TIP "$BASENAME: $DESC;"
     $BINARY $BINARY_OPTS >> $BOOT_LOG 2>&1
     check_exit_status $? "${BASENAME}"
-    if [ $? -eq 0 ]; then
-        colorize_nl $S_SUCCESS "$SUCCESS"
-    fi
     ;;
   stop)
     # noop

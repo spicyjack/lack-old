@@ -31,15 +31,13 @@ case "$ACTION" in
   start)
     colorize $S_INFO "$BASENAME: Starting $DESC"
     $BINARY $BINARY_OPTS
-    check_exit_status $? $BASENAME
-    colorize_nl $S_SUCCESS "$SUCCESS"
+    check_exit_status $? "$BASENAME: Starting $DESC"
     ;;
   stop)
     colorize $S_INFO "$BASENAME: Stopping $DESC"
     HTTPD_PID=$(cat /var/run/webserver.pid)
     /bin/kill $HTTPD_PID
-    check_exit_status $?
-    colorize_nl $S_SUCCESS "$SUCCESS"
+    check_exit_status $? "$BASENAME: Stopping $DESC"
     ;;
   restart|force-reload)
     $0 stop

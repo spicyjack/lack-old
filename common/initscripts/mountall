@@ -33,10 +33,10 @@ case "$ACTION" in
         colorize_nl "$BASENAME: udevadm can't find CD-ROM device;"
         colorize_nl "$BASENAME: skipping CD-ROM mounting"
     else
-        colorize $S_TIP "$BASENAME: Mounting /dev/$CDROM_DEV "
+        colorize $S_TIP "$BASENAME: Mounting /dev/$CDROM_DEV"
         $BINARY -t iso9660 -o ro /dev/$CDROM_DEV /mnt/cdrom
+        check_exit_status $? "$BASENAME: Mounting /dev/$CDROM_DEV"
         if [ $? -eq 0 ]; then
-            colorize_nl $S_SUCCESS "$SUCCESS"
             # the mount worked, so run a find on the CD-ROM drive now
             find /mnt/cdrom -type f -iname "*.mp3" -o -iname "*.ogg" \
                 >> $MP3_FILELIST
@@ -63,12 +63,10 @@ case "$ACTION" in
                 colorize $S_TIP "$BASENAME: Mounting /dev/${MNT_POINT}"
                 $BINARY -t auto -o ro /dev/$MNT_POINT \
                     /mnt/$MNT_POINT >> $BOOT_LOG 2>&1
+                check_exit_status $? "$BASENAME: Mounting /dev/${MNT_POINT}"
                 if [ $? -eq 0 ]; then
-                    colorize_nl $S_SUCCESS "$SUCCESS"
                     find /mnt/$MNT_POINT -type f \
                         -iname "*.mp3" -o -iname "*.ogg" >> $MP3_FILELIST
-                else
-                    colorize_nl $S_FAILURE "$FAILED"
                 fi
             done # for MNT_POINT in $(echo ${PARTITIONS});
         fi # if [ $? -eq 0 ];
@@ -81,6 +79,7 @@ case "$ACTION" in
     do
         echo " - $MOUNT"
         /bin/umount $MOUNT
+        check_exit_status $? "$BASENAME: unmounting ${MOUNT}"
     done
     ;; # stop)
   restart|force-reload)

@@ -45,7 +45,6 @@ case "$ACTION" in
     colorize $S_TIP "$BASENAME: Starting $DESC" > $SERIAL_PORT
     $BINARY $BINARY_OPTS
     check_exit_status $? $BASENAME
-    colorize_nl $S_SUCCESS "$SUCCESS"
     colorize_nl $S_SUCCESS "$SUCCESS" > $SERIAL_PORT
     ;;
   stop)
@@ -54,7 +53,6 @@ case "$ACTION" in
     HTTPD_PID=$(cat $HTTPD_PID_FILE)
     /bin/kill $HTTPD_PID
     check_exit_status $? $BASENAME
-    colorize_nl $S_SUCCESS "$SUCCESS"
     colorize_nl $S_SUCCESS "$SUCCESS" > $SERIAL_PORT
     ;;
   restart|force-reload)

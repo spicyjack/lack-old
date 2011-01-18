@@ -33,12 +33,18 @@ case "$1" in
   start)
     colorize $S_TIP "$BASENAME: Starting $DESC;"
     $BINARY $BINARY_OPTS >> $BOOT_LOG 2>&1
-    check_exit_status $? $BASENAME
+    SYSLOGD_STATUS=$?
     # get_pid sets $CHILD_PID
     get_pid $BINARY
     write_child_pid $BASENAME $CHILD_PID
-    colorize $S_SUCCESS "$SUCCESS"
-    echo " (PID=${CHILD_PID})"
+    # update the user on the status of starting syslogd
+    if [ $SYSLOGD_STATUS -eq 0 ]; then
+        colorize $S_SUCCESS "$SUCCESS"
+        echo " (PID=${CHILD_PID})"
+    else
+        colorize_nl $S_FAILURE "$FAILED"
+        colorize $S_FAILURE "syslogd exited with status code $SYSLOGD_STATUS"
+    fi # if [ $SYSLOGD_STATUS -eq 0 ]
     ;;
   stop)
     PATH=/bin:/sbin:/usr/bin:/usr/sbin
@@ -47,7 +53,6 @@ case "$1" in
     echo -n "(PID=${SYSLOGD_PID});"
     /bin/kill -TERM $SYSLOGD_PID
     check_exit_status $? $BASENAME
-    colorize_nl $S_SUCCESS "$SUCCESS"
     ;;
   restart|force-reload)
      $0 stop

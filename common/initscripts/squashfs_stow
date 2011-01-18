@@ -23,8 +23,8 @@ stow_package () {
     cd /pkgs
     PKG=$(basename ${PACKAGE_PATH})
     /usr/bin/perl /usr/bin/stow -t / $PKG
+    colorize $S_TIP "${BASENAME}: stowing $PKG"
     check_exit_status $? "${BASENAME}: stowing ${PKG}"
-    colorize_nl $S_TIP "${BASENAME}: stowed - $PKG"
 } # stow_package
 case "$ACTION" in
   vars)
@@ -45,8 +45,8 @@ case "$ACTION" in
     PERL5LIB=${PERL_PATH}/usr/lib/perl:${PERL_PATH}/usr/share/perl \
         ${PERL_PATH}/usr/bin/perl ${PERL_PATH}/usr/bin/stow -t / $PERL_PKG
     check_exit_status $? "stowing of perl + stow"
-    colorize_nl $S_SUCCESS "$SUCCESS"
-    for STOW_PKG in $(find /pkgs -maxdepth 1 -type d | grep -v '^/pkgs$');
+    for STOW_PKG in $(find /pkgs -maxdepth 1 -type d \
+        | grep -v '^/pkgs$' | sort);
     do
         stow_package $STOW_PKG
     done

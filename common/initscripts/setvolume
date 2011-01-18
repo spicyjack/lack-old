@@ -47,19 +47,16 @@ case "$ACTION" in
         # nope
         $BINARY
         check_exit_status $? $BASENAME
-        colorize_nl $S_SUCCESS "$SUCCESS"
     else
         # yep
         $BINARY --mute
         check_exit_status $? $BASENAME
-        colorize_nl $S_SUCCESS "$SUCCESS"
     fi # if [ "x$USE_WGET" != "x" ]
     ;;
   stop)
     colorize $S_TIP "${BASENAME}: Stopping ${DESC}"
     $BINARY --mute
     check_exit_status $? $BASENAME
-    colorize_nl $S_SUCCESS "$SUCCESS"
     ;;
   restart|force-reload)
      $0 stop

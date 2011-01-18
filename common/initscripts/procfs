@@ -37,7 +37,6 @@ case "$ACTION" in
     colorize $S_TIP "$BASENAME: Mounting $DESC;"
     $BINARY $BINARY_OPTS >> $BOOT_LOG 2>&1
     check_exit_status $? $BASENAME
-    colorize_nl $S_SUCCESS "$SUCCESS"
     ;;
   stop)
     PATH=/bin:/sbin:/usr/bin:/usr/sbin
@@ -46,7 +45,6 @@ case "$ACTION" in
     check_exit_status $? $BASENAME
     #DEBUG=1
     want_shell
-    colorize_nl $S_SUCCESS "$SUCCESS"
     ;;
   restart|force-reload)
      $0 stop

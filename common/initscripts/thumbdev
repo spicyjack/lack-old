@@ -44,8 +44,8 @@ case "$ACTION" in
     if [ -d $KEY_MOUNT/$HOSTNAME ]; then
         colorize $S_TIP "$BASENAME: Unmounting Thumbdrive device"
         /bin/umount $THUMB_DEV
+        check_exit_status $? "$BASENAME: unmounting Thumbdrive device"
         if [ $? -eq 0 ]; then
-            colorize_nl $S_SUCCESS "$SUCCESS"
             colorize_nl $S_SUCCESS \
                 "####################################################"
             colorize_nl $S_SUCCESS \
@@ -53,8 +53,6 @@ case "$ACTION" in
             colorize_nl $S_SUCCESS \
                 "####################################################"
             sleep 1
-        else
-            check_exit_status $? $BASENAME
         fi # if [ $? -eq 0 ]; then
     fi # if [ -d "/mnt/flash/keys" ]; then
     ;;

@@ -34,12 +34,11 @@ case "$ACTION" in
     colorize_nl $S_TIP "${BASENAME}: $DESC"
     for MODULE in $(cat $MODULES_FILE | grep -v "^#");
     do
-        colorize_nl $S_TIP "  - $MODULE"
+        colorize $S_TIP "  - $MODULE"
         $BINARY $BINARY_OPTS $MODULE >> $BOOT_LOG 2>&1
         check_exit_status $? $BASENAME
     done
-    colorize $S_TIP "${BASENAME}: All kernel modules in /etc/modules loaded;"
-    colorize_nl $S_SUCCESS "${SUCCESS}"
+    colorize_nl $S_TIP "${BASENAME}: All kernel modules in /etc/modules loaded"
     ;;
   stop)
     # noop

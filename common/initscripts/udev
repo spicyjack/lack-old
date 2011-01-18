@@ -42,7 +42,6 @@ case "$ACTION" in
     echo > /sys/kernel/uevent_helper
     /bin/mount -n -o size=10M,mode=0755 -t tmpfs tmpfs /dev
     check_exit_status $? "${BASENAME}: mount tmpfs (/dev)"
-    colorize_nl $S_SUCCESS "$SUCCESS"
     # create a basic set of device nodes in the new /dev
     # /dev/null is needed prior to starting udevd
     colorize $S_TIP "$BASENAME: Creating static nodes in /dev"
@@ -50,21 +49,25 @@ case "$ACTION" in
     /bin/mkdir -p /dev/.udev/queue/ /dev/.udev/rules.d/ /dev/.udev/db/
     /lib/udev/create_static_nodes /dev
     check_exit_status $? "${BASENAME}: udev create static nodes"
-    colorize_nl $S_SUCCESS "$SUCCESS"
     # start the actual daemon
     colorize $S_TIP "$BASENAME: Starting udevd"
     $BINARY $BINARY_OPTS >> $BOOT_LOG 2>&1
-    check_exit_status $? "${BASENAME}: starting udevd"
+    UDEVD_STATUS=$?
+    #check_exit_status $? "${BASENAME}: starting udevd"
     # get_pid sets $CHILD_PID
     get_pid $BINARY
     write_child_pid $BASENAME $CHILD_PID
-    # save the newline for later
-    colorize $S_SUCCESS "$SUCCESS"
-    echo " (PID=${CHILD_PID})"
+    # give the user some status
+    if [ $UDEVD_STATUS -eq 0 ]; then
+        colorize $S_SUCCESS "$SUCCESS"
+        echo " (PID=${CHILD_PID})"
+    else
+        colorize_nl $S_FAILURE "$FAILED"
+        colorize_nl $S_FAILURE "udevd exited with status code $UDEVD_STATUS"
+    fi # if [ $UDEV_STATUS -eq 0 ]
     colorize $S_TIP "$BASENAME: Running 'udevadm trigger'"
     /sbin/udevadm trigger >> $BOOT_LOG 2>&1
     check_exit_status $? "${BASENAME}: running udevadm trigger"
-    colorize_nl $S_SUCCESS "$SUCCESS"
     ;;
   stop)
     UDEV_PID=$(cat /var/run/${BASENAME}.pid)
@@ -72,11 +75,9 @@ case "$ACTION" in
     echo -n "(PID=${UDEV_PID});"
     /bin/kill -TERM $UDEV_PID
     check_exit_status $? "${BASENAME}: killing PID of udevd"
-    colorize_nl $S_SUCCESS "$SUCCESS"
     colorize $S_TIP "$BASENAME: Unmounting tmpfs for udev; "
     /bin/umount -l /dev
     check_exit_status $? "${BASENAME}: unmounting tmpfs (/dev)"
-    colorize_nl $S_SUCCESS "$SUCCESS"
     ;;
   restart|force-reload)
     $0 stop

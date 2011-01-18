@@ -30,7 +30,6 @@ case "$ACTION" in
     colorize $S_TIP "${BASENAME}: Nuking ${DESC}"
     $BINARY $BINARY_OPTS /lib/modules
     check_exit_status $? $BASENAME
-    colorize_nl $S_SUCCESS "$SUCCESS"
     ;;
   stop)
     : # NOOP

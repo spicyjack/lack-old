@@ -36,21 +36,17 @@ mount_all_squashfs_packages () {
     for SFS_FILE in $PKG_LIST;
     do
         SFS_NAME=$(basename ${SFS_FILE} | sed 's/\.sfs$//')
+        colorize $S_TIP "${BASENAME} - ${SFS_NAME}"
+
         #cp ${MOUNT_PATH}/portaboom/pkgs/$SFS_FILE /tmp
         if [ ! -d /pkgs/$SFS_NAME ]; then
+            # no error checking here :/
             mkdir /pkgs/$SFS_NAME
-            check_exit_status $? "${BASENAME}: mkdir /pkgs/${SFS_NAME}"
         fi
         #mount -t squashfs -o loop /tmp/$SFS_FILE /pkgs/$SFS_NAME
         #mount -t squashfs -o loop ${MOUNT_PATH}/${SFS_FILE} /pkgs/$SFS_NAME
-        colorize $S_TIP "$BASENAME: - ${SFS_NAME}"
         mount -t squashfs -o loop ${SFS_FILE} /pkgs/$SFS_NAME
-        check_exit_status $? "${BASENAME}: mount /pkgs/${SFS_NAME}"
-        if [ $? -eq 0 ]; then
-            colorize_nl $S_SUCCESS "$SUCCESS"
-        else
-            colorize_nl $S_FAILURE "$FAILED"
-        fi
+        check_exit_status $? "${BASENAME}: Mounting squashfs /pkgs/${SFS_NAME}"
     done # for SFS_FILE in $SFS_LIST
 } # function mount_all_squashfs_packages
 
@@ -68,16 +64,14 @@ case "$ACTION" in
         colorize_nl "$BASENAME: udevadm can't find CD-ROM device;"
         colorize_nl "$BASENAME: skipping CD-ROM mounting"
     else
-        colorize $S_TIP "$BASENAME: Mounting /dev/$CDROM_DEV "
+        colorize $S_TIP "$BASENAME: Mounting /dev/$CDROM_DEV"
         $BINARY -t iso9660 -o ro /dev/$CDROM_DEV /mnt/cdrom 2>/dev/null
+        check_exit_status $? "$BASENAME: Mounting /dev/$CDROM_DEV"
         if [ $? -eq 0 ]; then
-            colorize_nl $S_SUCCESS "$SUCCESS"
             # the mount worked, so run a find on the CD-ROM drive now
             SFS_LIST=$(find /mnt/cdrom/portaboom/pkgs -type f -iname "*.sfs")
             mount_all_squashfs_packages "/mnt/cdrom" "${SFS_LIST}"
-        else
-            colorize_nl $S_FAILURE "$FAILED"
-        fi
+        fi # if [ $? -eq 0 ]
     fi # if [ $? -gt 0 ];
 
     colorize_nl $S_TIP "$BASENAME: Checking for Disk/Thumbdrive Devices..."
@@ -100,6 +94,7 @@ case "$ACTION" in
             for MNT_POINT in $(echo ${PARTITIONS}); do
                 # don't create a directory if one already exists
                 if [ ! -d /mnt/$MNT_POINT ]; then
+                    colorize $S_TIP "$BASENAME: mkdir /mnt/${MNT_POINT}"
                     mkdir /mnt/$MNT_POINT
                     check_exit_status $? "${BASENAME}: mkdir /mnt/${MNT_POINT}"
                 fi
@@ -108,19 +103,16 @@ case "$ACTION" in
                     /mnt/$MNT_POINT >> $LOGFILE 2>&1
                 check_exit_status $? "${BASENAME}: mounting /dev/${MNT_POINT}"
                 if [ $? -eq 0 ]; then
-                    colorize_nl $S_SUCCESS "$SUCCESS"
                     # FIXME
                     # - this doesn't adhere to the list of directories to
                     # search, this is catching everything on the drive :(
                     SFS_LIST=$(find /mnt/${MNT_POINT}/portaboom/pkgs \
-                        -type f -iname "*.sfs")
+                        -type f -iname "*.sfs" | sort)
                     # try and mount all of the packages we find
                     mount_all_squashfs_packages \
                         "/mnt/${MNT_POINT}/portaboom/pkgs" \
                         "${SFS_LIST}"
-                else
-                    colorize_nl $S_FAILURE "$FAILED"
-                fi
+                fi # if [ $? -eq 0 ]
             done # for MNT_POINT in $(echo ${PARTITIONS});
         fi # if [ $? -eq 0 ];
     done # for DISK in hda hdb hdc hdd sda sdb sdc sdd sde sdf sdg

@@ -31,12 +31,10 @@ case "$ACTION" in
     colorize $S_TIP "$DESC $HOSTNAME"
     $BINARY $HOSTNAME
     check_exit_status $? $BASENAME
-    colorize_nl $S_SUCCESS "$SUCCESS"
     ;;
   stop)
     colorize $INFO "Stopping $DESC"
     check_exit_status $? $BASENAME
-    colorize_nl $S_SUCCESS "$SUCCESS"
     ;;
   restart|force-reload)
      $0 stop

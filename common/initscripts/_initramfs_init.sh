@@ -99,7 +99,6 @@ for INITSCRIPT in /etc/start/*; do
         colorize_nl $S_TIP "- Running 'sh -x $INITSCRIPT start'"
         sh -x $INITSCRIPT start 2>&1 >> $DEBUG_BOOT_LOG
     fi
-    check_exit_status $? $INITSCRIPT
     # was a pause asked for?
     pause_prompt
 done

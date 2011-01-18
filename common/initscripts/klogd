@@ -36,13 +36,17 @@ case "$1" in
   start)
     colorize $S_TIP "${BASENAME}: Starting $DESC;"
     $BINARY $BINARY_OPTS
-    check_exit_status $? $BASENAME
+    KLOGD_STATUS=$?
     # get_pid sets $CHILD_PID
     get_pid $BINARY
     write_child_pid $BASENAME $CHILD_PID
-    colorize "$S_SUCCESS" "$SUCCESS"
-    echo -n " (PID=${CHILD_PID}, "
-    echo "loglevel='${KERNEL_LOG_LEVEL}')"
+    if [ $KLOGD_STATUS -eq 0 ]; then
+        colorize $S_SUCCESS "$SUCCESS"
+        echo " (PID=${CHILD_PID}, loglevel='${KERNEL_LOG_LEVEL}')"
+    else
+        colorize_nl $S_FAILURE "$FAILED"
+        colorize $S_FAILURE "klogd exited with status code $KLOGD_STATUS"
+    fi # if [ $KLOGD_STATUS -eq 0 ]
     ;;
   stop)
     PATH=/bin:/sbin:/usr/bin:/usr/sbin
@@ -51,7 +55,6 @@ case "$1" in
     echo -n "(PID=${KLOGD_PID});"
     /bin/kill -TERM $KLOGD_PID
     check_exit_status $? $BASENAME
-    colorize_nl "$S_SUCCESS" "$SUCCESS"
     ;;
   restart|force-reload)
      $0 stop
