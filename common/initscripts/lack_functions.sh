@@ -50,6 +50,7 @@ T_FAILURE="${BLINK};${F_YLW};${B_RED}"
 T_INFO="${INVERSE};${F_WHT};${B_BLU}"
 T_TIP="${CONCEALED};${F_BLK};${B_WHT}"
 
+
 colorize () {
 # colorize some text; $1 == color tag(s), $2 == text to colorize
     $BB echo -n "${START}${1}${END}${2}${START};${NONE}${END}"
@@ -84,6 +85,23 @@ want_shell () {
     fi # if [ $DEBUG ]
 } # want_shell()
 
+check_exit_error () {
+# check the exit status of the last run command; bark if there was an error
+# return the exit status code that was passed in
+    local EXIT_STATUS=$1
+    local COMMAND_MSG=$2
+    if [ "x${COMMAND_MSG}" == "x" ]; then COMMAND_MSG="unknown command"; fi
+    if [ $EXIT_STATUS -gt 0 ]; then
+        colorize_nl $S_FAILURE "$FAILED"
+        colorize $S_FAILURE "--> Command '${COMMAND_MSG}' failed; exit code: "
+        colorize_nl $S_INFO ">${EXIT_STATUS}<"
+        # from here, we ask the user if they want a shell, but only if $DEBUG
+        # has been set in the main init script
+        want_shell
+    fi
+    return $EXIT_STATUS
+} # check_exit_status
+
 check_exit_status () {
 # check the exit status of the last run command; returns the status code that
 # was passed in
@@ -93,15 +111,12 @@ check_exit_status () {
     if [ $EXIT_STATUS -eq 0 ]; then
         colorize_nl $S_SUCCESS "$SUCCESS"
     else
-        colorize_nl $S_FAILURE "$FAILED"
-        colorize $S_FAILURE "Command '${COMMAND_MSG}' failed with status code: "
-        colorize_nl $S_INFO ">${EXIT_STATUS}<"
-        # from here, we ask the user if they want a shell, but only if $DEBUG
-        # has been set in the main init script
-        want_shell
+        # so we only have to update this in one place...
+        check_exit_error $EXIT_STATUS $COMMAND_MSG
     fi
     return $EXIT_STATUS
 } # check_exit_status
+
 
 file_parse () {
 # parse a file $1, looking for search string found in $2
