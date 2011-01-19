@@ -20,12 +20,31 @@ BASENAME="squashfs_stow"
 
 stow_package () {
     local PACKAGE_PATH=$1
-    cd /pkgs
+    local EXIT_STATUS=0
+    cd $PACKAGE_PATH
     PKG=$(basename ${PACKAGE_PATH})
-    /usr/bin/perl /usr/bin/stow -t / $PKG
     colorize $S_TIP "${BASENAME}: stowing $PKG"
-    check_exit_status $? "${BASENAME}: stowing ${PKG}"
+    echo
+    for PKG_DIR in $(/bin/ls -1);
+    do
+        if [ $(echo ${PKG_DIR} | /bin/grep -c 'etc$') -gt 0 ]; then
+            # recursive copy of all files into the etc directory
+            echo "Copying ${PKG}/etc to /etc"
+            /bin/cp -av etc/* /etc
+            check_exit_error $? "Copying of 'etc' files from package $PKG"
+            EXIT_STATUS=$?
+        else
+            # stow files from this directory into the same directory in the
+            # root filesystem
+            echo "Stowing ${PKG}/${PKG_DIR} to /"
+            /usr/bin/perl /usr/bin/stow -t /${PKG_DIR} ${PKG_DIR}
+            check_exit_error $? "Copying of ${PKG_DIR} files from package $PKG"
+            EXIT_STATUS=$?
+        fi # if [ $(echo ${PKG_DIR} | /bin/grep -c 'etc$') -gt 0 ];
+    done # for $PKG_DIR in $STOW_DIRS
+    check_exit_status $EXIT_STATUS "${BASENAME}: stowing ${PKG}"
 } # stow_package
+
 case "$ACTION" in
   vars)
     # echo out what commandline variables are parsed by this script
@@ -53,7 +72,17 @@ case "$ACTION" in
     cd $OLD_DIR
     ;;
   stop)
-    colorize $S_TIP "${BASENAME}: Stopping ${DESC}"
+    colorize_nl $S_TIP "${BASENAME}: Unstowing packages..."
+    cd /pkgs
+    for UNSTOW in $(ls -1); do
+        if [ $(echo $UNSTOW | /bin/grep -c "^perl") -gt 0 ]; then
+            continue
+        fi
+        colorize $S_TIP " - ${UNSTOW}"
+        /usr/bin/stow -D $UNSTOW
+        check_exit_status $? "unstowing of ${UNSTOW}"
+    done
+    /usr/bin/stow -D perl.*
     ;;
   restart|force-reload)
      $0 stop

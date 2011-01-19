@@ -27,10 +27,20 @@ case "$ACTION" in
     colorize_nl $S_TIP "${BASENAME}: Running ${DESC}"
     # use the Debian scripts to generate the fonts.[alias|dir] files at
     # runtime
+    # remove the symlink if it exists
+    if [ -e /usr/share/fonts/X11/misc/fonts.dir ]; then
+        /bin/rm /usr/share/fonts/X11/misc/fonts.dir
+    fi
     colorize $S_TIP "${BASENAME}: Creating 'fonts.dir'"
+    # generate a new fonts.dir
     /usr/sbin/update-fonts-dir -7 misc
     check_exit_status $? "${BASENAME}: Creating 'fonts.dir'"
+    # remove the symlink if it exists
+    if [ -e /usr/share/fonts/X11/misc/fonts.dir ]; then
+        /bin/rm /usr/share/fonts/X11/misc/fonts.alias
+    fi
     colorize $S_TIP "${BASENAME}: Creating 'fonts.alias'"
+    # generate a new fonts.alias
     /usr/sbin/update-fonts-alias misc
     check_exit_status $? "${BASENAME}: Creating 'fonts.alias'"
     ;;
