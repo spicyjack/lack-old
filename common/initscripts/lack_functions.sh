@@ -15,12 +15,6 @@
 # - maybe parse the console kernel boot argument to see if a serial console was
 # specified
 
-# initialize some variable defaults
-#PATH="${PATH}:/bin:/sbin:/usr/bin:/usr/sbin"
-# this should already be set by the time this script is called; if it's not
-# exported somewhere else, then uncomment the next line
-#BB="/bin/busybox"
-
 # color control strings
 START="["
 END="m"
@@ -50,17 +44,48 @@ T_FAILURE="${BLINK};${F_YLW};${B_RED}"
 T_INFO="${INVERSE};${F_WHT};${B_BLU}"
 T_TIP="${CONCEALED};${F_BLK};${B_WHT}"
 
-
+## FUNC: colorize
+## ARG:  ANSI shortcut tags or ANSI escape sequences for coloring text
+## ARG:  text to colorize and output on STDOUT
+## RET:  returns the exit status of the busybox 'echo' builtin
+## DESC: Outputs the text passed in as the 2nd argument to STDOUT, *WITHOUT* a
+## DESC: newline.  This is good if you have a status message that should be
+## DESC: printed on the same line as this message.
 colorize () {
-# colorize some text; $1 == color tag(s), $2 == text to colorize
-    $BB echo -n "${START}${1}${END}${2}${START};${NONE}${END}"
+    local COLOR=$1
+    local MESSAGE=$2
+    $BB echo -n "${START}${COLOR}${END}${MESSAGE}${START};${NONE}${END}"
+    return $?
 } # colorize()
 
+## FUNC: colorize_nl
+## ARG:  ANSI shortcut tags or ANSI escape sequences for coloring text
+## ARG:  text to colorize and output on STDOUT
+## RET:  returns the exit status of the busybox 'echo' builtin
+## DESC: Calls colorize(), with the color string/message passed in as
+## DESC: arguments, then outputs a newline.  This is good for updating the
+## DESC: status of a command that was previously run, or just for updating
+## DESC: general staus of the system.
 colorize_nl () {
-# same as colorize(), but with a newline added at the end
-    colorize "${1}" "${2}"
+    local COLOR=$1
+    local MESSAGE=$2
+    colorize "${COLOR}" "${MESSAGE}"
     $BB echo
 } # colorize_nl()
+
+## FUNC: dlog
+## ARG:  message to write to the debug log
+## ENV:  DEBUG_LOG - the location of the debug logfile
+## DESC: log a message to the file pointed to by the DEBUG_LOG environment
+## DESC: variable; note that if this variable is not set, uses
+## DESC: /var/log/debug.log by default.
+dlog () {
+    local MESSAGE=$1
+    if [ "x$DEBUG_LOG" = "x" ]; then
+        DEBUG_LOG="/var/log/debug.log"
+    fi
+    echo $MESSAGE >> $DEBUG_LOG
+} # dlog()
 
 pause_prompt () {
 # function to pause script execution and prompt for user input to continue
