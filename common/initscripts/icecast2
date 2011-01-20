@@ -30,7 +30,7 @@ case "$ACTION" in
         IFS_UP=$(/bin/ip address | /bin/grep UP | /usr/bin/wc -l)
         if [ $IFS_UP -gt 0 ]; then
             colorize $S_TIP "Starting $DESC"
-            su -s /bin/sh -c "$BINARY $BINARY_OPTS" icecast2 >>$BOOT_LOG 2&>1
+            su -s /bin/sh -c "$BINARY $BINARY_OPTS" icecast2 >>$DEBUG_LOG 2&>1
             check_exit_status $? $BASENAME
             # don't know why something here is writing this file...
             rm -f /1

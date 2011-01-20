@@ -40,10 +40,9 @@
 # FIXME sed/awk this out of /proc/cmdline, the 'console' tags
 export SERIAL_PORT="/dev/ttyS0"
 # log file to write messages to
-export BOOT_LOG="/var/log/boot.log"
+export DEBUG_LOG="/var/log/debug.log"
 # path to busybox
 export BB="/bin/busybox"
-DEBUG_BOOT_LOG="/var/log/debugboot.log"
 
 # Source the common functions script.  This is where things like colorize(),
 # check_exit_status(), want_shell() and file_parse() is coming from
@@ -70,9 +69,9 @@ if [ $DEBUG ]; then
     #$BB sh /etc/init.d/syslogd start
     #$BB sh /etc/init.d/klogd start
     # touch the debug flag file so these scripts don't run again later on
-    touch /var/run/debug.state
+    touch /var/log/debug.env.state
     colorize_nl $S_INFO "=== dumping shell environment to debug.state  ==="
-    set > /var/run/debug.state
+    set > /var/log/debug.env.state
     # since we just mounted /proc, we can also test to see if we want pauses
     # in the init scripts
     # do we want to stop in between scripts?
@@ -82,8 +81,7 @@ if [ $DEBUG ]; then
     colorize_nl $S_INFO "Prompts will be given at different times to allow"
     colorize_nl $S_INFO "for halting the startup process in order to drop"
     colorize_nl $S_INFO "to a shell."
-    colorize_nl $S_INFO "init scripts will log to $DEBUG_BOOT_LOG."
-    export DEBUG_BOOT_LOG
+    colorize_nl $S_INFO "init scripts will log to $DEBUG_LOG."
     want_shell
 fi # if [ "x$DEBUG" != "x" ];
 
@@ -93,11 +91,11 @@ fi # if [ "x$DEBUG" != "x" ];
 for INITSCRIPT in /etc/start/*; do
     if [ "x$DEBUG" = "x" ]; then
         # no debugging, the default
-        sh $INITSCRIPT start 2>>$BOOT_LOG
+        sh $INITSCRIPT start 2>>$DEBUG_LOG
     else
         # debugging, turn on sh -x
         colorize_nl $S_TIP "- Running 'sh -x $INITSCRIPT start'"
-        sh -x $INITSCRIPT start 2>&1 >> $DEBUG_BOOT_LOG
+        sh -x $INITSCRIPT start 2>&1 >> $DEBUG_LOG
     fi
     # was a pause asked for?
     pause_prompt

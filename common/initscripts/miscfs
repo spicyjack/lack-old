@@ -28,13 +28,13 @@ case "$ACTION" in
     # apparently udev is creating these
     #mkdir /dev/pts
     $BINARY devpts /dev/pts -t devpts -o rw,noexec,nosuid,gid=5,mode=620 \
-        >> $BOOT_LOG 2>&1
+        >> $DEBUG_LOG 2>&1
     check_exit_status $? "$BINARY devpts /dev/pts -t devpts"
 
     colorize $S_TIP "$BASENAME: Mounting /dev/shm (tmpfs);"
     # apparently udev is creating these
     #mkdir /dev/shm
-    $BINARY tmpfs /dev/shm -t tmpfs -o rw,nosuid,nodev >> $BOOT_LOG 2>&1
+    $BINARY tmpfs /dev/shm -t tmpfs -o rw,nosuid,nodev >> $DEBUG_LOG 2>&1
     check_exit_status $? "mount tmpfs /dev/shm -t tmpfs -o rw,nosuid,nodev"
 
     colorize_nl $S_TIP "$BASENAME: Checking for /proc/bus/usb directory"
@@ -53,7 +53,7 @@ case "$ACTION" in
         sleep 1s
     done # while [ ! -d /proc/bus ]
     colorize $S_TIP "$BASENAME: Mounting usbfs on /proc/bus/usb"
-    $BINARY usbfs /proc/bus/usb -t usbfs -o rw >> $BOOT_LOG 2>&1
+    $BINARY usbfs /proc/bus/usb -t usbfs -o rw >> $DEBUG_LOG 2>&1
     check_exit_status $? "mount usbfs /proc/bus/usb -t usbfs -o rw"
     ;;
   stop)

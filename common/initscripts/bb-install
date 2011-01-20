@@ -7,9 +7,9 @@
 # The proper venue for questions is the LACK mailing list at:
 # http://groups.google.com/linuxack or <linuxack.googlegroups.com>
 
-# /var/run/debug will get created if we're running in debug mode; in that
+# /var/log/debug.env.state will get created if we're running in debug mode; in that
 # case, this script will have already been run
-if [ -e /var/run/debug ]; then exit 0; fi
+if [ -e /var/log/debug.env.state ]; then exit 0; fi
 
 if ! [ -e $LACK_FUNCTIONS ]; then
     LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
@@ -31,7 +31,7 @@ case "$ACTION" in
   ;;
   start)
     colorize $S_TIP "$BASENAME: $DESC;"
-    $BINARY $BINARY_OPTS >> $BOOT_LOG 2>&1
+    $BINARY $BINARY_OPTS >> $DEBUG_LOG 2>&1
     check_exit_status $? "${BASENAME}"
     ;;
   stop)

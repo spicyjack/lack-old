@@ -11,7 +11,7 @@
 # have already been run
 # commenting this out for now, it's been commented out in the debug section of
 # the init script
-#if [ -e /var/run/debug ]; then exit 0; fi
+#if [ -e /var/log/debug.env.state ]; then exit 0; fi
 
 if ! [ -e $LACK_FUNCTIONS ]; then
     LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"

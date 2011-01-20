@@ -56,7 +56,7 @@ case "$ACTION" in
 
     # mount the root device or die trying
     colorize $S_TIP "$BASENAME: Mounting root device '${ROOT_DEV}' read-only;"
-    mount -t auto -o ro $ROOT_DEV /mnt/rootvol >> $BOOT_LOG 2>&1
+    mount -t auto -o ro $ROOT_DEV /mnt/rootvol >> $DEBUG_LOG 2>&1
     check_exit_status $? $BASENAME
     ;;
   stop)

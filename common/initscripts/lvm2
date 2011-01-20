@@ -28,7 +28,7 @@ case "$ACTION" in
     if [ "x$VOL_GRP" != "xno" -o "x$VOL_GRP" != "xNO" ]; then
         # scan for volumes first
         colorize $S_TIP "${BASENAME}: scanning for logical volumes;"
-        /sbin/vgscan >> $BOOT_LOG 2>&1
+        /sbin/vgscan >> $DEBUG_LOG 2>&1
         check_exit_status $? "${BASENAME}: scanning for logical volumes;"
         # now activate volumes
         if [ "x$VOL_GRP" != "x" ]; then
@@ -36,13 +36,13 @@ case "$ACTION" in
             # root device will be concatenated using vol_grp/rootvol
             colorize $S_TIP "${BASENAME}: enabling volume group ${VOL_GRP};"
             /sbin/vgchange -ay --ignorelockingfailure $VOL_GRP \
-                >> $BOOT_LOG 2>&1
+                >> $DEBUG_LOG 2>&1
             check_exit_status $? "$BASENAME: enabling volume group ${VOL_GRP}"
         else
             # activate all volumes, the root= parameter should point to the
             # exact root device
             colorize $S_TIP "${BASENAME}: enabling all volume groups;"
-            /sbin/vgchange -ay --ignorelockingfailure >> $BOOT_LOG 2>&1
+            /sbin/vgchange -ay --ignorelockingfailure >> $DEBUG_LOG 2>&1
             check_exit_status $? "$BASENAME: enabling all volume groups"
         fi
     else

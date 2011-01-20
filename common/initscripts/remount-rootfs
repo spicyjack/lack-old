@@ -9,7 +9,7 @@
 
 # this file will get touched if we're running in debug mode; this script will
 # have already been run
-if [ -e /var/run/debug ]; then exit 0; fi
+if [ -e /var/log/debug.env.state ]; then exit 0; fi
 
 if ! [ -e $LACK_FUNCTIONS ]; then
     LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
@@ -30,12 +30,12 @@ case "$ACTION" in
   ;;
   start)
     colorize $S_TIP "$BASENAME: $DESC read/write;"
-    $BINARY $BINARY_OPTS,rw >> $BOOT_LOG 2>&1
+    $BINARY $BINARY_OPTS,rw >> $DEBUG_LOG 2>&1
     check_exit_status $? ${BASENAME}
     ;;
   stop)
     colorize $S_TIP "$BASENAME: $DESC read-only;"
-    $BINARY $BINARY_OPTS,ro >> $BOOT_LOG 2>&1
+    $BINARY $BINARY_OPTS,ro >> $DEBUG_LOG 2>&1
     check_exit_status $? ${BASENAME}
     ;;
   restart|force-reload)

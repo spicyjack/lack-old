@@ -18,10 +18,10 @@ BINARY=/bin/mount
 [ -x "$BINARY" ] || exit 1
 BASENAME="squashfs_mountall"
 # if the boot log is not set, then use a default logfile of /var/log/messages
-if [ "x$BOOT_LOG" = "x" ]; then
+if [ "x$DEBUG_LOG" = "x" ]; then
     LOGFILE="/var/log/messages"
 else
-    LOGFILE=$BOOT_LOG
+    LOGFILE=$DEBUG_LOG
 fi
 
 ## FUNC: mount_all_squashfs_packages

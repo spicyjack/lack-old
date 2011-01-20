@@ -35,7 +35,7 @@ case "$ACTION" in
     for MODULE in $(cat $MODULES_FILE | grep -v "^#");
     do
         colorize $S_TIP "  - $MODULE"
-        $BINARY $BINARY_OPTS $MODULE >> $BOOT_LOG 2>&1
+        $BINARY $BINARY_OPTS $MODULE >> $DEBUG_LOG 2>&1
         check_exit_status $? $BASENAME
     done
     colorize_nl $S_TIP "${BASENAME}: All kernel modules in /etc/modules loaded"

@@ -9,7 +9,7 @@
 
 # this file will get touched if we're running in debug mode; this script will
 # have already been run
-if [ -e /var/run/debug ]; then exit 0; fi
+if [ -e /var/log/debug.env.state ]; then exit 0; fi
 
 if ! [ -e $LACK_FUNCTIONS ]; then
     LACK_FUNCTIONS="/etc/scripts/lack_functions.sh"
@@ -32,7 +32,7 @@ case "$ACTION" in
     for MODULE in usbcore ehci-hcd uhci-hcd usbhid hid;
     do
         colorize $S_TIP "  - $MODULE"
-        $BINARY $BINARY_OPTS $MODULE >> $BOOT_LOG 2>&1
+        $BINARY $BINARY_OPTS $MODULE >> $DEBUG_LOG 2>&1
         #$BINARY $BINARY_OPTS $MODULE
         check_exit_status $? $BASENAME
     done
