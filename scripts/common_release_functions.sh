@@ -131,17 +131,18 @@ function create_hostname_file {
     fi
 } # function create_hostname_file
 
-## FUNC: create_standalone_init_script
+## FUNC: create_init_bootstrap_script
 ## ARG:  None
 ## ENV:  See '_create_init_script' for any required environment variables
 ## RET:  See '_create_init_script' for the return value
 ## ERR:  See '_create_init_script' for any error values
-## DESC: Creates the standalone version of the /init script that the Linux
-## DESC: kernel runs once it loads the initramfs image into RAM.
-## DESC: Performs a bunch of text substitutions via sed when the file
-## DESC: is copied to $TEMP_DIR
-function create_standalone_init_script {
-    _create_init_script _init.sh
+## DESC: Creates the system bootstrap version of the /init script that the
+## DESC: Linux kernel runs once it loads the initramfs image into RAM.
+## DESC: This script calls the /sbin/init on the root volume of the system to
+## DESC: be booted. Performs a bunch of text substitutions via sed when the
+## DESC: file is copied to $TEMP_DIR
+function create_init_bootstrap_script {
+    _create_init_script _init_bootstrap.sh
 } # function create_standalone_init_script
 
 ## FUNC: create_initramfs_init_script - Create the /init script
@@ -149,13 +150,13 @@ function create_standalone_init_script {
 ## ENV:  See '_create_init_script' for any required environment variables
 ## RET:  See '_create_init_script' for the return value
 ## ERR:  See '_create_init_script' for any error values
-## DESC: Creates the initramfs version of the /init script that the Linux
-## DESC: kernel runs once it loads the initramfs image into RAM.
+## DESC: Creates the run-from-initramfs version of the /init script that 
+## DESC: the Linux kernel runs once it loads the initramfs image into RAM.
 ## DESC: This script calls Busybox /sbin/init at the tail end of the init
 ## DESC: process.  Performs a bunch of text substitutions via sed
 ## DESC: when it copies the file to $TEMP_DIR.
-function create_initramfs_init_script {
-    _create_init_script _initramfs_init.sh
+function create_init_initramfs_script {
+    _create_init_script _init_initramfs.sh
 } # function create_initramfs_init_script
 
 ## FUNC: _create_init_script
