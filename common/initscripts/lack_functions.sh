@@ -118,9 +118,12 @@ want_shell () {
     fi # if [ $DEBUG ]
 } # want_shell()
 
+## FUNC: check_exit_error
+## ARG:  EXIT_STATUS - the exit status of the command that was run
+## ARG:  COMMAND_MSG - the message to be output if EXIT_STATUS is non-zero
+## RET:  Returns EXIT_STATUS
+## DESC: Check EXIT_STATUS, and bark if there's an error, otherwise, be silent
 check_exit_error () {
-# check the exit status of the last run command; bark if there was an error
-# return the exit status code that was passed in
     local EXIT_STATUS=$1
     local COMMAND_MSG=$2
     if [ "x${COMMAND_MSG}" == "x" ]; then COMMAND_MSG="unknown command"; fi
@@ -135,9 +138,12 @@ check_exit_error () {
     return $EXIT_STATUS
 } # check_exit_status
 
+## FUNC: check_exit_error
+## ARG:  EXIT_STATUS - the exit status of the command that was run
+## ARG:  COMMAND_MSG - the message to be output if EXIT_STATUS is non-zero
+## RET:  Returns EXIT_STATUS
+## DESC: Check EXIT_STATUS, and output 'success' or 'failure' and a newline
 check_exit_status () {
-# check the exit status of the last run command; returns the status code that
-# was passed in
     local EXIT_STATUS=$1
     local COMMAND_MSG=$2
     if [ "x${COMMAND_MSG}" == "x" ]; then COMMAND_MSG="unknown command"; fi
@@ -150,11 +156,15 @@ check_exit_status () {
     return $EXIT_STATUS
 } # check_exit_status
 
-
+## FUNC: file_parse
+## ARG:  PARSE_FILE - the name of the file to parse
+## ARG:  SEARCH_STRING - the (regex) string to search for in that file
+## ENV:  DEBUG - outputs more verbose messages if set
+## SETS: PARSED - the string that was parsed out of the file, if any
+## DESC: Parses a file, looking for occurances of SEARCH_STRING
 file_parse () {
-# parse a file $1, looking for search string found in $2
-    PARSE_FILE=$1
-    SEARCH_STRING=$2
+    local PARSE_FILE=$1
+    local SEARCH_STRING=$2
     # reset the parsed flag; must do this here instead of inside the for loop,
     # or PARSED will get overwritten with each failure, which could happen
     # after the successful grep
@@ -177,24 +187,33 @@ file_parse () {
         fi
     done
     if [ $DEBUG ]; then echo "-> parsed string is ${PARSED}"; fi
-} # cmdline_parse()
+} # file_parse
 
+## FUNC: write_child_pid
+## ARG:  CHILD_BINARY - the name of the child process that was run
+## ARG:  CHILD_PID - the PID of the child process that was started
+## DESC: Writes a file with the name ${CHILD_BINARY}.pid to /var/run
 write_child_pid () {
 # write a PID file for scripts/programs that don't make their own
-    CHILD_BINARY=$1
-    CHILD_PID=$2
+    local CHILD_BINARY=$1
+    local CHILD_PID=$2
     echo $CHILD_PID > /var/run/${CHILD_BINARY}.pid
 } # write_child_pid()
 
+## FUNC: get_pid
+## ARG:  BINARY - the name of the program that was run
+## SETS: CHILD_PID - the PID of the $BINARY
+## DESC: Grabs the PID from a currently running process
 get_pid () {
-# grab a program's PID file; use this after starting the program
     BINARY=$1
     CHILD_PID=$(/bin/ps | /bin/grep ${BINARY} | /bin/grep -v grep \
         | /usr/bin/awk '{print $1}')
 } # get_pid ()
 
+## FUNC: get_hostname
+## SETS: HOSTNAME - the contents of the file /etc/hostname
+## DESC: Grabs the PID from a currently running process
 get_hostname () {
-# get the hostname from the file set in the initramfs image
     if [ -e "/etc/hostname" ]; then
         HOSTNAME=$(/bin/cat /etc/hostname)
     else
@@ -202,6 +221,12 @@ get_hostname () {
     fi
 } # get_hostname ()
 
+## FUNC: get_kernel_version
+## SETS: KERNEL_VER_STRING - the full kernel version string (X.X.X)
+## SETS: KERNEL_MAJOR - the kernel major version string
+## SETS: KERNEL_MINOR - the kernel minor version string
+## SETS: KERNEL_PATCH_VERSION - the kernel patch version
+## DESC: exports information about the running kernel to the environment
 get_kernel_version () {
 # grab the kernel version and export it into the environment as shell
 # variables
