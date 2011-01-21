@@ -87,14 +87,22 @@ dlog () {
     echo $MESSAGE >> $DEBUG_LOG
 } # dlog()
 
+## FUNC: pause_prompt
+## ENV:  PAUSE_PROMPT - whether or not to pause when this function is called
+## DESC: Pause (prompt the user to continue by hitting <ENTER>) when this
+## DESC: function is called if the PAUSE_PROMPT variable contains any value
 pause_prompt () {
-# function to pause script execution and prompt for user input to continue
+    local ANSWER
     if [ "x${PAUSE_PROMPT}" != "x" ]; then
         echo -n " -PAUSED-  Hit <ENTER> to continue..."
         read ANSWER
     fi # if [ "x${PAUSE_SCRIPT}" != "x" ]; then
 } # function script_pause ()
 
+## FUNC: want_shell
+## ENV:  PAUSE_PROMPT - whether or not to pause when this function is called
+## DESC: Pause (prompt the user to continue by hitting <ENTER>) when this
+## DESC: function is called if the PAUSE_PROMPT variable contains any value
 want_shell () {
 # run a shell (only if $DEBUG is set)
     if [ $DEBUG ]; then
