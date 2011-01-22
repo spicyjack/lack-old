@@ -9,6 +9,19 @@
 # - problems building binutils-2.18
 # http://anonir.wordpress.com/2010/02/05/linux-from-scratch-troubleshooting/
 
+# things we need to get from other places
+#BASE_URL="http://xaoc.qualcomm.com/bb_xcomp"
+BASE_URL="http://nob.pq.portaboom.com/linux/embedded/bb_xcomp"
+BINUTILS_VER="2.18"
+BINUTILS_FILE="binutils-${BINUTILS_VER}.tar.bz2"
+GCC_VER="4.3.1"
+GCC_FILE="gcc-${GCC_VER}.tar.bz2"
+UCLIBC_FILE="uclibc-20080607.svn.tar.bz2"
+BUSYBOX_FILE="busybox-20080607.svn.tar.bz2"
+# things used by this script
+APP_PREFIX="/home/app"
+CROSS_PREFIX="/home/cross"
+
     # source common_release_functions.sh, so that just in case there's a
     # conflict with duplicate environment variables, the variables set after
     # sourcing common_release_functions.sh take precedence
@@ -22,18 +35,6 @@
         echo "My name is: $0"
         exit 1
     fi # if [ -r ${SCRIPT_DIR}/lack_functions.sh ]
-
-    # things we need to get from other places
-    BASE_URL="http://xaoc.qualcomm.com/bb_xcomp"
-    BINUTILS_VER="2.18"
-    BINUTILS_FILE="binutils-${BINUTILS_VER}.tar.bz2"
-    GCC_VER="4.3.1"
-    GCC_FILE="gcc-${GCC_VER}.tar.bz2"
-    UCLIBC_FILE="uclibc-20080607.svn.tar.bz2"
-    BUSYBOX_FILE="busybox-20080607.svn.tar.bz2"
-
-    # things used by this script
-    #STATIC_DIR="/local/app"
 
     # locations of binaries used by this script
     TRUE=$(which true)
@@ -254,11 +255,13 @@ function sudo_update_timestamp() {
 
 ## FUNC: generic_make
 function generic_make () {
-    local SRC_DIR=$1
     echo "======= generic_make =======" >> $BB_BUILD_LOG
-    echo "changing directory to ${SRC_DIR}" >> $BB_BUILD_LOG
-    cd $SRC_DIR
     make "$@" 2>&1 | tee -a $BB_BUILD_LOG
+    check_exit_status $? "generic make"
+    if [ $? -gt 0 ]; then
+        echo "ERROR: make failed; exit status $?"
+        exit 1
+    fi
 } # function generic_make
 
 ## FUNC: binutils_configure
@@ -268,13 +271,17 @@ function binutils_configure () {
     echo "toplevel directory is ${TOPLEVEL_DIR}" >> $BB_BUILD_LOG
     if ! [ -d "binutils-${BINUTILS_VER}" ]; then
         wget -a $BB_BUILD_LOG $BASE_URL/$BINUTILS_FILE
-        tar -jxvf $BINUTILS_FILE | tee -a $BB_BUILD_LOG
+        check_exit_status $? "wget $BINUTILS_FILE failed"
+        tar -jxvf $BINUTILS_FILE
+        #tar -jxvf $BINUTILS_FILE | tee -a $BB_BUILD_LOG
+        check_exit_status $? "tar -jxvf $BINUTILS_FILE failed"
     fi
     echo "changing directory to binutils-${BINUTILS_VER}" >> $BB_BUILD_LOG
     cd binutils-${BINUTILS_VER}
     # if the .obj directory exists, we've been here before; don't run
     # configure
     if ! [ -e ${BB_TEMP_DIR}/stamp.binutils.configure ]; then
+        echo "making binutils object directory in $PWD" >> $BB_BUILD_LOG
         mkdir .obj-i486-linux-uclibc
         cd .obj-i486-linux-uclibc
         # run configure
@@ -286,7 +293,7 @@ function binutils_configure () {
         NAME=$(cd $SRC;pwd)
         NAME=$(basename "$NAME")-$CROSS
         echo "- NAME is ${NAME}"
-        STATIC_DIR=/local/app/$NAME
+        STATIC_DIR=$APP_PREFIX/$NAME
         echo "- Running ./configure for binutils" >> $BB_BUILD_LOG
         $SRC/configure \
             --prefix=$STATIC_DIR \
@@ -320,6 +327,8 @@ function binutils_configure () {
         fi # if [ -d .obj-i486-linux-uclibc ]
     fi # if ! [ -d .obj-i486-linux-uclibc ]
     touch ${BB_TEMP_DIR}/stamp.binutils.configure
+    generic_make
+    touch ${BB_TEMP_DIR}/stamp.binutils.make
     cd $TOPLEVEL_DIR
 } # function binutils_configure
 
@@ -333,7 +342,7 @@ function binutils_make_install() {
         CROSS="${CROSS#.obj-}"
         NAME=$(cd $SRC;pwd)
         NAME=$(basename "$NAME")-$CROSS
-        STATIC=/local/app/$NAME
+        STATIC=$APP_PREFIX/$NAME
         sudo make \
         prefix=$STATIC \
         exec-prefix=$STATIC \
@@ -349,6 +358,12 @@ function binutils_make_install() {
         infodir=$STATIC/info \
         mandir=$STATIC/man \
         install 2>&1 | tee -a $BB_BUILD_LOG
+        check_exit_status $? "binutils make install"
+        if [ $? -gt 0 ]; then
+            EXIT_STATUS=$?
+            echo "ERROR: binutils 'make install' failed"
+            exit $EXIT_STATUS
+        fi
         touch $BB_TEMP_DIR/stamp.binutils.make.install
     else
         echo "- Skipping 'make install' for binutils; stampfile exists"
@@ -363,7 +378,8 @@ function gcc_configure () {
     echo "toplevel directory is ${TOPLEVEL_DIR}" >> $BB_BUILD_LOG
     if ! [ -d "gcc-${GCC_VER}.obj-i486-linux-uclibc" ]; then
         wget -a $BB_BUILD_LOG $BASE_URL/$GCC_FILE
-        tar -jxvf $GCC_FILE | tee -a $BB_BUILD_LOG
+        #tar -jxvf $GCC_FILE | tee -a $BB_BUILD_LOG
+        tar -jxvf $GCC_FILE
         mkdir gcc-${GCC_VER}.obj-i486-linux-uclibc
     fi
     echo "changing directory to gcc-${GCC_VER}.obj-i486-linux-uclibc" \
@@ -377,9 +393,9 @@ function gcc_configure () {
         SRC=../$(basename "$PWD" .obj-$CROSS)
         NAME=$(cd $SRC;pwd)
         NAME=$(basename "$NAME" .obj-$CROSS)-$CROSS
-        STATIC=/local/app/$NAME
+        STATIC=$APP_PREFIX/$NAME
 
-        $SRC/configure \
+        time $SRC/configure \
         --prefix=$STATIC                                \
         --exec-prefix=$STATIC                           \
         --bindir=$STATIC/bin                            \
@@ -404,7 +420,7 @@ function gcc_configure () {
         --with-gnu-as                                   \
         --with-as="/usr/bin/$CROSS-as"                  \
         \
-        --with-sysroot=/local/cross/$CROSS                \
+        --with-sysroot=$CROSS_PREFIX/$CROSS                \
         \
         --enable-languages="c"                          \
         --disable-shared                                \
@@ -421,6 +437,12 @@ function gcc_configure () {
         2>&1 | tee -a $BB_BUILD_LOG
     fi # if ! [ -e ${BB_TEMP_DIR}/stamp.gcc.configure ]
     touch ${BB_TEMP_DIR}/stamp.gcc.configure
+    CROSS=`basename "$PWD" | cut -d- -f3-99`
+    # "The directory that should contain system headers does not exist:
+    # /usr/cross/foobar/usr/include"
+    sudo mkdir -p /home/cross/$CROSS/usr/include
+    time make "$@" 2>&1 | tee -a $BB_BUILD_LOG
+    touch ${BB_TEMP_DIR}/stamp.gcc.make
     cd $TOPLEVEL_DIR
 } # function binutils_configure
 
@@ -432,6 +454,5 @@ export BB_BUILD_LOG="${BB_TEMP_DIR}/build.log"
 : > $BB_BUILD_LOG
 cd $BB_TEMP_DIR
 binutils_configure
-generic_make binutils-${BINUTILS_VER}
 binutils_make_install
 gcc_configure
