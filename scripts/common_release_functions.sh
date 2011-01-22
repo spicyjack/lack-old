@@ -43,8 +43,9 @@ function warn {
 } # function warn
 
 ## FUNC: check_return_status
-## ARG:  Returned exit status code of that function
-## ARG:  Name of the function/command we're checking the return status of
+## ARG:  EXIT_STATUS - Returned exit status code of that function
+## ARG:  STATUS_MSG - Status message, usually the command that was run
+## RET:  Returns 0 if EXIT_STATUS is 0, exits with EXIT_STATUS otherwise
 ## DESC: Verifies the function exited with an exit status code (0), and
 ## DESC: exits the script if any other status code is found.
 function check_return_status {
@@ -56,7 +57,7 @@ function check_return_status {
             STATUS_MSG="unknown command"
         fi
         echo "ERROR: '${STATUS_MSG}' returned an exit code of ${EXIT_STATUS}"
-        exit 1
+        exit $EXIT_STATUS
     fi # if [ $STATUS_CODE -gt 0 ]
     return 0
 } # function check_return_status
@@ -227,15 +228,10 @@ function copy_lack_ssl_pem_file {
 ## DESC: Copies the Busybox binary to $TEMP_DIR
 ## DESC: Exits if it can't find the Busybox binary.
 function copy_busybox_binary {
-    if [ -e ~/busybox-*-x86 ]; then
-        BUSYBOX_BIN=$(ls ~/busybox-*-x86)
-        echo "Copying Busybox binary '${BUSYBOX_BIN}' to ${TEMP_DIR}"
-        cp $BUSYBOX_BIN $TEMP_DIR
-    else
-        echo "ERROR: missing busybox binary in ~"
-        return 1
-    fi # if [ -e ~/hostkeys/busybox-* ]
-    return 0
+    echo "Copying Busybox binaries to ${TEMP_DIR}"
+    cp -v ~/busybox-* $TEMP_DIR
+    check_return_status $? "copying busybox binaries to ${TEMP_DIR}"
+    return $?
 } # function copy_busybox_binary
 
 ## FUNC: sedify_input_files
