@@ -81,12 +81,12 @@ function set_vars()
     fi # if [ $VARSFILE ];
 } # function set_vars
 
-## FUNC: check_return_status
+## FUNC: check_exit_status
 ## ARG:  Returned exit status code of that function
 ## ARG:  Name of the function/command we're checking the return status of
 ## DESC: Verifies the function exited with an exit status code (0), and
 ## DESC: exits the script if any other status code is found.
-function check_return_status {
+function check_exit_status {
     local EXIT_STATUS=$1
     local STATUS_MSG=$2
 
@@ -97,7 +97,7 @@ function check_return_status {
         echo "ERROR: '${STATUS_MSG}' returned an exit code of ${EXIT_STATUS}"
         exit 1
     fi # if [ $STATUS_CODE -gt 0 ]
-} # function check_return_status
+} # function check_exit_status
 
 # cat the source file, filter it with sed, then append it to the destination
 function sedify ()
@@ -223,7 +223,7 @@ TEMP=$(${GETOPT} -o hHenp:d:f:sb:o:qlkw: \
 --long varsfile:,showvars,base:,output:,quiet,hardlink \
 --long keeplist,keepfiles,keep,workdir: \
 -n "${SCRIPTNAME}" -- "$@")
-check_return_status $? $GETOPT
+check_exit_status $? $GETOPT
 
 # Note the quotes around `$TEMP': they are essential!
 # read in the $TEMP variable
@@ -404,7 +404,7 @@ set_vars $PROJECT_DIR
 # $OUTPUT_FILE was either set in a profile or using --output
 if [ "x$OUTPUT_FILE" != "x" ]; then
     $TOUCH $OUTPUT_FILE
-    check_return_status $? $TOUCH
+    check_exit_status $? $TOUCH
 else
     echo "=-=-=-=-=-=-=-=-=-=-=-=-=-="
     echo "ERROR: output file not set"
