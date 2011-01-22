@@ -42,13 +42,13 @@ function warn {
     echo $MESSAGE >&2
 } # function warn
 
-## FUNC: check_return_status
+## FUNC: check_exit_status
 ## ARG:  EXIT_STATUS - Returned exit status code of that function
 ## ARG:  STATUS_MSG - Status message, usually the command that was run
-## RET:  Returns 0 if EXIT_STATUS is 0, exits with EXIT_STATUS otherwise
+## RET:  Returns the value of EXIT_STATUS
 ## DESC: Verifies the function exited with an exit status code (0), and
 ## DESC: exits the script if any other status code is found.
-function check_return_status {
+function check_exit_status {
     local EXIT_STATUS=$1
     local STATUS_MSG=$2
 
@@ -59,8 +59,8 @@ function check_return_status {
         echo "ERROR: '${STATUS_MSG}' returned an exit code of ${EXIT_STATUS}"
         exit $EXIT_STATUS
     fi # if [ $STATUS_CODE -gt 0 ]
-    return 0
-} # function check_return_status
+    return $EXIT_STATUS
+} # function check_exit_status
 
 ## FUNC: check_empty_envvar
 ## ARG:  VAR_NAME - Human-readable name of the variable to check
@@ -179,10 +179,10 @@ function _create_init_script {
         s!:BUILD_BASE:!${BUILD_BASE}!g;
         s!:VERSION:!${KERNEL_VER}!g;
         }" >> $TEMP_DIR/init.sh
-    check_return_status $? "Creating the init script in TEMP_DIR"
+    check_exit_status $? "Creating the init script in TEMP_DIR"
     # add the init script to the filelist
     echo "file /init /${TEMP_DIR}/init.sh 0755 0 0" >> $TEMP_DIR/$FILELIST
-    check_return_status $? "Creating the init script in TEMP_DIR"
+    check_exit_status $? "Creating the init script in TEMP_DIR"
     return 0
 } # function _create_init_script
 
@@ -230,7 +230,7 @@ function copy_lack_ssl_pem_file {
 function copy_busybox_binary {
     echo "Copying Busybox binaries to ${TEMP_DIR}"
     cp -v ~/busybox-* $TEMP_DIR
-    check_return_status $? "copying busybox binaries to ${TEMP_DIR}"
+    check_exit_status $? "copying busybox binaries to ${TEMP_DIR}"
     return $?
 } # function copy_busybox_binary
 
@@ -258,7 +258,7 @@ function sedify_input_files {
                 s!:LACK_PASS:!${LACK_PASS}!g;
             }" > $TEMP_DIR/$FILEBASE
         # check the return status after every sed call
-        check_return_status $? "Run /bin/sed on ${SEDFILE}"
+        check_exit_status $? "Run /bin/sed on ${SEDFILE}"
     done
 } # function ѕedify_input_files
 
@@ -281,12 +281,12 @@ function sync_perl_gtk2_source {
         # us
         echo "Cloning perl-Gtk2 source for 'examples' and 'gtk-demo'..."
         git clone git://git.gnome.org/perl-Gtk2 $PERL_GTK2_SRC
-        check_return_status $? "Running 'git clone' for Perl-Gtk2 source"
+        check_exit_status $? "Running 'git clone' for Perl-Gtk2 source"
     else
         echo "- Running 'git pull' on perl-Gtk2 source..."
         cd $PERL_GTK2_SRC
         git pull
-        check_return_status $? "Running 'git pull' for Perl-Gtk2 source"
+        check_exit_status $? "Running 'git pull' for Perl-Gtk2 source"
     fi # if [ ! -d "/tmp/gtk2-perl-examples" ];
     return 0
 } # function sync_perl_gtk2_source
