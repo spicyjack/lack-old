@@ -9,6 +9,20 @@
 # - problems building binutils-2.18
 # http://anonir.wordpress.com/2010/02/05/linux-from-scratch-troubleshooting/
 
+    # things we need to get from other places
+    #BASE_URL="http://xaoc.qualcomm.com/bb_xcomp"
+    BASE_URL="http://nob.pq.portaboom.com/linux/embedded/bb_xcomp"
+    BINUTILS_VER="2.18"
+    BINUTILS_FILE="binutils-${BINUTILS_VER}.tar.bz2"
+    GCC_VER="4.3.1"
+    GCC_FILE="gcc-${GCC_VER}.tar.bz2"
+    UCLIBC_FILE="uclibc-20080607.svn.tar.bz2"
+    BUSYBOX_FILE="busybox-20080607.svn.tar.bz2"
+
+    # things used by this script
+    unset START_DIR
+    APPS_DIR="/local/app"
+
     # source common_release_functions.sh, so that just in case there's a
     # conflict with duplicate environment variables, the variables set after
     # sourcing common_release_functions.sh take precedence
@@ -23,17 +37,10 @@
         exit 1
     fi # if [ -r ${SCRIPT_DIR}/lack_functions.sh ]
 
-    # things we need to get from other places
-    BASE_URL="http://xaoc.qualcomm.com/bb_xcomp"
-    BINUTILS_VER="2.18"
-    BINUTILS_FILE="binutils-${BINUTILS_VER}.tar.bz2"
-    GCC_VER="4.3.1"
-    GCC_FILE="gcc-${GCC_VER}.tar.bz2"
-    UCLIBC_FILE="uclibc-20080607.svn.tar.bz2"
-    BUSYBOX_FILE="busybox-20080607.svn.tar.bz2"
-
-    # things used by this script
-    #STATIC_DIR="/local/app"
+    # are we debugging?
+    if [ "x$DEBUG" = "x" ]; then
+        export DEBUG=0
+    fi
 
     # locations of binaries used by this script
     TRUE=$(which true)
@@ -62,7 +69,7 @@ Press <Enter>/[S]kip/Ctrl-C: ";
     read answer
     }
     test "$answer" != s -a "$answer" != S && {
-    ln -sfn "$2" "$1" || { echo -n " failed. Press <Enter>: "; read junk; }
+    sudo ln -sfn "$2" "$1" || { echo -n " failed. Press <Enter>: "; read junk; }
     }
 }
 
@@ -100,7 +107,7 @@ function make_stub_samename_abs() {
     for fn in $2; do
         if test -e "$fn"; then
         bn=$(basename "$fn")
-        mkdir -p "$1" 2>/dev/null
+        sudo mkdir -p "$1" 2>/dev/null
         make_stub_abs "$1/$bn" "$fn"
     fi
     done
@@ -110,18 +117,18 @@ function link_samename() {
     for fn in $2; do
         if test -e "$fn"; then
         bn=$(basename "$fn")
-        mkdir -p "$1" 2>/dev/null
+        sudo mkdir -p "$1" 2>/dev/null
         link "$1/$bn" "$fn"
     fi
     done
 }
 
 function link_samename_strip() {
-    strip $2
+    sudo strip $2
     for fn in $2; do
         if test -e "$fn"; then
         bn=$(basename "$fn")
-        mkdir -p "$1" 2>/dev/null
+        sudo mkdir -p "$1" 2>/dev/null
         link "$1/$bn" "$fn"
     fi
     done
@@ -133,11 +140,11 @@ function link_samename_r() {
         bn=$(basename "$fn")
         if test -f "$fn"; then
             # File: Make link with the same name in $1
-        mkdir -p "$1" 2>/dev/null
+        sudo mkdir -p "$1" 2>/dev/null
             link "$1/$bn" "$fn"
         elif test -d "$fn"; then
             # Dir: Descent into subdirs
-        mkdir -p "$1" 2>/dev/null
+        sudo mkdir -p "$1" 2>/dev/null
             link_samename_r "$1/$bn" "$fn/*"
         fi
     fi
@@ -145,7 +152,7 @@ function link_samename_r() {
 }
 
 function link_samename_r_strip() {
-    strip $2
+    sudo strip $2
     for fn in $2; do
     bn=$(basename "$fn")
     if test -f "$fn"; then
@@ -230,6 +237,11 @@ function link_man_r_gz() {
 function make_tempdir () {
     local START_DIR=$1
 
+    if [ $(echo ${START_DIR} | grep -c '^/') -eq 0 ]; then
+        echo "ERROR: temporary directory must be an absolute path"
+        echo "(path must start with leading slash '/')"
+        exit 1
+    fi
     if [ -e $START_DIR/stamp.tempdir ]; then
         BB_TEMP_DIR=$START_DIR
         echo "- Reusing temporary directory '${BB_TEMP_DIR}'"
@@ -245,35 +257,44 @@ function make_tempdir () {
 
 ## FUNC: sudo_update_timestamp
 function sudo_update_timestamp() {
+    sudo -v
+} # function sudo_update_timestamp
+
+## FUNC: sudo_start_message
+function sudo_start_message() {
     echo "SUDO access is usually required for installing cross-compile tools"
     echo "Will now run the command 'sudo -v' to update SUDO timestamp."
     echo "Please type your SUDO password when prompted,"
     echo "or hit Ctrl-C if you are unsure you want to run this script;"
-    sudo -v
-} # function sudo_stamp
+    sudo_update_timestamp
+} # function sudo_start_message
 
 ## FUNC: generic_make
 function generic_make () {
-    local SRC_DIR=$1
-    echo "======= generic_make =======" >> $BB_BUILD_LOG
-    echo "changing directory to ${SRC_DIR}" >> $BB_BUILD_LOG
-    cd $SRC_DIR
-    make "$@" 2>&1 | tee -a $BB_BUILD_LOG
-    check_exit_status $? "generic make in ${SRC_DIR}"
+    echo "======= generic_make =======" | tee -a $BB_BUILD_LOG
+    echo "current directory is ${PWD}" | tee -a $BB_BUILD_LOG
     pause_prompt
+    make "$@" 2>&1 | tee -a $BB_BUILD_LOG
+    check_exit_status $? "generic make in ${PWD}"
 } # function generic_make
 
 ## FUNC: binutils_configure
 function binutils_configure () {
-    TOPLEVEL_DIR=$PWD
-    echo "======= binutils_configure =======" >> $BB_BUILD_LOG
-    echo "toplevel directory is ${TOPLEVEL_DIR}" >> $BB_BUILD_LOG
+    echo "======= binutils_configure =======" | tee -a $BB_BUILD_LOG
     if ! [ -d "binutils-${BINUTILS_VER}" ]; then
-        wget -a $BB_BUILD_LOG $BASE_URL/$BINUTILS_FILE
-        tar -jxvf $BINUTILS_FILE | tee -a $BB_BUILD_LOG
+        echo "- downloading ${BINUTILS_FILE}"
+        wget -q -a $BB_BUILD_LOG $BASE_URL/$BINUTILS_FILE
+        echo "- unpacking ${BINUTILS_FILE}"
+        if [ $DEBUG -gt 0 ]; then
+            TAR_OPTS="-jxvf"
+        else
+            TAR_OPTS="-jxf"
+        fi
+        tar $TAR_OPTS $BINUTILS_FILE | tee -a $BB_BUILD_LOG
     fi
-    echo "changing directory to binutils-${BINUTILS_VER}" >> $BB_BUILD_LOG
+    echo "- changing directory to binutils-${BINUTILS_VER}"|tee -a $BB_BUILD_LOG
     cd binutils-${BINUTILS_VER}
+    pause_prompt
     # if the .obj directory exists, we've been here before; don't run
     # configure
     if ! [ -e ${BB_TEMP_DIR}/stamp.binutils.configure ]; then
@@ -323,14 +344,13 @@ function binutils_configure () {
         fi # if [ -d .obj-i486-linux-uclibc ]
     fi # if ! [ -d .obj-i486-linux-uclibc ]
     touch ${BB_TEMP_DIR}/stamp.binutils.configure
-    cd $TOPLEVEL_DIR
-    pause_prompt
 } # function binutils_configure
 
 ## FUNC: binutils_make_install
 function binutils_make_install() {
-    TOPLEVEL_DIR=$PWD
-    echo "toplevel directory is ${TOPLEVEL_DIR}" >> $BB_BUILD_LOG
+    echo "======= binutils_make_install =======" | tee -a $BB_BUILD_LOG
+    echo "- current directory is ${PWD}" | tee -a $BB_BUILD_LOG
+    pause_prompt
     if ! [ -e ${BB_TEMP_DIR}/stamp.binutils.make.install ]; then
         SRC=..
         CROSS=$(basename "$PWD")
@@ -358,21 +378,59 @@ function binutils_make_install() {
     else
         echo "- Skipping 'make install' for binutils; stampfile exists"
     fi
-    cd $TOPLEVEL_DIR
-    pause_prompt
 } # function binutils_make_install ()
+
+function binutils_make_symlinks() {
+    echo "======= binutils_make_symlinks =======" | tee -a $BB_BUILD_LOG
+    echo "- changing to Apps directory"
+    cd $APPS_DIR/binutils-*
+    echo "- current directory is ${PWD}" | tee -a $BB_BUILD_LOG
+    pause_prompt
+    NAME=`basename "$PWD"`
+    VER=-`echo $NAME | cut -d '-' -f 2-99`
+    echo "- ver is $VER"
+    NAME=`echo $NAME | cut -d '-' -f 1`
+    echo "- name is $NAME"
+    CROSS=`basename $PWD | cut -d '-' -f 3-99`
+    echo "- cross is $CROSS"
+    STATIC=/local/app/$NAME$VER
+
+    test "${STATIC%$CROSS}" = "$STATIC" && {
+        echo 'Wrong $CROSS in '"$0"; exit 1; }
+
+    sudo mkdir -p /local/cross/$CROSS/bin
+    sudo mkdir -p /local/cross/$CROSS/lib
+    # Don't want to deal with pairs of usr/bin/ and bin/, usr/lib/ and lib/
+    # in /usr/cross/$CROSS. This seems to be the easiest fix:
+    sudo ln -s . /local/cross/$CROSS/usr
+
+    # Do we really want to install tclsh8.4 and wish8.4 though? What are those
+    # btw?
+    link_samename_strip     /usr/bin                "$STATIC/bin/*"
+    link_samename_strip     /local/cross/$CROSS/bin   "$STATIC/$CROSS/bin/*"
+    # elf2flt.ld and ldscripts/*. Actually seems to work just fine
+    # without ldscripts/* symlinked, but elf2flt does insist.
+    link_samename           /local/cross/$CROSS/lib   "$STATIC/$CROSS/lib/*"
+} # function binutils_make_symlinks
 
 ## FUNC: gcc_configure
 function gcc_configure () {
-    TOPLEVEL_DIR=$PWD
-    echo "======= gcc_configure =======" >> $BB_BUILD_LOG
-    echo "toplevel directory is ${TOPLEVEL_DIR}" >> $BB_BUILD_LOG
+    echo "======= gcc_configure =======" | tee -a $BB_BUILD_LOG
+    echo "current directory is ${PWD}" | tee -a $BB_BUILD_LOG
+    pause_prompt
     if ! [ -d "gcc-${GCC_VER}.obj-i486-linux-uclibc" ]; then
-        wget -a $BB_BUILD_LOG $BASE_URL/$GCC_FILE
-        tar -jxvf $GCC_FILE | tee -a $BB_BUILD_LOG
+        echo "- downloading ${GCC_FILE}"
+        wget -q -a $BB_BUILD_LOG $BASE_URL/$GCC_FILE
+        echo "- unpacking ${GCC_FILE}"
+        if [ $DEBUG -gt 0 ]; then
+            TAR_OPTS="-jxvf"
+        else
+            TAR_OPTS="-jxf"
+        fi
+        tar $TAR_OPTS $GCC_FILE | tee -a $BB_BUILD_LOG
         mkdir gcc-${GCC_VER}.obj-i486-linux-uclibc
     fi
-    echo "changing directory to gcc-${GCC_VER}.obj-i486-linux-uclibc" \
+    echo "changing directory to ${PWD}/gcc-${GCC_VER}.obj-i486-linux-uclibc" \
         >> $BB_BUILD_LOG
     cd gcc-${GCC_VER}.obj-i486-linux-uclibc
     # if the .obj directory exists, we've been here before; don't run
@@ -426,40 +484,90 @@ function gcc_configure () {
         \
         2>&1 | tee -a $BB_BUILD_LOG
         check_exit_status $? "gcc configure"
+    else
+        echo "- Skipping 'configure' for gcc; stampfile exists"
     fi # if ! [ -e ${BB_TEMP_DIR}/stamp.gcc.configure ]
     touch ${BB_TEMP_DIR}/stamp.gcc.configure
-    cd $TOPLEVEL_DIR
-    pause_prompt
 } # function binutils_configure
 
 function gcc_make () {
-    CROSS=`basename "$PWD" | cut -d- -f3-99`
-
-    # "The directory that should contain system headers does not exist:
-    # /usr/cross/foobar/usr/include"
-    mkdir -p /local/cross/$CROSS/usr/include
-
-    make "$@" 2>&1 | tee -a $BB_BUILD_LOG
-    check_exit_status $? "gcc make"
+    echo "======= gcc_make =======" | tee -a $BB_BUILD_LOG
+    echo "- current directory is ${PWD}" | tee -a $BB_BUILD_LOG
     pause_prompt
+    if ! [ -e ${BB_TEMP_DIR}/stamp.gcc.make ]; then
+        CROSS=`basename "$PWD" | cut -d- -f3-99`
+
+        # "The directory that should contain system headers does not exist:
+        # /usr/cross/foobar/usr/include"
+        sudo mkdir -p /local/cross/$CROSS/usr/include
+
+        make "$@" 2>&1 | tee -a $BB_BUILD_LOG
+        check_exit_status $? "gcc make"
+        touch $BB_TEMP_DIR/stamp.gcc.make
+    else
+        echo "- Skipping 'make' for gcc; stampfile exists"
+    fi # if ! [ -e ${BB_TEMP_DIR}/stamp.gcc.make.install ]
 } # function gcc_make
+
+function gcc_make_install () {
+    echo "======= gcc_make_install =======" | tee -a $BB_BUILD_LOG
+    echo "- current directory is ${PWD}" | tee -a $BB_BUILD_LOG
+    pause_prompt
+    if ! [ -e ${BB_TEMP_DIR}/stamp.gcc.make.install ]; then
+
+        SRC=..
+        CROSS=`basename "$PWD"`
+        CROSS="${CROSS#.obj-}"
+        NAME=`cd $SRC;pwd`
+        NAME=`basename "$NAME"`-$CROSS
+        STATIC=/local/app/$NAME
+
+        sudo make \
+        prefix=$STATIC                          \
+        exec-prefix=$STATIC                     \
+        bindir=$STATIC/bin                      \
+        sbindir=$STATIC/sbin                    \
+        libexecdir=$STATIC/libexec              \
+        datadir=$STATIC/share                   \
+        sysconfdir=$STATIC/var_template/etc     \
+        sharedstatedir=$STATIC/var_template/com \
+        localstatedir=$STATIC/var_template      \
+        libdir=$STATIC/lib                      \
+        includedir=$STATIC/include              \
+        infodir=$STATIC/info                    \
+        mandir=$STATIC/man                      \
+        \
+        install 2>&1 | tee -a $BB_BUILD_LOG
+        check_exit_status $? "gcc make install"
+        touch $BB_TEMP_DIR/stamp.gcc.make.install
+    else
+        echo "- Skipping 'make install' for gcc; stampfile exists"
+    fi
+} # function gcc_make_install
 
 ### MAIN SCRIPT ###
 PAUSE_PROMPT=1
+SCRIPT_NAME=$(basename $0)
+export START_DIR=$PWD
 if [ "x$1" = "x" ]; then
     echo "ERROR: no working directory passed as an argument"
-    SCRIPT_NAME=$(basename $0)
     echo "Usage: ${SCRIPT_NAME} /path/to/working/directory"
     exit 1
 fi # if [ "x$1" = "x" ]
+echo "======= BEGIN crosscompiler_bootstrap.sh ======="
 make_tempdir $1
-sudo_update_timestamp
+sudo_start_message
 # things we need to use for this script
 export BB_BUILD_LOG="${BB_TEMP_DIR}/build.log"
 : > $BB_BUILD_LOG
 cd $BB_TEMP_DIR
 binutils_configure
-generic_make binutils-${BINUTILS_VER}
+generic_make
+sudo_update_timestamp
 binutils_make_install
+binutils_make_symlinks
+cd $BB_TEMP_DIR
 gcc_configure
+sudo_update_timestamp
 gcc_make
+gcc_make_install
