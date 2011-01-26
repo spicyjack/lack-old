@@ -259,6 +259,8 @@ function generic_make () {
     echo "changing directory to ${SRC_DIR}" >> $BB_BUILD_LOG
     cd $SRC_DIR
     make "$@" 2>&1 | tee -a $BB_BUILD_LOG
+    check_exit_status $? "generic make in ${SRC_DIR}"
+    pause_prompt
 } # function generic_make
 
 ## FUNC: binutils_configure
@@ -310,6 +312,7 @@ function binutils_configure () {
             --disable-nls \
             --enable-werror=no \
             2>&1 | tee -a $BB_BUILD_LOG
+            check_exit_status $? "binutils configure"
     else
         if [ -d .obj-i486-linux-uclibc ]; then
             cd .obj-i486-linux-uclibc
@@ -321,6 +324,7 @@ function binutils_configure () {
     fi # if ! [ -d .obj-i486-linux-uclibc ]
     touch ${BB_TEMP_DIR}/stamp.binutils.configure
     cd $TOPLEVEL_DIR
+    pause_prompt
 } # function binutils_configure
 
 ## FUNC: binutils_make_install
@@ -349,11 +353,13 @@ function binutils_make_install() {
         infodir=$STATIC/info \
         mandir=$STATIC/man \
         install 2>&1 | tee -a $BB_BUILD_LOG
+        check_exit_status $? "binutils make install"
         touch $BB_TEMP_DIR/stamp.binutils.make.install
     else
         echo "- Skipping 'make install' for binutils; stampfile exists"
     fi
     cd $TOPLEVEL_DIR
+    pause_prompt
 } # function binutils_make_install ()
 
 ## FUNC: gcc_configure
@@ -419,12 +425,33 @@ function gcc_configure () {
         --with-newlib                                   \
         \
         2>&1 | tee -a $BB_BUILD_LOG
+        check_exit_status $? "gcc configure"
     fi # if ! [ -e ${BB_TEMP_DIR}/stamp.gcc.configure ]
     touch ${BB_TEMP_DIR}/stamp.gcc.configure
     cd $TOPLEVEL_DIR
+    pause_prompt
 } # function binutils_configure
 
+function gcc_make () {
+    CROSS=`basename "$PWD" | cut -d- -f3-99`
+
+    # "The directory that should contain system headers does not exist:
+    # /usr/cross/foobar/usr/include"
+    mkdir -p /local/cross/$CROSS/usr/include
+
+    make "$@" 2>&1 | tee -a $BB_BUILD_LOG
+    check_exit_status $? "gcc make"
+    pause_prompt
+} # function gcc_make
+
 ### MAIN SCRIPT ###
+PAUSE_PROMPT=1
+if [ "x$1" = "x" ]; then
+    echo "ERROR: no working directory passed as an argument"
+    SCRIPT_NAME=$(basename $0)
+    echo "Usage: ${SCRIPT_NAME} /path/to/working/directory"
+    exit 1
+fi # if [ "x$1" = "x" ]
 make_tempdir $1
 sudo_update_timestamp
 # things we need to use for this script
@@ -435,3 +462,4 @@ binutils_configure
 generic_make binutils-${BINUTILS_VER}
 binutils_make_install
 gcc_configure
+gcc_make

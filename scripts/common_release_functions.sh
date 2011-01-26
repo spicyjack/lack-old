@@ -314,6 +314,19 @@ function find_first_free_filename()
 
     OUTPUT_FILE=$SEARCHDIR/$TESTNAME.$FILE_DATE.$FILE_COUNTER.cpio.gz
 } # function find_first_free_filename()
+
+## FUNC: pause_prompt
+## ENV:  PAUSE_PROMPT - whether or not to pause when this function is called
+## DESC: Pause (prompt the user to continue by hitting <ENTER>) when this
+## DESC: function is called if the PAUSE_PROMPT variable contains any value
+pause_prompt () {
+    local ANSWER
+    if [ "x${PAUSE_PROMPT}" != "x" ]; then
+        echo -n " -PAUSED-  Hit <ENTER> to continue..."
+        read ANSWER
+    fi # if [ "x${PAUSE_SCRIPT}" != "x" ]; then
+} # function script_pause ()
+
 # *begin license blurb*
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
