@@ -16,8 +16,12 @@
     BINUTILS_FILE="binutils-${BINUTILS_VER}.tar.bz2"
     GCC_VER="4.3.1"
     GCC_FILE="gcc-${GCC_VER}.tar.bz2"
-    UCLIBC_FILE="uclibc-20080607.svn.tar.bz2"
-    BUSYBOX_FILE="busybox-20080607.svn.tar.bz2"
+    UCLIBC_VER="20080607.svn"
+    UCLIBC_FILE="uclibc-${UCLIBC_VER}.tar.bz2"
+    BUSYBOX_VER="20080607.svn"
+    BUSYBOX_FILE="busybox-${BUSYBOX_VER}.tar.bz2"
+    KERNEL_VER="2.6.36"
+    KERNEL_FILE="linux-${KERNEL_VER}.tar.bz2"
 
     # things used by this script
     unset START_DIR
@@ -276,6 +280,7 @@ function generic_make () {
     pause_prompt
     make "$@" 2>&1 | tee -a $BB_BUILD_LOG
     check_exit_status $? "generic make in ${PWD}"
+    return 0
 } # function generic_make
 
 ## FUNC: binutils_configure
@@ -294,10 +299,10 @@ function binutils_configure () {
     fi
     echo "- changing directory to binutils-${BINUTILS_VER}"|tee -a $BB_BUILD_LOG
     cd binutils-${BINUTILS_VER}
-    pause_prompt
     # if the .obj directory exists, we've been here before; don't run
     # configure
     if ! [ -e ${BB_TEMP_DIR}/stamp.binutils.configure ]; then
+        pause_prompt
         mkdir .obj-i486-linux-uclibc
         cd .obj-i486-linux-uclibc
         # run configure
@@ -336,6 +341,7 @@ function binutils_configure () {
             check_exit_status $? "binutils configure"
     else
         if [ -d .obj-i486-linux-uclibc ]; then
+            echo "- Skipping 'configure' for binutils; stampfile exists"
             cd .obj-i486-linux-uclibc
         else
             echo "ERROR: binutils stampfile exists, but directory"
@@ -350,8 +356,8 @@ function binutils_configure () {
 function binutils_make_install() {
     echo "======= binutils_make_install =======" | tee -a $BB_BUILD_LOG
     echo "- current directory is ${PWD}" | tee -a $BB_BUILD_LOG
-    pause_prompt
     if ! [ -e ${BB_TEMP_DIR}/stamp.binutils.make.install ]; then
+        pause_prompt
         SRC=..
         CROSS=$(basename "$PWD")
         CROSS="${CROSS#.obj-}"
@@ -383,42 +389,49 @@ function binutils_make_install() {
 function binutils_make_symlinks() {
     echo "======= binutils_make_symlinks =======" | tee -a $BB_BUILD_LOG
     echo "- changing to Apps directory"
-    cd $APPS_DIR/binutils-*
+    cd $APPS_DIR/binutils-${BINUTILS_VER}-*
     echo "- current directory is ${PWD}" | tee -a $BB_BUILD_LOG
-    pause_prompt
-    NAME=`basename "$PWD"`
-    VER=-`echo $NAME | cut -d '-' -f 2-99`
-    echo "- ver is $VER"
-    NAME=`echo $NAME | cut -d '-' -f 1`
-    echo "- name is $NAME"
-    CROSS=`basename $PWD | cut -d '-' -f 3-99`
-    echo "- cross is $CROSS"
-    STATIC=/local/app/$NAME$VER
+    if ! [ -e ${BB_TEMP_DIR}/stamp.binutils.make.symlinks ]; then
+        pause_prompt
+        NAME=$(basename "$PWD")
+        VER=-$(echo $NAME | cut -d '-' -f 2-99)
+        echo "- ver is $VER" | tee -a $BB_BUILD_LOG
+        NAME=$(echo $NAME | cut -d '-' -f 1)
+        echo "- name is $NAME" | tee -a $BB_BUILD_LOG
+        CROSS=$(basename $PWD | cut -d '-' -f 3-99)
+        echo "- cross is $CROSS" | tee -a $BB_BUILD_LOG
+        STATIC=/local/app/$NAME$VER
 
-    test "${STATIC%$CROSS}" = "$STATIC" && {
-        echo 'Wrong $CROSS in '"$0"; exit 1; }
+        test "${STATIC%$CROSS}" = "$STATIC" && {
+            echo 'Wrong $CROSS in '"$0"; exit 1; }
 
-    sudo mkdir -p /local/cross/$CROSS/bin
-    sudo mkdir -p /local/cross/$CROSS/lib
-    # Don't want to deal with pairs of usr/bin/ and bin/, usr/lib/ and lib/
-    # in /usr/cross/$CROSS. This seems to be the easiest fix:
-    sudo ln -s . /local/cross/$CROSS/usr
+        sudo mkdir -p /local/cross/$CROSS/bin
+        sudo mkdir -p /local/cross/$CROSS/lib
+        # Don't want to deal with pairs of usr/bin/ and bin/, usr/lib/ and lib/
+        # in /usr/cross/$CROSS. This seems to be the easiest fix:
+        sudo ln -s . /local/cross/$CROSS/usr
 
-    # Do we really want to install tclsh8.4 and wish8.4 though? What are those
-    # btw?
-    link_samename_strip     /usr/bin                "$STATIC/bin/*"
-    link_samename_strip     /local/cross/$CROSS/bin   "$STATIC/$CROSS/bin/*"
-    # elf2flt.ld and ldscripts/*. Actually seems to work just fine
-    # without ldscripts/* symlinked, but elf2flt does insist.
-    link_samename           /local/cross/$CROSS/lib   "$STATIC/$CROSS/lib/*"
+        # Do we really want to install tclsh8.4 and wish8.4 though? What are
+        # those btw?
+        link_samename_strip     /usr/bin                "$STATIC/bin/*"
+        link_samename_strip     /local/cross/$CROSS/bin   "$STATIC/$CROSS/bin/*"
+        # elf2flt.ld and ldscripts/*. Actually seems to work just fine
+        # without ldscripts/* symlinked, but elf2flt does insist.
+        link_samename           /local/cross/$CROSS/lib   "$STATIC/$CROSS/lib/*"
+        touch $BB_TEMP_DIR/stamp.binutils.make.symlinks
+    else
+        echo "- Skipping 'make install' for gcc; stampfile exists" \
+            | tee -a $BB_BUILD_LOG
+    fi # if ! [ -e ${BB_TEMP_DIR}/stamp.gcc.make.symlinks ]
+
 } # function binutils_make_symlinks
 
 ## FUNC: gcc_configure
 function gcc_configure () {
     echo "======= gcc_configure =======" | tee -a $BB_BUILD_LOG
     echo "current directory is ${PWD}" | tee -a $BB_BUILD_LOG
-    pause_prompt
     if ! [ -d "gcc-${GCC_VER}.obj-i486-linux-uclibc" ]; then
+        pause_prompt
         echo "- downloading ${GCC_FILE}"
         wget -q -a $BB_BUILD_LOG $BASE_URL/$GCC_FILE
         echo "- unpacking ${GCC_FILE}"
@@ -438,9 +451,12 @@ function gcc_configure () {
     if ! [ -e ${BB_TEMP_DIR}/stamp.gcc.configure ]; then
         # run configure
         CROSS=$(basename "$PWD" | cut -d- -f3-99)
+        echo "CROSS is ${CROSS}" | tee -a $BB_BUILD_LOG
         SRC=../$(basename "$PWD" .obj-$CROSS)
+        echo "SRC is ${SRC}" | tee -a $BB_BUILD_LOG
         NAME=$(cd $SRC;pwd)
         NAME=$(basename "$NAME" .obj-$CROSS)-$CROSS
+        echo "NAME is ${NAME}" | tee -a $BB_BUILD_LOG
         STATIC=/local/app/$NAME
 
         $SRC/configure \
@@ -485,7 +501,8 @@ function gcc_configure () {
         2>&1 | tee -a $BB_BUILD_LOG
         check_exit_status $? "gcc configure"
     else
-        echo "- Skipping 'configure' for gcc; stampfile exists"
+        echo "- Skipping 'configure' for gcc; stampfile exists" \
+            | tee -a $BB_BUILD_LOG
     fi # if ! [ -e ${BB_TEMP_DIR}/stamp.gcc.configure ]
     touch ${BB_TEMP_DIR}/stamp.gcc.configure
 } # function binutils_configure
@@ -493,10 +510,10 @@ function gcc_configure () {
 function gcc_make () {
     echo "======= gcc_make =======" | tee -a $BB_BUILD_LOG
     echo "- current directory is ${PWD}" | tee -a $BB_BUILD_LOG
-    pause_prompt
     if ! [ -e ${BB_TEMP_DIR}/stamp.gcc.make ]; then
-        CROSS=`basename "$PWD" | cut -d- -f3-99`
-
+        pause_prompt
+        CROSS=$(basename "$PWD" | cut -d- -f3-99)
+        echo "CROSS is ${CROSS}" | tee -a $BB_BUILD_LOG
         # "The directory that should contain system headers does not exist:
         # /usr/cross/foobar/usr/include"
         sudo mkdir -p /local/cross/$CROSS/usr/include
@@ -505,24 +522,26 @@ function gcc_make () {
         check_exit_status $? "gcc make"
         touch $BB_TEMP_DIR/stamp.gcc.make
     else
-        echo "- Skipping 'make' for gcc; stampfile exists"
+        echo "- Skipping 'make' for gcc; stampfile exists" \
+            | tee -a $BB_BUILD_LOG
     fi # if ! [ -e ${BB_TEMP_DIR}/stamp.gcc.make.install ]
 } # function gcc_make
 
 function gcc_make_install () {
     echo "======= gcc_make_install =======" | tee -a $BB_BUILD_LOG
     echo "- current directory is ${PWD}" | tee -a $BB_BUILD_LOG
-    pause_prompt
     if ! [ -e ${BB_TEMP_DIR}/stamp.gcc.make.install ]; then
-
-        SRC=..
-        CROSS=`basename "$PWD"`
-        CROSS="${CROSS#.obj-}"
-        NAME=`cd $SRC;pwd`
-        NAME=`basename "$NAME"`-$CROSS
+        pause_prompt
+        CROSS=$(basename "$PWD" | cut -d- -f3-99)
+        echo "CROSS is ${CROSS}" | tee -a $BB_BUILD_LOG
+        SRC=../$(basename "$PWD" .obj-$CROSS)
+        echo "SRC is ${SRC}" | tee -a $BB_BUILD_LOG
+        NAME=$(cd $SRC;pwd)
+        NAME=$(basename "$NAME" .obj-$CROSS)-$CROSS
+        echo "NAME is ${NAME}" | tee -a $BB_BUILD_LOG
         STATIC=/local/app/$NAME
 
-        sudo make \
+        sudo make -k \
         prefix=$STATIC                          \
         exec-prefix=$STATIC                     \
         bindir=$STATIC/bin                      \
@@ -536,38 +555,179 @@ function gcc_make_install () {
         includedir=$STATIC/include              \
         infodir=$STATIC/info                    \
         mandir=$STATIC/man                      \
-        \
         install 2>&1 | tee -a $BB_BUILD_LOG
         check_exit_status $? "gcc make install"
         touch $BB_TEMP_DIR/stamp.gcc.make.install
     else
-        echo "- Skipping 'make install' for gcc; stampfile exists"
+        echo "- Skipping 'make install' for gcc; stampfile exists" \
+            | tee -a $BB_BUILD_LOG
     fi
 } # function gcc_make_install
 
+function gcc_make_symlinks() {
+    echo "======= gcc_make_symlinks =======" | tee -a $BB_BUILD_LOG
+    echo "- changing to Apps directory"
+    cd $APPS_DIR/gcc-${GCC_VER}-*
+    echo "- current directory is ${PWD}" | tee -a $BB_BUILD_LOG
+    if ! [ -e ${BB_TEMP_DIR}/stamp.gcc.make.symlinks ]; then
+        pause_prompt
+        NAME=$(basename "$PWD")
+        VER=-$(echo $NAME | cut -d '-' -f 2-99)
+        echo "- ver is $VER"
+        NAME=$(echo $NAME | cut -d '-' -f 1)
+        echo "- name is $NAME"
+        CROSS=$(basename $PWD | cut -d '-' -f 3-99)
+        echo "- cross is $CROSS"
+        STATIC=/local/app/$NAME$VER
+
+        test "${STATIC%$CROSS}" = "$STATIC" && {
+            echo 'Wrong $CROSS in '"$0"; exit 1; }
+        # Strip executables anywhere in the tree
+        # grep guards against matching files like *.o, *.so* etc
+        sudo strip $(find -perm +111 -type f | grep '/[a-z0-9]*$' | xargs)
+        # symlink binaries
+        link_samename_strip /usr/bin                "$STATIC/bin/*"
+        # symlink libs
+        link_samename /usr/cross/$CROSS/lib         "$STATIC/$CROSS/lib/*"
+        # symlink includes
+        link_samename /usr/cross/$CROSS/include/c++ \
+            "$STATIC/$CROSS/include/c++/*"
+        touch $BB_TEMP_DIR/stamp.gcc.make.symlinks
+    else
+        echo "- Skipping 'make install' for gcc; stampfile exists" \
+            | tee -a $BB_BUILD_LOG
+    fi # if ! [ -e ${BB_TEMP_DIR}/stamp.gcc.make.symlinks ]
+} # function gcc_make_symlinks
+
+function uclibc_kernel_download() {
+    echo "======= uclibc_kernel_download =======" | tee -a $BB_BUILD_LOG
+    echo "- current directory is ${PWD}" | tee -a $BB_BUILD_LOG
+    if ! [ -d "uclibc-${UCLIBC_VER}" ]; then
+        echo "- downloading ${UCLIBC_FILE}"
+        wget -q -a $BB_BUILD_LOG $BASE_URL/$UCLIBC_FILE
+        echo "- unpacking ${UCLIBC_FILE}"
+        if [ $DEBUG -gt 0 ]; then
+            TAR_OPTS="-jxvf"
+        else
+            TAR_OPTS="-jxf"
+        fi
+        tar $TAR_OPTS $UCLIBC_FILE | tee -a $BB_BUILD_LOG
+        touch $BB_TEMP_DIR/stamp.uclibc.unpack
+    fi
+    cd "uclibc-${UCLIBC_VER}"
+    echo "- current directory is ${PWD}" | tee -a $BB_BUILD_LOG
+    if ! [ -d "linux-${KERNEL_VER}" ]; then
+        echo "- installing kernel source..." | tee -a $BB_BUILD_LOG
+        echo "- downloading ${KERNEL_FILE}" | tee -a $BB_BUILD_LOG
+        wget -q -a $BB_BUILD_LOG $BASE_URL/$KERNEL_FILE
+        echo "- unpacking ${KERNEL_FILE}" | tee -a $BB_BUILD_LOG
+        if [ $DEBUG -gt 0 ]; then
+            TAR_OPTS="-jxvf"
+        else
+            TAR_OPTS="-jxf"
+        fi
+        tar $TAR_OPTS $KERNEL_FILE | tee -a $BB_BUILD_LOG
+        cd "linux-${KERNEL_VER}"
+        make ARCH=i386 CROSS_COMPILE=i486-linux-uclibc- defconfig 2>&1 \
+            | tee -a $BB_BUILD_LOG
+        ln -s asm-x86 include/asm
+        make ARCH=i386 CROSS_COMPILE=i486-linux-uclibc- headers_install 2>&1 \
+            | tee -a $BB_BUILD_LOG
+        touch $BB_TEMP_DIR/stamp.kernel.unpack
+        cd ..
+    fi # if ! [ -d "uclibc-${UCLIBC_VER}/linux-${KERNEL_VER}" ]
+    # don't change back to BB_TEMP_DIR, we need to run generic_make next
+} # function uclibc_download
+
+function uclibc_make_install() {
+    echo "======= uclibc_make_install =======" | tee -a $BB_BUILD_LOG
+    cd "${BB_TEMP_DIR}/uclibc-${UCLIBC_VER}"
+    echo "- current directory is ${PWD}" | tee -a $BB_BUILD_LOG
+    echo "HEY! Copy the .config file for uclibc into $PWD/uclibc-${UCLIBC_VER}"
+    pause_prompt
+    # FIXME check for uclibc.make.install stamp
+    if [ -d "uclibc-${UCLIBC_VER}" ]; then
+        cd "uclibc-${UCLIBC_VER}"
+        {
+            sudo make install || exit 1
+            sudo make install_kernel_headers || exit 1
+        } 2>&1 | tee -a $BB_BUILD_LOG
+        cd ..
+        touch $BB_TEMP_DIR/stamp.uclibc.make.install
+    else
+        echo "ERROR: uclibc directory 'uclibc-${UCLIBC_VER}' missing"
+        echo "ERROR: from ${PWD}"
+        exit 1
+    fi # if [ -d "uclibc-${UCLIBC_VER}" ]
+    return 0
+} # function uclibc_make_install
+
+function uclibc_make_symlinks() {
+    echo "======= uclibc_make_symlinks =======" | tee -a $BB_BUILD_LOG
+    echo "- changing to Apps directory"
+    cd $APPS_DIR/uclibc-${UCLIBC_VER}-*
+    echo "- current directory is ${PWD}" | tee -a $BB_BUILD_LOG
+    if ! [ -e ${BB_TEMP_DIR}/stamp.uclibc.make.symlinks ]; then
+        pause_prompt
+        NAME=$(basename "$PWD")
+        VER=-$(echo $NAME | cut -d '-' -f 2-99)
+        echo "- ver is $VER"
+        NAME=$(echo $NAME | cut -d '-' -f 1)
+        echo "- name is $NAME"
+        CROSS=$(basename $PWD | cut -d '-' -f 3-99)
+        echo "- cross is $CROSS"
+        ARCH=`echo $NAME$VER | cut -d- -f3 | sed -e 's/i.86/i386/'`
+        echo "- arch is $ARCH"
+        STATIC=/local/app/$NAME$VER
+
+        sudo mkdir -p /local/cross/$CROSS/lib
+        sudo mkdir -p /local/cross/$CROSS/include
+        # symlink libs
+        link_samename /local/cross/$CROSS/lib     "$STATIC/$ARCH/usr/lib/*"
+        # # symlink includes
+        link_samename /local/cross/$CROSS/include "$STATIC/$ARCH/usr/include/*"
+        touch $BB_TEMP_DIR/stamp.gcc.make.symlinks
+    else
+        echo "- Skipping making symlinks for uclibc; stampfile exists" \
+            | tee -a $BB_BUILD_LOG
+    fi # if ! [ -e ${BB_TEMP_DIR}/stamp.gcc.make.symlinks ]
+    return 0
+} # function gcc_make_symlinks
+
 ### MAIN SCRIPT ###
-PAUSE_PROMPT=1
-SCRIPT_NAME=$(basename $0)
-export START_DIR=$PWD
-if [ "x$1" = "x" ]; then
-    echo "ERROR: no working directory passed as an argument"
-    echo "Usage: ${SCRIPT_NAME} /path/to/working/directory"
-    exit 1
-fi # if [ "x$1" = "x" ]
-echo "======= BEGIN crosscompiler_bootstrap.sh ======="
-make_tempdir $1
-sudo_start_message
-# things we need to use for this script
-export BB_BUILD_LOG="${BB_TEMP_DIR}/build.log"
-: > $BB_BUILD_LOG
-cd $BB_TEMP_DIR
-binutils_configure
-generic_make
-sudo_update_timestamp
-binutils_make_install
-binutils_make_symlinks
-cd $BB_TEMP_DIR
-gcc_configure
-sudo_update_timestamp
-gcc_make
-gcc_make_install
+    PAUSE_PROMPT=1
+    SCRIPT_NAME=$(basename $0)
+    export START_DIR=$PWD
+    if [ "x$1" = "x" ]; then
+        echo "ERROR: no working directory passed as an argument"
+        echo "Usage: ${SCRIPT_NAME} /path/to/working/directory"
+        exit 1
+    fi # if [ "x$1" = "x" ]
+    make_tempdir $1
+    sudo_start_message
+    # things we need to use for this script
+    export BB_BUILD_LOG="${BB_TEMP_DIR}/build.log"
+    : > $BB_BUILD_LOG
+    echo "======= BEGIN crosscompiler_bootstrap.sh =======" \
+        | tee -a $BB_BUILD_LOG
+    # binutils
+    cd $BB_TEMP_DIR
+    binutils_configure
+    generic_make
+    sudo_update_timestamp
+    binutils_make_install
+    binutils_make_symlinks
+    # gcc
+    cd $BB_TEMP_DIR
+    gcc_configure
+    sudo_update_timestamp
+    gcc_make
+    gcc_make_install
+    gcc_make_symlinks
+    cd $BB_TEMP_DIR
+    uclibc_kernel_download
+    generic_make
+    uclibc_make_install
+    uclibc_make_symlinks
+exit 0
+# конец!
