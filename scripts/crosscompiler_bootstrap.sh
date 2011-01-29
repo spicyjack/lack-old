@@ -16,8 +16,9 @@
     BINUTILS_FILE="binutils-${BINUTILS_VER}.tar.bz2"
     GCC_VER="4.3.1"
     GCC_FILE="gcc-${GCC_VER}.tar.bz2"
-    UCLIBC_VER="20080607.svn"
-    UCLIBC_FILE="uclibc-${UCLIBC_VER}.tar.bz2"
+    #UCLIBC_VER="20080607.svn"
+    UCLIBC_VER="0.9.31"
+    UCLIBC_FILE="uClibc-${UCLIBC_VER}.tar.bz2"
     BUSYBOX_VER="20080607.svn"
     BUSYBOX_FILE="busybox-${BUSYBOX_VER}.tar.bz2"
     KERNEL_VER="2.6.36"
@@ -287,69 +288,74 @@ function generic_make () {
 function binutils_configure () {
     echo "======= binutils_configure =======" | tee -a $BB_BUILD_LOG
     if ! [ -d "binutils-${BINUTILS_VER}" ]; then
-        echo "- downloading ${BINUTILS_FILE}"
-        wget -q -a $BB_BUILD_LOG $BASE_URL/$BINUTILS_FILE
-        echo "- unpacking ${BINUTILS_FILE}"
+        echo "- downloading/unpacking ${BINUTILS_FILE}"
         if [ $DEBUG -gt 0 ]; then
             TAR_OPTS="-jxvf"
         else
             TAR_OPTS="-jxf"
         fi
-        tar $TAR_OPTS $BINUTILS_FILE | tee -a $BB_BUILD_LOG
+        wget -q -O - -a $BB_BUILD_LOG $BASE_URL/$BINUTILS_FILE \
+            | tar $TAR_OPTS - \
+            | tee -a $BB_BUILD_LOG
     fi
     echo "- changing directory to binutils-${BINUTILS_VER}"|tee -a $BB_BUILD_LOG
-    cd binutils-${BINUTILS_VER}
-    # if the .obj directory exists, we've been here before; don't run
-    # configure
-    if ! [ -e ${BB_TEMP_DIR}/stamp.binutils.configure ]; then
-        pause_prompt
-        mkdir .obj-i486-linux-uclibc
-        cd .obj-i486-linux-uclibc
-        # run configure
-        SRC=..
-        CROSS=$(basename "$PWD")
-        # removes .obj- from the front of $CROSS
-        CROSS="${CROSS#.obj-}"
-        # the name of the output directory?
-        NAME=$(cd $SRC;pwd)
-        NAME=$(basename "$NAME")-$CROSS
-        echo "- NAME is ${NAME}"
-        STATIC_DIR=/local/app/$NAME
-        echo "- Running ./configure for binutils" >> $BB_BUILD_LOG
-        $SRC/configure \
-            --prefix=$STATIC_DIR \
-            --exec-prefix=$STATIC_DIR \
-            --bindir=/usr/bin \
-            --sbindir=/usr/sbin \
-            --libexecdir=$STATIC_DIR/libexec \
-            --datadir=$STATIC_DIR/share \
-            --sysconfdir=/etc \
-            --sharedstatedir=$STATIC_DIR/var/com \
-            --localstatedir=$STATIC_DIR/var \
-            --libdir=/usr/lib \
-            --includedir=/usr/include \
-            --infodir=/usr/info \
-            --mandir=/usr/man \
-            \
-            --oldincludedir=/usr/include \
-            --target=$CROSS \
-            --with-sysroot=/usr/cross/$CROSS \
-            --disable-rpath \
-            --disable-nls \
-            --enable-werror=no \
-            2>&1 | tee -a $BB_BUILD_LOG
-            check_exit_status $? "binutils configure"
-    else
-        if [ -d .obj-i486-linux-uclibc ]; then
-            echo "- Skipping 'configure' for binutils; stampfile exists"
+    if [ -d binutils-${BINUTILS_VER} ]; then
+        cd binutils-${BINUTILS_VER}
+        # if the .obj directory exists, we've been here before; don't run
+        # configure
+        if ! [ -e ${BB_TEMP_DIR}/stamp.binutils.configure ]; then
+            pause_prompt
+            mkdir .obj-i486-linux-uclibc
             cd .obj-i486-linux-uclibc
+            # run configure
+            SRC=..
+            CROSS=$(basename "$PWD")
+            # removes .obj- from the front of $CROSS
+            CROSS="${CROSS#.obj-}"
+            # the name of the output directory?
+            NAME=$(cd $SRC;pwd)
+            NAME=$(basename "$NAME")-$CROSS
+            echo "- NAME is ${NAME}"
+            STATIC_DIR=/local/app/$NAME
+            echo "- Running ./configure for binutils" >> $BB_BUILD_LOG
+            $SRC/configure \
+                --prefix=$STATIC_DIR \
+                --exec-prefix=$STATIC_DIR \
+                --bindir=/usr/bin \
+                --sbindir=/usr/sbin \
+                --libexecdir=$STATIC_DIR/libexec \
+                --datadir=$STATIC_DIR/share \
+                --sysconfdir=/etc \
+                --sharedstatedir=$STATIC_DIR/var/com \
+                --localstatedir=$STATIC_DIR/var \
+                --libdir=/usr/lib \
+                --includedir=/usr/include \
+                --infodir=/usr/info \
+                --mandir=/usr/man \
+                \
+                --oldincludedir=/usr/include \
+                --target=$CROSS \
+                --with-sysroot=/usr/cross/$CROSS \
+                --disable-rpath \
+                --disable-nls \
+                --enable-werror=no \
+                2>&1 | tee -a $BB_BUILD_LOG
+                check_exit_status $? "binutils configure"
         else
-            echo "ERROR: binutils stampfile exists, but directory"
-            echo "ERROR: .obj-i486-linux-uclibc does not exist"
-            exit 1
-        fi # if [ -d .obj-i486-linux-uclibc ]
-    fi # if ! [ -d .obj-i486-linux-uclibc ]
-    touch ${BB_TEMP_DIR}/stamp.binutils.configure
+            if [ -d .obj-i486-linux-uclibc ]; then
+                echo "- Skipping 'configure' for binutils; stampfile exists"
+                cd .obj-i486-linux-uclibc
+            else
+                echo "ERROR: binutils stampfile exists, but directory"
+                echo "ERROR: .obj-i486-linux-uclibc does not exist"
+                exit 1
+            fi # if [ -d .obj-i486-linux-uclibc ]
+        fi # if ! [ -d .obj-i486-linux-uclibc ]
+        touch ${BB_TEMP_DIR}/stamp.binutils.configure
+    else
+        echo "binutils-${BINUTILS_VER} failed to download/unpack properly"
+        exit 1
+    fi # if [ -d binutils-${BINUTILS_VER} ]
 } # function binutils_configure
 
 ## FUNC: binutils_make_install
@@ -432,15 +438,15 @@ function gcc_configure () {
     echo "current directory is ${PWD}" | tee -a $BB_BUILD_LOG
     if ! [ -d "gcc-${GCC_VER}.obj-i486-linux-uclibc" ]; then
         pause_prompt
-        echo "- downloading ${GCC_FILE}"
-        wget -q -a $BB_BUILD_LOG $BASE_URL/$GCC_FILE
-        echo "- unpacking ${GCC_FILE}"
+        echo "- downloading/unpacking ${GCC_FILE}"
         if [ $DEBUG -gt 0 ]; then
             TAR_OPTS="-jxvf"
         else
             TAR_OPTS="-jxf"
         fi
-        tar $TAR_OPTS $GCC_FILE | tee -a $BB_BUILD_LOG
+        wget -q -O - -a $BB_BUILD_LOG $BASE_URL/$GCC_FILE \
+            | tar $TAR_OPTS - \
+            | tee -a $BB_BUILD_LOG
         mkdir gcc-${GCC_VER}.obj-i486-linux-uclibc
     fi
     echo "changing directory to ${PWD}/gcc-${GCC_VER}.obj-i486-linux-uclibc" \
@@ -602,70 +608,90 @@ function gcc_make_symlinks() {
 function uclibc_kernel_download() {
     echo "======= uclibc_kernel_download =======" | tee -a $BB_BUILD_LOG
     echo "- current directory is ${PWD}" | tee -a $BB_BUILD_LOG
-    if ! [ -d "uclibc-${UCLIBC_VER}" ]; then
-        echo "- downloading ${UCLIBC_FILE}"
-        wget -q -a $BB_BUILD_LOG $BASE_URL/$UCLIBC_FILE
-        echo "- unpacking ${UCLIBC_FILE}"
+    if ! [ -d "uClibc-${UCLIBC_VER}" ]; then
+        echo "- downloading/unpacking ${UCLIBC_FILE}"
         if [ $DEBUG -gt 0 ]; then
             TAR_OPTS="-jxvf"
         else
             TAR_OPTS="-jxf"
         fi
-        tar $TAR_OPTS $UCLIBC_FILE | tee -a $BB_BUILD_LOG
+        wget -q -O - -a $BB_BUILD_LOG $BASE_URL/$UCLIBC_FILE \
+            | tar $TAR_OPTS - \
+            | tee -a $BB_BUILD_LOG
         touch $BB_TEMP_DIR/stamp.uclibc.unpack
     fi
-    cd "uclibc-${UCLIBC_VER}"
-    echo "- current directory is ${PWD}" | tee -a $BB_BUILD_LOG
-    if ! [ -d "linux-${KERNEL_VER}" ]; then
-        echo "- installing kernel source..." | tee -a $BB_BUILD_LOG
-        echo "- downloading ${KERNEL_FILE}" | tee -a $BB_BUILD_LOG
-        wget -q -a $BB_BUILD_LOG $BASE_URL/$KERNEL_FILE
-        echo "- unpacking ${KERNEL_FILE}" | tee -a $BB_BUILD_LOG
-        if [ $DEBUG -gt 0 ]; then
-            TAR_OPTS="-jxvf"
-        else
-            TAR_OPTS="-jxf"
-        fi
-        tar $TAR_OPTS $KERNEL_FILE | tee -a $BB_BUILD_LOG
-        cd "linux-${KERNEL_VER}"
-        make ARCH=i386 CROSS_COMPILE=i486-linux-uclibc- defconfig 2>&1 \
-            | tee -a $BB_BUILD_LOG
-        ln -s asm-x86 include/asm
-        make ARCH=i386 CROSS_COMPILE=i486-linux-uclibc- headers_install 2>&1 \
-            | tee -a $BB_BUILD_LOG
-        touch $BB_TEMP_DIR/stamp.kernel.unpack
-        cd ..
-    fi # if ! [ -d "uclibc-${UCLIBC_VER}/linux-${KERNEL_VER}" ]
+    if [ -d "uClibc-${UCLIBC_VER}" ]; then
+        cd "uClibc-${UCLIBC_VER}"
+        echo "- current directory is ${PWD}" | tee -a $BB_BUILD_LOG
+        if ! [ -d "linux-${KERNEL_VER}" ]; then
+            echo "- downloading/unpacking kernel source ${KERNEL_FILE}" \
+                | tee -a $BB_BUILD_LOG
+            if [ $DEBUG -gt 0 ]; then
+                TAR_OPTS="-jxvf"
+            else
+                TAR_OPTS="-jxf"
+            fi
+            wget -q -O - -a $BB_BUILD_LOG $BASE_URL/$KERNEL_FILE \
+                | tar $TAR_OPTS - \
+                | tee -a $BB_BUILD_LOG
+            if [ -d "linux-${KERNEL_VER}" ]; then
+                cd "linux-${KERNEL_VER}"
+                make ARCH=i386 CROSS_COMPILE=i486-linux-uclibc- defconfig 2>&1 \
+                    | tee -a $BB_BUILD_LOG
+                ln -s asm-x86 include/asm
+                make ARCH=i386 CROSS_COMPILE=i486-linux-uclibc- \
+                    headers_install 2>&1 \
+                    | tee -a $BB_BUILD_LOG
+                touch $BB_TEMP_DIR/stamp.uclibc.kernel.unpack
+                # remove the unneeded source code directories
+                for DIR in arch block COPYING CREDITS crypto Documentation \
+                    drivers firmware fs include init ipc Kbuild kernel \
+                    lib MAINTAINERS Makefile mm net README REPORTING-BUGS \
+                    samples scripts security sound tools virt;
+                do
+                    rm -rf $DIR
+                done
+                cd ..
+            else
+                echo "ERROR: kernel source did not download/unpack"
+                exit 1
+            fi # if [ -d "linux-${KERNEL_VER}" ]
+        fi # if ! [ -d "uclibc-${UCLIBC_VER}/linux-${KERNEL_VER}" ]
+    else
+        echo "ERROR: failed to download/unpack uclibc-${UCLIBC_VER}"
+        exit 1
+    fi
     # don't change back to BB_TEMP_DIR, we need to run generic_make next
+    echo "HEY! Copy the .config file for uclibc into $PWD/uclibc-${UCLIBC_VER}"
+    pause_prompt
 } # function uclibc_download
 
 function uclibc_make_install() {
     echo "======= uclibc_make_install =======" | tee -a $BB_BUILD_LOG
-    cd "${BB_TEMP_DIR}/uclibc-${UCLIBC_VER}"
+    #cd "${BB_TEMP_DIR}/uClibc-${UCLIBC_VER}"
     echo "- current directory is ${PWD}" | tee -a $BB_BUILD_LOG
-    echo "HEY! Copy the .config file for uclibc into $PWD/uclibc-${UCLIBC_VER}"
-    pause_prompt
     # FIXME check for uclibc.make.install stamp
-    if [ -d "uclibc-${UCLIBC_VER}" ]; then
-        cd "uclibc-${UCLIBC_VER}"
+    #if [ -d "uClibc-${UCLIBC_VER}" ]; then
+    #    cd "uClibc-${UCLIBC_VER}"
         {
             sudo make install || exit 1
-            sudo make install_kernel_headers || exit 1
+            # target no longer exists in newer versions of uClibc
+            #sudo make install_kernel_headers || exit 1
         } 2>&1 | tee -a $BB_BUILD_LOG
         cd ..
         touch $BB_TEMP_DIR/stamp.uclibc.make.install
-    else
-        echo "ERROR: uclibc directory 'uclibc-${UCLIBC_VER}' missing"
-        echo "ERROR: from ${PWD}"
-        exit 1
-    fi # if [ -d "uclibc-${UCLIBC_VER}" ]
+    #else
+    #    echo "ERROR: uClibc directory 'uClibc-${UCLIBC_VER}' missing"
+    #    echo "ERROR: from ${PWD}"
+    #    exit 1
+    #fi # if [ -d "uclibc-${UCLIBC_VER}" ]
     return 0
 } # function uclibc_make_install
 
 function uclibc_make_symlinks() {
     echo "======= uclibc_make_symlinks =======" | tee -a $BB_BUILD_LOG
     echo "- changing to Apps directory"
-    cd $APPS_DIR/uclibc-${UCLIBC_VER}-*
+    cd $APPS_DIR/uClibc-${UCLIBC_VER}-*
     echo "- current directory is ${PWD}" | tee -a $BB_BUILD_LOG
     if ! [ -e ${BB_TEMP_DIR}/stamp.uclibc.make.symlinks ]; then
         pause_prompt
@@ -686,13 +712,13 @@ function uclibc_make_symlinks() {
         link_samename /local/cross/$CROSS/lib     "$STATIC/$ARCH/usr/lib/*"
         # # symlink includes
         link_samename /local/cross/$CROSS/include "$STATIC/$ARCH/usr/include/*"
-        touch $BB_TEMP_DIR/stamp.gcc.make.symlinks
+        touch $BB_TEMP_DIR/stamp.uclibc.make.symlinks
     else
         echo "- Skipping making symlinks for uclibc; stampfile exists" \
             | tee -a $BB_BUILD_LOG
     fi # if ! [ -e ${BB_TEMP_DIR}/stamp.gcc.make.symlinks ]
     return 0
-} # function gcc_make_symlinks
+} # function uclibc_make_symlinks
 
 ### MAIN SCRIPT ###
     PAUSE_PROMPT=1
