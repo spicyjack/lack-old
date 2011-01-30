@@ -263,7 +263,7 @@ cat <<EOU
 
     # create a single output squashfs file from one or more filellists
     ${SCRIPTNAME} --filelist --squashfs --workdir /dev/shm \ 
-        --base /path/to/recipes --single debug-tools.2010.362.1 \ 
+        --basepath /path/to/recipes --single debug-tools.2010.362.1 \ 
         -- debug-tools lspci.lenny
 
     ### MISC EXAMPLES
@@ -787,8 +787,10 @@ done # for $CURR_PKG in $@;
 
 # call mksquashfs if we're packaging a single package
 if [ "x$SINGLE_OUTFILE" != "x" ]; then
-    check_squashfile_exists $SINGLE_OUTFILE
-    run_mksquashfs $SINGLE_OUTFILE
+    check_squashfile_exists $SQUASH_SRC
+    run_mksquashfs "${SQUASH_SRC}"
+    #check_squashfile_exists $SINGLE_OUTFILE
+    #run_mksquashfs $SINGLE_OUTFILE
 fi # if [ "x$SINGLE_OUTFILE" == "x" ]
 
 # calculate script execution time, and output pretty statistics

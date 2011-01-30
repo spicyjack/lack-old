@@ -23,6 +23,7 @@ file /usr/bin/iceauth /usr/bin/iceauth 755 0 0
 file /usr/bin/sessreg /usr/bin/sessreg 755 0 0
 file /usr/bin/showrgb /usr/bin/showrgb 755 0 0
 file /usr/bin/xcmsdb /usr/bin/xcmsdb 755 0 0
+file /usr/bin/xdpyinfo /usr/bin/xdpyinfo 755 0 0
 file /usr/bin/xgamma /usr/bin/xgamma 755 0 0
 file /usr/bin/xhost /usr/bin/xhost 755 0 0
 file /usr/bin/xmodmap /usr/bin/xmodmap 755 0 0
