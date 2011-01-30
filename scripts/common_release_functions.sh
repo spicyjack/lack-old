@@ -181,7 +181,7 @@ function _create_init_script {
         }" >> $TEMP_DIR/init.sh
     check_exit_status $? "Creating the init script in TEMP_DIR"
     # add the init script to the filelist
-    echo "file /init /${TEMP_DIR}/init.sh 0755 0 0" >> $TEMP_DIR/$FILELIST
+    echo "file /init ${TEMP_DIR}/init.sh 0755 0 0" >> $TEMP_DIR/$FILELIST
     check_exit_status $? "Creating the init script in TEMP_DIR"
     return 0
 } # function _create_init_script
