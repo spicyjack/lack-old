@@ -263,7 +263,7 @@ cat <<EOU
 
     # create a single output squashfs file from one or more filellists
     ${SCRIPTNAME} --filelist --squashfs --workdir /dev/shm \ 
-        --basepath /path/to/recipes --single debug-tools.2010.362.1 \ 
+        --basepath /path/to/recipesdir --single debug-tools.2010.362.1 \ 
         -- debug-tools lspci.lenny
 
     ### MISC EXAMPLES
@@ -595,8 +595,8 @@ do
 
     ### FILELIST OUTPUT ###
     elif [ $OUTPUT_OPT == "filelist" ]; then
-        warn "== PACKAGE CONTENTS =="
-        warn "$PKG_CONTENTS"
+        say "== PACKAGE CONTENTS =="
+        say "$PKG_CONTENTS"
         # print the recipe header
         if [ $APPEND -eq 0 ]; then
             dump_filelist_header $CURR_PKG

@@ -16,6 +16,7 @@ file /etc/vga/dvorak-us.keymap /etc/vga/dvorak-us.keymap 644 0 0
 file /etc/vga/libvga.et4000 /etc/vga/libvga.et4000 644 0 0
 file /etc/vga/null.keymap /etc/vga/null.keymap 644 0 0
 file /etc/vga/libvga.config /etc/vga/libvga.config 644 0 0
+dir /usr 755 0 0
 dir /usr/lib 755 0 0
 file /usr/lib/libvga.so.1.4.3 /usr/lib/libvga.so.1.4.3 644 0 0
 file /usr/lib/libvgagl.so.1.4.3 /usr/lib/libvgagl.so.1.4.3 644 0 0
