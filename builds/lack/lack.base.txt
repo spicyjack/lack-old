@@ -3,7 +3,7 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 # make sure you get busybox in each project's specific initramfs file list now
-file /bin/busybox :TEMP_DIR:/busybox-1.18.0.git-x86 0755 0 0
+file /bin/busybox :TEMP_DIR:/busybox-1.18.2-x86 0755 0 0
 # busybox getopt hides in /bin
 slink /usr/bin/getopt /bin/getopt 0755 0 0
 # /etc
@@ -14,6 +14,10 @@ slink /etc/issue /etc/issue.lack 0644 0 0
 file /etc/modules :PROJECT_DIR:/etcfiles/modules 0644 0 0
 file /etc/fstab :PROJECT_DIR:/etcfiles/fstab 0644 0 0
 file /etc/inittab :PROJECT_DIR:/etcfiles/inittab 0644 0 0
+file /etc/group :BUILD_BASE:/common/etcfiles/group 0644 0 0
+file /etc/passwd :BUILD_BASE:/common/etcfiles/passwd 0644 0 0
+file /etc/shadow :BUILD_BASE:/common/etcfiles/shadow 0640 0 0
+file /etc/sudoers :BUILD_BASE:/common/etcfiles/sudoers 0440 0 0
 # the banner-printer-outer
 file /bin/start_shell.sh :BUILD_BASE:/common/scripts/start_shell.sh 0755 0 0
 # /sbin
@@ -36,10 +40,12 @@ file /etc/init.d/kernel-modules :BUILD_BASE:/common/initscripts/kernel-modules 0
 file /etc/init.d/klogd :BUILD_BASE:/common/initscripts/klogd 0755 0 0
 file /etc/init.d/loadfont :BUILD_BASE:/common/initscripts/loadfont 0755 0 0
 file /etc/init.d/miscfs :BUILD_BASE:/common/initscripts/miscfs 0755 0 0
+file /etc/init.d/networking :BUILD_BASE:/common/initscripts/networking 0755 0 0
 file /etc/init.d/procfs :BUILD_BASE:/common/initscripts/procfs 0755 0 0
 file /etc/init.d/remount-rootfs :BUILD_BASE:/common/initscripts/remount-rootfs 0755 0 0
 file /etc/init.d/rootvol :BUILD_BASE:/common/initscripts/rootvol 0755 0 0
 file /etc/init.d/run-program :BUILD_BASE:/common/initscripts/run-program 0755 0 0
+file /etc/init.d/shellinaboxd :BUILD_BASE:/common/initscripts/shellinaboxd 0755 0 0
 file /etc/init.d/syslogd :BUILD_BASE:/common/initscripts/syslogd 0755 0 0
 file /etc/init.d/sysfs :BUILD_BASE:/common/initscripts/sysfs 0755 0 0
 file /etc/init.d/udev :BUILD_BASE:/common/initscripts/udev 0755 0 0

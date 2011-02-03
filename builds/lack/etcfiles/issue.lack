@@ -12,5 +12,10 @@
 
 [1;33;40mRelease:[37;40m :RELEASE_VER:, kernel :KERNEL_VER:
 
-Shells are available on virtual consoles 1-5; hit
-<[1;32;40mAlt-F?[0;37;40m> to switch to a different virtual console.
+Account info:[34;40m
+u: root               p: Disabled; use SUDO from 'lack' user account
+u: lack               p: :LACK_PASS:[0;37;40m
+
+Shells are available on virtual consoles 1-5, no login required; 
+hit <[1;32;40mAlt-F?[0;37;40m> to switch to a different virtual console.
+
