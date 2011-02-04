@@ -1,0 +1,18 @@
+# name: libglew1.5
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# libglew1.5
+dir /usr 755 0 0
+dir /usr/share 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libGLEW.so.1.5.0 /usr/lib/libGLEW.so.1.5.0 644 0 0
+slink /usr/lib/libGLEW.so.1.5 /usr/lib/libGLEW.so.1.5.0 777 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:

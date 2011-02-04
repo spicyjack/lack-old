@@ -21,3 +21,11 @@ slink /usr/lib/libjpeg.so.62 /usr/lib/libjpeg.so.62.0.0 777 0 0
 #file /usr/lib/libXpm.so.4.11.0 /usr/lib/libXpm.so.4.11.0 644 0 0
 #slink /usr/lib/libXpm.so.4 /usr/lib/libXpm.so.4.11.0 777 0 0
 # vi: set sw=4 ts=4 paste:
+# libtiff4
+#dir /usr/share 755 0 0
+#dir /usr/share/lintian 755 0 0
+#dir /usr/share/lintian/overrides 755 0 0
+#file /usr/share/lintian/overrides/libtiff4 /usr/share/lintian/overrides/libtiff4 644 0 0
+file /usr/lib/libtiff.so.4.2.1 /usr/lib/libtiff.so.4.2.1 644 0 0
+slink /usr/lib/libtiff.so.4 /usr/lib/libtiff.so.4.2.1 777 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:

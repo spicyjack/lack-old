@@ -220,7 +220,7 @@ EOF
 # run getopt
 TEMP=$(${GETOPT} -o hHenp:d:f:sb:o:qlkw: \
 --long help,longhelp,examples,dry-run,project:,projectdir: \
---long varsfile:,showvars,base:,output:,quiet,hardlink \
+--long varsfile:,showvars,basedir:,output:,quiet,hardlink \
 --long keeplist,keepfiles,keep,workdir: \
 -n "${SCRIPTNAME}" -- "$@")
 check_exit_status $? $GETOPT

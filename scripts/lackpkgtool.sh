@@ -733,7 +733,7 @@ do
                         check_exit_status $? \
                             "${CP} ${SOURCE} ${SQUASH_SRC}/${TARGET}"
                     else
-                        $CP $SOURCE "${SQUASH_SRC}/${TARGET}"
+                        $CP --preserve=all $SOURCE "${SQUASH_SRC}/${TARGET}"
                         check_exit_status $? \
                             "${CP} ${SOURCE} ${SQUASH_SRC}/${TARGET}"
                     fi # if [ "x${LOGFILE}" != "x" ]

@@ -124,8 +124,8 @@ file /usr/lib/libpcreposix.so.3.12.1 /usr/lib/libpcreposix.so.3.12.1 644 0 0
 slink /usr/lib/libpcreposix.so.3 /usr/lib/libpcreposix.so.3.12.1 777 0 0
 slink /usr/lib/libpcre.so.3 /usr/lib/libpcre.so.3.12.1 777 0 0
 # libpng
-file /usr/lib/libpng12.so.0.27.0 /usr/lib/libpng12.so.0.27.0 644 0 0
-slink /usr/lib/libpng12.so.0 /usr/lib/libpng12.so.0.27.0 777 0 0
+#file /usr/lib/libpng12.so.0.27.0 /usr/lib/libpng12.so.0.27.0 644 0 0
+#slink /usr/lib/libpng12.so.0 /usr/lib/libpng12.so.0.27.0 777 0 0
 # libcairo2
 file /usr/lib/libcairo.so.2.17.5 /usr/lib/libcairo.so.2.17.5 644 0 0
 slink /usr/lib/libcairo.so.2 /usr/lib/libcairo.so.2.17.5 777 0 0

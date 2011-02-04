@@ -34,8 +34,8 @@ dir /usr/share/lintian/overrides 755 0 0
 file /usr/share/lintian/overrides/timidity /usr/share/lintian/overrides/timidity 644 0 0
 dir /usr/share/pixmaps 755 0 0
 file /usr/share/pixmaps/timidity.xpm /usr/share/pixmaps/timidity.xpm 644 0 0
-dir /usr/share/menu 755 0 0
-file /usr/share/menu/timidity /usr/share/menu/timidity 644 0 0
+#dir /usr/share/menu 755 0 0
+#file /usr/share/menu/timidity /usr/share/menu/timidity 644 0 0
 dir /usr/bin 755 0 0
 file /usr/bin/timidity /usr/bin/timidity 755 0 0
 dir /etc 755 0 0

@@ -69,6 +69,10 @@ case "$ACTION" in
     for STOW_PKG in $(find /pkgs -maxdepth 1 -type d \
         | grep -v '^/pkgs$' | sort);
     do
+        # don't stow the perl package again
+        if [ $(echo $STOW_PKG | /bin/grep -c "^perl") -gt 0 ]; then
+            continue
+        fi
         stow_package $STOW_PKG
     done
     cd $OLD_DIR
