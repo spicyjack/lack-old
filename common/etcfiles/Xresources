@@ -1,7 +1,8 @@
 ! comments are marked with an exclamation point at the beginning of the line
-#ifdef COLOR
+# requires a c-preprocessor (cpp)
+##ifdef COLOR
 *customization: -color
-#endif
+##endif
 
 ! mrxvt settings (mrxvt == multi-tab rxvt)
 ! size

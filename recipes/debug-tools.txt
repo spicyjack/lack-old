@@ -1,4 +1,15 @@
 # $Id: debug.txt,v 1.5 2009-06-30 08:23:19 brian Exp $
+# name: debug-tools
+# description: misc debugging tools
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
 # debug /usr/bin
 dir /usr 0755 0 0
 dir /usr/bin 0755 0 0
@@ -22,4 +33,39 @@ file /usr/share/locale/pl/LC_MESSAGES/pv.mo /usr/share/locale/pl/LC_MESSAGES/pv.
 dir /usr/share/locale/pt 755 0 0
 dir /usr/share/locale/pt/LC_MESSAGES 755 0 0
 file /usr/share/locale/pt/LC_MESSAGES/pv.mo /usr/share/locale/pt/LC_MESSAGES/pv.mo 644 0 0
-# vi: set sw=4 ts=4 paste:
+# screen
+dir /var 755 0 0
+dir /var/run 755 0 0
+dir /var/run/screen 775 0 43
+dir /etc 755 0 0
+#dir /etc/init.d 755 0 0
+#file /etc/init.d/screen-cleanup /etc/init.d/screen-cleanup 755 0 0
+file /etc/screenrc /etc/screenrc 644 0 0
+dir /usr 755 0 0
+dir /usr/bin 755 0 0
+# screen is SGID 'utmp'
+file /usr/bin/screen /usr/bin/screen 2755 0 43
+dir /usr/share 755 0 0
+dir /usr/share/screen 755 0 0
+dir /usr/share/screen/utf8encodings 755 0 0
+file /usr/share/screen/utf8encodings/a1 /usr/share/screen/utf8encodings/a1 644 0 0
+file /usr/share/screen/utf8encodings/d6 /usr/share/screen/utf8encodings/d6 644 0 0
+file /usr/share/screen/utf8encodings/02 /usr/share/screen/utf8encodings/02 644 0 0
+file /usr/share/screen/utf8encodings/c2 /usr/share/screen/utf8encodings/c2 644 0 0
+file /usr/share/screen/utf8encodings/c6 /usr/share/screen/utf8encodings/c6 644 0 0
+file /usr/share/screen/utf8encodings/cc /usr/share/screen/utf8encodings/cc 644 0 0
+file /usr/share/screen/utf8encodings/04 /usr/share/screen/utf8encodings/04 644 0 0
+file /usr/share/screen/utf8encodings/cd /usr/share/screen/utf8encodings/cd 644 0 0
+file /usr/share/screen/utf8encodings/c4 /usr/share/screen/utf8encodings/c4 644 0 0
+file /usr/share/screen/utf8encodings/c7 /usr/share/screen/utf8encodings/c7 644 0 0
+file /usr/share/screen/utf8encodings/18 /usr/share/screen/utf8encodings/18 644 0 0
+file /usr/share/screen/utf8encodings/01 /usr/share/screen/utf8encodings/01 644 0 0
+file /usr/share/screen/utf8encodings/c3 /usr/share/screen/utf8encodings/c3 644 0 0
+file /usr/share/screen/utf8encodings/19 /usr/share/screen/utf8encodings/19 644 0 0
+file /usr/share/screen/utf8encodings/c8 /usr/share/screen/utf8encodings/c8 644 0 0
+file /usr/share/screen/utf8encodings/03 /usr/share/screen/utf8encodings/03 644 0 0
+file /usr/share/screen/utf8encodings/bf /usr/share/screen/utf8encodings/bf 644 0 0
+#dir /usr/share/lintian 755 0 0
+#dir /usr/share/lintian/overrides 755 0 0
+#file /usr/share/lintian/overrides/screen /usr/share/lintian/overrides/screen 644 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:
