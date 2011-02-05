@@ -32,7 +32,7 @@ if [ $(/bin/grep -c nox /proc/cmdline) -eq 0 ]; then
     fi # if [ $(/bin/egrep -c "wm=[DEBUG|xterm]" /proc/cmdline) -gt 0 ]
 
     # set the xsession file to be owned by lack.lack
-    #chmod 755 $HOME_DIR/.xsession
+    chmod 755 $HOME_DIR/.xsession
     chown lack.lack $HOME_DIR/.xsession
 
     # see if the user wants a different screen resolution
