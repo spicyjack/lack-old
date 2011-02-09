@@ -112,6 +112,7 @@ function sedify ()
         s!:BUILD_BASE:!${BUILD_BASE}!g;
         s!:VERSION:!${KERNEL_VER}!g;
         s!:TEMP_DIR:!${TEMP_DIR}!g;
+        s!:LACK_WORK_DIR:!${LACK_WORK_DIR}!g;
         }" >> $DEST_FILE
 } # function sedify ()
 
@@ -395,7 +396,7 @@ echo "- Created temporary directory '${TEMP_DIR}'"
 ### EXPORTS
 # export things that were set up either in getopts or hardcoded into this
 # script
-export BUILD_BASE PROJECT_DIR TEMP_DIR FILELIST PROJECT_LIST
+export BUILD_BASE PROJECT_DIR TEMP_DIR FILELIST PROJECT_LIST LACK_WORK_DIR
 
 # SOURCE! call set_vars to source the project file
 set_vars $PROJECT_DIR
