@@ -270,11 +270,11 @@ while $TRUE; do
             SHOWVARS=1
             shift
             ;; # --quiet
-        -b|--basedir) # base directory for project files and recipes
+        -b|--basedir) # base directory for projects, project files and recipes
             BUILD_BASE=$2
             shift 2
             ;; # --basedir
-        -d|--projectdir) # project directory, outside of the base dir above
+        -d|--projectdir|--dir) # project directory, outside of base dir above
             PROJECT_DIR=$2
             shift 2
             ;; # --projectdir
