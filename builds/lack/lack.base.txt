@@ -19,7 +19,7 @@ file /etc/passwd :BUILD_BASE:/common/etcfiles/passwd 0644 0 0
 file /etc/shadow :BUILD_BASE:/common/etcfiles/shadow 0640 0 0
 file /etc/sudoers :BUILD_BASE:/common/etcfiles/sudoers 0440 0 0
 # the banner-printer-outer
-file /bin/start_shell.sh :BUILD_BASE:/common/scripts/start_shell.sh 0755 0 0
+file /etc/scripts/start_shell.sh :BUILD_BASE:/common/scripts/start_shell.sh 0755 0 0
 # /sbin
 file /sbin/modprobe /sbin/modprobe 0755 0 0
 # /usr/bin
@@ -64,6 +64,7 @@ slink /etc/start/16klogd /etc/init.d/klogd 0755 0 0
 slink /etc/start/17usb-modules /etc/init.d/usb-modules 0755 0 0
 slink /etc/start/18miscfs /etc/init.d/miscfs 0755 0 0
 slink /etc/start/20kernel-modules /etc/init.d/kernel-modules 0755 0 0
+slink /etc/start/30networking /etc/init.d/networking 0755 0 0
 # let run-program run from /init
 #slink /etc/start/30run-program /etc/init.d/run-program 0755 0 0
 # stop symlinks

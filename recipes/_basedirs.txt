@@ -46,6 +46,9 @@ slink /bin/dir /bin/dir.sh 0755 0 0
 # a fake bash, mostly to make ldd work correctly
 file /bin/fake-bash.sh :BUILD_BASE:/common/scripts/fake-bash.sh 0755 0 0
 slink /bin/bash /bin/fake-bash.sh 0755 0 0 
+# a fake editor, Debian's sudo wants /usr/bin/editor
+file /usr/bin/editor.sh :BUILD_BASE:/common/scripts/editor.sh 0755 0 0
+slink /usr/bin/editor /usr/bin/editor.sh 0755 0 0 
 # create a symlink from nslookup to the host command
 slink /usr/bin/host /usr/bin/nslookup 0755 0 0
 # _basedirs /etc

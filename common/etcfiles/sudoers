@@ -6,6 +6,7 @@
 #
 
 Defaults	env_reset, insults
+Defaults    env_keep = "LACK_FUNCTIONS DEBUG_LOG"
 
 # Host alias specification
 
