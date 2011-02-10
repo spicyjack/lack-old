@@ -36,12 +36,17 @@ if [ $(/bin/grep -c nox /proc/cmdline) -eq 0 ]; then
     chown lack.lack $HOME_DIR/.xsession
 
     # see if the user wants a different screen resolution
-    # BOOTCHEAT [rez|res|resolution|X|x]=[1024x768|800x600] - X resolution
+    # BOOTCHEAT [rez|res|resolution|X|x]=[1024x768|800x600|xdefault]
+    # BOOTCHEAT - X resolution
     if [ $(/bin/egrep -c "rez|res|resolution|X|x" /proc/cmdline) -eq 0 ]; then
-        if [ $(/bin/grep -c "1024x768" /proc/cmdline) -gt 0 ]; then
+        if [ $(/bin/grep -c "=xdefault" /proc/cmdline) -gt 0 ]; then
+            # create an empty xorg.conf file; this will let X
+            # use whatever resolution that it feels like using
+            touch /etc/X11/xorg.conf
+        elif [ $(/bin/grep -c "=1024x768" /proc/cmdline) -gt 0 ]; then
             cat /etc/X11/xorg.conf.orig | sed 's/#\(Modes "1024x768"\)/\1/' \
                 > /etc/X11/xorg.conf
-        elif [ $(/bin/grep -c "800x600" /proc/cmdline) -gt 0 ]; then
+        elif [ $(/bin/grep -c "=800x600" /proc/cmdline) -gt 0 ]; then
             cat /etc/X11/xorg.conf.orig | sed 's/#\(Modes "800x600"\)/\1/' \
                 > /etc/X11/xorg.conf
         else
