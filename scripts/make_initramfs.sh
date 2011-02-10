@@ -220,7 +220,7 @@ EOF
 ### BEGIN SCRIPT ###
 # run getopt
 TEMP=$(${GETOPT} -o hHenp:d:f:sb:o:qlkw: \
---long help,longhelp,examples,dry-run,project:,projectdir: \
+--long help,longhelp,examples,dry-run,project:,projectdir:,dir: \
 --long varsfile:,showvars,basedir:,output:,quiet,hardlink \
 --long keeplist,keepfiles,keep,workdir: \
 -n "${SCRIPTNAME}" -- "$@")
