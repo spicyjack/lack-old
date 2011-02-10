@@ -138,11 +138,14 @@ check_exit_error () {
     return $EXIT_STATUS
 } # check_exit_status
 
-## FUNC: check_exit_error
+## FUNC: check_exit_status
 ## ARG:  EXIT_STATUS - the exit status of the command that was run
 ## ARG:  COMMAND_MSG - the message to be output if EXIT_STATUS is non-zero
 ## RET:  Returns EXIT_STATUS
 ## DESC: Check EXIT_STATUS, and output 'success' or 'failure' and a newline
+## DESC: Note that this is different from check_exit_error, as there will
+## DESC: always be output from this function, regardless of whether there
+## DESC: was an error or not.
 check_exit_status () {
     local EXIT_STATUS=$1
     local COMMAND_MSG=$2
