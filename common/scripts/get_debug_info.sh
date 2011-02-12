@@ -63,9 +63,15 @@ echo >> $OUT_FILE
         /bin/ls *.list | /bin/sed 's/\.list//' >> $OUT_FILE
     fi
 
-    if [ -x /bin/lsmod ]; then
+    if [ -x /sbin/lsmod ]; then
         echo "### Loaded kernel modules ###" >> $OUT_FILE
-        /bin/lsmod >> $OUT_FILE 2>&1
+        /sbin/lsmod >> $OUT_FILE 2>&1
+        /bin/echo >> $OUT_FILE
+    fi
+
+    if [ -x /usr/bin/lshw ]; then
+        echo "### Hardware information ###" >> $OUT_FILE
+        /usr/bin/lshw -v >> $OUT_FILE 2>&1
         /bin/echo >> $OUT_FILE
     fi
 
@@ -75,8 +81,8 @@ echo >> $OUT_FILE
         /bin/echo >> $OUT_FILE
     fi
 
-    if [ -x /usr/bin/lsusb ]; then
+    if [ -x /usr/sbin/lsusb ]; then
         echo "### USB bus information ###" >> $OUT_FILE
-        /usr/bin/lsusb -v >> $OUT_FILE 2>&1
+        /usr/sbin/lsusb -v >> $OUT_FILE 2>&1
         /bin/echo >> $OUT_FILE
     fi
