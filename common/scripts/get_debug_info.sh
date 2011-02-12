@@ -17,6 +17,7 @@ fi
 
 OUT_FILE="/tmp/debug.${HOSTNAME}.${DATE_STR}.txt"
 echo "===== Debugging information: ${DATE_STR} =====" > $OUT_FILE
+echo >> $OUT_FILE
 
     ### disk information ###
     CDROM_DEV=$(/sbin/udevadm info --query=name --name=cdrom)
@@ -27,18 +28,21 @@ echo "===== Debugging information: ${DATE_STR} =====" > $OUT_FILE
             continue
         fi
         if [ -b /dev/${DISK} ]; then
-            echo "#### fdisk: ${DISK} ####" >> $OUT_FILE
+            VENDOR=$(cat /sys/block/${DISK}/device/vendor)
+            MODEL=$(cat /sys/block/${DISK}/device/model)
+            echo "### Disk vendor/model: ${VENDOR} - ${MODEL} ###" >> $OUT_FILE
+            echo "--- fdisk: ${DISK} ---" >> $OUT_FILE
             /sbin/fdisk -l /dev/${DISK} >> $OUT_FILE
             /bin/echo >> $OUT_FILE
         fi
     done
 
-    echo "#### partition information ####" >> $OUT_FILE
+    echo "### partition information ###" >> $OUT_FILE
     cat /proc/partitions | awk '{ print $4 }' \
         | grep -E "hd.[1-9]$|sd.[1-9]$" >> $OUT_FILE
     /bin/echo >> $OUT_FILE
 
-    echo "#### disk usage information ####" >> $OUT_FILE
+    echo "### disk usage information ###" >> $OUT_FILE
     for MOUNT in $(cat /proc/mounts | grep -E '^/dev|^none' \
         | awk '{ print $2 }' | sort);
     do
@@ -46,33 +50,33 @@ echo "===== Debugging information: ${DATE_STR} =====" > $OUT_FILE
     done
     /bin/echo >> $OUT_FILE
 
-    echo "#### network information ####" >> $OUT_FILE
+    echo "### network information ###" >> $OUT_FILE
     /sbin/ifconfig -a >> $OUT_FILE
     /bin/echo >> $OUT_FILE
     /sbin/route -n >> $OUT_FILE
     /bin/echo >> $OUT_FILE
 
     if [ -x /usr/bin/dpkg ]; then
-        echo "#### package listing ####" >> $OUT_FILE
+        echo "### package listing ###" >> $OUT_FILE
         #/usr/bin/dpkg -l >> $OUT_FILE
         cd /var/lib/dpkg/info/
         /bin/ls *.list | /bin/sed 's/\.list//' >> $OUT_FILE
     fi
 
     if [ -x /bin/lsmod ]; then
-        echo "#### Loaded kernel modules ####" >> $OUT_FILE
+        echo "### Loaded kernel modules ###" >> $OUT_FILE
         /bin/lsmod >> $OUT_FILE 2>&1
         /bin/echo >> $OUT_FILE
     fi
 
     if [ -x /usr/bin/lspci ]; then
-        echo "#### PCI bus information ####" >> $OUT_FILE
+        echo "### PCI bus information ###" >> $OUT_FILE
         /usr/bin/lspci -v >> $OUT_FILE 2>&1
         /bin/echo >> $OUT_FILE
     fi
 
     if [ -x /usr/bin/lsusb ]; then
-        echo "#### USB bus information ####" >> $OUT_FILE
+        echo "### USB bus information ###" >> $OUT_FILE
         /usr/bin/lsusb -v >> $OUT_FILE 2>&1
         /bin/echo >> $OUT_FILE
     fi
