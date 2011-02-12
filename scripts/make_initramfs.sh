@@ -49,7 +49,7 @@ BUILD_BASE="/home/lack/src/lack.hg"
 FILELIST="initramfs-filelist.txt"
 PROJECT_LIST="project-filelist.txt"
 # default working directory
-LACK_WORK_DIR="/tmp"
+LACK_WORK_DIR="/dev/shm"
 
 # helper functions
 
@@ -137,8 +137,8 @@ cat <<-EOF
   $SCRIPTNAME [options] --basedir --projectdir
 
   SCRIPT OPTIONS
-  -b|--basedir      Base directory for project files and recipes
-  -d|--projectdir   Directory for the project files, if not in --basedir
+  -b|--base         Base directory for project files and recipes
+  -d|--dir          Directory for the project files, if not in --basedir
   -p|--project      Name of the project to build an initramfs image for
                     Subdirectory under --basedir; use --projectdir if the
                     project directory is not in --basedir
@@ -154,7 +154,7 @@ cat <<-EOF
   -q|--quiet        No script output (unless an error occurs)
   -l|--hardlink     Create hardlink from 'initrd' to initramfs file
   -k|--keepfiles    Don't delete the created initramfs filelist/init.sh script
-  -w|--workdir      Directory to use for working files (default: /tmp)
+  -w|--work         Directory to use for working files (default: /tmp)
 EOF
 } # function show_help ()
 
@@ -221,8 +221,8 @@ EOF
 # run getopt
 TEMP=$(${GETOPT} -o hHenp:d:f:sb:o:qlkw: \
 --long help,longhelp,examples,dry-run,project:,projectdir:,dir: \
---long varsfile:,showvars,basedir:,output:,quiet,hardlink \
---long keeplist,keepfiles,keep,workdir: \
+--long varsfile:,showvars,basedir:,base:,output:,quiet,hardlink \
+--long keeplist,keepfiles,keep,workdir:,work: \
 -n "${SCRIPTNAME}" -- "$@")
 check_exit_status $? $GETOPT
 
@@ -270,11 +270,14 @@ while $TRUE; do
             SHOWVARS=1
             shift
             ;; # --quiet
-        -b|--basedir) # base directory for projects, project files and recipes
+        -b|--basedir|--base)
+            # base directory for projects, project files and recipes
             BUILD_BASE=$2
             shift 2
             ;; # --basedir
-        -d|--projectdir|--dir) # project directory, outside of base dir above
+        -d|--projectdir|--dir)
+            # project directory, or a directory located outside of base dir
+            # above
             PROJECT_DIR=$2
             shift 2
             ;; # --projectdir
@@ -297,7 +300,7 @@ while $TRUE; do
             KEEP_TEMP_DIR=1
             shift
             ;; # --keep
-        -w|--workdir) # working directory; defaults to /tmp
+        -w|--workdir|--work) # working directory; defaults to /tmp
             LACK_WORK_DIR=$2
             export LACK_WORK_DIR
             shift 2
