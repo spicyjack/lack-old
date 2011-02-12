@@ -71,7 +71,7 @@ echo >> $OUT_FILE
 
     if [ -x /usr/bin/lshw ]; then
         echo "### Hardware information ###" >> $OUT_FILE
-        /usr/bin/lshw -v >> $OUT_FILE 2>&1
+        /usr/bin/lshw >> $OUT_FILE 2>&1
         /bin/echo >> $OUT_FILE
     fi
 
