@@ -60,12 +60,15 @@ echo >> $OUT_FILE
         echo "### package listing ###" >> $OUT_FILE
         #/usr/bin/dpkg -l >> $OUT_FILE
         cd /var/lib/dpkg/info/
-        /bin/ls *.list | /bin/sed 's/\.list//' >> $OUT_FILE
+        /bin/ls *.list | /bin/sed 's/\.list//' | sort >> $OUT_FILE
     fi
 
     if [ -x /sbin/lsmod ]; then
         echo "### Loaded kernel modules ###" >> $OUT_FILE
-        /sbin/lsmod >> $OUT_FILE 2>&1
+        # output the header first
+        /sbin/lsmod | grep "^Module" >> $OUT_FILE 2>&1 
+        # then sort everything else and output it after the header
+        /sbin/lsmod | grep -v "^Module" | sort >> $OUT_FILE 2>&1
         /bin/echo >> $OUT_FILE
     fi
 
