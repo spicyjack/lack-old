@@ -36,6 +36,8 @@ dir /var 0755 0 0
 dir /var/lib 0755 0 0
 dir /var/log 0755 0 0
 dir /var/run 0755 0 0
+# for screen
+dir /var/run/screen 775 0 43
 dir /var/tmp/ 1777 0 0
 # _basedirs /bin
 # IMPORTANT: busybox must now be sourced from the individual project initramfs

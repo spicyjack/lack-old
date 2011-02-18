@@ -86,6 +86,8 @@ FGID=100
 APPEND=0
 # don't overwrite by default
 OVERWRITE=0
+# don't sort output filelists by default
+SORT_FILELIST=0
 
 ### FUNCTIONS ###
 
@@ -212,10 +214,11 @@ function check_excludes {
 ## DESC: output the header of a filelist
 function dump_filelist_header {
     local PKG_NAME=$1
+    local PKG_VERSION=$2
 # we know the name of the package.... generate a nicer header that includes
 # the current date and package name
 cat <<EOHD
-# name: ${PKG_NAME}
+# name: ${PKG_NAME} - ${PKG_VERSION}
 # description: example package with comments
 # depends: _base otherpackage1 otherpackage2
 # helpcommand: /usr/bin/somebin --help
@@ -284,10 +287,10 @@ fi # if [ $(readlink /bin/sh | grep -c dash) -gt 0 ]
 
 ### SCRIPT SETUP ###
 # and this is the GNU part
-TEMP=$(/usr/bin/getopt -o hvepdfb:o:qtcs:w:xal:u:g:r: \
+TEMP=$(/usr/bin/getopt -o hvepdfb:sqtco:w:xal:u:g:r: \
     --long help,verbose,examples,\
     --long package,directory,filelist,basepath: \
-    --long outdir:,squashfs,listout,cpio,single:,workdir:,overwrite,append \
+    --long sort,squashfs,listout,cpio,output:,workdir:,overwrite,append \
     --long show-excludes,excludes:,skip-excludes \
     --long log:,logfile:,uid:,gid:,regex: \
     -n "${SCRIPTNAME}" -- "$@")
@@ -326,11 +329,11 @@ while true ; do
                         Multiple directories are separated with a colon ':'
 
     OUTPUT OPTIONS
-    -o|--outdir         Output files created to this directory (broken)
+    -s|--sort           Sort the output of filelists
     -q|--squashfs       Output squashfs package(s)
     -t|--listout        Output filelist(s) suitable for gen_init_cpio
     -c|--cpio           Create a CPIO file (via gen_init_cpio)
-    -s|--single         Output only a single file with this name + .sfs
+    -o|--output         Output only a single file with this name + .sfs
     -w|--workdir        Working directory to use for copying/storing files
     -x|--overwrite      Overwrite any existing output files
     -a|--append         Append to an existing file, don't create a new file
@@ -385,11 +388,9 @@ EOF
             ;;
 
         ### OUTPUT OPTIONS ###
-        -o|--outdir) # base directory to look for filelists (recipes)
-            echo "Not implemented yet :("
-            exit 1
-            OUTPUT_DIR=$2
-            shift 2
+        -s|--sort) # sort output filelists
+            SORT_FILELIST=1
+            shift 1
             ;;
         -q|--squashfs) # make squashfs file(s)
             OUTPUT_OPT="squashfs"
@@ -403,7 +404,7 @@ EOF
             OUTPUT_OPT="cpio"
             shift 1
             ;;
-        -s|--single)
+        -o|--output)
             # make one large file instead of multiple files for each
             # filelist/directory/package
             SINGLE_OUTFILE=$2
@@ -496,13 +497,25 @@ do
             say "=== Processing package '${CURR_PKG}' ==="
             warn "- Querying package system for package '${CURR_PKG}'"
             if [ "x${LOGFILE}" != "x" ]; then
-                PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} 2>>$LOGFILE \
-                    | sed 's/ /\\ /g')
-                check_exit_status $? "dpkg -L ${CURR_PKG}"
+                if [ $SORT_FILELIST -gt 0 ]; then
+                    PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} 2>>$LOGFILE \
+                        | sort | sed 's/ /\\ /g')
+                    check_exit_status $? "dpkg -L ${CURR_PKG}"
+                else
+                    PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} 2>>$LOGFILE \
+                        | sed 's/ /\\ /g')
+                    check_exit_status $? "dpkg -L ${CURR_PKG}"
+                fi
             else
-                PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} \
-                    | sed 's/ /\\ /')
-                check_exit_status $? "dpkg -L ${CURR_PKG}"
+                if [ $SORT_FILELIST -gt 0 ]; then
+                    PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} \
+                        | sort | sed 's/ /\\ /')
+                    check_exit_status $? "dpkg -L ${CURR_PKG}"
+                else
+                    PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} \
+                        | sed 's/ /\\ /')
+                    check_exit_status $? "dpkg -L ${CURR_PKG}"
+                fi
             fi # if [ "x${LOGFILE}" != "x" ]
             #PKG_CONTENTS=$(echo ${PKG_CONTENTS} | sort )
             PKG_VERSION=$(dpkg-query -s ${CURR_PKG} \
@@ -601,7 +614,7 @@ do
         if [ $APPEND -eq 0 ]; then
             dump_filelist_header $CURR_PKG
         fi
-        echo "# ${CURR_PKG}"
+        echo "# ${CURR_PKG} - ${PKG_VERSION}"
 
         # PKG_CONTENTS should be a list of files, directories and/or symlinks
         for LINE in $(echo $PKG_CONTENTS);
