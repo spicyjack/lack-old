@@ -612,7 +612,7 @@ do
         say "$PKG_CONTENTS"
         # print the recipe header
         if [ $APPEND -eq 0 ]; then
-            dump_filelist_header $CURR_PKG
+            dump_filelist_header $CURR_PKG $PKG_VERSION
         fi
         echo "# ${CURR_PKG} - ${PKG_VERSION}"
 

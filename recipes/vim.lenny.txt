@@ -13,29 +13,16 @@
 dir /usr 755 0 0
 dir /usr/bin 755 0 0
 file /usr/bin/vim.basic /usr/bin/vim.basic 755 0 0
-dir /usr/share 755 0 0
-dir /usr/share/lintian 755 0 0
-dir /usr/share/lintian/overrides 755 0 0
-file /usr/share/lintian/overrides/vim /usr/share/lintian/overrides/vim 644 0 0
-# vi: set shiftwidth=4 tabstop=4 paste:
-# name: vim-common - 
-# description: example package with comments
-# depends: _base otherpackage1 otherpackage2
-# helpcommand: /usr/bin/somebin --help
-# versioncommand: /usr/bin/somebin --version
-# examplecommand: /usr/bin/somebin -x -y -z 10
-#
-# dir <name> <mode> <uid> <gid>
-# file <name> <source> <mode> <uid> <gid>
-# slink <new name> <original file> <mode> <uid> <gid>
+#dir /usr/share 755 0 0
+#dir /usr/share/lintian 755 0 0
+#dir /usr/share/lintian/overrides 755 0 0
+#file /usr/share/lintian/overrides/vim /usr/share/lintian/overrides/vim 644 0 0
 #
 # vim-common - 1:7.1.314-3+lenny2
 dir /etc 755 0 0
 dir /etc/vim 755 0 0
 file /etc/vim/vimrc /etc/vim/vimrc 644 0 0
-dir /usr 755 0 0
-dir /usr/bin 755 0 0
-file /usr/bin/helpztags /usr/bin/helpztags 755 0 0
+#file /usr/bin/helpztags /usr/bin/helpztags 755 0 0
 file /usr/bin/xxd /usr/bin/xxd 755 0 0
 dir /usr/lib 755 0 0
 dir /usr/lib/mime 755 0 0
@@ -52,29 +39,16 @@ dir /var 755 0 0
 dir /var/lib 755 0 0
 dir /var/lib/vim 755 0 0
 dir /var/lib/vim/addons 755 0 0
-# vi: set shiftwidth=4 tabstop=4 paste:
-# name: vim-runtime - 
-# description: example package with comments
-# depends: _base otherpackage1 otherpackage2
-# helpcommand: /usr/bin/somebin --help
-# versioncommand: /usr/bin/somebin --version
-# examplecommand: /usr/bin/somebin -x -y -z 10
-#
-# dir <name> <mode> <uid> <gid>
-# file <name> <source> <mode> <uid> <gid>
-# slink <new name> <original file> <mode> <uid> <gid>
 #
 # vim-runtime - 1:7.1.314-3+lenny2
-file /usr/share/vim/vim71/doc/help.txt.vim-tiny /usr/share/vim/vim71/doc/help.txt.vim-tiny 644 0 0
-file /usr/share/vim/vim71/doc/tags.vim-tiny /usr/share/vim/vim71/doc/tags.vim-tiny 644 0 0
-dir /usr 755 0 0
-dir /usr/bin 755 0 0
-file /usr/bin/gvimtutor /usr/bin/gvimtutor 755 0 0
-file /usr/bin/vimtutor /usr/bin/vimtutor 755 0 0
-dir /usr/share 755 0 0
-dir /usr/share/lintian 755 0 0
-dir /usr/share/lintian/overrides 755 0 0
-file /usr/share/lintian/overrides/vim-runtime /usr/share/lintian/overrides/vim-runtime 644 0 0
+#file /usr/share/vim/vim71/doc/help.txt.vim-tiny /usr/share/vim/vim71/doc/help.txt.vim-tiny 644 0 0
+#file /usr/share/vim/vim71/doc/tags.vim-tiny /usr/share/vim/vim71/doc/tags.vim-tiny 644 0 0
+#file /usr/bin/gvimtutor /usr/bin/gvimtutor 755 0 0
+#file /usr/bin/vimtutor /usr/bin/vimtutor 755 0 0
+#dir /usr/share 755 0 0
+#dir /usr/share/lintian 755 0 0
+#dir /usr/share/lintian/overrides 755 0 0
+#file /usr/share/lintian/overrides/vim-runtime /usr/share/lintian/overrides/vim-runtime 644 0 0
 dir /usr/share/vim 755 0 0
 dir /usr/share/vim/addons 755 0 0
 dir /usr/share/vim/addons/doc 755 0 0
@@ -85,13 +59,13 @@ slink /usr/share/vim/addons/plugin/justify.vim /usr/share/vim/vim71/macros/justi
 slink /usr/share/vim/addons/plugin/matchit.vim /usr/share/vim/vim71/macros/matchit.vim 777 0 0
 dir /usr/share/vim/registry 755 0 0
 file /usr/share/vim/registry/vim-runtime.yaml /usr/share/vim/registry/vim-runtime.yaml 644 0 0
-dir /usr/share/vim/vim71 755 0 0
-dir /usr/share/vim/vim71/autoload 755 0 0
-file /usr/share/vim/vim71/autoload/adacomplete.vim /usr/share/vim/vim71/autoload/adacomplete.vim 644 0 0
-file /usr/share/vim/vim71/autoload/ada.vim /usr/share/vim/vim71/autoload/ada.vim 644 0 0
-file /usr/share/vim/vim71/autoload/ccomplete.vim /usr/share/vim/vim71/autoload/ccomplete.vim 644 0 0
+#dir /usr/share/vim/vim71 755 0 0
+#dir /usr/share/vim/vim71/autoload 755 0 0
+#file /usr/share/vim/vim71/autoload/adacomplete.vim /usr/share/vim/vim71/autoload/adacomplete.vim 644 0 0
+#file /usr/share/vim/vim71/autoload/ada.vim /usr/share/vim/vim71/autoload/ada.vim 644 0 0
+#file /usr/share/vim/vim71/autoload/ccomplete.vim /usr/share/vim/vim71/autoload/ccomplete.vim 644 0 0
 file /usr/share/vim/vim71/autoload/csscomplete.vim /usr/share/vim/vim71/autoload/csscomplete.vim 644 0 0
-file /usr/share/vim/vim71/autoload/decada.vim /usr/share/vim/vim71/autoload/decada.vim 644 0 0
+#file /usr/share/vim/vim71/autoload/decada.vim /usr/share/vim/vim71/autoload/decada.vim 644 0 0
 file /usr/share/vim/vim71/autoload/getscript.vim /usr/share/vim/vim71/autoload/getscript.vim 644 0 0
 file /usr/share/vim/vim71/autoload/gnat.vim /usr/share/vim/vim71/autoload/gnat.vim 644 0 0
 file /usr/share/vim/vim71/autoload/gzip.vim /usr/share/vim/vim71/autoload/gzip.vim 644 0 0
