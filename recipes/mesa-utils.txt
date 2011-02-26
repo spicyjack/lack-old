@@ -1,0 +1,9 @@
+# mesa-utils - 7.0.3-7
+dir /usr 755 0 0
+dir /usr/share 755 0 0
+dir /usr/bin 755 0 0
+file /usr/bin/glxdemo /usr/bin/glxdemo 755 0 0
+file /usr/bin/glxgears /usr/bin/glxgears 755 0 0
+file /usr/bin/glxheads /usr/bin/glxheads 755 0 0
+file /usr/bin/glxinfo /usr/bin/glxinfo 755 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:
