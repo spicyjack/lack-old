@@ -21,9 +21,9 @@ dir /usr 0755 0 0
 dir /usr/bin 0755 0 0
 file /usr/bin/iceauth /usr/bin/iceauth 755 0 0
 file /usr/bin/sessreg /usr/bin/sessreg 755 0 0
-file /usr/bin/showrgb /usr/bin/showrgb 755 0 0
+#file /usr/bin/showrgb /usr/bin/showrgb 755 0 0
 file /usr/bin/xcmsdb /usr/bin/xcmsdb 755 0 0
-file /usr/bin/xdpyinfo /usr/bin/xdpyinfo 755 0 0
+#file /usr/bin/xdpyinfo /usr/bin/xdpyinfo 755 0 0
 file /usr/bin/xgamma /usr/bin/xgamma 755 0 0
 file /usr/bin/xhost /usr/bin/xhost 755 0 0
 file /usr/bin/xmodmap /usr/bin/xmodmap 755 0 0
@@ -35,12 +35,12 @@ file /usr/bin/xsetmode /usr/bin/xsetmode 755 0 0
 file /usr/bin/xsetpointer /usr/bin/xsetpointer 755 0 0
 file /usr/bin/xsetroot /usr/bin/xsetroot 755 0 0
 file /usr/bin/xstdcmap /usr/bin/xstdcmap 755 0 0
-file /usr/bin/xtrapchar /usr/bin/xtrapchar 755 0 0
-file /usr/bin/xtrapin /usr/bin/xtrapin 755 0 0
-file /usr/bin/xtrapout /usr/bin/xtrapout 755 0 0
-file /usr/bin/xtrapproto /usr/bin/xtrapproto 755 0 0
-file /usr/bin/xtrapreset /usr/bin/xtrapreset 755 0 0
-file /usr/bin/xtrapstats /usr/bin/xtrapstats 755 0 0
+#file /usr/bin/xtrapchar /usr/bin/xtrapchar 755 0 0
+#file /usr/bin/xtrapin /usr/bin/xtrapin 755 0 0
+#file /usr/bin/xtrapout /usr/bin/xtrapout 755 0 0
+#file /usr/bin/xtrapproto /usr/bin/xtrapproto 755 0 0
+#file /usr/bin/xtrapreset /usr/bin/xtrapreset 755 0 0
+#file /usr/bin/xtrapstats /usr/bin/xtrapstats 755 0 0
 file /usr/bin/xvidtune /usr/bin/xvidtune 755 0 0
 # /usr/share xfonts-utils
 dir /usr/share 755 0 0
