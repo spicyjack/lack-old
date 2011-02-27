@@ -60,7 +60,7 @@ slink /usr/share/vim/addons/plugin/matchit.vim /usr/share/vim/vim71/macros/match
 dir /usr/share/vim/registry 755 0 0
 file /usr/share/vim/registry/vim-runtime.yaml /usr/share/vim/registry/vim-runtime.yaml 644 0 0
 #dir /usr/share/vim/vim71 755 0 0
-#dir /usr/share/vim/vim71/autoload 755 0 0
+dir /usr/share/vim/vim71/autoload 755 0 0
 #file /usr/share/vim/vim71/autoload/adacomplete.vim /usr/share/vim/vim71/autoload/adacomplete.vim 644 0 0
 #file /usr/share/vim/vim71/autoload/ada.vim /usr/share/vim/vim71/autoload/ada.vim 644 0 0
 #file /usr/share/vim/vim71/autoload/ccomplete.vim /usr/share/vim/vim71/autoload/ccomplete.vim 644 0 0
@@ -834,7 +834,7 @@ file /usr/share/vim/vim71/macros/less.vim /usr/share/vim/vim71/macros/less.vim 6
 #file /usr/share/vim/vim71/menu.vim /usr/share/vim/vim71/menu.vim 644 0 0
 #file /usr/share/vim/vim71/mswin.vim /usr/share/vim/vim71/mswin.vim 644 0 0
 #file /usr/share/vim/vim71/optwin.vim /usr/share/vim/vim71/optwin.vim 644 0 0
-#dir /usr/share/vim/vim71/plugin 755 0 0
+dir /usr/share/vim/vim71/plugin 755 0 0
 file /usr/share/vim/vim71/plugin/getscriptPlugin.vim /usr/share/vim/vim71/plugin/getscriptPlugin.vim 644 0 0
 file /usr/share/vim/vim71/plugin/gzip.vim /usr/share/vim/vim71/plugin/gzip.vim 644 0 0
 file /usr/share/vim/vim71/plugin/matchparen.vim /usr/share/vim/vim71/plugin/matchparen.vim 644 0 0

@@ -26,7 +26,7 @@
 #   packages or filelists need to be passed in after double-dashes '--';
 #   use $* to pick them up
 #   - multiple packages can be written to individual files or a single file,
-#   select via command line switch (--single/--multiple?)
+#   select via command line switch (--output/--multiple?)
 #   - http://www.shelldorado.com/goodcoding/cmdargs.html
 # - one or more filelists for converting into squashfs and/or cpio files
 #
@@ -262,11 +262,11 @@ cat <<EOU
     # create a single output squashfs file from an installed Debian package, 
     # output to --workdir
     ${SCRIPTNAME} --package --squashfs --workdir /dev/shm \ 
-        --single perl-combined.sfs -- perl perl-base
+        --output perl-combined.sfs -- perl perl-base
 
     # create a single output squashfs file from one or more filellists
     ${SCRIPTNAME} --filelist --squashfs --workdir /dev/shm \ 
-        --basepath /path/to/recipesdir --single debug-tools.2010.362.1 \ 
+        --basepath /path/to/recipesdir --output debug-tools.2010.362.1 \ 
         -- debug-tools lspci.lenny
 
     ### MISC EXAMPLES
@@ -410,7 +410,7 @@ EOF
             SINGLE_OUTFILE=$2
             shift 2
             if [ $(echo ${SINGLE_OUTFILE} | grep -c "^/") -gt 0 ]; then
-                warn "WARN: --single argument starts with a slash '/'"
+                warn "WARN: --output argument starts with a slash '/'"
                 warn "WARN: this is probably not what you want, as this path"
                 warn "WARN: will be created under WORKDIR -> ${WORKDIR}"
             fi
