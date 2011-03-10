@@ -123,7 +123,7 @@ function show_vars()
     echo "KERNEL_VER=${KERNEL_VER}"
     echo "LACK_PROJECT_NAME=${LACK_PROJECT_NAME}"
     echo "PROJECT_DIR=${PROJECT_DIR}"
-    echo "PACKAGES='${PACKAGES}'"
+    echo "RECPIES='${RECPIES}'"
     echo "OUTPUT_FILE=${OUTPUT_FILE}"
 } # function show_vars()
 
@@ -181,7 +181,7 @@ cat <<-EOF
         filelist, project configuration file and support scripts
     PROJECT_DIR: directory to look in for initramfs filelist, project
         configuration file and support scripts
-    PACKAGES:
+    RECPIES:
         a quoted, whitespace-separated list of packages to include in the
         final initramfs image; each package's recipe is used when building the
         initramfs image.  The list can span multiple lines without using a
@@ -437,7 +437,7 @@ echo "# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" \
 #echo "file /init /${TEMP_DIR}/init.sh 0755 0 0" >> $TEMP_DIR/$FILELIST
 
 # copy all the desired recipie files first
-for RECIPE in $(echo ${PACKAGES});
+for RECIPE in $(echo ${RECPIES});
 do
     # verify the recipe file exists
     # check in $PROJECT_DIR first; note this works even if
