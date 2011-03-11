@@ -436,8 +436,14 @@ echo "# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" \
 # add the init script to the filelist
 #echo "file /init /${TEMP_DIR}/init.sh 0755 0 0" >> $TEMP_DIR/$FILELIST
 
+# check that RECIPES is not zero length
+if [ -z "${RECIPES}" ]; then
+    echo "ERROR: no recpies defined in RECIPES variable!"
+    exit 1
+fi
+
 # copy all the desired recipie files first
-for RECIPE in $(echo ${RECPIES});
+for RECIPE in $(echo ${RECIPES});
 do
     # verify the recipe file exists
     # check in $PROJECT_DIR first; note this works even if
