@@ -153,7 +153,7 @@ cat <<-EOF
   -o|--output       Filename to write the initramfs image to
   -q|--quiet        No script output (unless an error occurs)
   -l|--hardlink     Create hardlink from 'initrd' to initramfs file
-  -k|--keepfiles    Don't delete the created initramfs filelist/init.sh script
+  -k|--keep         Don't delete the created initramfs filelist/init.sh script
   -w|--work         Directory to use for working files (default: /tmp)
 EOF
 } # function show_help ()
