@@ -27,6 +27,7 @@ dir /usr 0755 0 0
 dir /usr/bin 0755 0 0
 dir /usr/games 0755 0 0
 dir /usr/lib 0755 0 0
+dir /usr/lib/mime 0755 0 0
 dir /usr/sbin 0755 0 0
 dir /usr/share 0755 0 0
 dir /usr/share/doc 0755 0 0
