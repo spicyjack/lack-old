@@ -13,42 +13,42 @@
 dir /usr 755 0 0
 dir /usr/lib 755 0 0
 dir /usr/lib/timidity 755 0 0
-dir /usr/lib/timidity/bitmaps 755 0 0
-file /usr/lib/timidity/bitmaps/back.xbm /usr/lib/timidity/bitmaps/back.xbm 644 0 0
-file /usr/lib/timidity/bitmaps/fwrd.xbm /usr/lib/timidity/bitmaps/fwrd.xbm 644 0 0
-file /usr/lib/timidity/bitmaps/next.xbm /usr/lib/timidity/bitmaps/next.xbm 644 0 0
-file /usr/lib/timidity/bitmaps/pause.xbm /usr/lib/timidity/bitmaps/pause.xbm 644 0 0
-file /usr/lib/timidity/bitmaps/play.xbm /usr/lib/timidity/bitmaps/play.xbm 644 0 0
-file /usr/lib/timidity/bitmaps/prev.xbm /usr/lib/timidity/bitmaps/prev.xbm 644 0 0
-file /usr/lib/timidity/bitmaps/quit.xbm /usr/lib/timidity/bitmaps/quit.xbm 644 0 0
-file /usr/lib/timidity/bitmaps/stop.xbm /usr/lib/timidity/bitmaps/stop.xbm 644 0 0
-file /usr/lib/timidity/bitmaps/random.xbm /usr/lib/timidity/bitmaps/random.xbm 644 0 0
-file /usr/lib/timidity/bitmaps/repeat.xbm /usr/lib/timidity/bitmaps/repeat.xbm 644 0 0
-file /usr/lib/timidity/bitmaps/timidity.xbm /usr/lib/timidity/bitmaps/timidity.xbm 644 0 0
+#dir /usr/lib/timidity/bitmaps 755 0 0
+#file /usr/lib/timidity/bitmaps/back.xbm /usr/lib/timidity/bitmaps/back.xbm 644 0 0
+#file /usr/lib/timidity/bitmaps/fwrd.xbm /usr/lib/timidity/bitmaps/fwrd.xbm 644 0 0
+#file /usr/lib/timidity/bitmaps/next.xbm /usr/lib/timidity/bitmaps/next.xbm 644 0 0
+#file /usr/lib/timidity/bitmaps/pause.xbm /usr/lib/timidity/bitmaps/pause.xbm 644 0 0
+#file /usr/lib/timidity/bitmaps/play.xbm /usr/lib/timidity/bitmaps/play.xbm 644 0 0
+#file /usr/lib/timidity/bitmaps/prev.xbm /usr/lib/timidity/bitmaps/prev.xbm 644 0 0
+#file /usr/lib/timidity/bitmaps/quit.xbm /usr/lib/timidity/bitmaps/quit.xbm 644 0 0
+#file /usr/lib/timidity/bitmaps/stop.xbm /usr/lib/timidity/bitmaps/stop.xbm 644 0 0
+#file /usr/lib/timidity/bitmaps/random.xbm /usr/lib/timidity/bitmaps/random.xbm 644 0 0
+#file /usr/lib/timidity/bitmaps/repeat.xbm /usr/lib/timidity/bitmaps/repeat.xbm 644 0 0
+#file /usr/lib/timidity/bitmaps/timidity.xbm /usr/lib/timidity/bitmaps/timidity.xbm 644 0 0
 dir /usr/lib/mime 755 0 0
 dir /usr/lib/mime/packages 755 0 0
 file /usr/lib/mime/packages/timidity /usr/lib/mime/packages/timidity 644 0 0
 dir /usr/share 755 0 0
-dir /usr/share/lintian 755 0 0
-dir /usr/share/lintian/overrides 755 0 0
-file /usr/share/lintian/overrides/timidity /usr/share/lintian/overrides/timidity 644 0 0
-dir /usr/share/pixmaps 755 0 0
-file /usr/share/pixmaps/timidity.xpm /usr/share/pixmaps/timidity.xpm 644 0 0
+#dir /usr/share/lintian 755 0 0
+#dir /usr/share/lintian/overrides 755 0 0
+#file /usr/share/lintian/overrides/timidity /usr/share/lintian/overrides/timidity 644 0 0
+#dir /usr/share/pixmaps 755 0 0
+#file /usr/share/pixmaps/timidity.xpm /usr/share/pixmaps/timidity.xpm 644 0 0
 #dir /usr/share/menu 755 0 0
 #file /usr/share/menu/timidity /usr/share/menu/timidity 644 0 0
 dir /usr/bin 755 0 0
 file /usr/bin/timidity /usr/bin/timidity 755 0 0
 dir /etc 755 0 0
-dir /etc/X11 755 0 0
-dir /etc/X11/app-defaults 755 0 0
-file /etc/X11/app-defaults/TiMidity /etc/X11/app-defaults/TiMidity 644 0 0
-dir /etc/X11/ja_JP.eucJP 755 0 0
-dir /etc/X11/ja_JP.eucJP/app-defaults 755 0 0
-file /etc/X11/ja_JP.eucJP/app-defaults/TiMidity /etc/X11/ja_JP.eucJP/app-defaults/TiMidity 644 0 0
+#dir /etc/X11 755 0 0
+#dir /etc/X11/app-defaults 755 0 0
+#file /etc/X11/app-defaults/TiMidity /etc/X11/app-defaults/TiMidity 644 0 0
+#dir /etc/X11/ja_JP.eucJP 755 0 0
+#dir /etc/X11/ja_JP.eucJP/app-defaults 755 0 0
+#file /etc/X11/ja_JP.eucJP/app-defaults/TiMidity /etc/X11/ja_JP.eucJP/app-defaults/TiMidity 644 0 0
 dir /etc/timidity 755 0 0
 file /etc/timidity/timidity.cfg /etc/timidity/timidity.cfg 644 0 0
-dir /etc/default 755 0 0
-file /etc/default/timidity /etc/default/timidity 644 0 0
-dir /etc/init.d 755 0 0
-file /etc/init.d/timidity /etc/init.d/timidity 755 0 0
+#dir /etc/default 755 0 0
+#file /etc/default/timidity /etc/default/timidity 644 0 0
+#dir /etc/init.d 755 0 0
+#file /etc/init.d/timidity /etc/init.d/timidity 755 0 0
 # vi: set shiftwidth=4 tabstop=4 paste:
