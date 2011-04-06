@@ -12,6 +12,6 @@
 # libstdc++6
 dir /usr 755 0 0
 dir /usr/lib 755 0 0
-file /usr/lib/libstdc++.so.6.0.10 /usr/lib/libstdc++.so.6.0.10 644 0 0
-slink /usr/lib/libstdc++.so.6 /usr/lib/libstdc++.so.6.0.10 777 0 0
+file /usr/lib/libstdc++.so.6.0.13 /usr/lib/libstdc++.so.6.0.13 644 0 0
+slink /usr/lib/libstdc++.so.6 /usr/lib/libstdc++.so.6.0.13 777 0 0
 # vi: set sw=4 ts=4 paste:
