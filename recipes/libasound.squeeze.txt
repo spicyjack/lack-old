@@ -1,0 +1,96 @@
+# name: libasound2 - 1.0.23-2.1
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# libasound2 - 1.0.23-2.1
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libasound.so.2.0.0 /usr/lib/libasound.so.2.0.0 644 0 0
+dir /usr/share 755 0 0
+dir /usr/share/alsa 755 0 0
+file /usr/share/alsa/sndo-mixer.alisp /usr/share/alsa/sndo-mixer.alisp 644 0 0
+dir /usr/share/alsa/pcm 755 0 0
+file /usr/share/alsa/pcm/center_lfe.conf /usr/share/alsa/pcm/center_lfe.conf 644 0 0
+file /usr/share/alsa/pcm/default.conf /usr/share/alsa/pcm/default.conf 644 0 0
+file /usr/share/alsa/pcm/dmix.conf /usr/share/alsa/pcm/dmix.conf 644 0 0
+file /usr/share/alsa/pcm/dpl.conf /usr/share/alsa/pcm/dpl.conf 644 0 0
+file /usr/share/alsa/pcm/dsnoop.conf /usr/share/alsa/pcm/dsnoop.conf 644 0 0
+file /usr/share/alsa/pcm/front.conf /usr/share/alsa/pcm/front.conf 644 0 0
+file /usr/share/alsa/pcm/hdmi.conf /usr/share/alsa/pcm/hdmi.conf 644 0 0
+file /usr/share/alsa/pcm/iec958.conf /usr/share/alsa/pcm/iec958.conf 644 0 0
+file /usr/share/alsa/pcm/modem.conf /usr/share/alsa/pcm/modem.conf 644 0 0
+file /usr/share/alsa/pcm/rear.conf /usr/share/alsa/pcm/rear.conf 644 0 0
+file /usr/share/alsa/pcm/side.conf /usr/share/alsa/pcm/side.conf 644 0 0
+file /usr/share/alsa/pcm/surround40.conf /usr/share/alsa/pcm/surround40.conf 644 0 0
+file /usr/share/alsa/pcm/surround41.conf /usr/share/alsa/pcm/surround41.conf 644 0 0
+file /usr/share/alsa/pcm/surround50.conf /usr/share/alsa/pcm/surround50.conf 644 0 0
+file /usr/share/alsa/pcm/surround51.conf /usr/share/alsa/pcm/surround51.conf 644 0 0
+file /usr/share/alsa/pcm/surround71.conf /usr/share/alsa/pcm/surround71.conf 644 0 0
+file /usr/share/alsa/alsa.conf /usr/share/alsa/alsa.conf 644 0 0
+file /usr/share/alsa/smixer.conf /usr/share/alsa/smixer.conf 644 0 0
+dir /usr/share/alsa/cards 755 0 0
+dir /usr/share/alsa/cards/SI7018 755 0 0
+file /usr/share/alsa/cards/AACI.conf /usr/share/alsa/cards/AACI.conf 644 0 0
+file /usr/share/alsa/cards/ATIIXP-MODEM.conf /usr/share/alsa/cards/ATIIXP-MODEM.conf 644 0 0
+file /usr/share/alsa/cards/ATIIXP-SPDMA.conf /usr/share/alsa/cards/ATIIXP-SPDMA.conf 644 0 0
+file /usr/share/alsa/cards/ATIIXP.conf /usr/share/alsa/cards/ATIIXP.conf 644 0 0
+file /usr/share/alsa/cards/AU8810.conf /usr/share/alsa/cards/AU8810.conf 644 0 0
+file /usr/share/alsa/cards/AU8820.conf /usr/share/alsa/cards/AU8820.conf 644 0 0
+file /usr/share/alsa/cards/AU8830.conf /usr/share/alsa/cards/AU8830.conf 644 0 0
+file /usr/share/alsa/cards/Audigy.conf /usr/share/alsa/cards/Audigy.conf 644 0 0
+file /usr/share/alsa/cards/Audigy2.conf /usr/share/alsa/cards/Audigy2.conf 644 0 0
+file /usr/share/alsa/cards/Aureon51.conf /usr/share/alsa/cards/Aureon51.conf 644 0 0
+file /usr/share/alsa/cards/Aureon71.conf /usr/share/alsa/cards/Aureon71.conf 644 0 0
+file /usr/share/alsa/cards/CA0106.conf /usr/share/alsa/cards/CA0106.conf 644 0 0
+file /usr/share/alsa/cards/CMI8338-SWIEC.conf /usr/share/alsa/cards/CMI8338-SWIEC.conf 644 0 0
+file /usr/share/alsa/cards/CMI8338.conf /usr/share/alsa/cards/CMI8338.conf 644 0 0
+file /usr/share/alsa/cards/CMI8738-MC6.conf /usr/share/alsa/cards/CMI8738-MC6.conf 644 0 0
+file /usr/share/alsa/cards/CMI8738-MC8.conf /usr/share/alsa/cards/CMI8738-MC8.conf 644 0 0
+file /usr/share/alsa/cards/CMI8788.conf /usr/share/alsa/cards/CMI8788.conf 644 0 0
+file /usr/share/alsa/cards/CS46xx.conf /usr/share/alsa/cards/CS46xx.conf 644 0 0
+file /usr/share/alsa/cards/EMU10K1.conf /usr/share/alsa/cards/EMU10K1.conf 644 0 0
+file /usr/share/alsa/cards/EMU10K1X.conf /usr/share/alsa/cards/EMU10K1X.conf 644 0 0
+file /usr/share/alsa/cards/ENS1370.conf /usr/share/alsa/cards/ENS1370.conf 644 0 0
+file /usr/share/alsa/cards/ENS1371.conf /usr/share/alsa/cards/ENS1371.conf 644 0 0
+file /usr/share/alsa/cards/ES1968.conf /usr/share/alsa/cards/ES1968.conf 644 0 0
+file /usr/share/alsa/cards/FM801.conf /usr/share/alsa/cards/FM801.conf 644 0 0
+file /usr/share/alsa/cards/GUS.conf /usr/share/alsa/cards/GUS.conf 644 0 0
+file /usr/share/alsa/cards/HDA-Intel.conf /usr/share/alsa/cards/HDA-Intel.conf 644 0 0
+file /usr/share/alsa/cards/ICE1712.conf /usr/share/alsa/cards/ICE1712.conf 644 0 0
+file /usr/share/alsa/cards/ICE1724.conf /usr/share/alsa/cards/ICE1724.conf 644 0 0
+file /usr/share/alsa/cards/ICH-MODEM.conf /usr/share/alsa/cards/ICH-MODEM.conf 644 0 0
+file /usr/share/alsa/cards/ICH.conf /usr/share/alsa/cards/ICH.conf 644 0 0
+file /usr/share/alsa/cards/ICH4.conf /usr/share/alsa/cards/ICH4.conf 644 0 0
+file /usr/share/alsa/cards/Maestro3.conf /usr/share/alsa/cards/Maestro3.conf 644 0 0
+file /usr/share/alsa/cards/NFORCE.conf /usr/share/alsa/cards/NFORCE.conf 644 0 0
+file /usr/share/alsa/cards/PC-Speaker.conf /usr/share/alsa/cards/PC-Speaker.conf 644 0 0
+file /usr/share/alsa/cards/PMac.conf /usr/share/alsa/cards/PMac.conf 644 0 0
+file /usr/share/alsa/cards/PMacToonie.conf /usr/share/alsa/cards/PMacToonie.conf 644 0 0
+file /usr/share/alsa/cards/PS3.conf /usr/share/alsa/cards/PS3.conf 644 0 0
+file /usr/share/alsa/cards/RME9636.conf /usr/share/alsa/cards/RME9636.conf 644 0 0
+file /usr/share/alsa/cards/RME9652.conf /usr/share/alsa/cards/RME9652.conf 644 0 0
+file /usr/share/alsa/cards/SB-XFi.conf /usr/share/alsa/cards/SB-XFi.conf 644 0 0
+file /usr/share/alsa/cards/SI7018.conf /usr/share/alsa/cards/SI7018.conf 644 0 0
+file /usr/share/alsa/cards/SI7018/sndoc-mixer.alisp /usr/share/alsa/cards/SI7018/sndoc-mixer.alisp 644 0 0
+file /usr/share/alsa/cards/SI7018/sndop-mixer.alisp /usr/share/alsa/cards/SI7018/sndop-mixer.alisp 644 0 0
+file /usr/share/alsa/cards/TRID4DWAVENX.conf /usr/share/alsa/cards/TRID4DWAVENX.conf 644 0 0
+file /usr/share/alsa/cards/USB-Audio.conf /usr/share/alsa/cards/USB-Audio.conf 644 0 0
+file /usr/share/alsa/cards/VIA686A.conf /usr/share/alsa/cards/VIA686A.conf 644 0 0
+file /usr/share/alsa/cards/VIA8233.conf /usr/share/alsa/cards/VIA8233.conf 644 0 0
+file /usr/share/alsa/cards/VIA8233A.conf /usr/share/alsa/cards/VIA8233A.conf 644 0 0
+file /usr/share/alsa/cards/VIA8237.conf /usr/share/alsa/cards/VIA8237.conf 644 0 0
+file /usr/share/alsa/cards/VX222.conf /usr/share/alsa/cards/VX222.conf 644 0 0
+file /usr/share/alsa/cards/VXPocket.conf /usr/share/alsa/cards/VXPocket.conf 644 0 0
+file /usr/share/alsa/cards/VXPocket440.conf /usr/share/alsa/cards/VXPocket440.conf 644 0 0
+file /usr/share/alsa/cards/YMF744.conf /usr/share/alsa/cards/YMF744.conf 644 0 0
+file /usr/share/alsa/cards/aliases.alisp /usr/share/alsa/cards/aliases.alisp 644 0 0
+file /usr/share/alsa/cards/aliases.conf /usr/share/alsa/cards/aliases.conf 644 0 0
+slink /usr/lib/libasound.so.2 /usr/lib/libasound.so.2.0.0 777 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:
