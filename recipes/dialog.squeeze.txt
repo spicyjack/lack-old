@@ -1,0 +1,177 @@
+# name: dialog - 1.1-20100428-1
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# dialog - 1.1-20100428-1
+dir /usr 755 0 0
+#dir /usr/include 755 0 0
+#file /usr/include/dlg_config.h /usr/include/dlg_config.h 644 0 0
+#file /usr/include/dlg_colors.h /usr/include/dlg_colors.h 644 0 0
+#file /usr/include/dlg_keys.h /usr/include/dlg_keys.h 644 0 0
+#file /usr/include/dialog.h /usr/include/dialog.h 644 0 0
+dir /usr/bin 755 0 0
+file /usr/bin/dialog /usr/bin/dialog 755 0 0
+#dir /usr/lib 755 0 0
+#file /usr/lib/libdialog.a /usr/lib/libdialog.a 644 0 0
+dir /usr/share 755 0 0
+dir /usr/share/locale 755 0 0
+dir /usr/share/locale/el 755 0 0
+dir /usr/share/locale/el/LC_MESSAGES 755 0 0
+file /usr/share/locale/el/LC_MESSAGES/dialog.mo /usr/share/locale/el/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/mk 755 0 0
+dir /usr/share/locale/mk/LC_MESSAGES 755 0 0
+file /usr/share/locale/mk/LC_MESSAGES/dialog.mo /usr/share/locale/mk/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/lv 755 0 0
+dir /usr/share/locale/lv/LC_MESSAGES 755 0 0
+file /usr/share/locale/lv/LC_MESSAGES/dialog.mo /usr/share/locale/lv/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/wa 755 0 0
+dir /usr/share/locale/wa/LC_MESSAGES 755 0 0
+file /usr/share/locale/wa/LC_MESSAGES/dialog.mo /usr/share/locale/wa/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/ku 755 0 0
+dir /usr/share/locale/ku/LC_MESSAGES 755 0 0
+file /usr/share/locale/ku/LC_MESSAGES/dialog.mo /usr/share/locale/ku/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/id 755 0 0
+dir /usr/share/locale/id/LC_MESSAGES 755 0 0
+file /usr/share/locale/id/LC_MESSAGES/dialog.mo /usr/share/locale/id/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/sr 755 0 0
+dir /usr/share/locale/sr/LC_MESSAGES 755 0 0
+file /usr/share/locale/sr/LC_MESSAGES/dialog.mo /usr/share/locale/sr/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/bg 755 0 0
+dir /usr/share/locale/bg/LC_MESSAGES 755 0 0
+file /usr/share/locale/bg/LC_MESSAGES/dialog.mo /usr/share/locale/bg/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/ga 755 0 0
+dir /usr/share/locale/ga/LC_MESSAGES 755 0 0
+file /usr/share/locale/ga/LC_MESSAGES/dialog.mo /usr/share/locale/ga/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/zh_CN 755 0 0
+dir /usr/share/locale/zh_CN/LC_MESSAGES 755 0 0
+file /usr/share/locale/zh_CN/LC_MESSAGES/dialog.mo /usr/share/locale/zh_CN/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/vi 755 0 0
+dir /usr/share/locale/vi/LC_MESSAGES 755 0 0
+file /usr/share/locale/vi/LC_MESSAGES/dialog.mo /usr/share/locale/vi/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/lt 755 0 0
+dir /usr/share/locale/lt/LC_MESSAGES 755 0 0
+file /usr/share/locale/lt/LC_MESSAGES/dialog.mo /usr/share/locale/lt/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/gl 755 0 0
+dir /usr/share/locale/gl/LC_MESSAGES 755 0 0
+file /usr/share/locale/gl/LC_MESSAGES/dialog.mo /usr/share/locale/gl/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/ms 755 0 0
+dir /usr/share/locale/ms/LC_MESSAGES 755 0 0
+file /usr/share/locale/ms/LC_MESSAGES/dialog.mo /usr/share/locale/ms/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/eo 755 0 0
+dir /usr/share/locale/eo/LC_MESSAGES 755 0 0
+file /usr/share/locale/eo/LC_MESSAGES/dialog.mo /usr/share/locale/eo/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/uk 755 0 0
+dir /usr/share/locale/uk/LC_MESSAGES 755 0 0
+file /usr/share/locale/uk/LC_MESSAGES/dialog.mo /usr/share/locale/uk/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/ca 755 0 0
+dir /usr/share/locale/ca/LC_MESSAGES 755 0 0
+file /usr/share/locale/ca/LC_MESSAGES/dialog.mo /usr/share/locale/ca/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/th 755 0 0
+dir /usr/share/locale/th/LC_MESSAGES 755 0 0
+file /usr/share/locale/th/LC_MESSAGES/dialog.mo /usr/share/locale/th/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/be@latin 755 0 0
+dir /usr/share/locale/be@latin/LC_MESSAGES 755 0 0
+file /usr/share/locale/be@latin/LC_MESSAGES/dialog.mo /usr/share/locale/be@latin/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/tr 755 0 0
+dir /usr/share/locale/tr/LC_MESSAGES 755 0 0
+file /usr/share/locale/tr/LC_MESSAGES/dialog.mo /usr/share/locale/tr/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/eu 755 0 0
+dir /usr/share/locale/eu/LC_MESSAGES 755 0 0
+file /usr/share/locale/eu/LC_MESSAGES/dialog.mo /usr/share/locale/eu/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/cy 755 0 0
+dir /usr/share/locale/cy/LC_MESSAGES 755 0 0
+file /usr/share/locale/cy/LC_MESSAGES/dialog.mo /usr/share/locale/cy/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/hr 755 0 0
+dir /usr/share/locale/hr/LC_MESSAGES 755 0 0
+file /usr/share/locale/hr/LC_MESSAGES/dialog.mo /usr/share/locale/hr/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/fi 755 0 0
+dir /usr/share/locale/fi/LC_MESSAGES 755 0 0
+file /usr/share/locale/fi/LC_MESSAGES/dialog.mo /usr/share/locale/fi/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/da 755 0 0
+dir /usr/share/locale/da/LC_MESSAGES 755 0 0
+file /usr/share/locale/da/LC_MESSAGES/dialog.mo /usr/share/locale/da/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/is 755 0 0
+dir /usr/share/locale/is/LC_MESSAGES 755 0 0
+file /usr/share/locale/is/LC_MESSAGES/dialog.mo /usr/share/locale/is/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/rm 755 0 0
+dir /usr/share/locale/rm/LC_MESSAGES 755 0 0
+file /usr/share/locale/rm/LC_MESSAGES/dialog.mo /usr/share/locale/rm/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/sw 755 0 0
+dir /usr/share/locale/sw/LC_MESSAGES 755 0 0
+file /usr/share/locale/sw/LC_MESSAGES/dialog.mo /usr/share/locale/sw/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/et 755 0 0
+dir /usr/share/locale/et/LC_MESSAGES 755 0 0
+file /usr/share/locale/et/LC_MESSAGES/dialog.mo /usr/share/locale/et/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/ru 755 0 0
+dir /usr/share/locale/ru/LC_MESSAGES 755 0 0
+file /usr/share/locale/ru/LC_MESSAGES/dialog.mo /usr/share/locale/ru/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/sq 755 0 0
+dir /usr/share/locale/sq/LC_MESSAGES 755 0 0
+file /usr/share/locale/sq/LC_MESSAGES/dialog.mo /usr/share/locale/sq/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/ar 755 0 0
+dir /usr/share/locale/ar/LC_MESSAGES 755 0 0
+file /usr/share/locale/ar/LC_MESSAGES/dialog.mo /usr/share/locale/ar/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/nb 755 0 0
+dir /usr/share/locale/nb/LC_MESSAGES 755 0 0
+file /usr/share/locale/nb/LC_MESSAGES/dialog.mo /usr/share/locale/nb/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/ro 755 0 0
+dir /usr/share/locale/ro/LC_MESSAGES 755 0 0
+file /usr/share/locale/ro/LC_MESSAGES/dialog.mo /usr/share/locale/ro/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/es 755 0 0
+dir /usr/share/locale/es/LC_MESSAGES 755 0 0
+file /usr/share/locale/es/LC_MESSAGES/dialog.mo /usr/share/locale/es/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/pt_BR 755 0 0
+dir /usr/share/locale/pt_BR/LC_MESSAGES 755 0 0
+file /usr/share/locale/pt_BR/LC_MESSAGES/dialog.mo /usr/share/locale/pt_BR/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/fr 755 0 0
+dir /usr/share/locale/fr/LC_MESSAGES 755 0 0
+file /usr/share/locale/fr/LC_MESSAGES/dialog.mo /usr/share/locale/fr/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/hi 755 0 0
+dir /usr/share/locale/hi/LC_MESSAGES 755 0 0
+file /usr/share/locale/hi/LC_MESSAGES/dialog.mo /usr/share/locale/hi/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/zh_TW 755 0 0
+dir /usr/share/locale/zh_TW/LC_MESSAGES 755 0 0
+file /usr/share/locale/zh_TW/LC_MESSAGES/dialog.mo /usr/share/locale/zh_TW/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/sv 755 0 0
+dir /usr/share/locale/sv/LC_MESSAGES 755 0 0
+file /usr/share/locale/sv/LC_MESSAGES/dialog.mo /usr/share/locale/sv/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/de 755 0 0
+dir /usr/share/locale/de/LC_MESSAGES 755 0 0
+file /usr/share/locale/de/LC_MESSAGES/dialog.mo /usr/share/locale/de/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/nl 755 0 0
+dir /usr/share/locale/nl/LC_MESSAGES 755 0 0
+file /usr/share/locale/nl/LC_MESSAGES/dialog.mo /usr/share/locale/nl/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/rw 755 0 0
+dir /usr/share/locale/rw/LC_MESSAGES 755 0 0
+file /usr/share/locale/rw/LC_MESSAGES/dialog.mo /usr/share/locale/rw/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/ja 755 0 0
+dir /usr/share/locale/ja/LC_MESSAGES 755 0 0
+file /usr/share/locale/ja/LC_MESSAGES/dialog.mo /usr/share/locale/ja/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/hu 755 0 0
+dir /usr/share/locale/hu/LC_MESSAGES 755 0 0
+file /usr/share/locale/hu/LC_MESSAGES/dialog.mo /usr/share/locale/hu/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/it 755 0 0
+dir /usr/share/locale/it/LC_MESSAGES 755 0 0
+file /usr/share/locale/it/LC_MESSAGES/dialog.mo /usr/share/locale/it/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/pt 755 0 0
+dir /usr/share/locale/pt/LC_MESSAGES 755 0 0
+file /usr/share/locale/pt/LC_MESSAGES/dialog.mo /usr/share/locale/pt/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/cs 755 0 0
+dir /usr/share/locale/cs/LC_MESSAGES 755 0 0
+file /usr/share/locale/cs/LC_MESSAGES/dialog.mo /usr/share/locale/cs/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/pl 755 0 0
+dir /usr/share/locale/pl/LC_MESSAGES 755 0 0
+file /usr/share/locale/pl/LC_MESSAGES/dialog.mo /usr/share/locale/pl/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/locale/mg 755 0 0
+dir /usr/share/locale/mg/LC_MESSAGES 755 0 0
+file /usr/share/locale/mg/LC_MESSAGES/dialog.mo /usr/share/locale/mg/LC_MESSAGES/dialog.mo 644 0 0
+dir /usr/share/perl5 755 0 0
+file /usr/share/perl5/dialog.pl /usr/share/perl5/dialog.pl 644 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:
