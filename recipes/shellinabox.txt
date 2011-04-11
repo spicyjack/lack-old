@@ -13,7 +13,7 @@
 #
 dir /usr 0755 0 0
 dir /usr/bin 0755 0 0
-file /usr/bin/shellinaboxd /usr/local/stow/shellinabox-2.10/usr/bin/shellinaboxd 755 0 0
+file /usr/bin/shellinaboxd /usr/local/stow/shellinabox-2.10/bin/shellinaboxd 755 0 0
 dir /etc 0755 0 0
 dir /etc/shellinabox 0755 0 0
 file /etc/shellinabox/color.css /usr/local/stow/shellinabox-2.10/share/doc/shellinabox/color.css 644 0 0
