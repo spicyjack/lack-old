@@ -13,20 +13,13 @@
 #
 dir /usr 0755 0 0
 dir /usr/bin 0755 0 0
-#file /usr/bin/shellinaboxd /usr/local/stow/shellinabox-2.10/bin/shellinaboxd 755 0 0
-file /usr/bin/shellinaboxd /usr/bin/shellinaboxd 755 0 0
+file /usr/bin/shellinaboxd /usr/local/stow/shellinabox-2.10/bin/shellinaboxd 755 0 0
 dir /etc 0755 0 0
 dir /etc/shellinabox 0755 0 0
-file /etc/shellinabox/color.css /etc/shellinabox/color.css 644 0 0
-file /etc/shellinabox/monochrome.css /etc/shellinabox/monochrome.css 644 0 0
-file /etc/shellinabox/white-on-black.css /etc/shellinabox/white-on-black.css 644 0 0
-# zero length file :(
-#file /etc/shellinabox/black-on-white.css /etc/shellinabox/black-on-white.css 644 0 0
-#file /etc/shellinabox/black-on-white.css /etc/shellinabox/options-available/01+Color Terminal.css 644 0 0
-#file /etc/shellinabox/color.css /etc/shellinabox/options-available/00+Black on White.css 644 0 0
-#file /etc/shellinabox/monochrome.css /etc/shellinabox/options-available/01_Monochrome.css 644 0 0
-#file /etc/shellinabox/white-on-black.css /etc/shellinabox/options-available/00_White On Black.css 644 0 0
-# shellinabox needs the xterm terminfo file to work when presenting dialog
+file /etc/shellinabox/color.css /usr/local/stow/shellinabox-2.10/share/doc/shellinabox/color.css 644 0 0
+file /etc/shellinabox/monochrome.css /usr/local/stow/shellinabox-2.10/share/doc/shellinabox/monochrome.css 644 0 0
+file /etc/shellinabox/white-on-black.css /usr/local/stow/shellinabox-2.10/share/doc/shellinabox/white-on-black.css 644 0 0
+file /etc/shellinabox/black-on-white.css /usr/local/stow/shellinabox-2.10/share/doc/shellinabox/black-on-white.css 644 0 0
 # screens
 dir /lib 0755 0 0
 dir /lib/terminfo 0755 0 0

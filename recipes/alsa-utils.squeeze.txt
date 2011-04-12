@@ -1,0 +1,70 @@
+# name: alsa-utils - 1.0.23-3
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# alsa-utils - 1.0.23-3
+dir /lib 755 0 0
+dir /lib/udev 755 0 0
+dir /lib/udev/rules.d 755 0 0
+file /lib/udev/rules.d/80-alsa.rules /lib/udev/rules.d/80-alsa.rules 644 0 0
+file /lib/udev/alsa-utils /lib/udev/alsa-utils 755 0 0
+dir /etc 755 0 0
+dir /etc/init.d 755 0 0
+file /etc/init.d/alsa-utils /etc/init.d/alsa-utils 755 0 0
+dir /var 755 0 0
+dir /var/lib 755 0 0
+dir /var/lib/alsa 755 0 0
+dir /usr 755 0 0
+dir /usr/bin 755 0 0
+file /usr/bin/aplay /usr/bin/aplay 755 0 0
+file /usr/bin/amixer /usr/bin/amixer 755 0 0
+file /usr/bin/arecordmidi /usr/bin/arecordmidi 755 0 0
+file /usr/bin/aseqnet /usr/bin/aseqnet 755 0 0
+file /usr/bin/alsamixer /usr/bin/alsamixer 755 0 0
+file /usr/bin/aconnect /usr/bin/aconnect 755 0 0
+file /usr/bin/speaker-test /usr/bin/speaker-test 755 0 0
+file /usr/bin/iecset /usr/bin/iecset 755 0 0
+file /usr/bin/amidi /usr/bin/amidi 755 0 0
+file /usr/bin/aplaymidi /usr/bin/aplaymidi 755 0 0
+file /usr/bin/aseqdump /usr/bin/aseqdump 755 0 0
+dir /usr/sbin 755 0 0
+file /usr/sbin/alsactl /usr/sbin/alsactl 755 0 0
+dir /usr/share 755 0 0
+dir /usr/share/locale 755 0 0
+dir /usr/share/locale/ja 755 0 0
+dir /usr/share/locale/ja/LC_MESSAGES 755 0 0
+file /usr/share/locale/ja/LC_MESSAGES/alsa-utils.mo /usr/share/locale/ja/LC_MESSAGES/alsa-utils.mo 644 0 0
+dir /usr/share/locale/ru 755 0 0
+dir /usr/share/locale/ru/LC_MESSAGES 755 0 0
+dir /usr/share/locale/de 755 0 0
+dir /usr/share/locale/de/LC_MESSAGES 755 0 0
+file /usr/share/locale/de/LC_MESSAGES/alsa-utils.mo /usr/share/locale/de/LC_MESSAGES/alsa-utils.mo 644 0 0
+dir /usr/share/sounds 755 0 0
+dir /usr/share/sounds/alsa 755 0 0
+file /usr/share/sounds/alsa/Side_Left.wav /usr/share/sounds/alsa/Side_Left.wav 644 0 0
+file /usr/share/sounds/alsa/Noise.wav /usr/share/sounds/alsa/Noise.wav 644 0 0
+file /usr/share/sounds/alsa/Front_Left.wav /usr/share/sounds/alsa/Front_Left.wav 644 0 0
+file /usr/share/sounds/alsa/Front_Center.wav /usr/share/sounds/alsa/Front_Center.wav 644 0 0
+file /usr/share/sounds/alsa/Rear_Left.wav /usr/share/sounds/alsa/Rear_Left.wav 644 0 0
+file /usr/share/sounds/alsa/Rear_Center.wav /usr/share/sounds/alsa/Rear_Center.wav 644 0 0
+file /usr/share/sounds/alsa/Front_Right.wav /usr/share/sounds/alsa/Front_Right.wav 644 0 0
+file /usr/share/sounds/alsa/Rear_Right.wav /usr/share/sounds/alsa/Rear_Right.wav 644 0 0
+file /usr/share/sounds/alsa/Side_Right.wav /usr/share/sounds/alsa/Side_Right.wav 644 0 0
+dir /usr/share/alsa 755 0 0
+dir /usr/share/alsa/speaker-test 755 0 0
+file /usr/share/alsa/speaker-test/sample_map.csv /usr/share/alsa/speaker-test/sample_map.csv 644 0 0
+dir /usr/share/alsa/init 755 0 0
+file /usr/share/alsa/init/test /usr/share/alsa/init/test 644 0 0
+file /usr/share/alsa/init/hda /usr/share/alsa/init/hda 644 0 0
+file /usr/share/alsa/init/help /usr/share/alsa/init/help 644 0 0
+file /usr/share/alsa/init/00main /usr/share/alsa/init/00main 644 0 0
+file /usr/share/alsa/init/default /usr/share/alsa/init/default 644 0 0
+slink /usr/bin/arecord /usr/bin/aplay 777 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:

@@ -1,0 +1,46 @@
+# name: libartsc0 - 1.5.9-2
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# libartsc0 - 1.5.9-2
+dir /usr 755 0 0
+dir /usr/share 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libartsc.so.0.0.0 /usr/lib/libartsc.so.0.0.0 644 0 0
+slink /usr/lib/libartsc.so.0 /usr/lib/libartsc.so.0.0.0 777 0 0
+# libesd0 - 0.2.36-3
+dir /usr/lib/esound 755 0 0
+file /usr/lib/esound/libesddsp.so.0.2.36 /usr/lib/esound/libesddsp.so.0.2.36 644 0 0
+file /usr/lib/libesd.so.0.2.36 /usr/lib/libesd.so.0.2.36 644 0 0
+slink /usr/lib/esound/libesddsp.so.0 /usr/lib/esound/libesddsp.so.0.2.36 777 0 0
+slink /usr/lib/libesd.so.0 /usr/lib/libesd.so.0.2.36 777 0 0
+# libaudiofile0 - 0.2.6-7+lenny1
+file /usr/lib/libaudiofile.so.0.0.2 /usr/lib/libaudiofile.so.0.0.2 644 0 0
+slink /usr/lib/libaudiofile.so.0 /usr/lib/libaudiofile.so.0.0.2 777 0 0
+# libaudio2 - 1.9.1-5
+file /usr/lib/libaudio.so.2.4 /usr/lib/libaudio.so.2.4 644 0 0
+file /usr/lib/AuErrorDB /usr/lib/AuErrorDB 644 0 0
+slink /usr/lib/libaudio.so.2 /usr/lib/libaudio.so.2.4 777 0 0
+# libjack0 - 0.109.2-5
+file /usr/lib/libjack.so.0.0.28 /usr/lib/libjack.so.0.0.28 644 0 0
+dir /usr/lib/jack 755 0 0
+file /usr/lib/jack/jack_oss.so /usr/lib/jack/jack_oss.so 644 0 0
+file /usr/lib/jack/jack_dummy.so /usr/lib/jack/jack_dummy.so 644 0 0
+file /usr/lib/jack/inprocess.so /usr/lib/jack/inprocess.so 644 0 0
+file /usr/lib/jack/intime.so /usr/lib/jack/intime.so 644 0 0
+file /usr/lib/jack/jack_freebob.so /usr/lib/jack/jack_freebob.so 644 0 0
+file /usr/lib/jack/jack_alsa.so /usr/lib/jack/jack_alsa.so 644 0 0
+slink /usr/lib/libjack-0.100.0.so.0 /usr/lib/libjack.so.0.0.28 777 0 0
+slink /usr/lib/libjack.so.0 /usr/lib/libjack.so.0.0.28 777 0 0
+slink /usr/lib/libjack0.100.0 /usr/lib/jack 777 0 0
+# libmikmod2
+file /usr/lib/libmikmod.so.2.0.4 /usr/lib/libmikmod.so.2.0.4 644 0 0
+slink /usr/lib/libmikmod.so.2 /usr/lib/libmikmod.so.2.0.4 777 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:

@@ -1,0 +1,26 @@
+# name: libcgi-pm-perl - 3.49-1squeeze1
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# libcgi-pm-perl - 3.49-1squeeze1
+dir /usr 755 0 0
+dir /usr/share 755 0 0
+dir /usr/share/perl5 755 0 0
+file /usr/share/perl5/CGI.pm /usr/share/perl5/CGI.pm 644 0 0
+dir /usr/share/perl5/CGI 755 0 0
+file /usr/share/perl5/CGI/Carp.pm /usr/share/perl5/CGI/Carp.pm 644 0 0
+file /usr/share/perl5/CGI/Push.pm /usr/share/perl5/CGI/Push.pm 644 0 0
+file /usr/share/perl5/CGI/Apache.pm /usr/share/perl5/CGI/Apache.pm 644 0 0
+file /usr/share/perl5/CGI/Cookie.pm /usr/share/perl5/CGI/Cookie.pm 644 0 0
+file /usr/share/perl5/CGI/Pretty.pm /usr/share/perl5/CGI/Pretty.pm 644 0 0
+file /usr/share/perl5/CGI/Fast.pm /usr/share/perl5/CGI/Fast.pm 644 0 0
+file /usr/share/perl5/CGI/Util.pm /usr/share/perl5/CGI/Util.pm 644 0 0
+file /usr/share/perl5/CGI/Switch.pm /usr/share/perl5/CGI/Switch.pm 644 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:

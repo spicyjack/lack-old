@@ -1,0 +1,122 @@
+# name: libpam0g - 1.1.1-6.1
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# libpam0g - 1.1.1-6.1
+#dir /usr 755 0 0
+#dir /usr/share 755 0 0
+#dir /usr/share/lintian 755 0 0
+#dir /usr/share/lintian/overrides 755 0 0
+#file /usr/share/lintian/overrides/libpam0g /usr/share/lintian/overrides/libpam0g 644 0 0
+dir /lib 755 0 0
+file /lib/libpamc.so.0.82.1 /lib/libpamc.so.0.82.1 644 0 0
+file /lib/libpam_misc.so.0.82.0 /lib/libpam_misc.so.0.82.0 644 0 0
+file /lib/libpam.so.0.82.2 /lib/libpam.so.0.82.2 644 0 0
+slink /lib/libpam.so.0 /lib/libpam.so.0.82.2 777 0 0
+slink /lib/libpamc.so.0 /lib/libpamc.so.0.82.1 777 0 0
+slink /lib/libpam_misc.so.0 /lib/libpam_misc.so.0.82.0 777 0 0
+# libpam-modules - 1.1.1-6.1
+#dir /usr 755 0 0
+#dir /usr/share 755 0 0
+#dir /usr/share/lintian 755 0 0
+#dir /usr/share/lintian/overrides 755 0 0
+#file /usr/share/lintian/overrides/libpam-modules /usr/share/lintian/overrides/libpam-modules 644 0 0
+#dir /lib 755 0 0
+dir /lib/security 755 0 0
+file /lib/security/pam_access.so /lib/security/pam_access.so 644 0 0
+file /lib/security/pam_deny.so /lib/security/pam_deny.so 644 0 0
+file /lib/security/pam_echo.so /lib/security/pam_echo.so 644 0 0
+file /lib/security/pam_env.so /lib/security/pam_env.so 644 0 0
+#file /lib/security/pam_exec.so /lib/security/pam_exec.so 644 0 0
+#file /lib/security/pam_faildelay.so /lib/security/pam_faildelay.so 644 0 0
+#file /lib/security/pam_filter.so /lib/security/pam_filter.so 644 0 0
+#file /lib/security/pam_ftp.so /lib/security/pam_ftp.so 644 0 0
+#file /lib/security/pam_group.so /lib/security/pam_group.so 644 0 0
+#file /lib/security/pam_issue.so /lib/security/pam_issue.so 644 0 0
+#file /lib/security/pam_keyinit.so /lib/security/pam_keyinit.so 644 0 0
+#file /lib/security/pam_lastlog.so /lib/security/pam_lastlog.so 644 0 0
+file /lib/security/pam_limits.so /lib/security/pam_limits.so 644 0 0
+#file /lib/security/pam_listfile.so /lib/security/pam_listfile.so 644 0 0
+#file /lib/security/pam_localuser.so /lib/security/pam_localuser.so 644 0 0
+#file /lib/security/pam_loginuid.so /lib/security/pam_loginuid.so 644 0 0
+#file /lib/security/pam_mail.so /lib/security/pam_mail.so 644 0 0
+#file /lib/security/pam_mkhomedir.so /lib/security/pam_mkhomedir.so 644 0 0
+#file /lib/security/pam_motd.so /lib/security/pam_motd.so 644 0 0
+#file /lib/security/pam_namespace.so /lib/security/pam_namespace.so 644 0 0
+#file /lib/security/pam_nologin.so /lib/security/pam_nologin.so 644 0 0
+file /lib/security/pam_permit.so /lib/security/pam_permit.so 644 0 0
+#file /lib/security/pam_pwhistory.so /lib/security/pam_pwhistory.so 644 0 0
+#file /lib/security/pam_rhosts.so /lib/security/pam_rhosts.so 644 0 0
+#file /lib/security/pam_rootok.so /lib/security/pam_rootok.so 644 0 0
+#file /lib/security/pam_securetty.so /lib/security/pam_securetty.so 644 0 0
+file /lib/security/pam_selinux.so /lib/security/pam_selinux.so 644 0 0
+#file /lib/security/pam_sepermit.so /lib/security/pam_sepermit.so 644 0 0
+#file /lib/security/pam_shells.so /lib/security/pam_shells.so 644 0 0
+#file /lib/security/pam_stress.so /lib/security/pam_stress.so 644 0 0
+#file /lib/security/pam_succeed_if.so /lib/security/pam_succeed_if.so 644 0 0
+#file /lib/security/pam_tally.so /lib/security/pam_tally.so 644 0 0
+#file /lib/security/pam_tally2.so /lib/security/pam_tally2.so 644 0 0
+#file /lib/security/pam_time.so /lib/security/pam_time.so 644 0 0
+#file /lib/security/pam_timestamp.so /lib/security/pam_timestamp.so 644 0 0
+#file /lib/security/pam_umask.so /lib/security/pam_umask.so 644 0 0
+file /lib/security/pam_unix.so /lib/security/pam_unix.so 644 0 0
+#file /lib/security/pam_userdb.so /lib/security/pam_userdb.so 644 0 0
+#file /lib/security/pam_warn.so /lib/security/pam_warn.so 644 0 0
+#file /lib/security/pam_wheel.so /lib/security/pam_wheel.so 644 0 0
+#file /lib/security/pam_xauth.so /lib/security/pam_xauth.so 644 0 0
+# there used to be symlinks here in lenny's libpam package
+dir /etc 755 0 0
+dir /etc/security 755 0 0
+file /etc/security/sepermit.conf /etc/security/sepermit.conf 644 0 0
+file /etc/security/limits.conf /etc/security/limits.conf 644 0 0
+file /etc/security/time.conf /etc/security/time.conf 644 0 0
+dir /etc/security/limits.d 755 0 0
+file /etc/security/namespace.init /etc/security/namespace.init 755 0 0
+file /etc/security/pam_env.conf /etc/security/pam_env.conf 644 0 0
+file /etc/security/namespace.conf /etc/security/namespace.conf 644 0 0
+file /etc/security/group.conf /etc/security/group.conf 644 0 0
+dir /etc/security/namespace.d 755 0 0
+file /etc/security/access.conf /etc/security/access.conf 644 0 0
+dir /sbin 755 0 0
+file /sbin/unix_chkpwd /sbin/unix_chkpwd 2755 0 0
+file /sbin/pam_tally2 /sbin/pam_tally2 755 0 0
+file /sbin/mkhomedir_helper /sbin/mkhomedir_helper 755 0 0
+file /sbin/pam_tally /sbin/pam_tally 755 0 0
+file /sbin/unix_update /sbin/unix_update 755 0 0
+# libpam-runtime - 1.1.1-6.1
+dir /usr 755 0 0
+dir /usr/share 755 0 0
+dir /usr/share/pam 755 0 0
+file /usr/share/pam/common-auth.md5sums /usr/share/pam/common-auth.md5sums 644 0 0
+file /usr/share/pam/common-password /usr/share/pam/common-password 644 0 0
+file /usr/share/pam/common-auth /usr/share/pam/common-auth 644 0 0
+file /usr/share/pam/common-session-noninteractive.md5sums /usr/share/pam/common-session-noninteractive.md5sums 644 0 0
+file /usr/share/pam/common-account /usr/share/pam/common-account 644 0 0
+file /usr/share/pam/common-session /usr/share/pam/common-session 644 0 0
+file /usr/share/pam/common-session-noninteractive /usr/share/pam/common-session-noninteractive 644 0 0
+file /usr/share/pam/common-session.md5sums /usr/share/pam/common-session.md5sums 644 0 0
+file /usr/share/pam/common-account.md5sums /usr/share/pam/common-account.md5sums 644 0 0
+file /usr/share/pam/common-password.md5sums /usr/share/pam/common-password.md5sums 644 0 0
+#dir /usr/share/lintian 755 0 0
+#dir /usr/share/lintian/overrides 755 0 0
+#file /usr/share/lintian/overrides/libpam-runtime /usr/share/lintian/overrides/libpam-runtime 644 0 0
+dir /usr/share/pam-configs 755 0 0
+file /usr/share/pam-configs/unix /usr/share/pam-configs/unix 644 0 0
+dir /usr/sbin 755 0 0
+file /usr/sbin/pam-auth-update /usr/sbin/pam-auth-update 755 0 0
+file /usr/sbin/pam_getenv /usr/sbin/pam_getenv 755 0 0
+dir /var 755 0 0
+dir /var/lib 755 0 0
+dir /var/lib/pam 755 0 0
+dir /etc 755 0 0
+dir /etc/pam.d 755 0 0
+file /etc/pam.d/other /etc/pam.d/other 644 0 0
+file /etc/pam.conf /etc/pam.conf 644 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:
