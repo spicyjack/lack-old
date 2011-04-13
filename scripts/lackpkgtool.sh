@@ -519,7 +519,7 @@ do
             fi # if [ "x${LOGFILE}" != "x" ]
             #PKG_CONTENTS=$(echo ${PKG_CONTENTS} | sort )
             PKG_VERSION=$(dpkg-query -s ${CURR_PKG} \
-                | grep Version | awk '{print $2}')
+                | grep '^Version:' | awk '{print $2}')
             #check_exit_status $? "dpkg-query -s ${CURR_PKG}"
             ;;
         directory)
