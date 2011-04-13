@@ -1,0 +1,155 @@
+# name: libpcre3 - 8.02-1.1
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# libpcre3 - 8.02-1.1
+dir /usr 755 0 0
+#dir /usr/bin 755 0 0
+#file /usr/bin/pcretest /usr/bin/pcretest 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libpcreposix.so.3.12.1 /usr/lib/libpcreposix.so.3.12.1 644 0 0
+#dir /usr/share 755 0 0
+#dir /usr/sbin 755 0 0
+dir /lib 755 0 0
+file /lib/libpcre.so.3.12.1 /lib/libpcre.so.3.12.1 644 0 0
+slink /usr/lib/libpcreposix.so.3 /usr/lib/libpcreposix.so.3.12.1 777 0 0
+slink /lib/libpcre.so.3 /lib/libpcre.so.3.12.1 777 0 0
+# libexpat1 - 2.0.1-7
+#dir /usr 755 0 0
+#dir /usr/lib 755 0 0
+file /usr/lib/libexpatw.so.1.5.2 /usr/lib/libexpatw.so.1.5.2 644 0 0
+file /usr/lib/libexpat.so.1.5.2 /usr/lib/libexpat.so.1.5.2 644 0 0
+#dir /usr/share 755 0 0
+slink /usr/lib/libexpat.so.1 /usr/lib/libexpat.so.1.5.2 777 0 0
+slink /usr/lib/libexpatw.so.1 /usr/lib/libexpatw.so.1.5.2 777 0 0
+# libatk1.0-0 - 1.30.0-1
+#dir /usr 755 0 0
+#dir /usr/lib 755 0 0
+file /usr/lib/libatk-1.0.so.0.3009.1 /usr/lib/libatk-1.0.so.0.3009.1 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libatk-1.0.so.0 /usr/lib/libatk-1.0.so.0.3009.1 777 0 0
+# libpango1.0-0 - 1.28.3-1+squeeze2
+#dir /usr 755 0 0
+#dir /usr/lib 755 0 0
+file /usr/lib/libpangoft2-1.0.so.0.2800.3 /usr/lib/libpangoft2-1.0.so.0.2800.3 644 0 0
+file /usr/lib/libpangox-1.0.so.0.2800.3 /usr/lib/libpangox-1.0.so.0.2800.3 644 0 0
+dir /usr/lib/pango 755 0 0
+dir /usr/lib/pango/1.6.0 755 0 0
+dir /usr/lib/pango/1.6.0/module-files.d 755 0 0
+file /usr/lib/pango/1.6.0/module-files.d/libpango1.0-0.modules /usr/lib/pango/1.6.0/module-files.d/libpango1.0-0.modules 644 0 0
+dir /usr/lib/pango/1.6.0/modules 755 0 0
+file /usr/lib/pango/1.6.0/modules/pango-khmer-fc.so /usr/lib/pango/1.6.0/modules/pango-khmer-fc.so 644 0 0
+file /usr/lib/pango/1.6.0/modules/pango-arabic-lang.so /usr/lib/pango/1.6.0/modules/pango-arabic-lang.so 644 0 0
+file /usr/lib/pango/1.6.0/modules/pango-indic-fc.so /usr/lib/pango/1.6.0/modules/pango-indic-fc.so 644 0 0
+file /usr/lib/pango/1.6.0/modules/pango-thai-fc.so /usr/lib/pango/1.6.0/modules/pango-thai-fc.so 644 0 0
+file /usr/lib/pango/1.6.0/modules/pango-hangul-fc.so /usr/lib/pango/1.6.0/modules/pango-hangul-fc.so 644 0 0
+file /usr/lib/pango/1.6.0/modules/pango-hebrew-fc.so /usr/lib/pango/1.6.0/modules/pango-hebrew-fc.so 644 0 0
+file /usr/lib/pango/1.6.0/modules/pango-basic-fc.so /usr/lib/pango/1.6.0/modules/pango-basic-fc.so 644 0 0
+file /usr/lib/pango/1.6.0/modules/pango-syriac-fc.so /usr/lib/pango/1.6.0/modules/pango-syriac-fc.so 644 0 0
+file /usr/lib/pango/1.6.0/modules/pango-indic-lang.so /usr/lib/pango/1.6.0/modules/pango-indic-lang.so 644 0 0
+file /usr/lib/pango/1.6.0/modules/pango-basic-x.so /usr/lib/pango/1.6.0/modules/pango-basic-x.so 644 0 0
+file /usr/lib/pango/1.6.0/modules/pango-tibetan-fc.so /usr/lib/pango/1.6.0/modules/pango-tibetan-fc.so 644 0 0
+file /usr/lib/pango/1.6.0/modules/pango-thai-lang.so /usr/lib/pango/1.6.0/modules/pango-thai-lang.so 644 0 0
+file /usr/lib/pango/1.6.0/modules/pango-arabic-fc.so /usr/lib/pango/1.6.0/modules/pango-arabic-fc.so 644 0 0
+file /usr/lib/libpango-1.0.so.0.2800.3 /usr/lib/libpango-1.0.so.0.2800.3 644 0 0
+file /usr/lib/libpangoxft-1.0.so.0.2800.3 /usr/lib/libpangoxft-1.0.so.0.2800.3 644 0 0
+file /usr/lib/libpangocairo-1.0.so.0.2800.3 /usr/lib/libpangocairo-1.0.so.0.2800.3 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libpangox-1.0.so.0 /usr/lib/libpangox-1.0.so.0.2800.3 777 0 0
+slink /usr/lib/libpangoft2-1.0.so.0 /usr/lib/libpangoft2-1.0.so.0.2800.3 777 0 0
+slink /usr/lib/libpango-1.0.so.0 /usr/lib/libpango-1.0.so.0.2800.3 777 0 0
+slink /usr/lib/libpangoxft-1.0.so.0 /usr/lib/libpangoxft-1.0.so.0.2800.3 777 0 0
+slink /usr/lib/libpangocairo-1.0.so.0 /usr/lib/libpangocairo-1.0.so.0.2800.3 777 0 0
+# libcairo2 - 1.8.10-6
+#dir /usr 755 0 0
+#dir /usr/lib 755 0 0
+file /usr/lib/libcairo.so.2.10800.10 /usr/lib/libcairo.so.2.10800.10 644 0 0
+#dir /usr/share 755 0 0
+slink /usr/lib/libcairo.so.2 /usr/lib/libcairo.so.2.10800.10 777 0 0
+# libglib2.0-0 - 2.24.2-1
+#dir /usr 755 0 0
+#dir /usr/lib 755 0 0
+dir /usr/lib/glib-2.0 755 0 0
+file /usr/lib/glib-2.0/gio-querymodules /usr/lib/glib-2.0/gio-querymodules 755 0 0
+file /usr/lib/libgio-2.0.so.0.2400.2 /usr/lib/libgio-2.0.so.0.2400.2 644 0 0
+file /usr/lib/libgthread-2.0.so.0.2400.2 /usr/lib/libgthread-2.0.so.0.2400.2 644 0 0
+file /usr/lib/libgobject-2.0.so.0.2400.2 /usr/lib/libgobject-2.0.so.0.2400.2 644 0 0
+file /usr/lib/libgmodule-2.0.so.0.2400.2 /usr/lib/libgmodule-2.0.so.0.2400.2 644 0 0
+#dir /usr/share 755 0 0
+dir /lib 755 0 0
+file /lib/libglib-2.0.so.0.2400.2 /lib/libglib-2.0.so.0.2400.2 644 0 0
+slink /usr/lib/libgio-2.0.so.0 /usr/lib/libgio-2.0.so.0.2400.2 777 0 0
+slink /usr/lib/libgmodule-2.0.so.0 /usr/lib/libgmodule-2.0.so.0.2400.2 777 0 0
+slink /usr/lib/libgobject-2.0.so.0 /usr/lib/libgobject-2.0.so.0.2400.2 777 0 0
+slink /usr/lib/libgthread-2.0.so.0 /usr/lib/libgthread-2.0.so.0.2400.2 777 0 0
+slink /lib/libglib-2.0.so.0 /lib/libglib-2.0.so.0.2400.2 777 0 0
+# libgtk2.0-0 - 2.20.1-2
+dir /etc 755 0 0
+dir /etc/gtk-2.0 755 0 0
+file /etc/gtk-2.0/im-multipress.conf /etc/gtk-2.0/im-multipress.conf 644 0 0
+#dir /usr 755 0 0
+#dir /usr/lib 755 0 0
+dir /usr/lib/gtk-2.0 755 0 0
+dir /usr/lib/gtk-2.0/2.10.0 755 0 0
+dir /usr/lib/gtk-2.0/2.10.0/loaders 755 0 0
+file /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-qtif.so /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-qtif.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-xpm.so /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-xpm.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-icns.so /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-icns.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-jpeg.so /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-jpeg.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-tiff.so /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-tiff.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-pcx.so /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-pcx.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-jasper.so /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-jasper.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-bmp.so /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-bmp.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-ras.so /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-ras.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-ani.so /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-ani.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-png.so /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-png.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-pnm.so /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-pnm.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-xbm.so /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-xbm.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-ico.so /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-ico.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-wbmp.so /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-wbmp.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-tga.so /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-tga.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-gif.so /usr/lib/gtk-2.0/2.10.0/loaders/libpixbufloader-gif.so 644 0 0
+#dir /usr/lib/gtk-2.0/2.10.0/printbackends 755 0 0
+#file /usr/lib/gtk-2.0/2.10.0/printbackends/libprintbackend-cups.so /usr/lib/gtk-2.0/2.10.0/printbackends/libprintbackend-cups.so 644 0 0
+#file /usr/lib/gtk-2.0/2.10.0/printbackends/libprintbackend-file.so /usr/lib/gtk-2.0/2.10.0/printbackends/libprintbackend-file.so 644 0 0
+#file /usr/lib/gtk-2.0/2.10.0/printbackends/libprintbackend-lpr.so /usr/lib/gtk-2.0/2.10.0/printbackends/libprintbackend-lpr.so 644 0 0
+#file /usr/lib/gtk-2.0/2.10.0/printbackends/libprintbackend-test.so /usr/lib/gtk-2.0/2.10.0/printbackends/libprintbackend-test.so 644 0 0
+dir /usr/lib/gtk-2.0/2.10.0/immodules 755 0 0
+file /usr/lib/gtk-2.0/2.10.0/immodules/im-cyrillic-translit.so /usr/lib/gtk-2.0/2.10.0/immodules/im-cyrillic-translit.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/immodules/im-thai.so /usr/lib/gtk-2.0/2.10.0/immodules/im-thai.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/immodules/im-xim.so /usr/lib/gtk-2.0/2.10.0/immodules/im-xim.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/immodules/im-inuktitut.so /usr/lib/gtk-2.0/2.10.0/immodules/im-inuktitut.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/immodules/im-viqr.so /usr/lib/gtk-2.0/2.10.0/immodules/im-viqr.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/immodules/im-cedilla.so /usr/lib/gtk-2.0/2.10.0/immodules/im-cedilla.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/immodules/im-multipress.so /usr/lib/gtk-2.0/2.10.0/immodules/im-multipress.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/immodules/im-ti-et.so /usr/lib/gtk-2.0/2.10.0/immodules/im-ti-et.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/immodules/im-am-et.so /usr/lib/gtk-2.0/2.10.0/immodules/im-am-et.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/immodules/im-ti-er.so /usr/lib/gtk-2.0/2.10.0/immodules/im-ti-er.so 644 0 0
+file /usr/lib/gtk-2.0/2.10.0/immodules/im-ipa.so /usr/lib/gtk-2.0/2.10.0/immodules/im-ipa.so 644 0 0
+dir /usr/lib/gtk-2.0/2.10.0/immodule-files.d 755 0 0
+file /usr/lib/gtk-2.0/2.10.0/immodule-files.d/libgtk2.0-0.immodules /usr/lib/gtk-2.0/2.10.0/immodule-files.d/libgtk2.0-0.immodules 644 0 0
+dir /usr/lib/gtk-2.0/2.10.0/loader-files.d 755 0 0
+file /usr/lib/gtk-2.0/2.10.0/loader-files.d/libgtk2.0-0.loaders /usr/lib/gtk-2.0/2.10.0/loader-files.d/libgtk2.0-0.loaders 644 0 0
+file /usr/lib/libgdk_pixbuf-2.0.so.0.2000.1 /usr/lib/libgdk_pixbuf-2.0.so.0.2000.1 644 0 0
+file /usr/lib/libgdk_pixbuf_xlib-2.0.so.0.2000.1 /usr/lib/libgdk_pixbuf_xlib-2.0.so.0.2000.1 644 0 0
+file /usr/lib/libgtk-x11-2.0.so.0.2000.1 /usr/lib/libgtk-x11-2.0.so.0.2000.1 644 0 0
+dir /usr/lib/libgtk2.0-0 755 0 0
+file /usr/lib/libgtk2.0-0/update-gdkpixbuf-loaders /usr/lib/libgtk2.0-0/update-gdkpixbuf-loaders 755 0 0
+file /usr/lib/libgtk2.0-0/gtk-query-immodules-2.0 /usr/lib/libgtk2.0-0/gtk-query-immodules-2.0 755 0 0
+file /usr/lib/libgtk2.0-0/update-gtk-immodules /usr/lib/libgtk2.0-0/update-gtk-immodules 755 0 0
+file /usr/lib/libgtk2.0-0/gdk-pixbuf-query-loaders /usr/lib/libgtk2.0-0/gdk-pixbuf-query-loaders 755 0 0
+file /usr/lib/libgtk2.0-0/gtk-update-icon-cache /usr/lib/libgtk2.0-0/gtk-update-icon-cache 755 0 0
+file /usr/lib/libgdk-x11-2.0.so.0.2000.1 /usr/lib/libgdk-x11-2.0.so.0.2000.1 644 0 0
+#dir /usr/share 755 0 0
+slink /usr/lib/libgdk_pixbuf-2.0.so.0 /usr/lib/libgdk_pixbuf-2.0.so.0.2000.1 777 0 0
+slink /usr/lib/libgdk-x11-2.0.so.0 /usr/lib/libgdk-x11-2.0.so.0.2000.1 777 0 0
+slink /usr/lib/libgdk_pixbuf_xlib-2.0.so.0 /usr/lib/libgdk_pixbuf_xlib-2.0.so.0.2000.1 777 0 0
+slink /usr/lib/libgtk-x11-2.0.so.0 /usr/lib/libgtk-x11-2.0.so.0.2000.1 777 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:

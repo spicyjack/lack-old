@@ -73,7 +73,7 @@ SCRIPT_START=$(${EPOCH_DATE_CMD})
 VERBOSE=0
 # pattern of strings to exclude
 EXCLUDES="share/doc|/man|/info|bug"
-EXCLUDES="${EXCLUDES}|^/\.$|^/boot$|^/lib/modules$"
+EXCLUDES="${EXCLUDES}|^/\.$|^/boot$|^/lib/modules$|\.pod$|\.h$"
 # we need all the extra directories now when making squashfs packages
 #EXCLUDES="${EXCLUDES}|^/\.$|^/boot$|^/usr$|^/usr/share$|^/lib$|^/lib/modules$"
 # make all files owned by root by default

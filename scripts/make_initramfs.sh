@@ -14,6 +14,9 @@
 # that to 'gen_init_cpio', which creates the initramfs file
 
 # TODO
+# - create a clean_up function that removes files/directories that were
+# created by this script; any other function that wants to exit after an error
+# calls the cleanup function first
 # - fall back to cpio/afio if gen_cpio_image doesn't exist
 # - add detection of 'requirements' in the recipe files so that dependencies
 # can be detected and added to the initramfs image as needed; run the
