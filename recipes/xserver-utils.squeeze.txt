@@ -1,0 +1,74 @@
+# name: x11-xserver-utils - 7.5+2
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# x11-xserver-utils - 7.5+2
+dir /etc 755 0 0
+dir /etc/X11 755 0 0
+dir /etc/X11/app-defaults 755 0 0
+file /etc/X11/app-defaults/Xvidtune /etc/X11/app-defaults/Xvidtune 644 0 0
+dir /usr 755 0 0
+dir /usr/bin 755 0 0
+file /usr/bin/xrdb /usr/bin/xrdb 755 0 0
+file /usr/bin/xsetpointer /usr/bin/xsetpointer 755 0 0
+#file /usr/bin/showrgb /usr/bin/showrgb 755 0 0
+file /usr/bin/xstdcmap /usr/bin/xstdcmap 755 0 0
+file /usr/bin/xhost /usr/bin/xhost 755 0 0
+file /usr/bin/xset /usr/bin/xset 755 0 0
+file /usr/bin/xmodmap /usr/bin/xmodmap 755 0 0
+file /usr/bin/xsetroot /usr/bin/xsetroot 755 0 0
+file /usr/bin/xsetmode /usr/bin/xsetmode 755 0 0
+file /usr/bin/iceauth /usr/bin/iceauth 755 0 0
+file /usr/bin/xgamma /usr/bin/xgamma 755 0 0
+file /usr/bin/xrefresh /usr/bin/xrefresh 755 0 0
+file /usr/bin/sessreg /usr/bin/sessreg 755 0 0
+file /usr/bin/xvidtune /usr/bin/xvidtune 755 0 0
+file /usr/bin/xrandr /usr/bin/xrandr 755 0 0
+file /usr/bin/xcmsdb /usr/bin/xcmsdb 755 0 0
+file /usr/bin/xkeystone /usr/bin/xkeystone 755 0 0
+#dir /usr/share 755 0 0
+#dir /usr/share/menu 755 0 0
+#file /usr/share/menu/x11-xserver-utils /usr/share/menu/x11-xserver-utils 644 0 0
+# x11-utils - 7.5+4
+dir /etc 755 0 0
+dir /etc/X11 755 0 0
+dir /etc/X11/app-defaults 755 0 0
+file /etc/X11/app-defaults/XFontSel /etc/X11/app-defaults/XFontSel 644 0 0
+file /etc/X11/app-defaults/Viewres /etc/X11/app-defaults/Viewres 644 0 0
+file /etc/X11/app-defaults/Xmessage-color /etc/X11/app-defaults/Xmessage-color 644 0 0
+file /etc/X11/app-defaults/Viewres-color /etc/X11/app-defaults/Viewres-color 644 0 0
+file /etc/X11/app-defaults/Xmessage /etc/X11/app-defaults/Xmessage 644 0 0
+file /etc/X11/app-defaults/Xfd /etc/X11/app-defaults/Xfd 644 0 0
+file /etc/X11/app-defaults/Editres-color /etc/X11/app-defaults/Editres-color 644 0 0
+file /etc/X11/app-defaults/Editres /etc/X11/app-defaults/Editres 644 0 0
+dir /usr 755 0 0
+dir /usr/bin 755 0 0
+file /usr/bin/luit /usr/bin/luit 755 0 0
+file /usr/bin/xlsatoms /usr/bin/xlsatoms 755 0 0
+file /usr/bin/editres /usr/bin/editres 755 0 0
+file /usr/bin/xwininfo /usr/bin/xwininfo 755 0 0
+file /usr/bin/xlsclients /usr/bin/xlsclients 755 0 0
+file /usr/bin/xdriinfo /usr/bin/xdriinfo 755 0 0
+file /usr/bin/xvinfo /usr/bin/xvinfo 755 0 0
+file /usr/bin/xdpyinfo /usr/bin/xdpyinfo 755 0 0
+file /usr/bin/xlsfonts /usr/bin/xlsfonts 755 0 0
+file /usr/bin/listres /usr/bin/listres 755 0 0
+file /usr/bin/xfd /usr/bin/xfd 755 0 0
+file /usr/bin/xmessage /usr/bin/xmessage 755 0 0
+file /usr/bin/xkill /usr/bin/xkill 755 0 0
+file /usr/bin/viewres /usr/bin/viewres 755 0 0
+file /usr/bin/appres /usr/bin/appres 755 0 0
+file /usr/bin/xprop /usr/bin/xprop 755 0 0
+file /usr/bin/xfontsel /usr/bin/xfontsel 755 0 0
+file /usr/bin/xev /usr/bin/xev 755 0 0
+#dir /usr/share 755 0 0
+#dir /usr/share/menu 755 0 0
+#file /usr/share/menu/x11-utils /usr/share/menu/x11-utils 644 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:
