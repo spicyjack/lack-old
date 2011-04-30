@@ -1,0 +1,486 @@
+# name: x11-xkb-utils - 7.5+5
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# x11-xkb-utils - 7.5+5
+dir /usr 755 0 0
+dir /usr/bin 755 0 0
+file /usr/bin/xkbprint /usr/bin/xkbprint 755 0 0
+file /usr/bin/xkbbell /usr/bin/xkbbell 755 0 0
+file /usr/bin/xkbwatch /usr/bin/xkbwatch 755 0 0
+file /usr/bin/xkbcomp /usr/bin/xkbcomp 755 0 0
+file /usr/bin/xkbvleds /usr/bin/xkbvleds 755 0 0
+file /usr/bin/setxkbmap /usr/bin/setxkbmap 755 0 0
+file /usr/bin/xkbevd /usr/bin/xkbevd 755 0 0
+dir /usr/share 755 0 0
+dir /var 755 0 0
+dir /var/lib 755 0 0
+dir /var/lib/xkb 755 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:
+# name: xkb-data - 1.8-2
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# xkb-data - 1.8-2
+dir /etc 755 0 0
+dir /etc/X11 755 0 0
+dir /etc/X11/xkb 755 0 0
+dir /usr 755 0 0
+dir /usr/share 755 0 0
+dir /usr/share/X11 755 0 0
+dir /usr/share/X11/xkb 755 0 0
+dir /usr/share/X11/xkb/compat 755 0 0
+file /usr/share/X11/xkb/compat/accessx /usr/share/X11/xkb/compat/accessx 644 0 0
+file /usr/share/X11/xkb/compat/basic /usr/share/X11/xkb/compat/basic 644 0 0
+file /usr/share/X11/xkb/compat/complete /usr/share/X11/xkb/compat/complete 644 0 0
+file /usr/share/X11/xkb/compat/default /usr/share/X11/xkb/compat/default 644 0 0
+file /usr/share/X11/xkb/compat/iso9995 /usr/share/X11/xkb/compat/iso9995 644 0 0
+file /usr/share/X11/xkb/compat/japan /usr/share/X11/xkb/compat/japan 644 0 0
+file /usr/share/X11/xkb/compat/keypad /usr/share/X11/xkb/compat/keypad 644 0 0
+file /usr/share/X11/xkb/compat/ledcaps /usr/share/X11/xkb/compat/ledcaps 644 0 0
+file /usr/share/X11/xkb/compat/lednum /usr/share/X11/xkb/compat/lednum 644 0 0
+file /usr/share/X11/xkb/compat/ledscroll /usr/share/X11/xkb/compat/ledscroll 644 0 0
+file /usr/share/X11/xkb/compat/level5 /usr/share/X11/xkb/compat/level5 644 0 0
+file /usr/share/X11/xkb/compat/misc /usr/share/X11/xkb/compat/misc 644 0 0
+file /usr/share/X11/xkb/compat/mousekeys /usr/share/X11/xkb/compat/mousekeys 644 0 0
+file /usr/share/X11/xkb/compat/norepeat /usr/share/X11/xkb/compat/norepeat 644 0 0
+file /usr/share/X11/xkb/compat/olpc /usr/share/X11/xkb/compat/olpc 644 0 0
+file /usr/share/X11/xkb/compat/pc /usr/share/X11/xkb/compat/pc 644 0 0
+file /usr/share/X11/xkb/compat/pc98 /usr/share/X11/xkb/compat/pc98 644 0 0
+file /usr/share/X11/xkb/compat/xfree86 /usr/share/X11/xkb/compat/xfree86 644 0 0
+file /usr/share/X11/xkb/compat/xtest /usr/share/X11/xkb/compat/xtest 644 0 0
+file /usr/share/X11/xkb/compat/README /usr/share/X11/xkb/compat/README 644 0 0
+dir /usr/share/X11/xkb/geometry 755 0 0
+dir /usr/share/X11/xkb/geometry/digital_vndr 755 0 0
+file /usr/share/X11/xkb/geometry/digital_vndr/lk /usr/share/X11/xkb/geometry/digital_vndr/lk 644 0 0
+file /usr/share/X11/xkb/geometry/digital_vndr/pc /usr/share/X11/xkb/geometry/digital_vndr/pc 644 0 0
+file /usr/share/X11/xkb/geometry/digital_vndr/unix /usr/share/X11/xkb/geometry/digital_vndr/unix 644 0 0
+dir /usr/share/X11/xkb/geometry/sgi_vndr 755 0 0
+file /usr/share/X11/xkb/geometry/sgi_vndr/indigo /usr/share/X11/xkb/geometry/sgi_vndr/indigo 644 0 0
+file /usr/share/X11/xkb/geometry/sgi_vndr/indy /usr/share/X11/xkb/geometry/sgi_vndr/indy 644 0 0
+file /usr/share/X11/xkb/geometry/sgi_vndr/O2 /usr/share/X11/xkb/geometry/sgi_vndr/O2 644 0 0
+file /usr/share/X11/xkb/geometry/amiga /usr/share/X11/xkb/geometry/amiga 644 0 0
+file /usr/share/X11/xkb/geometry/ataritt /usr/share/X11/xkb/geometry/ataritt 644 0 0
+file /usr/share/X11/xkb/geometry/chicony /usr/share/X11/xkb/geometry/chicony 644 0 0
+file /usr/share/X11/xkb/geometry/dell /usr/share/X11/xkb/geometry/dell 644 0 0
+file /usr/share/X11/xkb/geometry/everex /usr/share/X11/xkb/geometry/everex 644 0 0
+file /usr/share/X11/xkb/geometry/fujitsu /usr/share/X11/xkb/geometry/fujitsu 644 0 0
+file /usr/share/X11/xkb/geometry/hhk /usr/share/X11/xkb/geometry/hhk 644 0 0
+file /usr/share/X11/xkb/geometry/hp /usr/share/X11/xkb/geometry/hp 644 0 0
+file /usr/share/X11/xkb/geometry/keytronic /usr/share/X11/xkb/geometry/keytronic 644 0 0
+file /usr/share/X11/xkb/geometry/kinesis /usr/share/X11/xkb/geometry/kinesis 644 0 0
+file /usr/share/X11/xkb/geometry/macintosh /usr/share/X11/xkb/geometry/macintosh 644 0 0
+file /usr/share/X11/xkb/geometry/microsoft /usr/share/X11/xkb/geometry/microsoft 644 0 0
+file /usr/share/X11/xkb/geometry/nec /usr/share/X11/xkb/geometry/nec 644 0 0
+file /usr/share/X11/xkb/geometry/nokia /usr/share/X11/xkb/geometry/nokia 644 0 0
+file /usr/share/X11/xkb/geometry/northgate /usr/share/X11/xkb/geometry/northgate 644 0 0
+file /usr/share/X11/xkb/geometry/pc /usr/share/X11/xkb/geometry/pc 644 0 0
+file /usr/share/X11/xkb/geometry/sony /usr/share/X11/xkb/geometry/sony 644 0 0
+file /usr/share/X11/xkb/geometry/thinkpad /usr/share/X11/xkb/geometry/thinkpad 644 0 0
+file /usr/share/X11/xkb/geometry/sun /usr/share/X11/xkb/geometry/sun 644 0 0
+file /usr/share/X11/xkb/geometry/typematrix /usr/share/X11/xkb/geometry/typematrix 644 0 0
+file /usr/share/X11/xkb/geometry/winbook /usr/share/X11/xkb/geometry/winbook 644 0 0
+file /usr/share/X11/xkb/geometry/README /usr/share/X11/xkb/geometry/README 644 0 0
+dir /usr/share/X11/xkb/keycodes 755 0 0
+dir /usr/share/X11/xkb/keycodes/digital_vndr 755 0 0
+file /usr/share/X11/xkb/keycodes/digital_vndr/lk /usr/share/X11/xkb/keycodes/digital_vndr/lk 644 0 0
+file /usr/share/X11/xkb/keycodes/digital_vndr/pc /usr/share/X11/xkb/keycodes/digital_vndr/pc 644 0 0
+dir /usr/share/X11/xkb/keycodes/sgi_vndr 755 0 0
+file /usr/share/X11/xkb/keycodes/sgi_vndr/indigo /usr/share/X11/xkb/keycodes/sgi_vndr/indigo 644 0 0
+file /usr/share/X11/xkb/keycodes/sgi_vndr/indy /usr/share/X11/xkb/keycodes/sgi_vndr/indy 644 0 0
+file /usr/share/X11/xkb/keycodes/sgi_vndr/iris /usr/share/X11/xkb/keycodes/sgi_vndr/iris 644 0 0
+file /usr/share/X11/xkb/keycodes/aliases /usr/share/X11/xkb/keycodes/aliases 644 0 0
+file /usr/share/X11/xkb/keycodes/amiga /usr/share/X11/xkb/keycodes/amiga 644 0 0
+file /usr/share/X11/xkb/keycodes/ataritt /usr/share/X11/xkb/keycodes/ataritt 644 0 0
+file /usr/share/X11/xkb/keycodes/evdev /usr/share/X11/xkb/keycodes/evdev 644 0 0
+file /usr/share/X11/xkb/keycodes/fujitsu /usr/share/X11/xkb/keycodes/fujitsu 644 0 0
+file /usr/share/X11/xkb/keycodes/hp /usr/share/X11/xkb/keycodes/hp 644 0 0
+file /usr/share/X11/xkb/keycodes/ibm /usr/share/X11/xkb/keycodes/ibm 644 0 0
+file /usr/share/X11/xkb/keycodes/macintosh /usr/share/X11/xkb/keycodes/macintosh 644 0 0
+file /usr/share/X11/xkb/keycodes/sony /usr/share/X11/xkb/keycodes/sony 644 0 0
+file /usr/share/X11/xkb/keycodes/sun /usr/share/X11/xkb/keycodes/sun 644 0 0
+file /usr/share/X11/xkb/keycodes/xfree86 /usr/share/X11/xkb/keycodes/xfree86 644 0 0
+file /usr/share/X11/xkb/keycodes/xfree98 /usr/share/X11/xkb/keycodes/xfree98 644 0 0
+file /usr/share/X11/xkb/keycodes/README /usr/share/X11/xkb/keycodes/README 644 0 0
+dir /usr/share/X11/xkb/keymap 755 0 0
+dir /usr/share/X11/xkb/keymap/digital_vndr 755 0 0
+file /usr/share/X11/xkb/keymap/digital_vndr/us /usr/share/X11/xkb/keymap/digital_vndr/us 644 0 0
+dir /usr/share/X11/xkb/keymap/sgi_vndr 755 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/be /usr/share/X11/xkb/keymap/sgi_vndr/be 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/bg /usr/share/X11/xkb/keymap/sgi_vndr/bg 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/ca /usr/share/X11/xkb/keymap/sgi_vndr/ca 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/ch /usr/share/X11/xkb/keymap/sgi_vndr/ch 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/cz /usr/share/X11/xkb/keymap/sgi_vndr/cz 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/de /usr/share/X11/xkb/keymap/sgi_vndr/de 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/dk /usr/share/X11/xkb/keymap/sgi_vndr/dk 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/dvorak /usr/share/X11/xkb/keymap/sgi_vndr/dvorak 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/es /usr/share/X11/xkb/keymap/sgi_vndr/es 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/fi /usr/share/X11/xkb/keymap/sgi_vndr/fi 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/fr /usr/share/X11/xkb/keymap/sgi_vndr/fr 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/gb /usr/share/X11/xkb/keymap/sgi_vndr/gb 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/hu /usr/share/X11/xkb/keymap/sgi_vndr/hu 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/it /usr/share/X11/xkb/keymap/sgi_vndr/it 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/jp /usr/share/X11/xkb/keymap/sgi_vndr/jp 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/no /usr/share/X11/xkb/keymap/sgi_vndr/no 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/pl /usr/share/X11/xkb/keymap/sgi_vndr/pl 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/pt /usr/share/X11/xkb/keymap/sgi_vndr/pt 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/ru /usr/share/X11/xkb/keymap/sgi_vndr/ru 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/se /usr/share/X11/xkb/keymap/sgi_vndr/se 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/sk /usr/share/X11/xkb/keymap/sgi_vndr/sk 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/th /usr/share/X11/xkb/keymap/sgi_vndr/th 644 0 0
+file /usr/share/X11/xkb/keymap/sgi_vndr/us /usr/share/X11/xkb/keymap/sgi_vndr/us 644 0 0
+dir /usr/share/X11/xkb/keymap/sun_vndr 755 0 0
+file /usr/share/X11/xkb/keymap/sun_vndr/all /usr/share/X11/xkb/keymap/sun_vndr/all 644 0 0
+file /usr/share/X11/xkb/keymap/sun_vndr/de /usr/share/X11/xkb/keymap/sun_vndr/de 644 0 0
+file /usr/share/X11/xkb/keymap/sun_vndr/es /usr/share/X11/xkb/keymap/sun_vndr/es 644 0 0
+file /usr/share/X11/xkb/keymap/sun_vndr/fi /usr/share/X11/xkb/keymap/sun_vndr/fi 644 0 0
+file /usr/share/X11/xkb/keymap/sun_vndr/fr /usr/share/X11/xkb/keymap/sun_vndr/fr 644 0 0
+file /usr/share/X11/xkb/keymap/sun_vndr/no /usr/share/X11/xkb/keymap/sun_vndr/no 644 0 0
+file /usr/share/X11/xkb/keymap/sun_vndr/pl /usr/share/X11/xkb/keymap/sun_vndr/pl 644 0 0
+file /usr/share/X11/xkb/keymap/sun_vndr/ru /usr/share/X11/xkb/keymap/sun_vndr/ru 644 0 0
+file /usr/share/X11/xkb/keymap/sun_vndr/se /usr/share/X11/xkb/keymap/sun_vndr/se 644 0 0
+file /usr/share/X11/xkb/keymap/sun_vndr/uk /usr/share/X11/xkb/keymap/sun_vndr/uk 644 0 0
+file /usr/share/X11/xkb/keymap/sun_vndr/us /usr/share/X11/xkb/keymap/sun_vndr/us 644 0 0
+file /usr/share/X11/xkb/keymap/amiga /usr/share/X11/xkb/keymap/amiga 644 0 0
+file /usr/share/X11/xkb/keymap/ataritt /usr/share/X11/xkb/keymap/ataritt 644 0 0
+file /usr/share/X11/xkb/keymap/macintosh /usr/share/X11/xkb/keymap/macintosh 644 0 0
+file /usr/share/X11/xkb/keymap/sony /usr/share/X11/xkb/keymap/sony 644 0 0
+file /usr/share/X11/xkb/keymap/xfree86 /usr/share/X11/xkb/keymap/xfree86 644 0 0
+file /usr/share/X11/xkb/keymap/xfree98 /usr/share/X11/xkb/keymap/xfree98 644 0 0
+file /usr/share/X11/xkb/keymap/README /usr/share/X11/xkb/keymap/README 644 0 0
+file /usr/share/X11/xkb/keymap.dir /usr/share/X11/xkb/keymap.dir 644 0 0
+dir /usr/share/X11/xkb/rules 755 0 0
+file /usr/share/X11/xkb/rules/base /usr/share/X11/xkb/rules/base 644 0 0
+file /usr/share/X11/xkb/rules/evdev /usr/share/X11/xkb/rules/evdev 644 0 0
+file /usr/share/X11/xkb/rules/xfree98 /usr/share/X11/xkb/rules/xfree98 644 0 0
+file /usr/share/X11/xkb/rules/base.lst /usr/share/X11/xkb/rules/base.lst 644 0 0
+file /usr/share/X11/xkb/rules/evdev.lst /usr/share/X11/xkb/rules/evdev.lst 644 0 0
+file /usr/share/X11/xkb/rules/xkb.dtd /usr/share/X11/xkb/rules/xkb.dtd 644 0 0
+file /usr/share/X11/xkb/rules/README /usr/share/X11/xkb/rules/README 644 0 0
+file /usr/share/X11/xkb/rules/base.xml /usr/share/X11/xkb/rules/base.xml 644 0 0
+file /usr/share/X11/xkb/rules/evdev.xml /usr/share/X11/xkb/rules/evdev.xml 644 0 0
+file /usr/share/X11/xkb/rules/base.extras.xml /usr/share/X11/xkb/rules/base.extras.xml 644 0 0
+file /usr/share/X11/xkb/rules/evdev.extras.xml /usr/share/X11/xkb/rules/evdev.extras.xml 644 0 0
+dir /usr/share/X11/xkb/semantics 755 0 0
+file /usr/share/X11/xkb/semantics/basic /usr/share/X11/xkb/semantics/basic 644 0 0
+file /usr/share/X11/xkb/semantics/complete /usr/share/X11/xkb/semantics/complete 644 0 0
+file /usr/share/X11/xkb/semantics/default /usr/share/X11/xkb/semantics/default 644 0 0
+file /usr/share/X11/xkb/semantics/xtest /usr/share/X11/xkb/semantics/xtest 644 0 0
+dir /usr/share/X11/xkb/symbols 755 0 0
+dir /usr/share/X11/xkb/symbols/digital_vndr 755 0 0
+file /usr/share/X11/xkb/symbols/digital_vndr/lk /usr/share/X11/xkb/symbols/digital_vndr/lk 644 0 0
+file /usr/share/X11/xkb/symbols/digital_vndr/pc /usr/share/X11/xkb/symbols/digital_vndr/pc 644 0 0
+file /usr/share/X11/xkb/symbols/digital_vndr/us /usr/share/X11/xkb/symbols/digital_vndr/us 644 0 0
+file /usr/share/X11/xkb/symbols/digital_vndr/vt /usr/share/X11/xkb/symbols/digital_vndr/vt 644 0 0
+dir /usr/share/X11/xkb/symbols/fujitsu_vndr 755 0 0
+file /usr/share/X11/xkb/symbols/fujitsu_vndr/jp /usr/share/X11/xkb/symbols/fujitsu_vndr/jp 644 0 0
+file /usr/share/X11/xkb/symbols/fujitsu_vndr/us /usr/share/X11/xkb/symbols/fujitsu_vndr/us 644 0 0
+dir /usr/share/X11/xkb/symbols/hp_vndr 755 0 0
+file /usr/share/X11/xkb/symbols/hp_vndr/us /usr/share/X11/xkb/symbols/hp_vndr/us 644 0 0
+dir /usr/share/X11/xkb/symbols/macintosh_vndr 755 0 0
+file /usr/share/X11/xkb/symbols/macintosh_vndr/apple /usr/share/X11/xkb/symbols/macintosh_vndr/apple 644 0 0
+file /usr/share/X11/xkb/symbols/macintosh_vndr/ch /usr/share/X11/xkb/symbols/macintosh_vndr/ch 644 0 0
+file /usr/share/X11/xkb/symbols/macintosh_vndr/de /usr/share/X11/xkb/symbols/macintosh_vndr/de 644 0 0
+file /usr/share/X11/xkb/symbols/macintosh_vndr/dk /usr/share/X11/xkb/symbols/macintosh_vndr/dk 644 0 0
+file /usr/share/X11/xkb/symbols/macintosh_vndr/fi /usr/share/X11/xkb/symbols/macintosh_vndr/fi 644 0 0
+file /usr/share/X11/xkb/symbols/macintosh_vndr/fr /usr/share/X11/xkb/symbols/macintosh_vndr/fr 644 0 0
+file /usr/share/X11/xkb/symbols/macintosh_vndr/gb /usr/share/X11/xkb/symbols/macintosh_vndr/gb 644 0 0
+file /usr/share/X11/xkb/symbols/macintosh_vndr/is /usr/share/X11/xkb/symbols/macintosh_vndr/is 644 0 0
+file /usr/share/X11/xkb/symbols/macintosh_vndr/it /usr/share/X11/xkb/symbols/macintosh_vndr/it 644 0 0
+file /usr/share/X11/xkb/symbols/macintosh_vndr/latam /usr/share/X11/xkb/symbols/macintosh_vndr/latam 644 0 0
+file /usr/share/X11/xkb/symbols/macintosh_vndr/nl /usr/share/X11/xkb/symbols/macintosh_vndr/nl 644 0 0
+file /usr/share/X11/xkb/symbols/macintosh_vndr/no /usr/share/X11/xkb/symbols/macintosh_vndr/no 644 0 0
+file /usr/share/X11/xkb/symbols/macintosh_vndr/pt /usr/share/X11/xkb/symbols/macintosh_vndr/pt 644 0 0
+file /usr/share/X11/xkb/symbols/macintosh_vndr/se /usr/share/X11/xkb/symbols/macintosh_vndr/se 644 0 0
+file /usr/share/X11/xkb/symbols/macintosh_vndr/us /usr/share/X11/xkb/symbols/macintosh_vndr/us 644 0 0
+dir /usr/share/X11/xkb/symbols/nec_vndr 755 0 0
+file /usr/share/X11/xkb/symbols/nec_vndr/jp /usr/share/X11/xkb/symbols/nec_vndr/jp 644 0 0
+dir /usr/share/X11/xkb/symbols/nokia_vndr 755 0 0
+file /usr/share/X11/xkb/symbols/nokia_vndr/rx-44 /usr/share/X11/xkb/symbols/nokia_vndr/rx-44 644 0 0
+file /usr/share/X11/xkb/symbols/nokia_vndr/rx-51 /usr/share/X11/xkb/symbols/nokia_vndr/rx-51 644 0 0
+file /usr/share/X11/xkb/symbols/nokia_vndr/su-8w /usr/share/X11/xkb/symbols/nokia_vndr/su-8w 644 0 0
+dir /usr/share/X11/xkb/symbols/sgi_vndr 755 0 0
+file /usr/share/X11/xkb/symbols/sgi_vndr/jp /usr/share/X11/xkb/symbols/sgi_vndr/jp 644 0 0
+dir /usr/share/X11/xkb/symbols/sony_vndr 755 0 0
+file /usr/share/X11/xkb/symbols/sony_vndr/us /usr/share/X11/xkb/symbols/sony_vndr/us 644 0 0
+dir /usr/share/X11/xkb/symbols/sun_vndr 755 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/cs /usr/share/X11/xkb/symbols/sun_vndr/cs 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/cz /usr/share/X11/xkb/symbols/sun_vndr/cz 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/de /usr/share/X11/xkb/symbols/sun_vndr/de 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/dk /usr/share/X11/xkb/symbols/sun_vndr/dk 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/es /usr/share/X11/xkb/symbols/sun_vndr/es 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/fi /usr/share/X11/xkb/symbols/sun_vndr/fi 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/fr /usr/share/X11/xkb/symbols/sun_vndr/fr 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/gb /usr/share/X11/xkb/symbols/sun_vndr/gb 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/gr /usr/share/X11/xkb/symbols/sun_vndr/gr 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/hu /usr/share/X11/xkb/symbols/sun_vndr/hu 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/it /usr/share/X11/xkb/symbols/sun_vndr/it 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/jp /usr/share/X11/xkb/symbols/sun_vndr/jp 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/ko /usr/share/X11/xkb/symbols/sun_vndr/ko 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/lt /usr/share/X11/xkb/symbols/sun_vndr/lt 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/lv /usr/share/X11/xkb/symbols/sun_vndr/lv 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/nl /usr/share/X11/xkb/symbols/sun_vndr/nl 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/no /usr/share/X11/xkb/symbols/sun_vndr/no 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/pl /usr/share/X11/xkb/symbols/sun_vndr/pl 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/pt /usr/share/X11/xkb/symbols/sun_vndr/pt 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/ru /usr/share/X11/xkb/symbols/sun_vndr/ru 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/se /usr/share/X11/xkb/symbols/sun_vndr/se 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/solaris /usr/share/X11/xkb/symbols/sun_vndr/solaris 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/sw /usr/share/X11/xkb/symbols/sun_vndr/sw 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/tr /usr/share/X11/xkb/symbols/sun_vndr/tr 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/tuv /usr/share/X11/xkb/symbols/sun_vndr/tuv 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/tw /usr/share/X11/xkb/symbols/sun_vndr/tw 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/us /usr/share/X11/xkb/symbols/sun_vndr/us 644 0 0
+file /usr/share/X11/xkb/symbols/sun_vndr/usb /usr/share/X11/xkb/symbols/sun_vndr/usb 644 0 0
+dir /usr/share/X11/xkb/symbols/xfree68_vndr 755 0 0
+file /usr/share/X11/xkb/symbols/xfree68_vndr/amiga /usr/share/X11/xkb/symbols/xfree68_vndr/amiga 644 0 0
+file /usr/share/X11/xkb/symbols/xfree68_vndr/ataritt /usr/share/X11/xkb/symbols/xfree68_vndr/ataritt 644 0 0
+dir /usr/share/X11/xkb/symbols/extras 755 0 0
+file /usr/share/X11/xkb/symbols/extras/apl /usr/share/X11/xkb/symbols/extras/apl 644 0 0
+file /usr/share/X11/xkb/symbols/extras/rs /usr/share/X11/xkb/symbols/extras/rs 644 0 0
+file /usr/share/X11/xkb/symbols/extras/us /usr/share/X11/xkb/symbols/extras/us 644 0 0
+file /usr/share/X11/xkb/symbols/ad /usr/share/X11/xkb/symbols/ad 644 0 0
+file /usr/share/X11/xkb/symbols/af /usr/share/X11/xkb/symbols/af 644 0 0
+file /usr/share/X11/xkb/symbols/al /usr/share/X11/xkb/symbols/al 644 0 0
+file /usr/share/X11/xkb/symbols/am /usr/share/X11/xkb/symbols/am 644 0 0
+file /usr/share/X11/xkb/symbols/ara /usr/share/X11/xkb/symbols/ara 644 0 0
+file /usr/share/X11/xkb/symbols/az /usr/share/X11/xkb/symbols/az 644 0 0
+file /usr/share/X11/xkb/symbols/be /usr/share/X11/xkb/symbols/be 644 0 0
+file /usr/share/X11/xkb/symbols/bd /usr/share/X11/xkb/symbols/bd 644 0 0
+file /usr/share/X11/xkb/symbols/bg /usr/share/X11/xkb/symbols/bg 644 0 0
+file /usr/share/X11/xkb/symbols/br /usr/share/X11/xkb/symbols/br 644 0 0
+file /usr/share/X11/xkb/symbols/ba /usr/share/X11/xkb/symbols/ba 644 0 0
+file /usr/share/X11/xkb/symbols/bt /usr/share/X11/xkb/symbols/bt 644 0 0
+file /usr/share/X11/xkb/symbols/by /usr/share/X11/xkb/symbols/by 644 0 0
+file /usr/share/X11/xkb/symbols/brai /usr/share/X11/xkb/symbols/brai 644 0 0
+file /usr/share/X11/xkb/symbols/ca /usr/share/X11/xkb/symbols/ca 644 0 0
+file /usr/share/X11/xkb/symbols/cd /usr/share/X11/xkb/symbols/cd 644 0 0
+file /usr/share/X11/xkb/symbols/ch /usr/share/X11/xkb/symbols/ch 644 0 0
+file /usr/share/X11/xkb/symbols/cn /usr/share/X11/xkb/symbols/cn 644 0 0
+file /usr/share/X11/xkb/symbols/cz /usr/share/X11/xkb/symbols/cz 644 0 0
+file /usr/share/X11/xkb/symbols/de /usr/share/X11/xkb/symbols/de 644 0 0
+file /usr/share/X11/xkb/symbols/dk /usr/share/X11/xkb/symbols/dk 644 0 0
+file /usr/share/X11/xkb/symbols/ee /usr/share/X11/xkb/symbols/ee 644 0 0
+file /usr/share/X11/xkb/symbols/es /usr/share/X11/xkb/symbols/es 644 0 0
+file /usr/share/X11/xkb/symbols/et /usr/share/X11/xkb/symbols/et 644 0 0
+file /usr/share/X11/xkb/symbols/epo /usr/share/X11/xkb/symbols/epo 644 0 0
+file /usr/share/X11/xkb/symbols/fi /usr/share/X11/xkb/symbols/fi 644 0 0
+file /usr/share/X11/xkb/symbols/fo /usr/share/X11/xkb/symbols/fo 644 0 0
+file /usr/share/X11/xkb/symbols/fr /usr/share/X11/xkb/symbols/fr 644 0 0
+file /usr/share/X11/xkb/symbols/gb /usr/share/X11/xkb/symbols/gb 644 0 0
+file /usr/share/X11/xkb/symbols/ge /usr/share/X11/xkb/symbols/ge 644 0 0
+file /usr/share/X11/xkb/symbols/gh /usr/share/X11/xkb/symbols/gh 644 0 0
+file /usr/share/X11/xkb/symbols/gn /usr/share/X11/xkb/symbols/gn 644 0 0
+file /usr/share/X11/xkb/symbols/gr /usr/share/X11/xkb/symbols/gr 644 0 0
+file /usr/share/X11/xkb/symbols/hr /usr/share/X11/xkb/symbols/hr 644 0 0
+file /usr/share/X11/xkb/symbols/hu /usr/share/X11/xkb/symbols/hu 644 0 0
+file /usr/share/X11/xkb/symbols/ie /usr/share/X11/xkb/symbols/ie 644 0 0
+file /usr/share/X11/xkb/symbols/il /usr/share/X11/xkb/symbols/il 644 0 0
+file /usr/share/X11/xkb/symbols/in /usr/share/X11/xkb/symbols/in 644 0 0
+file /usr/share/X11/xkb/symbols/iq /usr/share/X11/xkb/symbols/iq 644 0 0
+file /usr/share/X11/xkb/symbols/ir /usr/share/X11/xkb/symbols/ir 644 0 0
+file /usr/share/X11/xkb/symbols/is /usr/share/X11/xkb/symbols/is 644 0 0
+file /usr/share/X11/xkb/symbols/it /usr/share/X11/xkb/symbols/it 644 0 0
+file /usr/share/X11/xkb/symbols/jp /usr/share/X11/xkb/symbols/jp 644 0 0
+file /usr/share/X11/xkb/symbols/kg /usr/share/X11/xkb/symbols/kg 644 0 0
+file /usr/share/X11/xkb/symbols/kh /usr/share/X11/xkb/symbols/kh 644 0 0
+file /usr/share/X11/xkb/symbols/kr /usr/share/X11/xkb/symbols/kr 644 0 0
+file /usr/share/X11/xkb/symbols/kz /usr/share/X11/xkb/symbols/kz 644 0 0
+file /usr/share/X11/xkb/symbols/la /usr/share/X11/xkb/symbols/la 644 0 0
+file /usr/share/X11/xkb/symbols/latam /usr/share/X11/xkb/symbols/latam 644 0 0
+file /usr/share/X11/xkb/symbols/latin /usr/share/X11/xkb/symbols/latin 644 0 0
+file /usr/share/X11/xkb/symbols/lk /usr/share/X11/xkb/symbols/lk 644 0 0
+file /usr/share/X11/xkb/symbols/lt /usr/share/X11/xkb/symbols/lt 644 0 0
+file /usr/share/X11/xkb/symbols/lv /usr/share/X11/xkb/symbols/lv 644 0 0
+file /usr/share/X11/xkb/symbols/ma /usr/share/X11/xkb/symbols/ma 644 0 0
+file /usr/share/X11/xkb/symbols/mao /usr/share/X11/xkb/symbols/mao 644 0 0
+file /usr/share/X11/xkb/symbols/me /usr/share/X11/xkb/symbols/me 644 0 0
+file /usr/share/X11/xkb/symbols/mk /usr/share/X11/xkb/symbols/mk 644 0 0
+file /usr/share/X11/xkb/symbols/mm /usr/share/X11/xkb/symbols/mm 644 0 0
+file /usr/share/X11/xkb/symbols/mn /usr/share/X11/xkb/symbols/mn 644 0 0
+file /usr/share/X11/xkb/symbols/mt /usr/share/X11/xkb/symbols/mt 644 0 0
+file /usr/share/X11/xkb/symbols/mv /usr/share/X11/xkb/symbols/mv 644 0 0
+file /usr/share/X11/xkb/symbols/ng /usr/share/X11/xkb/symbols/ng 644 0 0
+file /usr/share/X11/xkb/symbols/nl /usr/share/X11/xkb/symbols/nl 644 0 0
+file /usr/share/X11/xkb/symbols/no /usr/share/X11/xkb/symbols/no 644 0 0
+file /usr/share/X11/xkb/symbols/np /usr/share/X11/xkb/symbols/np 644 0 0
+file /usr/share/X11/xkb/symbols/pc /usr/share/X11/xkb/symbols/pc 644 0 0
+file /usr/share/X11/xkb/symbols/pk /usr/share/X11/xkb/symbols/pk 644 0 0
+file /usr/share/X11/xkb/symbols/pl /usr/share/X11/xkb/symbols/pl 644 0 0
+file /usr/share/X11/xkb/symbols/pt /usr/share/X11/xkb/symbols/pt 644 0 0
+file /usr/share/X11/xkb/symbols/ro /usr/share/X11/xkb/symbols/ro 644 0 0
+file /usr/share/X11/xkb/symbols/rs /usr/share/X11/xkb/symbols/rs 644 0 0
+file /usr/share/X11/xkb/symbols/ru /usr/share/X11/xkb/symbols/ru 644 0 0
+file /usr/share/X11/xkb/symbols/se /usr/share/X11/xkb/symbols/se 644 0 0
+file /usr/share/X11/xkb/symbols/si /usr/share/X11/xkb/symbols/si 644 0 0
+file /usr/share/X11/xkb/symbols/sk /usr/share/X11/xkb/symbols/sk 644 0 0
+file /usr/share/X11/xkb/symbols/sn /usr/share/X11/xkb/symbols/sn 644 0 0
+file /usr/share/X11/xkb/symbols/sy /usr/share/X11/xkb/symbols/sy 644 0 0
+file /usr/share/X11/xkb/symbols/th /usr/share/X11/xkb/symbols/th 644 0 0
+file /usr/share/X11/xkb/symbols/terminate /usr/share/X11/xkb/symbols/terminate 644 0 0
+file /usr/share/X11/xkb/symbols/tj /usr/share/X11/xkb/symbols/tj 644 0 0
+file /usr/share/X11/xkb/symbols/tm /usr/share/X11/xkb/symbols/tm 644 0 0
+file /usr/share/X11/xkb/symbols/tr /usr/share/X11/xkb/symbols/tr 644 0 0
+file /usr/share/X11/xkb/symbols/ua /usr/share/X11/xkb/symbols/ua 644 0 0
+file /usr/share/X11/xkb/symbols/us /usr/share/X11/xkb/symbols/us 644 0 0
+file /usr/share/X11/xkb/symbols/uz /usr/share/X11/xkb/symbols/uz 644 0 0
+file /usr/share/X11/xkb/symbols/vn /usr/share/X11/xkb/symbols/vn 644 0 0
+file /usr/share/X11/xkb/symbols/za /usr/share/X11/xkb/symbols/za 644 0 0
+file /usr/share/X11/xkb/symbols/altwin /usr/share/X11/xkb/symbols/altwin 644 0 0
+file /usr/share/X11/xkb/symbols/capslock /usr/share/X11/xkb/symbols/capslock 644 0 0
+file /usr/share/X11/xkb/symbols/compose /usr/share/X11/xkb/symbols/compose 644 0 0
+file /usr/share/X11/xkb/symbols/ctrl /usr/share/X11/xkb/symbols/ctrl 644 0 0
+file /usr/share/X11/xkb/symbols/eurosign /usr/share/X11/xkb/symbols/eurosign 644 0 0
+file /usr/share/X11/xkb/symbols/group /usr/share/X11/xkb/symbols/group 644 0 0
+file /usr/share/X11/xkb/symbols/inet /usr/share/X11/xkb/symbols/inet 644 0 0
+file /usr/share/X11/xkb/symbols/keypad /usr/share/X11/xkb/symbols/keypad 644 0 0
+file /usr/share/X11/xkb/symbols/kpdl /usr/share/X11/xkb/symbols/kpdl 644 0 0
+file /usr/share/X11/xkb/symbols/level3 /usr/share/X11/xkb/symbols/level3 644 0 0
+file /usr/share/X11/xkb/symbols/level5 /usr/share/X11/xkb/symbols/level5 644 0 0
+file /usr/share/X11/xkb/symbols/nbsp /usr/share/X11/xkb/symbols/nbsp 644 0 0
+file /usr/share/X11/xkb/symbols/olpc /usr/share/X11/xkb/symbols/olpc 644 0 0
+file /usr/share/X11/xkb/symbols/shift /usr/share/X11/xkb/symbols/shift 644 0 0
+file /usr/share/X11/xkb/symbols/srvr_ctrl /usr/share/X11/xkb/symbols/srvr_ctrl 644 0 0
+file /usr/share/X11/xkb/symbols/typo /usr/share/X11/xkb/symbols/typo 644 0 0
+file /usr/share/X11/xkb/symbols.dir /usr/share/X11/xkb/symbols.dir 644 0 0
+dir /usr/share/X11/xkb/types 755 0 0
+file /usr/share/X11/xkb/types/basic /usr/share/X11/xkb/types/basic 644 0 0
+file /usr/share/X11/xkb/types/cancel /usr/share/X11/xkb/types/cancel 644 0 0
+file /usr/share/X11/xkb/types/caps /usr/share/X11/xkb/types/caps 644 0 0
+file /usr/share/X11/xkb/types/complete /usr/share/X11/xkb/types/complete 644 0 0
+file /usr/share/X11/xkb/types/default /usr/share/X11/xkb/types/default 644 0 0
+file /usr/share/X11/xkb/types/extra /usr/share/X11/xkb/types/extra 644 0 0
+file /usr/share/X11/xkb/types/iso9995 /usr/share/X11/xkb/types/iso9995 644 0 0
+file /usr/share/X11/xkb/types/level5 /usr/share/X11/xkb/types/level5 644 0 0
+file /usr/share/X11/xkb/types/mousekeys /usr/share/X11/xkb/types/mousekeys 644 0 0
+file /usr/share/X11/xkb/types/nokia /usr/share/X11/xkb/types/nokia 644 0 0
+file /usr/share/X11/xkb/types/numpad /usr/share/X11/xkb/types/numpad 644 0 0
+file /usr/share/X11/xkb/types/pc /usr/share/X11/xkb/types/pc 644 0 0
+file /usr/share/X11/xkb/types/README /usr/share/X11/xkb/types/README 644 0 0
+dir /usr/share/locale 755 0 0
+dir /usr/share/locale/af 755 0 0
+dir /usr/share/locale/af/LC_MESSAGES 755 0 0
+file /usr/share/locale/af/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/af/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/az 755 0 0
+dir /usr/share/locale/az/LC_MESSAGES 755 0 0
+file /usr/share/locale/az/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/az/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/bg 755 0 0
+dir /usr/share/locale/bg/LC_MESSAGES 755 0 0
+file /usr/share/locale/bg/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/bg/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/ca 755 0 0
+dir /usr/share/locale/ca/LC_MESSAGES 755 0 0
+file /usr/share/locale/ca/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/ca/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/crh 755 0 0
+dir /usr/share/locale/crh/LC_MESSAGES 755 0 0
+file /usr/share/locale/crh/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/crh/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/cs 755 0 0
+dir /usr/share/locale/cs/LC_MESSAGES 755 0 0
+file /usr/share/locale/cs/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/cs/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/da 755 0 0
+dir /usr/share/locale/da/LC_MESSAGES 755 0 0
+file /usr/share/locale/da/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/da/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/de 755 0 0
+dir /usr/share/locale/de/LC_MESSAGES 755 0 0
+file /usr/share/locale/de/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/de/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/el 755 0 0
+dir /usr/share/locale/el/LC_MESSAGES 755 0 0
+file /usr/share/locale/el/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/el/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/en_GB 755 0 0
+dir /usr/share/locale/en_GB/LC_MESSAGES 755 0 0
+file /usr/share/locale/en_GB/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/en_GB/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/eo 755 0 0
+dir /usr/share/locale/eo/LC_MESSAGES 755 0 0
+file /usr/share/locale/eo/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/eo/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/es 755 0 0
+dir /usr/share/locale/es/LC_MESSAGES 755 0 0
+file /usr/share/locale/es/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/es/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/fi 755 0 0
+dir /usr/share/locale/fi/LC_MESSAGES 755 0 0
+file /usr/share/locale/fi/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/fi/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/fr 755 0 0
+dir /usr/share/locale/fr/LC_MESSAGES 755 0 0
+file /usr/share/locale/fr/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/fr/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/hu 755 0 0
+dir /usr/share/locale/hu/LC_MESSAGES 755 0 0
+file /usr/share/locale/hu/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/hu/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/id 755 0 0
+dir /usr/share/locale/id/LC_MESSAGES 755 0 0
+file /usr/share/locale/id/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/id/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/it 755 0 0
+dir /usr/share/locale/it/LC_MESSAGES 755 0 0
+file /usr/share/locale/it/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/it/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/ka 755 0 0
+dir /usr/share/locale/ka/LC_MESSAGES 755 0 0
+file /usr/share/locale/ka/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/ka/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/ko 755 0 0
+dir /usr/share/locale/ko/LC_MESSAGES 755 0 0
+file /usr/share/locale/ko/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/ko/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/ky 755 0 0
+dir /usr/share/locale/ky/LC_MESSAGES 755 0 0
+file /usr/share/locale/ky/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/ky/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/lt 755 0 0
+dir /usr/share/locale/lt/LC_MESSAGES 755 0 0
+file /usr/share/locale/lt/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/lt/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/nb 755 0 0
+dir /usr/share/locale/nb/LC_MESSAGES 755 0 0
+file /usr/share/locale/nb/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/nb/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/nl 755 0 0
+dir /usr/share/locale/nl/LC_MESSAGES 755 0 0
+file /usr/share/locale/nl/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/nl/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/ru 755 0 0
+dir /usr/share/locale/ru/LC_MESSAGES 755 0 0
+file /usr/share/locale/ru/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/ru/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/rw 755 0 0
+dir /usr/share/locale/rw/LC_MESSAGES 755 0 0
+file /usr/share/locale/rw/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/rw/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/sk 755 0 0
+dir /usr/share/locale/sk/LC_MESSAGES 755 0 0
+file /usr/share/locale/sk/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/sk/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/sl 755 0 0
+dir /usr/share/locale/sl/LC_MESSAGES 755 0 0
+file /usr/share/locale/sl/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/sl/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/sq 755 0 0
+dir /usr/share/locale/sq/LC_MESSAGES 755 0 0
+file /usr/share/locale/sq/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/sq/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/sr 755 0 0
+dir /usr/share/locale/sr/LC_MESSAGES 755 0 0
+file /usr/share/locale/sr/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/sr/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/sv 755 0 0
+dir /usr/share/locale/sv/LC_MESSAGES 755 0 0
+file /usr/share/locale/sv/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/sv/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/tr 755 0 0
+dir /usr/share/locale/tr/LC_MESSAGES 755 0 0
+file /usr/share/locale/tr/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/tr/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/uk 755 0 0
+dir /usr/share/locale/uk/LC_MESSAGES 755 0 0
+file /usr/share/locale/uk/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/uk/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/vi 755 0 0
+dir /usr/share/locale/vi/LC_MESSAGES 755 0 0
+file /usr/share/locale/vi/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/vi/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/zh_CN 755 0 0
+dir /usr/share/locale/zh_CN/LC_MESSAGES 755 0 0
+file /usr/share/locale/zh_CN/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/zh_CN/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+dir /usr/share/locale/zh_TW 755 0 0
+dir /usr/share/locale/zh_TW/LC_MESSAGES 755 0 0
+file /usr/share/locale/zh_TW/LC_MESSAGES/xkeyboard-config.mo /usr/share/locale/zh_TW/LC_MESSAGES/xkeyboard-config.mo 644 0 0
+slink /usr/share/X11/xkb/rules/xfree86 /usr/share/X11/xkb/rules/base 777 0 0
+slink /usr/share/X11/xkb/rules/xfree86.lst /usr/share/X11/xkb/rules/base.lst 777 0 0
+slink /usr/share/X11/xkb/rules/xfree86.xml /usr/share/X11/xkb/rules/base.xml 777 0 0
+slink /usr/share/X11/xkb/rules/xorg /usr/share/X11/xkb/rules/base 777 0 0
+slink /usr/share/X11/xkb/rules/xorg.lst /usr/share/X11/xkb/rules/base.lst 777 0 0
+slink /usr/share/X11/xkb/rules/xorg.xml /usr/share/X11/xkb/rules/base.xml 777 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:
