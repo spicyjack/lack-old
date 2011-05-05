@@ -12,6 +12,8 @@
 # x11-common - 1:7.5+8
 dir /etc 755 0 0
 dir /etc/X11 755 0 0
+# symlink back to the X binary
+slink /etc/X11/X /usr/bin/Xorg 755 0 0
 dir /etc/X11/Xsession.d 755 0 0
 file /etc/X11/Xsession.d/99x11-common_start /etc/X11/Xsession.d/99x11-common_start 644 0 0
 file /etc/X11/Xsession.d/40x11-common_xsessionrc /etc/X11/Xsession.d/40x11-common_xsessionrc 644 0 0
