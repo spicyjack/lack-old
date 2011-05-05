@@ -19,6 +19,9 @@
 # - Creating the output squashfs filename is broken for non-dpkg lists of
 # files, as the version number of the package is not available, yet it's
 # encoded into the output filename
+# - add dedup'ing of files/directories by using some kind of cache mechanisim;
+# maybe some kind of dbm client, test to see if a specific line has already
+# been written to a dbm database, and skip outputting the line if it has
 
 # SCRIPT DESIGN
 # Inputs:
@@ -88,6 +91,8 @@ APPEND=0
 OVERWRITE=0
 # don't sort output filelists by default
 SORT_FILELIST=0
+# filelist header has already been output?
+FILELIST_HEADER_FLAG=0
 
 ### FUNCTIONS ###
 
@@ -612,9 +617,13 @@ do
         say "$PKG_CONTENTS"
         # print the recipe header
         if [ $APPEND -eq 0 ]; then
-            dump_filelist_header $CURR_PKG $PKG_VERSION
+            if [ $FILELIST_HEADER_FLAG -eq 0 ]; then
+                dump_filelist_header $CURR_PKG $PKG_VERSION
+                FILELIST_HEADER_FLAG=1
+            else
+                echo "# ${CURR_PKG} - ${PKG_VERSION}"
+            fi 
         fi
-        echo "# ${CURR_PKG} - ${PKG_VERSION}"
 
         # PKG_CONTENTS should be a list of files, directories and/or symlinks
         for LINE in $(echo $PKG_CONTENTS);
@@ -673,9 +682,6 @@ do
             esac
         done # for LINE in $(echo $PKG_CONTENTS);
 
-        # print the vim tag at the bottom so the recipes are formatted nicely
-        # when you edit them
-        echo "# vi: set shiftwidth=4 tabstop=4 paste:"
 
     ### SQUASHFS OUTPUT ###
     elif [ $OUTPUT_OPT == "squashfs" ]; then
@@ -806,6 +812,12 @@ if [ "x$SINGLE_OUTFILE" != "x" ]; then
     #run_mksquashfs $SINGLE_OUTFILE
 fi # if [ "x$SINGLE_OUTFILE" == "x" ]
 
+if [ "x$OUTPUT_OPT" = "xfilelist" ]; then
+    # print the vim tag at the bottom so the recipes are formatted nicely
+    # when you edit them
+    echo "# vi: set shiftwidth=4 tabstop=4 paste:"
+fi
+
 # calculate script execution time, and output pretty statistics
 SCRIPT_END=$(${EPOCH_DATE_CMD})
 SCRIPT_EXECUTION_SECS=$(( ${SCRIPT_END} - ${SCRIPT_START}))
@@ -813,10 +825,10 @@ if [ $SCRIPT_EXECUTION_SECS -gt 60 ]; then
     SCRIPT_EXECUTION_MINS=$(( $SCRIPT_EXECUTION_SECS / 60))
     SCRIPT_EXECUTION_MOD=$(( $SCRIPT_EXECUTION_MINS * 60 ))
     SCRIPT_EXECUTION_SECS=$(( $SCRIPT_EXECUTION_SECS - $SCRIPT_EXECUTION_MOD))
-    warn -n "Total script execution time: ${SCRIPT_EXECUTION_MINS} minutes, "
+    warn -n "- Total script execution time: ${SCRIPT_EXECUTION_MINS} minutes, "
     warn "${SCRIPT_EXECUTION_SECS} seconds"
 else
-    warn "Total script execution time: ${SCRIPT_EXECUTION_SECS} seconds"
+    warn "- Total script execution time: ${SCRIPT_EXECUTION_SECS} seconds"
 fi
 
 # exit with the happy
