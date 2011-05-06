@@ -135,4 +135,51 @@ dir /usr/lib 755 0 0
 file /usr/lib/libXdmcp.so.6.0.0 /usr/lib/libXdmcp.so.6.0.0 644 0 0
 dir /usr/share 755 0 0
 slink /usr/lib/libXdmcp.so.6 /usr/lib/libXdmcp.so.6.0.0 777 0 0
+# libaudit0 - 1.7.13-1+b2
+dir /etc 755 0 0
+file /etc/libaudit.conf /etc/libaudit.conf 644 0 0
+dir /usr 755 0 0
+dir /usr/share 755 0 0
+dir /lib 755 0 0
+file /lib/libauparse.so.0.0.0 /lib/libauparse.so.0.0.0 644 0 0
+file /lib/libaudit.so.0.0.0 /lib/libaudit.so.0.0.0 644 0 0
+slink /lib/libaudit.so.0 /lib/libaudit.so.0.0.0 777 0 0
+slink /lib/libauparse.so.0 /lib/libauparse.so.0.0.0 777 0 0
+# libgcrypt11 - 1.4.5-2
+dir /usr 755 0 0
+dir /usr/share 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libgcrypt.so.11.5.3 /usr/lib/libgcrypt.so.11.5.3 644 0 0
+slink /usr/lib/libgcrypt.so.11 /usr/lib/libgcrypt.so.11.5.3 777 0 0
+# libpciaccess0 - 0.12.0-1
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libpciaccess.so.0.10.8 /usr/lib/libpciaccess.so.0.10.8 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libpciaccess.so.0 /usr/lib/libpciaccess.so.0.10.8 777 0 0
+# libgpg-error0 - 1.6-1
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libgpg-error.so.0.4.0 /usr/lib/libgpg-error.so.0.4.0 644 0 0
+dir /usr/share 755 0 0
+dir /usr/share/locale 755 0 0
+dir /usr/share/locale/ro 755 0 0
+dir /usr/share/locale/ro/LC_MESSAGES 755 0 0
+file /usr/share/locale/ro/LC_MESSAGES/libgpg-error.mo /usr/share/locale/ro/LC_MESSAGES/libgpg-error.mo 644 0 0
+dir /usr/share/locale/pl 755 0 0
+dir /usr/share/locale/pl/LC_MESSAGES 755 0 0
+file /usr/share/locale/pl/LC_MESSAGES/libgpg-error.mo /usr/share/locale/pl/LC_MESSAGES/libgpg-error.mo 644 0 0
+dir /usr/share/locale/sv 755 0 0
+dir /usr/share/locale/sv/LC_MESSAGES 755 0 0
+file /usr/share/locale/sv/LC_MESSAGES/libgpg-error.mo /usr/share/locale/sv/LC_MESSAGES/libgpg-error.mo 644 0 0
+dir /usr/share/locale/de 755 0 0
+dir /usr/share/locale/de/LC_MESSAGES 755 0 0
+file /usr/share/locale/de/LC_MESSAGES/libgpg-error.mo /usr/share/locale/de/LC_MESSAGES/libgpg-error.mo 644 0 0
+dir /usr/share/locale/vi 755 0 0
+dir /usr/share/locale/vi/LC_MESSAGES 755 0 0
+file /usr/share/locale/vi/LC_MESSAGES/libgpg-error.mo /usr/share/locale/vi/LC_MESSAGES/libgpg-error.mo 644 0 0
+dir /usr/share/locale/fr 755 0 0
+dir /usr/share/locale/fr/LC_MESSAGES 755 0 0
+file /usr/share/locale/fr/LC_MESSAGES/libgpg-error.mo /usr/share/locale/fr/LC_MESSAGES/libgpg-error.mo 644 0 0
+slink /usr/lib/libgpg-error.so.0 /usr/lib/libgpg-error.so.0.4.0 777 0 0
 # vi: set shiftwidth=4 tabstop=4 paste:

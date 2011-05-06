@@ -25,6 +25,7 @@ file /etc/passwd :BUILD_BASE:/common/etcfiles/passwd 0644 0 0
 file /etc/shadow :BUILD_BASE:/common/etcfiles/shadow 0640 0 0
 file /etc/sudoers :BUILD_BASE:/common/etcfiles/sudoers 0440 0 0
 file /etc/X11/xorg.conf :PROJECT_DIR:/etcfiles/xorg.conf 644 0 0
+file /etc/X11/Xwrapper.config :BUILD_BASE:/common/etcfiles/Xwrapper.config 600 0 0
 # files sourced from the xlack sub-project directory
 file /etc/inittab :PROJECT_DIR:/etcfiles/inittab 0644 0 0
 file /etc/modules :PROJECT_DIR:/etcfiles/modules 0644 0 0

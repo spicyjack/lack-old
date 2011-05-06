@@ -119,4 +119,10 @@ dir /etc 755 0 0
 dir /etc/pam.d 755 0 0
 file /etc/pam.d/other /etc/pam.d/other 644 0 0
 file /etc/pam.conf /etc/pam.conf 644 0 0
+# name: /etc/pam.d - 
+file /etc/pam.d/common-session /etc/pam.d/common-session 644 0 0
+file /etc/pam.d/common-session-noninteractive /etc/pam.d/common-session-noninteractive 644 0 0
+file /etc/pam.d/common-password /etc/pam.d/common-password 644 0 0
+file /etc/pam.d/common-auth /etc/pam.d/common-auth 644 0 0
+file /etc/pam.d/common-account /etc/pam.d/common-account 644 0 0
 # vi: set shiftwidth=4 tabstop=4 paste:

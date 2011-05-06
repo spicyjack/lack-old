@@ -13,7 +13,10 @@
 dir /usr 755 0 0
 #dir /usr/share 755 0 0
 dir /usr/bin 755 0 0
-file /usr/bin/startx /usr/bin/startx 755 0 0
+# copied to :BUILD_BASE: due to the usage of 'mktemp --tmpdir' needing to be
+# changed so it can run with busybox
+#file /usr/bin/startx /usr/bin/startx 755 0 0
+file /usr/bin/startx :BUILD_BASE:/common/scripts/startx 755 0 0
 file /usr/bin/xinit /usr/bin/xinit 755 0 0
 dir /etc 755 0 0
 dir /etc/X11 755 0 0

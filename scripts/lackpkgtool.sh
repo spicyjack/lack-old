@@ -257,8 +257,9 @@ cat <<EOU
     ${SCRIPTNAME} --directory --listout /tmp/somedirectory > somepackage.txt
 
     # create a filelist, and mangle some of the filenames in the filelist
-    ${SCRIPTNAME} --directory --listout -- /tmp/somedirectory \ 
-        --regex 's!/some/path!/other/path!g' > somepackage.txt
+    ${SCRIPTNAME} --directory --listout --regex 's!/some/path!/other/path!g' \
+        -- /tmp/somedirectory > somepackage.txt
+
 
     ### CREATING SQUASHFS ARCHIVES
     # create individual output squashfs files from installed Debian packages
