@@ -9,6 +9,10 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 #
+# a fake tempfile for the X startup scripts
+dir /bin 0755 0 0
+file /bin/fake-tempfile.sh :BUILD_BASE:/common/scripts/fake-tempfile.sh 755 0 0
+slink /bin/tempfile /bin/fake-tempfile.sh 755 0 0
 # xinit - 1.2.0-2
 dir /usr 755 0 0
 #dir /usr/share 755 0 0
