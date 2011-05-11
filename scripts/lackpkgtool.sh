@@ -91,6 +91,8 @@ APPEND=0
 OVERWRITE=0
 # don't sort output filelists by default
 SORT_FILELIST=0
+# don't sort the list of packages provided as input
+SORT_INPUT=0
 # filelist header has already been output?
 FILELIST_HEADER_FLAG=0
 
@@ -296,8 +298,8 @@ fi # if [ $(readlink /bin/sh | grep -c dash) -gt 0 ]
 TEMP=$(/usr/bin/getopt -o hvepdfb:sqtco:w:xal:u:g:r: \
     --long help,verbose,examples,\
     --long package,directory,filelist,basepath: \
-    --long sort,squashfs,listout,cpio,output:,workdir:,overwrite,append \
-    --long show-excludes,excludes:,skip-excludes \
+    --long sort-output,sort-input,squashfs,listout,cpio,output:,workdir: \
+    --long overwrite,append,show-excludes,excludes:,skip-excludes \
     --long log:,logfile:,uid:,gid:,regex: \
     -n "${SCRIPTNAME}" -- "$@")
 
@@ -335,7 +337,8 @@ while true ; do
                         Multiple directories are separated with a colon ':'
 
     OUTPUT OPTIONS
-    -s|--sort           Sort the output of filelists
+    -s|--sort-output    Sort the output of filelists
+    --sort-input        Sort the input package list
     -q|--squashfs       Output squashfs package(s)
     -t|--listout        Output filelist(s) suitable for gen_init_cpio
     -c|--cpio           Create a CPIO file (via gen_init_cpio)
@@ -394,8 +397,12 @@ EOF
             ;;
 
         ### OUTPUT OPTIONS ###
-        -s|--sort) # sort output filelists
+        -s|--sort|--sort-output) # sort output filelists
             SORT_FILELIST=1
+            shift 1
+            ;;
+        --sort-input) # sort output filelists
+            SORT_INPUT=1
             shift 1
             ;;
         -q|--squashfs) # make squashfs file(s)
@@ -495,7 +502,13 @@ if [ $ALL_ROOT -eq 1 ]; then
 fi # if [ $ALL_ROOT -eq 1 ]
 
 # loop across the arguments listed after the double-dashes '--'
-for CURR_PKG in $@;
+if [ $SORT_INPUT -eq 1 ]; then
+    PACKAGE_LIST=$(echo $@ | sort)
+else
+    PACKAGE_LIST=$(echo $@)
+fi
+
+for CURR_PKG in $(echo ${PACKAGE_LIST});
 do
     # depending on what the input type will be is what actions we will take
     case "$INPUT_OPT" in
