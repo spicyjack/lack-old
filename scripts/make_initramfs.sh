@@ -25,19 +25,8 @@
 # files and list the dependencies for each file in order to build a master list
 # of dependencies
 
-# external programs used
-TRUE=$(which true)
-GETOPT=$(which getopt)
-MV=$(which mv)
-CAT=$(which cat)
-RM=$(which rm)
-MKTEMP=$(which mktemp)
-GZIP=$(which gzip)
-SED=$(which sed)
-TOUCH=$(which touch)
-DATE=$(which date)
-RFC_2822_DATE=$(${DATE} --rfc-2822)
-
+# minimum config version required to work with this script
+INITRAMFS_CFG_REQUIRED_VERSION=2
 # the name of this script
 SCRIPTNAME=$(basename $0)
 # some defaults
@@ -54,6 +43,19 @@ PROJECT_LIST="project-filelist.txt"
 # default working directory
 LACK_WORK_DIR="/dev/shm"
 
+# external programs used
+TRUE=$(which true)
+GETOPT=$(which getopt)
+MV=$(which mv)
+CAT=$(which cat)
+RM=$(which rm)
+MKTEMP=$(which mktemp)
+GZIP=$(which gzip)
+SED=$(which sed)
+TOUCH=$(which touch)
+DATE=$(which date)
+RFC_2822_DATE=$(${DATE} --rfc-2822)
+
 # helper functions
 
 # set the script parameters from initramfs.cfg or a user-specified file
@@ -67,6 +69,7 @@ function set_vars()
         echo "Checked ${PROJECT_DIR}"
         exit 1
     fi
+
 
     # verify a project name was used; we need one to know which initramfs
     # package file to go get
@@ -82,6 +85,22 @@ function set_vars()
     else
         source $PROJECT_DIR/initramfs.cfg
     fi # if [ $VARSFILE ];
+    if [ "x$INITRAMFS_CFG_VERSION" != "x" ]; then
+        if [ $INITRAMFS_CFG_VERSION -lt $INITRAMFS_CFG_REQUIRED_VERSION ];
+        then
+            echo "ERROR: initramfs.cfg file is out of date"
+            echo -n "ERROR: Required initramfs.cfg version: "
+            echo $INITRAMFS_CFG_REQUIRED_VERSION
+            echo -n "ERROR: Project initramfs.cfg version: "
+            echo $INITRAMFS_CFG_VERSION
+            echo "ERROR: Project directory: $PROJECT_DIR"
+            exit 1
+        fi
+    else
+        echo "ERROR: INITRAMFS_CFG_VERSION not set in initramfs.cfg"
+        echo "ERROR: Project directory: $PROJECT_DIR"
+        exit 1
+    fi
 } # function set_vars
 
 ## FUNC: check_exit_status
@@ -404,7 +423,7 @@ echo "- Created temporary directory '${TEMP_DIR}'"
 # script
 export BUILD_BASE PROJECT_DIR TEMP_DIR FILELIST PROJECT_LIST LACK_WORK_DIR
 
-# SOURCE! call set_vars to source the project file
+# SOURCE! call set_vars to source the project initramfs.cfg
 set_vars $PROJECT_DIR
 
 # verify the output file can be written to
