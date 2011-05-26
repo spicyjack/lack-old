@@ -1,0 +1,32 @@
+# name: alsa-base - 1.0.23+dfsg-2
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+dir /usr 755 0 0
+dir /usr/sbin 755 0 0
+file /usr/sbin/alsa /usr/sbin/alsa 755 0 0
+dir /usr/share 755 0 0
+dir /usr/share/alsa-base 755 0 0
+file /usr/share/alsa-base/alsa.default /usr/share/alsa-base/alsa.default 644 0 0
+file /usr/share/alsa-base/program-wrapper /usr/share/alsa-base/program-wrapper 755 0 0
+file /usr/share/alsa-base/snddevices /usr/share/alsa-base/snddevices 755 0 0
+dir /usr/share/lintian 755 0 0
+dir /usr/share/lintian/overrides 755 0 0
+file /usr/share/lintian/overrides/alsa-base /usr/share/lintian/overrides/alsa-base 644 0 0
+dir /etc 755 0 0
+dir /etc/apm 755 0 0
+dir /etc/apm/scripts.d 755 0 0
+file /etc/apm/scripts.d/alsa /etc/apm/scripts.d/alsa 755 0 0
+dir /etc/apm/suspend.d 755 0 0
+dir /etc/apm/resume.d 755 0 0
+dir /etc/modprobe.d 755 0 0
+file /etc/modprobe.d/alsa-base-blacklist.conf /etc/modprobe.d/alsa-base-blacklist.conf 644 0 0
+file /etc/modprobe.d/alsa-base.conf /etc/modprobe.d/alsa-base.conf 644 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:
