@@ -77,4 +77,5 @@ under the same terms as Perl itself.
 
 =cut
 
-1; # End of App::Mayhem
+# vim: filetype=perl shiftwidth=4 tabstop=4:
+# конец!
