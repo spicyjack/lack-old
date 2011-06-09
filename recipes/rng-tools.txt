@@ -1,12 +1,31 @@
-# $Id: rng-tools.txt,v 1.4 2009-02-27 09:06:03 brian Exp $
-# depends: _base
-# rng-tools /dev
-nod /dev/hwrng 0600 0 0 c 10 183
-# rng-tools /usr
-# helpcommand: /usr/sbin/rngd --help
-# versioncommand: /usr/sbin/rngd --version
-file /etc/modprobe.d/rng-tools /etc/modprobe.d/rng-tools 0644 0 0
-file /usr/sbin/rngd /usr/sbin/rngd 0755 0 0
-# examplecommand: /usr/bin/rngtest -c 1 </dev/hwrng
-# helpcommand: /usr/bin/rngtest --help
-file /usr/bin/rngtest /usr/bin/rngtest 0755 0 0
+# name: rng-tools - 2-unofficial-mt.13-3
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+dir /etc 755 0 0
+#dir /etc/logcheck 755 0 0
+#dir /etc/logcheck/violations.ignore.d 755 0 0
+#file /etc/logcheck/violations.ignore.d/rng-tools /etc/logcheck/violations.ignore.d/rng-tools 644 0 0
+#dir /etc/logcheck/ignore.d.server 755 0 0
+#file /etc/logcheck/ignore.d.server/rng-tools /etc/logcheck/ignore.d.server/rng-tools 644 0 0
+dir /etc/init.d 755 0 0
+file /etc/init.d/rng-tools /etc/init.d/rng-tools 755 0 0
+dir /etc/default 755 0 0
+file /etc/default/rng-tools /etc/default/rng-tools 644 0 0
+dir /usr 755 0 0
+dir /usr/bin 755 0 0
+file /usr/bin/rngtest /usr/bin/rngtest 755 0 0
+#dir /usr/share 755 0 0
+#dir /usr/share/lintian 755 0 0
+#dir /usr/share/lintian/overrides 755 0 0
+#file /usr/share/lintian/overrides/rng-tools /usr/share/lintian/overrides/rng-tools 644 0 0
+dir /usr/sbin 755 0 0
+file /usr/sbin/rngd /usr/sbin/rngd 755 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:
