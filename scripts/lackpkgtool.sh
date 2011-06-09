@@ -51,7 +51,9 @@
 CAT=$(which cat)
 CP=$(which cp)
 DPKG=$(which dpkg)
+DPKG_QUERY=$(which dpkg-query)
 DATE=$(which date)
+FIND=$(which find)
 GETOPT=$(which getopt)
 GZIP=$(which gzip)
 MKTEMP=$(which mktemp)
@@ -70,6 +72,7 @@ UNAME=$(which uname)
 # handy shortcuts using the above commands
 EPOCH_DATE_CMD="${DATE} +%s"
 SCRIPT_START=$(${EPOCH_DATE_CMD})
+
 
 ### LOCAL VARIABLES ###
 # don't be verbose by default
@@ -515,34 +518,30 @@ do
         package)
             say "=== Processing package '${CURR_PKG}' ==="
             warn "- Querying package system for package '${CURR_PKG}'"
+            TEMP_PKGLIST=$(mktemp --tmpdir ${WORKDIR} filelist.XXXXX)
             if [ "x${LOGFILE}" != "x" ]; then
-                if [ $SORT_FILELIST -gt 0 ]; then
-                    PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} 2>>$LOGFILE \
-                        | sort | sed 's/ /\\ /g')
-                    check_exit_status $? "dpkg -L ${CURR_PKG}"
-                else
-                    PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} 2>>$LOGFILE \
-                        | sed 's/ /\\ /g')
-                    check_exit_status $? "dpkg -L ${CURR_PKG}"
-                fi
+                ${DPKG} -L ${CURR_PKG} > ${TEMP_PKGLIST} 2>>$LOGFILE
+                check_exit_status $? "dpkg -L ${CURR_PKG}"
             else
-                if [ $SORT_FILELIST -gt 0 ]; then
-                    PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} \
-                        | sort | sed 's/ /\\ /')
-                    check_exit_status $? "dpkg -L ${CURR_PKG}"
-                else
-                    PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} \
-                        | sed 's/ /\\ /')
-                    check_exit_status $? "dpkg -L ${CURR_PKG}"
-                fi
-            fi # if [ "x${LOGFILE}" != "x" ]
-            #PKG_CONTENTS=$(echo ${PKG_CONTENTS} | sort )
-            PKG_VERSION=$(dpkg-query -s ${CURR_PKG} \
+                ${DPKG} -L ${CURR_PKG} > ${TEMP_PKGLIST}
+                check_exit_status $? "dpkg -L ${CURR_PKG}"
+            fi
+            if [ $SORT_FILELIST -gt 0 ]; then
+                PKG_CONTENTS=$(cat ${TEMP_PKGLIST} | sort | sed 's/ /\\ /g')
+            else
+                PKG_CONTENTS=$(cat ${TEMP_PKGLIST} | sed 's/ /\\ /g')
+            fi
+            # remove the package list tempfile if we're done with it
+            rm $TEMP_PKGLIST
+            TEMP_PKGMETA=$(mktemp --tmpdir ${WORKDIR} filelist.XXXXX)
+            ${DPKG_QUERY} -s ${CURR_PKG} > ${TEMP_PKGMETA}
+            check_exit_status $? "dpkg-query -s ${CURR_PKG}"
+            PKG_VERSION=$(cat ${TEMP_PKGMETA} \
                 | grep '^Version:' | awk '{print $2}')
-            #check_exit_status $? "dpkg-query -s ${CURR_PKG}"
+            rm $TEMP_PKGMETA
             ;;
         directory)
-            PKG_CONTENTS=$(/usr/bin/find ${CURR_PKG} -type f)
+            PKG_CONTENTS=$(${FIND} ${CURR_PKG} -type f)
             check_exit_status $? "find ${CURR_PKG} -type f"
             ;;
         filelist)
@@ -556,6 +555,7 @@ do
                 do
                     # we need to eval here so the tilde '~' is expanded if
                     # used
+                    # check for 'package_name.txt' first
                     eval CHECK_FILE="${CHECK_PATH}/${CURR_PKG}.txt"
                     say "- Checking for filelist ${CHECK_FILE}"
                     if [ -s $CHECK_FILE ]; then
@@ -566,6 +566,7 @@ do
                     fi # if [ -e ${CHECK_PATH}/${CURR_PKG}.txt ]
                     # we need to eval here so the tilde '~' is expanded if
                     # used
+                    # then check for just 'package_name'
                     eval CHECK_FILE="${CHECK_PATH}/${CURR_PKG}"
                     say "- Checking for filelist ${CHECK_FILE}"
                     if [ -s $CHECK_FILE ]; then
