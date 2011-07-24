@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # make_initramfs.sh
 # Copyright (c)2006 Brian Manning <brian at portaboom dot com>
@@ -59,8 +59,7 @@ RFC_2822_DATE=$(${DATE} --rfc-2822)
 # helper functions
 
 # set the script parameters from initramfs.cfg or a user-specified file
-function set_vars()
-{
+function set_vars {
     local PROJECT_DIR=$1
     # $1 is the name of the build to set up for
     # verify the initramfs.cfg file exists
