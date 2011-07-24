@@ -34,9 +34,10 @@ dhcp_up () {
     colorize $S_TIP "$BASENAME: Enabling ethernet interface 'eth0'"
     /bin/ip link set eth0 up
     check_exit_status $? $BASENAME
-    colorize $S_TIP "$BASENAME: Starting $DESC"
+    colorize $S_TIP "$BASENAME: Starting $DESC in the background"
     #$BINARY $BINARY_OPTS >> $DEBUG_LOG 2>&1
-    /sbin/udhcpc -i eth0 -p /var/run/udhcpc.eth0.pid >> $DEBUG_LOG 2>&1
+    #/sbin/udhcpc -i eth0 -p /var/run/udhcpc.eth0.pid >> $DEBUG_LOG 2>&1 &
+    /sbin/dhclient -v -pf /var/run/udhcpc.eth0.pid eth0 >> $DEBUG_LOG 2>&1 &
     check_exit_status $? $BASENAME
 } # dhcp_up ()
 

@@ -51,6 +51,12 @@ loopback_test () {
     LOOPBACK_TEST=$(/sbin/losetup -a | wc -l | tr -d '\n')
 } # loopback_test
 
+show_eth0_ip () {
+    colorize_nl $S_TIP "${BASENAME} - current IP address of eth0 is:"
+    colorize $S_TIP "${BASENAME} - "
+    $(/bin/ip addr show eth0 | grep inet)
+} # loopback_test
+
 case "$ACTION" in
   vars)
     echo "${BASENAME}:"
@@ -79,6 +85,7 @@ case "$ACTION" in
     # FIXME test for multiple directories here
     # /mnt/flash/keyhosts/$HOSTNAME, /mnt/flash/keys
     loopback_test
+    show_eth0_ip
     echo
     colorize_nl $S_TIP \
         "#### #   #  #### #### ####  ######   ##  # #### ##   # ## "
