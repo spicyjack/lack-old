@@ -4,15 +4,14 @@
 # slink <new name> <original file> <mode> <uid> <gid>
 # home directories
 # moved to _basedirs 07Jul2010
+# make sure you get busybox in each project's specific initramfs file list now
+file /bin/busybox :TEMP_DIR:/busybox-1.18.5-x86 0755 0 0
+# busybox getopt hides in /bin
+slink /usr/bin/getopt /bin/getopt 0755 0 0
 #dir /home 0755 0 0
 #dir /home/lack 0755 1000 1000
 file /home/lack/.gtkrc-2.0 :PROJECT_DIR:/etcfiles/lack.gtkrc-2.0 644 1000 1000
 dir /home/nobody 0755 65535 65535
-# /bin
-# make sure you get busybox in each project's specific initramfs file list now
-file /bin/busybox :TEMP_DIR:/busybox-1.18.4-x86 0755 0 0
-# busybox getopt hides in /bin
-slink /usr/bin/getopt /bin/getopt 0755 0 0
 # /etc
 # generated files
 file /etc/issue.xlack :TEMP_DIR:/issue.xlack 0644 0 0
