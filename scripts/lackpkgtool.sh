@@ -461,7 +461,7 @@ EOF
             ALL_ROOT=0
             shift 2
             ;;
-        -s|--skip|--skip-exclude) # skip excluding of files using grep
+        -s|--skip|--skip-excludes) # skip excluding of files using grep
             SKIP_EXCLUDES=1
             shift
             ;;
