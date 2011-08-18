@@ -60,7 +60,7 @@ show_netdev_ip () {
     fi
     colorize_nl $S_TIP "${BASENAME} - current IP address of ${NETDEV} is:"
     colorize $S_TIP "${BASENAME} - "
-    $(/bin/ip addr show ${NETDEV} | grep inet)
+    /bin/ip addr show
 } # loopback_test
 
 case "$ACTION" in
@@ -80,6 +80,12 @@ case "$ACTION" in
     THUMB_DEV=$PARSED
     #HOSTNAME=$(/bin/cat /etc/hostname | /usr/bin/tr -d '\n')
     get_hostname # from lack_functions
+    # allow for alternate key directories
+    if [ "x${PROMPT}" != "x" ]; then
+        KEY_DIR=$PROMPT
+    else
+        KEY_DIR=$HOSTNAME
+    fi
     KEY_MOUNT="/mnt/flash/keyhosts"
     # write a pid file so we can be killed by the web script if necessary
     write_child_pid $BASENAME $$
@@ -113,7 +119,7 @@ case "$ACTION" in
     echo
     # start the spinner loop
     KEY_TIMER=0
-    while [ ! -d $KEY_MOUNT/$HOSTNAME ];
+    while [ ! -d $KEY_MOUNT/$KEY_DIR ];
     do
         # we already have a loopback device mounted from somewhere else
         #if [ $LOOPBACK_TEST = 1 ]; then mount_success; fi
@@ -146,7 +152,7 @@ case "$ACTION" in
     # - test for secring/pubring below specifcally, throw a warning if they're
     # not found; if you're using random keys, you'll copy the keys into
     # secring/pubring yourself prior to doing the test
-    MASTER_KEY=$(/usr/bin/gpg --homedir $KEY_MOUNT/$HOSTNAME \
+    MASTER_KEY=$(/usr/bin/gpg --homedir $KEY_MOUNT/$KEY_DIR \
         --list-secret-keys --lock-never --trust-model=always 2>/dev/null \
         | grep "^sec" | sed 's/^sec .*1024D\/\(.*\) .*$/\1/' | tr -d '\n')
      # get the path to the real root device which will be mounted to /dev/loop0
@@ -186,8 +192,8 @@ case "$ACTION" in
         colorize_nl $S_TIP "Running losetup to attach loopback device..."
         # echo the passphrase read in to STDIN of losetup
         LOSETUP_CMD=$(echo "${PASSPHRASE}" \
-            | /sbin/losetup -G ${KEY_MOUNT}/${HOSTNAME} \
-            -K ${KEY_MOUNT}/${HOSTNAME}/disk_key.gpg -p 0 \
+            | /sbin/losetup -G ${KEY_MOUNT}/${KEY_DIR} \
+            -K ${KEY_MOUNT}/${KEY_DIR}/disk_key.gpg -p 0 \
             -e AES${AESKEY} /dev/loop0 ${ROOT_DEV} 2>&1)
         # was 'losetup' successful?  break out of this while loop
         # FIXME this will pass regardless of whether or not a loopback mount

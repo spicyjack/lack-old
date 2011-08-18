@@ -56,6 +56,8 @@ dhcp_down () {
     echo -n "(PID = $UDHCPC_PID) "
     kill -TERM $(cat /var/run/udhcpc.${NETDEV}.pid)
     check_exit_status $? $BASENAME
+    /bin/ip link set ${NETDEV} down
+    check_exit_status $? $BASENAME
 } # dhcp_up ()
 
 case "$ACTION" in

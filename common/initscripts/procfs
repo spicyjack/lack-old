@@ -43,7 +43,7 @@ case "$ACTION" in
     colorize $S_TIP "$BASENAME: Unmounting $DESC;"
     /bin/umount /proc
     check_exit_status $? $BASENAME
-    #DEBUG=1
+    DEBUG=1
     want_shell
     ;;
   restart|force-reload)
