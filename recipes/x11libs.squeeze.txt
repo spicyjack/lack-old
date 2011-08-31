@@ -1,0 +1,256 @@
+# name: libx11-6 - 2:1.3.3-4
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libX11.so.6.3.0 /usr/lib/libX11.so.6.3.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libX11.so.6 /usr/lib/libX11.so.6.3.0 777 0 0
+# libfreetype6 - 2.4.2-2.1
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libfreetype.so.6.6.0 /usr/lib/libfreetype.so.6.6.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libfreetype.so.6 /usr/lib/libfreetype.so.6.6.0 777 0 0
+# libfontconfig1 - 2.8.0-2.1
+dir /usr 755 0 0
+dir /usr/share 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libfontconfig.so.1.4.4 /usr/lib/libfontconfig.so.1.4.4 644 0 0
+slink /usr/lib/libfontconfig.so.1 /usr/lib/libfontconfig.so.1.4.4 777 0 0
+# libxmuu1 - 2:1.0.5-2
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libXmuu.so.1.0.0 /usr/lib/libXmuu.so.1.0.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libXmuu.so.1 /usr/lib/libXmuu.so.1.0.0 777 0 0
+# libxfont1 - 1:1.4.1-2
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libXfont.so.1.4.1 /usr/lib/libXfont.so.1.4.1 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libXfont.so.1 /usr/lib/libXfont.so.1.4.1 777 0 0
+# libfontenc1 - 1:1.0.5-2
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libfontenc.so.1.0.0 /usr/lib/libfontenc.so.1.0.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libfontenc.so.1 /usr/lib/libfontenc.so.1.0.0 777 0 0
+# libpixman-1-0 - 0.16.4-1
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libpixman-1.so.0.16.4 /usr/lib/libpixman-1.so.0.16.4 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libpixman-1.so.0 /usr/lib/libpixman-1.so.0.16.4 777 0 0
+# libdbus-1-3 - 1.2.24-4
+dir /usr 755 0 0
+dir /usr/share 755 0 0
+dir /lib 755 0 0
+file /lib/libdbus-1.so.3.4.0 /lib/libdbus-1.so.3.4.0 644 0 0
+slink /lib/libdbus-1.so.3 /lib/libdbus-1.so.3.4.0 777 0 0
+# libxkbfile1 - 1:1.0.6-2
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libxkbfile.so.1.0.2 /usr/lib/libxkbfile.so.1.0.2 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libxkbfile.so.1 /usr/lib/libxkbfile.so.1.0.2 777 0 0
+# libdrm2 - 2.4.21-1~squeeze3
+dir /usr 755 0 0
+dir /usr/share 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libdrm.so.2.4.0 /usr/lib/libdrm.so.2.4.0 644 0 0
+slink /usr/lib/libdrm.so.2 /usr/lib/libdrm.so.2.4.0 777 0 0
+# libxft2 - 2.1.14-2
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libXft.so.2.1.13 /usr/lib/libXft.so.2.1.13 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libXft.so.2 /usr/lib/libXft.so.2.1.13 777 0 0
+# libxaw7 - 2:1.0.7-1
+dir /usr 755 0 0
+dir /usr/share 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libXaw7.so.7.0.0 /usr/lib/libXaw7.so.7.0.0 644 0 0
+slink /usr/lib/libXaw7.so.7 /usr/lib/libXaw7.so.7.0.0 777 0 0
+slink /usr/lib/libXaw.so.7 /usr/lib/libXaw7.so.7.0.0 777 0 0
+# libxmu6 - 2:1.0.5-2
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libXmu.so.6.2.0 /usr/lib/libXmu.so.6.2.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libXmu.so.6 /usr/lib/libXmu.so.6.2.0 777 0 0
+# libxt6 - 1:1.0.7-1
+dir /usr 755 0 0
+dir /usr/share 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libXt.so.6.0.0 /usr/lib/libXt.so.6.0.0 644 0 0
+slink /usr/lib/libXt.so.6 /usr/lib/libXt.so.6.0.0 777 0 0
+# libsm6 - 2:1.1.1-1
+dir /usr 755 0 0
+dir /usr/share 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libSM.so.6.0.1 /usr/lib/libSM.so.6.0.1 644 0 0
+slink /usr/lib/libSM.so.6 /usr/lib/libSM.so.6.0.1 777 0 0
+# libice6 - 2:1.0.6-2
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libICE.so.6.3.0 /usr/lib/libICE.so.6.3.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libICE.so.6 /usr/lib/libICE.so.6.3.0 777 0 0
+# libxpm4 - 1:3.5.8-1
+dir /usr 755 0 0
+dir /usr/share 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libXpm.so.4.11.0 /usr/lib/libXpm.so.4.11.0 644 0 0
+slink /usr/lib/libXpm.so.4 /usr/lib/libXpm.so.4.11.0 777 0 0
+# libxau6 - 1:1.0.6-1
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libXau.so.6.0.0 /usr/lib/libXau.so.6.0.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libXau.so.6 /usr/lib/libXau.so.6.0.0 777 0 0
+# libxext6 - 2:1.1.2-1
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libXext.so.6.4.0 /usr/lib/libXext.so.6.4.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libXext.so.6 /usr/lib/libXext.so.6.4.0 777 0 0
+# libxdmcp6 - 1:1.0.3-2
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libXdmcp.so.6.0.0 /usr/lib/libXdmcp.so.6.0.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libXdmcp.so.6 /usr/lib/libXdmcp.so.6.0.0 777 0 0
+# libaudit0 - 1.7.13-1+b2
+dir /etc 755 0 0
+file /etc/libaudit.conf /etc/libaudit.conf 644 0 0
+dir /usr 755 0 0
+dir /usr/share 755 0 0
+dir /lib 755 0 0
+file /lib/libauparse.so.0.0.0 /lib/libauparse.so.0.0.0 644 0 0
+file /lib/libaudit.so.0.0.0 /lib/libaudit.so.0.0.0 644 0 0
+slink /lib/libaudit.so.0 /lib/libaudit.so.0.0.0 777 0 0
+slink /lib/libauparse.so.0 /lib/libauparse.so.0.0.0 777 0 0
+# libgcrypt11 - 1.4.5-2
+dir /usr 755 0 0
+dir /usr/share 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libgcrypt.so.11.5.3 /usr/lib/libgcrypt.so.11.5.3 644 0 0
+slink /usr/lib/libgcrypt.so.11 /usr/lib/libgcrypt.so.11.5.3 777 0 0
+# libpciaccess0 - 0.12.0-1
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libpciaccess.so.0.10.8 /usr/lib/libpciaccess.so.0.10.8 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libpciaccess.so.0 /usr/lib/libpciaccess.so.0.10.8 777 0 0
+# libgpg-error0 - 1.6-1
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libgpg-error.so.0.4.0 /usr/lib/libgpg-error.so.0.4.0 644 0 0
+dir /usr/share 755 0 0
+dir /usr/share/locale 755 0 0
+dir /usr/share/locale/ro 755 0 0
+dir /usr/share/locale/ro/LC_MESSAGES 755 0 0
+file /usr/share/locale/ro/LC_MESSAGES/libgpg-error.mo /usr/share/locale/ro/LC_MESSAGES/libgpg-error.mo 644 0 0
+dir /usr/share/locale/pl 755 0 0
+dir /usr/share/locale/pl/LC_MESSAGES 755 0 0
+file /usr/share/locale/pl/LC_MESSAGES/libgpg-error.mo /usr/share/locale/pl/LC_MESSAGES/libgpg-error.mo 644 0 0
+dir /usr/share/locale/sv 755 0 0
+dir /usr/share/locale/sv/LC_MESSAGES 755 0 0
+file /usr/share/locale/sv/LC_MESSAGES/libgpg-error.mo /usr/share/locale/sv/LC_MESSAGES/libgpg-error.mo 644 0 0
+dir /usr/share/locale/de 755 0 0
+dir /usr/share/locale/de/LC_MESSAGES 755 0 0
+file /usr/share/locale/de/LC_MESSAGES/libgpg-error.mo /usr/share/locale/de/LC_MESSAGES/libgpg-error.mo 644 0 0
+dir /usr/share/locale/vi 755 0 0
+dir /usr/share/locale/vi/LC_MESSAGES 755 0 0
+file /usr/share/locale/vi/LC_MESSAGES/libgpg-error.mo /usr/share/locale/vi/LC_MESSAGES/libgpg-error.mo 644 0 0
+dir /usr/share/locale/fr 755 0 0
+dir /usr/share/locale/fr/LC_MESSAGES 755 0 0
+file /usr/share/locale/fr/LC_MESSAGES/libgpg-error.mo /usr/share/locale/fr/LC_MESSAGES/libgpg-error.mo 644 0 0
+slink /usr/lib/libgpg-error.so.0 /usr/lib/libgpg-error.so.0.4.0 777 0 0
+# libxrender1 - 1:0.9.6-1
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libXrender.so.1.3.0 /usr/lib/libXrender.so.1.3.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libXrender.so.1 /usr/lib/libXrender.so.1.3.0 777 0 0
+# libutempter0 - 1.1.5-3
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+dir /usr/lib/utempter 755 0 0
+file /usr/lib/utempter/utempter /usr/lib/utempter/utempter 2755 0 0
+file /usr/lib/libutempter.so.1.1.5 /usr/lib/libutempter.so.1.1.5 644 0 0
+dir /usr/share 755 0 0
+dir /usr/share/lintian 755 0 0
+dir /usr/share/lintian/overrides 755 0 0
+file /usr/share/lintian/overrides/libutempter0 /usr/share/lintian/overrides/libutempter0 644 0 0
+slink /usr/lib/libutempter.so.0 /usr/lib/libutempter.so.1.1.5 777 0 0
+# libxcomposite1 - 1:0.4.2-1
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libXcomposite.so.1.0.0 /usr/lib/libXcomposite.so.1.0.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libXcomposite.so.1 /usr/lib/libXcomposite.so.1.0.0 777 0 0
+# libxdamage1 - 1:1.1.3-1
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libXdamage.so.1.1.0 /usr/lib/libXdamage.so.1.1.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libXdamage.so.1 /usr/lib/libXdamage.so.1.1.0 777 0 0
+# libxfixes3 - 1:4.0.5-1
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libXfixes.so.3.1.0 /usr/lib/libXfixes.so.3.1.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libXfixes.so.3 /usr/lib/libXfixes.so.3.1.0 777 0 0
+# libxinerama1 - 2:1.1-3
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libXinerama.so.1.0.0 /usr/lib/libXinerama.so.1.0.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libXinerama.so.1 /usr/lib/libXinerama.so.1.0.0 777 0 0
+# libxi6 - 2:1.3-6
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libXi.so.6.1.0 /usr/lib/libXi.so.6.1.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libXi.so.6 /usr/lib/libXi.so.6.1.0 777 0 0
+# libxrandr2 - 2:1.3.0-3
+dir /usr 755 0 0
+dir /usr/share 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libXrandr.so.2.2.0 /usr/lib/libXrandr.so.2.2.0 644 0 0
+slink /usr/lib/libXrandr.so.2 /usr/lib/libXrandr.so.2.2.0 777 0 0
+# libxcursor1 - 1:1.1.10-2
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libXcursor.so.1.0.2 /usr/lib/libXcursor.so.1.0.2 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libXcursor.so.1 /usr/lib/libXcursor.so.1.0.2 777 0 0
+# libxcb1 - 1.6-1
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libxcb.so.1.1.0 /usr/lib/libxcb.so.1.1.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libxcb.so.1 /usr/lib/libxcb.so.1.1.0 777 0 0
+# libxcb-render0 - 1.6-1
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libxcb-render.so.0.0.0 /usr/lib/libxcb-render.so.0.0.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libxcb-render.so.0 /usr/lib/libxcb-render.so.0.0.0 777 0 0
+# libxcb-render-util0 - 0.3.6-1
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libxcb-render-util.so.0.0.0 /usr/lib/libxcb-render-util.so.0.0.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libxcb-render-util.so.0 /usr/lib/libxcb-render-util.so.0.0.0 777 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:

@@ -1,23 +1,22 @@
 #!/usr/bin/make -f
 
 # loop-AES build options
-OPTIONS := KEYSCRUB=y RUNDM=n MODINST=n MODVERDIR=$(PWD)/symbols PADLOCK=y EXTRA_CIPHERS=y
+OPTIONS := KEYSCRUB=y PADLOCK=y EXTRA_CIPHERS=y
 
 PACKAGE	:= loop-aes
 MA_DIR  ?= /usr/share/modass
 -include $(MA_DIR)/include/generic.make
 -include $(MA_DIR)/include/common-rules.make
 
-#PKGDIR  := debian/loop-aes-modules-$(KVERS)
-PKGDIR  := debian/tmp
+PKGDIR  := debian/loop-aes-modules-$(KVERS)
 DOCDIR  := $(PKGDIR)/usr/share/doc/loop-aes-modules-$(KVERS)
 
 KV := $(shell echo "$(KVERS)" | sed -e 's/^\([2-9]\.[2-9]\)\..*/\1/')
-ifeq (2.6,$(KV))
+ifeq (2.4,$(KV))
+MODDIR  := $(PKGDIR)/lib/modules/$(KVERS)/kernel/drivers/block
+else
 MODDIR  := $(PKGDIR)/lib/modules/$(KVERS)/updates
 OPTIONS += USE_KBUILD=y
-else
-MODDIR  := $(PKGDIR)/lib/modules/$(KVERS)/kernel/drivers/block
 endif
 
 configure: prep-deb-files
@@ -29,7 +28,7 @@ kdist_clean:
 
 build: build-stamp
 build-stamp: configure
-	$(MAKE) $(OPTIONS) LINUX_SOURCE=$(KSRC)
+	$(MAKE) LINUX_SOURCE=$(KSRC) $(OPTIONS) RUNDM=n MODINST=n
 	touch build-stamp
 
 install: install-stamp
@@ -39,7 +38,7 @@ install-stamp: build
 	for module in tmp-d-kbuild/$$m.ko $$m.ko $$m.o; do \
 	    if [ -f $$module ]; then \
 	        mod=`basename $$module`; \
-	        install -m644 -D $$module $(MODDIR)/$$mod; \
+	        install -m644 -b -D $$module $(MODDIR)/$$mod; \
 		break; \
 	    fi \
 	done \
@@ -49,7 +48,8 @@ install-stamp: build
 	    for module in tmp-d-kbuild/$$m.ko $$m.ko $$m.o; do \
 		if [ -f $$module ]; then \
 		    mod=`basename $$module`; \
-		    install -m644 -D $$module $(MODDIR)/$$mod; \
+		    install -m644 -b -D $$module $(MODDIR)/$$mod; \
+		    break; \
 		fi \
 	    done \
 	done
@@ -62,7 +62,7 @@ binary-modules: configure build install
 	dh_installdirs
 	dh_installdocs README
 	dh_installchangelogs ChangeLog
-#	ls -lR /usr/src/modules/loop-aes
+
 	dh_compress
 	dh_fixperms
 	dh_installdeb
@@ -79,4 +79,4 @@ clean:
 
 .PHONY: clean configure build binary-indep binary-arch binary binary-modules install kdist_config kdist_clean
 
-# $Id: loop-aes.debian.rules,v 1.4 2008-01-04 08:48:14 brian Exp $
+# $Id: rules.modules 1879 2006-08-07 14:02:32Z max $

@@ -1,0 +1,136 @@
+# name: xserver-xorg-video-all - 1:7.5+8
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+#dir /usr 755 0 0
+#dir /usr/share 755 0 0
+# xserver-xorg-video-apm - 1:1.2.2-2
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+dir /usr/lib/xorg 755 0 0
+dir /usr/lib/xorg/modules 755 0 0
+dir /usr/lib/xorg/modules/drivers 755 0 0
+file /usr/lib/xorg/modules/drivers/apm_drv.so /usr/lib/xorg/modules/drivers/apm_drv.so 644 0 0
+dir /usr/share 755 0 0
+# xserver-xorg-video-ark - 1:0.7.2-2
+file /usr/lib/xorg/modules/drivers/ark_drv.so /usr/lib/xorg/modules/drivers/ark_drv.so 644 0 0
+# xserver-xorg-video-ati - 1:6.13.1-2+squeeze1
+file /usr/lib/xorg/modules/drivers/ati_drv.so /usr/lib/xorg/modules/drivers/ati_drv.so 644 0 0
+# xserver-xorg-video-chips - 1:1.2.3-1
+file /usr/lib/xorg/modules/drivers/chips_drv.so /usr/lib/xorg/modules/drivers/chips_drv.so 644 0 0
+# xserver-xorg-video-cirrus - 1:1.3.2-2+squeeze1
+file /usr/lib/xorg/modules/drivers/cirrus_alpine.so /usr/lib/xorg/modules/drivers/cirrus_alpine.so 644 0 0
+file /usr/lib/xorg/modules/drivers/cirrus_drv.so /usr/lib/xorg/modules/drivers/cirrus_drv.so 644 0 0
+file /usr/lib/xorg/modules/drivers/cirrus_laguna.so /usr/lib/xorg/modules/drivers/cirrus_laguna.so 644 0 0
+# xserver-xorg-video-fbdev - 1:0.4.2-2
+file /usr/lib/xorg/modules/drivers/fbdev_drv.so /usr/lib/xorg/modules/drivers/fbdev_drv.so 644 0 0
+# xserver-xorg-video-geode - 2.11.9-7
+dir /usr/share 755 0 0
+dir /usr/share/xserver-xorg 755 0 0
+dir /usr/share/xserver-xorg/pci 755 0 0
+file /usr/share/xserver-xorg/pci/geode.ids /usr/share/xserver-xorg/pci/geode.ids 644 0 0
+file /usr/lib/xorg/modules/drivers/geode_drv.so /usr/lib/xorg/modules/drivers/geode_drv.so 644 0 0
+# xserver-xorg-video-i128 - 1:1.3.3-2
+file /usr/lib/xorg/modules/drivers/i128_drv.so /usr/lib/xorg/modules/drivers/i128_drv.so 644 0 0
+# xserver-xorg-video-i128 - 1:1.3.3-2
+file /usr/lib/xorg/modules/drivers/i128_drv.so /usr/lib/xorg/modules/drivers/i128_drv.so 644 0 0
+# xserver-xorg-video-i740 - 1:1.3.2-2
+file /usr/lib/xorg/modules/drivers/i740_drv.so /usr/lib/xorg/modules/drivers/i740_drv.so 644 0 0
+# xserver-xorg-video-intel - 2:2.13.0-6
+dir /etc 755 0 0
+dir /etc/modprobe.d 755 0 0
+file /etc/modprobe.d/i915-kms.conf /etc/modprobe.d/i915-kms.conf 644 0 0
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libI810XvMC.so.1.0.0 /usr/lib/libI810XvMC.so.1.0.0 644 0 0
+file /usr/lib/libIntelXvMC.so.1.0.0 /usr/lib/libIntelXvMC.so.1.0.0 644 0 0
+file /usr/lib/xorg/modules/drivers/intel_drv.so /usr/lib/xorg/modules/drivers/intel_drv.so 644 0 0
+slink /usr/lib/libIntelXvMC.so.1 /usr/lib/libIntelXvMC.so.1.0.0 777 0 0
+slink /usr/lib/libI810XvMC.so.1 /usr/lib/libI810XvMC.so.1.0.0 777 0 0
+slink /usr/lib/libI810XvMC.so /usr/lib/libI810XvMC.so.1.0.0 777 0 0
+slink /usr/lib/libIntelXvMC.so /usr/lib/libIntelXvMC.so.1.0.0 777 0 0
+# xserver-xorg-video-mach64 - 6.8.2-3
+file /usr/lib/xorg/modules/drivers/mach64_drv.so /usr/lib/xorg/modules/drivers/mach64_drv.so 644 0 0
+# xserver-xorg-video-mga - 1:1.4.11.dfsg-4+squeeze1
+file /usr/lib/xorg/modules/drivers/mga_drv.so /usr/lib/xorg/modules/drivers/mga_drv.so 644 0 0
+# xserver-xorg-video-neomagic - 1:1.2.4-3
+file /usr/lib/xorg/modules/drivers/neomagic_drv.so /usr/lib/xorg/modules/drivers/neomagic_drv.so 644 0 0
+# xserver-xorg-video-nouveau - 1:0.0.15+git20100329+7858345-5
+file /usr/lib/xorg/modules/drivers/nouveau_drv.so /usr/lib/xorg/modules/drivers/nouveau_drv.so 644 0 0
+# xserver-xorg-video-nv - 1:2.1.17-3
+file /usr/lib/xorg/modules/drivers/nv_drv.so /usr/lib/xorg/modules/drivers/nv_drv.so 644 0 0
+# xserver-xorg-video-openchrome - 1:0.2.904+svn842-2
+file /usr/lib/libchromeXvMCPro.so.1.0.0 /usr/lib/libchromeXvMCPro.so.1.0.0 644 0 0
+file /usr/lib/libchromeXvMC.so.1.0.0 /usr/lib/libchromeXvMC.so.1.0.0 644 0 0
+file /usr/lib/xorg/modules/drivers/openchrome_drv.so /usr/lib/xorg/modules/drivers/openchrome_drv.so 644 0 0
+#dir /usr/share 755 0 0
+#dir /usr/share/lintian 755 0 0
+#dir /usr/share/lintian/overrides 755 0 0
+#file /usr/share/lintian/overrides/xserver-xorg-video-openchrome /usr/share/lintian/overrides/xserver-xorg-video-openchrome 644 0 0
+slink /usr/lib/libchromeXvMCPro.so /usr/lib/libchromeXvMCPro.so.1.0.0 777 0 0
+slink /usr/lib/libchromeXvMC.so /usr/lib/libchromeXvMC.so.1.0.0 777 0 0
+slink /usr/lib/libchromeXvMCPro.so.1 /usr/lib/libchromeXvMCPro.so.1.0.0 777 0 0
+slink /usr/lib/libchromeXvMC.so.1 /usr/lib/libchromeXvMC.so.1.0.0 777 0 0
+# xserver-xorg-video-r128 - 6.8.1-3
+file /usr/lib/xorg/modules/drivers/r128_drv.so /usr/lib/xorg/modules/drivers/r128_drv.so 644 0 0
+# xserver-xorg-video-radeon - 1:6.13.1-2+squeeze1
+dir /etc 755 0 0
+dir /etc/modprobe.d 755 0 0
+file /etc/modprobe.d/radeon-kms.conf /etc/modprobe.d/radeon-kms.conf 644 0 0
+file /usr/lib/xorg/modules/drivers/radeon_drv.so /usr/lib/xorg/modules/drivers/radeon_drv.so 644 0 0
+dir /usr/lib/xorg/modules/multimedia 755 0 0
+file /usr/lib/xorg/modules/multimedia/theatre200_drv.so /usr/lib/xorg/modules/multimedia/theatre200_drv.so 644 0 0
+file /usr/lib/xorg/modules/multimedia/theatre_detect_drv.so /usr/lib/xorg/modules/multimedia/theatre_detect_drv.so 644 0 0
+file /usr/lib/xorg/modules/multimedia/theatre_drv.so /usr/lib/xorg/modules/multimedia/theatre_drv.so 644 0 0
+# xserver-xorg-video-rendition - 1:4.2.3-3
+file /usr/lib/xorg/modules/drivers/rendition_drv.so /usr/lib/xorg/modules/drivers/rendition_drv.so 644 0 0
+# xserver-xorg-video-s3 - 1:0.6.3-2
+file /usr/lib/xorg/modules/drivers/s3_drv.so /usr/lib/xorg/modules/drivers/s3_drv.so 644 0 0
+# xserver-xorg-video-s3virge - 1:1.10.4-2
+file /usr/lib/xorg/modules/drivers/s3virge_drv.so /usr/lib/xorg/modules/drivers/s3virge_drv.so 644 0 0
+# xserver-xorg-video-savage - 1:2.3.1-2
+file /usr/lib/xorg/modules/drivers/savage_drv.so /usr/lib/xorg/modules/drivers/savage_drv.so 644 0 0
+# xserver-xorg-video-siliconmotion - 1:1.7.3-2
+file /usr/lib/xorg/modules/drivers/siliconmotion_drv.so /usr/lib/xorg/modules/drivers/siliconmotion_drv.so 644 0 0
+# xserver-xorg-video-sis - 1:0.10.3-1
+file /usr/lib/xorg/modules/drivers/sis_drv.so /usr/lib/xorg/modules/drivers/sis_drv.so 644 0 0
+# xserver-xorg-video-sisusb - 1:0.9.3-2
+file /usr/lib/xorg/modules/drivers/sisusb_drv.so /usr/lib/xorg/modules/drivers/sisusb_drv.so 644 0 0
+# xserver-xorg-video-tdfx - 1:1.4.3-2
+file /usr/lib/xorg/modules/drivers/tdfx_drv.so /usr/lib/xorg/modules/drivers/tdfx_drv.so 644 0 0
+# xserver-xorg-video-trident - 1:1.3.3-2
+file /usr/lib/xorg/modules/drivers/trident_drv.so /usr/lib/xorg/modules/drivers/trident_drv.so 644 0 0
+# xserver-xorg-video-tseng - 1:1.2.3-2
+file /usr/lib/xorg/modules/drivers/tseng_drv.so /usr/lib/xorg/modules/drivers/tseng_drv.so 644 0 0
+# xserver-xorg-video-vesa - 1:2.3.0-3
+file /usr/lib/xorg/modules/drivers/vesa_drv.so /usr/lib/xorg/modules/drivers/vesa_drv.so 644 0 0
+# xserver-xorg-video-vmware - 1:11.0.1-2
+file /usr/lib/xorg/modules/drivers/vmware_drv.so /usr/lib/xorg/modules/drivers/vmware_drv.so 644 0 0
+file /usr/lib/xorg/modules/drivers/vmwlegacy_drv.so /usr/lib/xorg/modules/drivers/vmwlegacy_drv.so 644 0 0
+# xserver-xorg-video-voodoo - 1:1.2.3-2
+file /usr/lib/xorg/modules/drivers/voodoo_drv.so /usr/lib/xorg/modules/drivers/voodoo_drv.so 644 0 0
+# libgl1-mesa-dri - 7.7.1-4
+dir /usr/lib/dri 755 0 0
+file /usr/lib/dri/swrast_dri.so /usr/lib/dri/swrast_dri.so 644 0 0
+file /usr/lib/dri/sis_dri.so /usr/lib/dri/sis_dri.so 644 0 0
+file /usr/lib/dri/savage_dri.so /usr/lib/dri/savage_dri.so 644 0 0
+file /usr/lib/dri/i965_dri.so /usr/lib/dri/i965_dri.so 644 0 0
+file /usr/lib/dri/radeon_dri.so /usr/lib/dri/radeon_dri.so 644 0 0
+file /usr/lib/dri/r600_dri.so /usr/lib/dri/r600_dri.so 644 0 0
+file /usr/lib/dri/unichrome_dri.so /usr/lib/dri/unichrome_dri.so 644 0 0
+file /usr/lib/dri/tdfx_dri.so /usr/lib/dri/tdfx_dri.so 644 0 0
+file /usr/lib/dri/mach64_dri.so /usr/lib/dri/mach64_dri.so 644 0 0
+file /usr/lib/dri/r300_dri.so /usr/lib/dri/r300_dri.so 644 0 0
+file /usr/lib/dri/mga_dri.so /usr/lib/dri/mga_dri.so 644 0 0
+file /usr/lib/dri/i915_dri.so /usr/lib/dri/i915_dri.so 644 0 0
+file /usr/lib/dri/i810_dri.so /usr/lib/dri/i810_dri.so 644 0 0
+file /usr/lib/dri/r200_dri.so /usr/lib/dri/r200_dri.so 644 0 0
+file /usr/lib/dri/r128_dri.so /usr/lib/dri/r128_dri.so 644 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:

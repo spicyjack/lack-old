@@ -19,6 +19,9 @@
 # - Creating the output squashfs filename is broken for non-dpkg lists of
 # files, as the version number of the package is not available, yet it's
 # encoded into the output filename
+# - add dedup'ing of files/directories by using some kind of cache mechanisim;
+# maybe some kind of dbm client, test to see if a specific line has already
+# been written to a dbm database, and skip outputting the line if it has
 
 # SCRIPT DESIGN
 # Inputs:
@@ -48,7 +51,9 @@
 CAT=$(which cat)
 CP=$(which cp)
 DPKG=$(which dpkg)
+DPKG_QUERY=$(which dpkg-query)
 DATE=$(which date)
+FIND=$(which find)
 GETOPT=$(which getopt)
 GZIP=$(which gzip)
 MKTEMP=$(which mktemp)
@@ -68,12 +73,13 @@ UNAME=$(which uname)
 EPOCH_DATE_CMD="${DATE} +%s"
 SCRIPT_START=$(${EPOCH_DATE_CMD})
 
+
 ### LOCAL VARIABLES ###
 # don't be verbose by default
 VERBOSE=0
 # pattern of strings to exclude
 EXCLUDES="share/doc|/man|/info|bug"
-EXCLUDES="${EXCLUDES}|^/\.$|^/boot$|^/lib/modules$"
+EXCLUDES="${EXCLUDES}|^/\.$|^/boot$|^/lib/modules$|\.pod$|\.h$"
 # we need all the extra directories now when making squashfs packages
 #EXCLUDES="${EXCLUDES}|^/\.$|^/boot$|^/usr$|^/usr/share$|^/lib$|^/lib/modules$"
 # make all files owned by root by default
@@ -88,6 +94,10 @@ APPEND=0
 OVERWRITE=0
 # don't sort output filelists by default
 SORT_FILELIST=0
+# don't sort the list of packages provided as input
+SORT_INPUT=0
+# filelist header has already been output?
+FILELIST_HEADER_FLAG=0
 
 ### FUNCTIONS ###
 
@@ -252,8 +262,9 @@ cat <<EOU
     ${SCRIPTNAME} --directory --listout /tmp/somedirectory > somepackage.txt
 
     # create a filelist, and mangle some of the filenames in the filelist
-    ${SCRIPTNAME} --directory --listout -- /tmp/somedirectory \ 
-        --regex 's!/some/path!/other/path!g' > somepackage.txt
+    ${SCRIPTNAME} --directory --listout --regex 's!/some/path!/other/path!g' \
+        -- /tmp/somedirectory > somepackage.txt
+
 
     ### CREATING SQUASHFS ARCHIVES
     # create individual output squashfs files from installed Debian packages
@@ -290,8 +301,8 @@ fi # if [ $(readlink /bin/sh | grep -c dash) -gt 0 ]
 TEMP=$(/usr/bin/getopt -o hvepdfb:sqtco:w:xal:u:g:r: \
     --long help,verbose,examples,\
     --long package,directory,filelist,basepath: \
-    --long sort,squashfs,listout,cpio,output:,workdir:,overwrite,append \
-    --long show-excludes,excludes:,skip-excludes \
+    --long sort-output,sort-input,squashfs,listout,cpio,output:,workdir: \
+    --long overwrite,append,show-excludes,excludes:,skip-excludes \
     --long log:,logfile:,uid:,gid:,regex: \
     -n "${SCRIPTNAME}" -- "$@")
 
@@ -329,7 +340,8 @@ while true ; do
                         Multiple directories are separated with a colon ':'
 
     OUTPUT OPTIONS
-    -s|--sort           Sort the output of filelists
+    -s|--sort-output    Sort the output of filelists
+    --sort-input        Sort the input package list
     -q|--squashfs       Output squashfs package(s)
     -t|--listout        Output filelist(s) suitable for gen_init_cpio
     -c|--cpio           Create a CPIO file (via gen_init_cpio)
@@ -388,8 +400,12 @@ EOF
             ;;
 
         ### OUTPUT OPTIONS ###
-        -s|--sort) # sort output filelists
+        -s|--sort|--sort-output) # sort output filelists
             SORT_FILELIST=1
+            shift 1
+            ;;
+        --sort-input) # sort output filelists
+            SORT_INPUT=1
             shift 1
             ;;
         -q|--squashfs) # make squashfs file(s)
@@ -445,7 +461,7 @@ EOF
             ALL_ROOT=0
             shift 2
             ;;
-        -s|--skip|--skip-exclude) # skip excluding of files using grep
+        -s|--skip|--skip-excludes) # skip excluding of files using grep
             SKIP_EXCLUDES=1
             shift
             ;;
@@ -489,41 +505,43 @@ if [ $ALL_ROOT -eq 1 ]; then
 fi # if [ $ALL_ROOT -eq 1 ]
 
 # loop across the arguments listed after the double-dashes '--'
-for CURR_PKG in $@;
+if [ $SORT_INPUT -eq 1 ]; then
+    PACKAGE_LIST=$(echo $@ | sort)
+else
+    PACKAGE_LIST=$(echo $@)
+fi
+
+for CURR_PKG in $(echo ${PACKAGE_LIST});
 do
     # depending on what the input type will be is what actions we will take
     case "$INPUT_OPT" in
         package)
             say "=== Processing package '${CURR_PKG}' ==="
             warn "- Querying package system for package '${CURR_PKG}'"
+            TEMP_PKGLIST=$(mktemp --tmpdir ${WORKDIR} filelist.XXXXX)
             if [ "x${LOGFILE}" != "x" ]; then
-                if [ $SORT_FILELIST -gt 0 ]; then
-                    PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} 2>>$LOGFILE \
-                        | sort | sed 's/ /\\ /g')
-                    check_exit_status $? "dpkg -L ${CURR_PKG}"
-                else
-                    PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} 2>>$LOGFILE \
-                        | sed 's/ /\\ /g')
-                    check_exit_status $? "dpkg -L ${CURR_PKG}"
-                fi
+                ${DPKG} -L ${CURR_PKG} > ${TEMP_PKGLIST} 2>>$LOGFILE
+                check_exit_status $? "dpkg -L ${CURR_PKG}"
             else
-                if [ $SORT_FILELIST -gt 0 ]; then
-                    PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} \
-                        | sort | sed 's/ /\\ /')
-                    check_exit_status $? "dpkg -L ${CURR_PKG}"
-                else
-                    PKG_CONTENTS=$(/usr/bin/dpkg -L ${CURR_PKG} \
-                        | sed 's/ /\\ /')
-                    check_exit_status $? "dpkg -L ${CURR_PKG}"
-                fi
-            fi # if [ "x${LOGFILE}" != "x" ]
-            #PKG_CONTENTS=$(echo ${PKG_CONTENTS} | sort )
-            PKG_VERSION=$(dpkg-query -s ${CURR_PKG} \
-                | grep Version | awk '{print $2}')
-            #check_exit_status $? "dpkg-query -s ${CURR_PKG}"
+                ${DPKG} -L ${CURR_PKG} > ${TEMP_PKGLIST}
+                check_exit_status $? "dpkg -L ${CURR_PKG}"
+            fi
+            if [ $SORT_FILELIST -gt 0 ]; then
+                PKG_CONTENTS=$(cat ${TEMP_PKGLIST} | sort | sed 's/ /\\ /g')
+            else
+                PKG_CONTENTS=$(cat ${TEMP_PKGLIST} | sed 's/ /\\ /g')
+            fi
+            # remove the package list tempfile if we're done with it
+            rm $TEMP_PKGLIST
+            TEMP_PKGMETA=$(mktemp --tmpdir ${WORKDIR} filelist.XXXXX)
+            ${DPKG_QUERY} -s ${CURR_PKG} > ${TEMP_PKGMETA}
+            check_exit_status $? "dpkg-query -s ${CURR_PKG}"
+            PKG_VERSION=$(cat ${TEMP_PKGMETA} \
+                | grep '^Version:' | awk '{print $2}')
+            rm $TEMP_PKGMETA
             ;;
         directory)
-            PKG_CONTENTS=$(/usr/bin/find ${CURR_PKG} -type f)
+            PKG_CONTENTS=$(${FIND} ${CURR_PKG} -type f)
             check_exit_status $? "find ${CURR_PKG} -type f"
             ;;
         filelist)
@@ -537,6 +555,7 @@ do
                 do
                     # we need to eval here so the tilde '~' is expanded if
                     # used
+                    # check for 'package_name.txt' first
                     eval CHECK_FILE="${CHECK_PATH}/${CURR_PKG}.txt"
                     say "- Checking for filelist ${CHECK_FILE}"
                     if [ -s $CHECK_FILE ]; then
@@ -547,6 +566,7 @@ do
                     fi # if [ -e ${CHECK_PATH}/${CURR_PKG}.txt ]
                     # we need to eval here so the tilde '~' is expanded if
                     # used
+                    # then check for just 'package_name'
                     eval CHECK_FILE="${CHECK_PATH}/${CURR_PKG}"
                     say "- Checking for filelist ${CHECK_FILE}"
                     if [ -s $CHECK_FILE ]; then
@@ -612,9 +632,13 @@ do
         say "$PKG_CONTENTS"
         # print the recipe header
         if [ $APPEND -eq 0 ]; then
-            dump_filelist_header $CURR_PKG $PKG_VERSION
+            if [ $FILELIST_HEADER_FLAG -eq 0 ]; then
+                dump_filelist_header $CURR_PKG $PKG_VERSION
+                FILELIST_HEADER_FLAG=1
+            else
+                echo "# ${CURR_PKG} - ${PKG_VERSION}"
+            fi 
         fi
-        echo "# ${CURR_PKG} - ${PKG_VERSION}"
 
         # PKG_CONTENTS should be a list of files, directories and/or symlinks
         for LINE in $(echo $PKG_CONTENTS);
@@ -673,9 +697,6 @@ do
             esac
         done # for LINE in $(echo $PKG_CONTENTS);
 
-        # print the vim tag at the bottom so the recipes are formatted nicely
-        # when you edit them
-        echo "# vi: set shiftwidth=4 tabstop=4 paste:"
 
     ### SQUASHFS OUTPUT ###
     elif [ $OUTPUT_OPT == "squashfs" ]; then
@@ -806,6 +827,12 @@ if [ "x$SINGLE_OUTFILE" != "x" ]; then
     #run_mksquashfs $SINGLE_OUTFILE
 fi # if [ "x$SINGLE_OUTFILE" == "x" ]
 
+if [ "x$OUTPUT_OPT" = "xfilelist" ]; then
+    # print the vim tag at the bottom so the recipes are formatted nicely
+    # when you edit them
+    echo "# vi: set shiftwidth=4 tabstop=4 paste:"
+fi
+
 # calculate script execution time, and output pretty statistics
 SCRIPT_END=$(${EPOCH_DATE_CMD})
 SCRIPT_EXECUTION_SECS=$(( ${SCRIPT_END} - ${SCRIPT_START}))
@@ -813,10 +840,10 @@ if [ $SCRIPT_EXECUTION_SECS -gt 60 ]; then
     SCRIPT_EXECUTION_MINS=$(( $SCRIPT_EXECUTION_SECS / 60))
     SCRIPT_EXECUTION_MOD=$(( $SCRIPT_EXECUTION_MINS * 60 ))
     SCRIPT_EXECUTION_SECS=$(( $SCRIPT_EXECUTION_SECS - $SCRIPT_EXECUTION_MOD))
-    warn -n "Total script execution time: ${SCRIPT_EXECUTION_MINS} minutes, "
+    warn -n "- Total script execution time: ${SCRIPT_EXECUTION_MINS} minutes, "
     warn "${SCRIPT_EXECUTION_SECS} seconds"
 else
-    warn "Total script execution time: ${SCRIPT_EXECUTION_SECS} seconds"
+    warn "- Total script execution time: ${SCRIPT_EXECUTION_SECS} seconds"
 fi
 
 # exit with the happy

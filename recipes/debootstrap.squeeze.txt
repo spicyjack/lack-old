@@ -1,0 +1,51 @@
+# name: debootstrap - 1.0.26+squeeze1
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+dir /usr 755 0 0
+dir /usr/sbin 755 0 0
+file /usr/sbin/debootstrap /usr/sbin/debootstrap 755 0 0
+dir /usr/share 755 0 0
+dir /usr/share/debootstrap 755 0 0
+file /usr/share/debootstrap/functions /usr/share/debootstrap/functions 644 0 0
+dir /usr/share/debootstrap/scripts 755 0 0
+file /usr/share/debootstrap/scripts/feisty /usr/share/debootstrap/scripts/feisty 644 0 0
+file /usr/share/debootstrap/scripts/sarge.buildd /usr/share/debootstrap/scripts/sarge.buildd 644 0 0
+file /usr/share/debootstrap/scripts/gutsy /usr/share/debootstrap/scripts/gutsy 644 0 0
+file /usr/share/debootstrap/scripts/woody.buildd /usr/share/debootstrap/scripts/woody.buildd 644 0 0
+file /usr/share/debootstrap/scripts/breezy /usr/share/debootstrap/scripts/breezy 644 0 0
+file /usr/share/debootstrap/scripts/warty /usr/share/debootstrap/scripts/warty 644 0 0
+file /usr/share/debootstrap/scripts/sarge.fakechroot /usr/share/debootstrap/scripts/sarge.fakechroot 644 0 0
+file /usr/share/debootstrap/scripts/hoary /usr/share/debootstrap/scripts/hoary 644 0 0
+file /usr/share/debootstrap/scripts/warty.buildd /usr/share/debootstrap/scripts/warty.buildd 644 0 0
+file /usr/share/debootstrap/scripts/sid /usr/share/debootstrap/scripts/sid 644 0 0
+file /usr/share/debootstrap/scripts/potato /usr/share/debootstrap/scripts/potato 644 0 0
+file /usr/share/debootstrap/scripts/edgy /usr/share/debootstrap/scripts/edgy 644 0 0
+file /usr/share/debootstrap/scripts/sarge /usr/share/debootstrap/scripts/sarge 644 0 0
+file /usr/share/debootstrap/scripts/dapper /usr/share/debootstrap/scripts/dapper 644 0 0
+file /usr/share/debootstrap/scripts/woody /usr/share/debootstrap/scripts/woody 644 0 0
+file /usr/share/debootstrap/scripts/hoary.buildd /usr/share/debootstrap/scripts/hoary.buildd 644 0 0
+file /usr/share/debootstrap/devices.tar.gz /usr/share/debootstrap/devices.tar.gz 644 0 0
+slink /usr/share/debootstrap/scripts/wheezy /usr/share/debootstrap/scripts/sid 777 0 0
+slink /usr/share/debootstrap/scripts/karmic /usr/share/debootstrap/scripts/gutsy 777 0 0
+slink /usr/share/debootstrap/scripts/testing /usr/share/debootstrap/scripts/sid 777 0 0
+slink /usr/share/debootstrap/scripts/stable /usr/share/debootstrap/scripts/sid 777 0 0
+slink /usr/share/debootstrap/scripts/lucid /usr/share/debootstrap/scripts/gutsy 777 0 0
+slink /usr/share/debootstrap/scripts/maverick /usr/share/debootstrap/scripts/gutsy 777 0 0
+slink /usr/share/debootstrap/scripts/unstable /usr/share/debootstrap/scripts/sid 777 0 0
+slink /usr/share/debootstrap/scripts/squeeze /usr/share/debootstrap/scripts/sid 777 0 0
+slink /usr/share/debootstrap/scripts/etch /usr/share/debootstrap/scripts/sid 777 0 0
+slink /usr/share/debootstrap/scripts/jaunty /usr/share/debootstrap/scripts/gutsy 777 0 0
+slink /usr/share/debootstrap/scripts/hardy /usr/share/debootstrap/scripts/gutsy 777 0 0
+slink /usr/share/debootstrap/scripts/etch-m68k /usr/share/debootstrap/scripts/sid 777 0 0
+slink /usr/share/debootstrap/scripts/natty /usr/share/debootstrap/scripts/gutsy 777 0 0
+slink /usr/share/debootstrap/scripts/lenny /usr/share/debootstrap/scripts/sid 777 0 0
+slink /usr/share/debootstrap/scripts/intrepid /usr/share/debootstrap/scripts/gutsy 777 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:

@@ -1,0 +1,50 @@
+diff -Npru thttpd-2.25b/extras/htpasswd.c thttpd-2.25b-squeeze//extras/htpasswd.c
+--- thttpd-2.25b/extras/htpasswd.c	2001-12-18 16:08:08.000000000 -0800
++++ thttpd-2.25b-squeeze//extras/htpasswd.c	2011-04-08 14:42:55.000000000 -0700
+@@ -36,7 +36,7 @@ static char * strd(char *s) {
+     return(d);
+ }
+ 
+-static void getword(char *word, char *line, char stop) {
++static void tgetword(char *word, char *line, char stop) {
+     int x = 0,y;
+ 
+     for(x=0;((line[x]) && (line[x] != stop));x++)
+@@ -49,7 +49,7 @@ static void getword(char *word, char *li
+     while((line[y++] = line[x++]));
+ }
+ 
+-static int getline(char *s, int n, FILE *f) {
++static int tgetline(char *s, int n, FILE *f) {
+     register int i=0;
+ 
+     while(1) {
+@@ -66,7 +66,7 @@ static int getline(char *s, int n, FILE
+     }
+ }
+ 
+-static void putline(FILE *f,char *l) {
++static void tputline(FILE *f,char *l) {
+     int x;
+ 
+     for(x=0;l[x];x++) fputc(l[x],f);
+@@ -189,15 +189,15 @@ int main(int argc, char *argv[]) {
+     strcpy(user,argv[2]);
+ 
+     found = 0;
+-    while(!(getline(line,MAX_STRING_LEN,f))) {
++    while(!(tgetline(line,MAX_STRING_LEN,f))) {
+         if(found || (line[0] == '#') || (!line[0])) {
+-            putline(tfp,line);
++            tputline(tfp,line);
+             continue;
+         }
+         strcpy(l,line);
+-        getword(w,l,':');
++        tgetword(w,l,':');
+         if(strcmp(user,w)) {
+-            putline(tfp,line);
++            tputline(tfp,line);
+             continue;
+         }
+         else {

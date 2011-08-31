@@ -1,0 +1,91 @@
+# name: x11-common - 1:7.5+8
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# x11-common - 1:7.5+8
+dir /etc 755 0 0
+dir /etc/X11 755 0 0
+# symlink back to the X binary
+slink /etc/X11/X /usr/bin/Xorg 755 0 0
+dir /etc/X11/Xsession.d 755 0 0
+file /etc/X11/Xsession.d/99x11-common_start /etc/X11/Xsession.d/99x11-common_start 644 0 0
+file /etc/X11/Xsession.d/40x11-common_xsessionrc /etc/X11/Xsession.d/40x11-common_xsessionrc 644 0 0
+file /etc/X11/Xsession.d/20x11-common_process-args /etc/X11/Xsession.d/20x11-common_process-args 644 0 0
+file /etc/X11/Xsession.d/90x11-common_ssh-agent /etc/X11/Xsession.d/90x11-common_ssh-agent 644 0 0
+file /etc/X11/Xsession.d/30x11-common_xresources /etc/X11/Xsession.d/30x11-common_xresources 644 0 0
+file /etc/X11/Xsession.d/50x11-common_determine-startup /etc/X11/Xsession.d/50x11-common_determine-startup 644 0 0
+file /etc/X11/rgb.txt /etc/X11/rgb.txt 644 0 0
+file /etc/X11/Xreset /etc/X11/Xreset 755 0 0
+dir /etc/X11/Xreset.d 755 0 0
+#file /etc/X11/Xreset.d/README /etc/X11/Xreset.d/README 644 0 0
+file /etc/X11/Xsession /etc/X11/Xsession 755 0 0
+file /etc/X11/Xsession.options /etc/X11/Xsession.options 644 0 0
+dir /etc/X11/Xresources 755 0 0
+file /etc/X11/Xresources/x11-common /etc/X11/Xresources/x11-common 644 0 0
+dir /etc/init.d 755 0 0
+file /etc/init.d/x11-common /etc/init.d/x11-common 755 0 0
+dir /usr 755 0 0
+dir /usr/share 755 0 0
+#dir /usr/share/lintian 755 0 0
+#dir /usr/share/lintian/overrides 755 0 0
+#file /usr/share/lintian/overrides/x11-common /usr/share/lintian/overrides/x11-common 644 0 0
+dir /usr/share/X11 755 0 0
+dir /usr/bin 755 0 0
+dir /usr/lib 755 0 0
+dir /usr/lib/X11 755 0 0
+dir /usr/include 755 0 0
+dir /usr/include/X11 755 0 0
+slink /usr/share/X11/rgb.txt /etc/X11/rgb.txt 777 0 0
+slink /usr/bin/X11 /usr/bin 777 0 0
+# xserver-xorg-core - 2:1.7.7-13
+#dir /usr 755 0 0
+#dir /usr/bin 755 0 0
+file /usr/bin/Xorg /usr/bin/Xorg 755 0 0
+file /usr/bin/cvt /usr/bin/cvt 755 0 0
+file /usr/bin/gtf /usr/bin/gtf 755 0 0
+#dir /usr/lib 755 0 0
+dir /usr/lib/xorg 755 0 0
+dir /usr/lib/xorg/modules 755 0 0
+file /usr/lib/xorg/modules/libwfb.so /usr/lib/xorg/modules/libwfb.so 644 0 0
+file /usr/lib/xorg/modules/libvbe.so /usr/lib/xorg/modules/libvbe.so 644 0 0
+file /usr/lib/xorg/modules/libexa.so /usr/lib/xorg/modules/libexa.so 644 0 0
+file /usr/lib/xorg/modules/libshadowfb.so /usr/lib/xorg/modules/libshadowfb.so 644 0 0
+dir /usr/lib/xorg/modules/linux 755 0 0
+file /usr/lib/xorg/modules/linux/libfbdevhw.so /usr/lib/xorg/modules/linux/libfbdevhw.so 644 0 0
+dir /usr/lib/xorg/modules/extensions 755 0 0
+file /usr/lib/xorg/modules/extensions/librecord.so /usr/lib/xorg/modules/extensions/librecord.so 644 0 0
+file /usr/lib/xorg/modules/extensions/libglx.so /usr/lib/xorg/modules/extensions/libglx.so 644 0 0
+file /usr/lib/xorg/modules/extensions/libdbe.so /usr/lib/xorg/modules/extensions/libdbe.so 644 0 0
+file /usr/lib/xorg/modules/extensions/libdri.so /usr/lib/xorg/modules/extensions/libdri.so 644 0 0
+file /usr/lib/xorg/modules/extensions/libextmod.so /usr/lib/xorg/modules/extensions/libextmod.so 644 0 0
+file /usr/lib/xorg/modules/extensions/libdri2.so /usr/lib/xorg/modules/extensions/libdri2.so 644 0 0
+#dir /usr/lib/xorg/modules/multimedia 755 0 0
+#file /usr/lib/xorg/modules/multimedia/tda8425_drv.so /usr/lib/xorg/modules/multimedia/tda8425_drv.so 644 0 0
+#file /usr/lib/xorg/modules/multimedia/msp3430_drv.so /usr/lib/xorg/modules/multimedia/msp3430_drv.so 644 0 0
+#file /usr/lib/xorg/modules/multimedia/bt829_drv.so /usr/lib/xorg/modules/multimedia/bt829_drv.so 644 0 0
+#file /usr/lib/xorg/modules/multimedia/uda1380_drv.so /usr/lib/xorg/modules/multimedia/uda1380_drv.so 644 0 0
+#file /usr/lib/xorg/modules/multimedia/tda9885_drv.so /usr/lib/xorg/modules/multimedia/tda9885_drv.so 644 0 0
+#file /usr/lib/xorg/modules/multimedia/tda9850_drv.so /usr/lib/xorg/modules/multimedia/tda9850_drv.so 644 0 0
+#file /usr/lib/xorg/modules/multimedia/fi1236_drv.so /usr/lib/xorg/modules/multimedia/fi1236_drv.so 644 0 0
+file /usr/lib/xorg/modules/libshadow.so /usr/lib/xorg/modules/libshadow.so 644 0 0
+file /usr/lib/xorg/modules/libint10.so /usr/lib/xorg/modules/libint10.so 644 0 0
+file /usr/lib/xorg/modules/libfb.so /usr/lib/xorg/modules/libfb.so 644 0 0
+file /usr/lib/xorg/modules/libxf8_16bpp.so /usr/lib/xorg/modules/libxf8_16bpp.so 644 0 0
+file /usr/lib/xorg/modules/libvgahw.so /usr/lib/xorg/modules/libvgahw.so 644 0 0
+file /usr/lib/xorg/modules/libxaa.so /usr/lib/xorg/modules/libxaa.so 644 0 0
+#dir /usr/share 755 0 0
+#dir /usr/share/X11 755 0 0
+dir /usr/share/X11/xorg.conf.d 755 0 0
+file /usr/share/X11/xorg.conf.d/10-evdev.conf /usr/share/X11/xorg.conf.d/10-evdev.conf 644 0 0
+dir /lib 755 0 0
+dir /lib/udev 755 0 0
+dir /lib/udev/rules.d 755 0 0
+file /lib/udev/rules.d/64-xorg-xkb.rules /lib/udev/rules.d/64-xorg-xkb.rules 644 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:

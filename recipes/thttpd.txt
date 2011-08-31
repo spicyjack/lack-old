@@ -4,15 +4,23 @@
 # versioncommand: /usr/sbin/thttpd --version
 # examplecommand: /usr/sbin/thttpd -C /path/to/config/file/thttpd.conf
 #
-# build thttpd with ./configure && make
+# apply the patch, which fixes htpasswd, then dig out the config file and
+# replace config.h in the thttpd archive
+# build thttpd with:
+# ./configure --prefix=/usr/local/stow/thttpd-2.25b 
+#
+# change WEBGROUP in the top-level Makefile to "www-data";
+# Add mkdir -p $(MANDIR)/man1 mkdir -p $(MANDIR)/man8 commands to the Makefile
+# in the extras directory, then type:
+# make
 #
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 #
 # NOTE: the initramfs script is supposed to provide the thttpd config file
 # thttpd /usr/bin
-file /usr/sbin/htpasswd /usr/local/src/thttpd-2.25b/extras/htpasswd 0755 0 0
+file /usr/sbin/htpasswd /usr/local/stow/thttpd-2.25b/sbin/htpasswd 0755 0 0
 # thttpd /usr/sbin
-file /usr/sbin/thttpd /usr/local/src/thttpd-2.25b/thttpd 0755 0 0
+file /usr/sbin/thttpd /usr/local/stow/thttpd-2.25b/sbin/thttpd 0755 0 0
 # thttpd /var/www
 dir /var/www 0755 0 0

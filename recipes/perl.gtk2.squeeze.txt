@@ -1,0 +1,87 @@
+# name: libcairo-perl - 1.070-1
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# libcairo-perl - 1.070-1
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+dir /usr/lib/perl5 755 0 0
+dir /usr/lib/perl5/auto 755 0 0
+dir /usr/lib/perl5/auto/Cairo 755 0 0
+file /usr/lib/perl5/auto/Cairo/Cairo.so /usr/lib/perl5/auto/Cairo/Cairo.so 644 0 0
+dir /usr/lib/perl5/Cairo 755 0 0
+dir /usr/lib/perl5/Cairo/Install 755 0 0
+file /usr/lib/perl5/Cairo/Install/doctypes /usr/lib/perl5/Cairo/Install/doctypes 644 0 0
+file /usr/lib/perl5/Cairo/Install/cairo-perl.typemap /usr/lib/perl5/Cairo/Install/cairo-perl.typemap 644 0 0
+file /usr/lib/perl5/Cairo/Install/Files.pm /usr/lib/perl5/Cairo/Install/Files.pm 644 0 0
+file /usr/lib/perl5/Cairo/Install/cairo-perl-auto.typemap /usr/lib/perl5/Cairo/Install/cairo-perl-auto.typemap 644 0 0
+file /usr/lib/perl5/Cairo.pm /usr/lib/perl5/Cairo.pm 644 0 0
+dir /usr/share 755 0 0
+# libpango-perl - 1.221-2
+#dir /usr 755 0 0
+#dir /usr/lib 755 0 0
+#dir /usr/lib/perl5 755 0 0
+dir /usr/lib/perl5/Pango 755 0 0
+dir /usr/lib/perl5/Pango/Install 755 0 0
+file /usr/lib/perl5/Pango/Install/Files.pm /usr/lib/perl5/Pango/Install/Files.pm 644 0 0
+file /usr/lib/perl5/Pango/Install/doctypes /usr/lib/perl5/Pango/Install/doctypes 644 0 0
+file /usr/lib/perl5/Pango/Install/pango.typemap /usr/lib/perl5/Pango/Install/pango.typemap 644 0 0
+file /usr/lib/perl5/Pango/Install/pango-perl.typemap /usr/lib/perl5/Pango/Install/pango-perl.typemap 644 0 0
+dir /usr/lib/perl5/Pango/Cairo 755 0 0
+file /usr/lib/perl5/Pango.pm /usr/lib/perl5/Pango.pm 644 0 0
+dir /usr/lib/perl5/auto 755 0 0
+dir /usr/lib/perl5/auto/Pango 755 0 0
+file /usr/lib/perl5/auto/Pango/Pango.so /usr/lib/perl5/auto/Pango/Pango.so 644 0 0
+# libglib-perl - 2:1.223-1
+#dir /usr 755 0 0
+#dir /usr/share 755 0 0
+#dir /usr/lib 755 0 0
+#dir /usr/lib/perl5 755 0 0
+file /usr/lib/perl5/Glib.pm /usr/lib/perl5/Glib.pm 644 0 0
+dir /usr/lib/perl5/Glib 755 0 0
+dir /usr/lib/perl5/Glib/Param 755 0 0
+dir /usr/lib/perl5/Glib/Object 755 0 0
+file /usr/lib/perl5/Glib/Object/Subclass.pm /usr/lib/perl5/Glib/Object/Subclass.pm 644 0 0
+file /usr/lib/perl5/Glib/CodeGen.pm /usr/lib/perl5/Glib/CodeGen.pm 644 0 0
+file /usr/lib/perl5/Glib/ParseXSDoc.pm /usr/lib/perl5/Glib/ParseXSDoc.pm 644 0 0
+file /usr/lib/perl5/Glib/MakeHelper.pm /usr/lib/perl5/Glib/MakeHelper.pm 644 0 0
+file /usr/lib/perl5/Glib/GenPod.pm /usr/lib/perl5/Glib/GenPod.pm 644 0 0
+dir /usr/lib/perl5/Glib/Install 755 0 0
+file /usr/lib/perl5/Glib/Install/typemap /usr/lib/perl5/Glib/Install/typemap 644 0 0
+file /usr/lib/perl5/Glib/Install/Files.pm /usr/lib/perl5/Glib/Install/Files.pm 644 0 0
+file /usr/lib/perl5/Glib/Install/doctypes /usr/lib/perl5/Glib/Install/doctypes 644 0 0
+dir /usr/lib/perl5/auto 755 0 0
+dir /usr/lib/perl5/auto/Glib 755 0 0
+file /usr/lib/perl5/auto/Glib/Glib.so /usr/lib/perl5/auto/Glib/Glib.so 644 0 0
+# libgtk2-perl - 2:1.222-1
+#dir /usr 755 0 0
+#dir /usr/share 755 0 0
+#dir /usr/lib 755 0 0
+#dir /usr/lib/perl5 755 0 0
+dir /usr/lib/perl5/auto 755 0 0
+dir /usr/lib/perl5/auto/Gtk2 755 0 0
+file /usr/lib/perl5/auto/Gtk2/Gtk2.so /usr/lib/perl5/auto/Gtk2/Gtk2.so 644 0 0
+dir /usr/lib/perl5/Gtk2 755 0 0
+file /usr/lib/perl5/Gtk2/SimpleList.pm /usr/lib/perl5/Gtk2/SimpleList.pm 644 0 0
+file /usr/lib/perl5/Gtk2/Pango.pm /usr/lib/perl5/Gtk2/Pango.pm 644 0 0
+file /usr/lib/perl5/Gtk2/CodeGen.pm /usr/lib/perl5/Gtk2/CodeGen.pm 644 0 0
+file /usr/lib/perl5/Gtk2/TestHelper.pm /usr/lib/perl5/Gtk2/TestHelper.pm 644 0 0
+file /usr/lib/perl5/Gtk2/Helper.pm /usr/lib/perl5/Gtk2/Helper.pm 644 0 0
+file /usr/lib/perl5/Gtk2/SimpleMenu.pm /usr/lib/perl5/Gtk2/SimpleMenu.pm 644 0 0
+dir /usr/lib/perl5/Gtk2/Gdk 755 0 0
+file /usr/lib/perl5/Gtk2/Gdk/Keysyms.pm /usr/lib/perl5/Gtk2/Gdk/Keysyms.pm 644 0 0
+dir /usr/lib/perl5/Gtk2/Install 755 0 0
+file /usr/lib/perl5/Gtk2/Install/gdk.typemap /usr/lib/perl5/Gtk2/Install/gdk.typemap 644 0 0
+file /usr/lib/perl5/Gtk2/Install/Files.pm /usr/lib/perl5/Gtk2/Install/Files.pm 644 0 0
+file /usr/lib/perl5/Gtk2/Install/gtk2perl.typemap /usr/lib/perl5/Gtk2/Install/gtk2perl.typemap 644 0 0
+file /usr/lib/perl5/Gtk2/Install/gtk.typemap /usr/lib/perl5/Gtk2/Install/gtk.typemap 644 0 0
+file /usr/lib/perl5/Gtk2/Install/doctypes /usr/lib/perl5/Gtk2/Install/doctypes 644 0 0
+file /usr/lib/perl5/Gtk2.pm /usr/lib/perl5/Gtk2.pm 644 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:

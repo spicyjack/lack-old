@@ -3,7 +3,7 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 # make sure you get busybox in each project's specific initramfs file list now
-file /bin/busybox :TEMP_DIR:/busybox-1.18.3-x86 0755 0 0
+file /bin/busybox :TEMP_DIR:/busybox-1.18.5-x86 0755 0 0
 # busybox getopt hides in /bin
 slink /usr/bin/getopt /bin/getopt 0755 0 0
 # /etc
@@ -20,6 +20,17 @@ file /etc/shadow :BUILD_BASE:/common/etcfiles/shadow 0640 0 0
 file /etc/sudoers :BUILD_BASE:/common/etcfiles/sudoers 0440 0 0
 # the banner-printer-outer
 file /etc/scripts/start_shell.sh :BUILD_BASE:/common/scripts/start_shell.sh 0755 0 0
+# /etc/network (directory already exists in _base)
+dir /etc/network/if-down.d 0755 0 0
+dir /etc/network/if-post-down.d 0755 0 0
+dir /etc/network/if-pre-up.d 0755 0 0
+dir /etc/network/if-up.d 0755 0 0
+file /etc/network/interfaces :PROJECT_DIR:/etcfiles/network.interfaces 0644 0 0
+dir /etc/network/run 0755 0 0
+file /etc/network/run/ifstate /etc/network/run/ifstate 0644 0 0
+# /usr/share/udhcpc for udhcpc script
+dir /usr/share/udhcpc 0755 0 0
+file /usr/share/udhcpc/default.script :BUILD_BASE:/common/scripts/udhcpc.default.script 0755 0 0
 # /sbin
 file /sbin/modprobe /sbin/modprobe 0755 0 0
 # /usr/bin

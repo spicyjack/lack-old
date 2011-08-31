@@ -1,0 +1,19 @@
+# name: libfltk1.1 - 1.1.10-2+b1
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# libfltk1.1 - 1.1.10-2+b1
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libfltk_forms.so.1.1 /usr/lib/libfltk_forms.so.1.1 644 0 0
+file /usr/lib/libfltk_gl.so.1.1 /usr/lib/libfltk_gl.so.1.1 644 0 0
+file /usr/lib/libfltk.so.1.1 /usr/lib/libfltk.so.1.1 644 0 0
+file /usr/lib/libfltk_images.so.1.1 /usr/lib/libfltk_images.so.1.1 644 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:

@@ -51,6 +51,18 @@ loopback_test () {
     LOOPBACK_TEST=$(/sbin/losetup -a | wc -l | tr -d '\n')
 } # loopback_test
 
+show_netdev_ip () {
+# BOOTCHEAT netdev= - Network device to bring up in the initramfs image
+    file_parse "/proc/cmdline" "netdev"
+    NETDEV="netdev"
+    if [ ! -z $PARSED ]; then
+        NETDEV=$PARSED
+    fi
+    colorize_nl $S_TIP "${BASENAME} - current IP address of ${NETDEV} is:"
+    colorize $S_TIP "${BASENAME} - "
+    /bin/ip addr show
+} # loopback_test
+
 case "$ACTION" in
   vars)
     echo "${BASENAME}:"
@@ -67,7 +79,13 @@ case "$ACTION" in
     file_parse "/proc/cmdline" "thumbdev"
     THUMB_DEV=$PARSED
     #HOSTNAME=$(/bin/cat /etc/hostname | /usr/bin/tr -d '\n')
-    get_hostname # from ant_functions
+    get_hostname # from lack_functions
+    # allow for alternate key directories
+    if [ "x${PROMPT}" != "x" ]; then
+        KEY_DIR=$PROMPT
+    else
+        KEY_DIR=$HOSTNAME
+    fi
     KEY_MOUNT="/mnt/flash/keyhosts"
     # write a pid file so we can be killed by the web script if necessary
     write_child_pid $BASENAME $$
@@ -79,6 +97,7 @@ case "$ACTION" in
     # FIXME test for multiple directories here
     # /mnt/flash/keyhosts/$HOSTNAME, /mnt/flash/keys
     loopback_test
+    show_netdev_ip
     echo
     colorize_nl $S_TIP \
         "#### #   #  #### #### ####  ######   ##  # #### ##   # ## "
@@ -100,7 +119,7 @@ case "$ACTION" in
     echo
     # start the spinner loop
     KEY_TIMER=0
-    while [ ! -d $KEY_MOUNT/$HOSTNAME ];
+    while [ ! -d $KEY_MOUNT/$KEY_DIR ];
     do
         # we already have a loopback device mounted from somewhere else
         #if [ $LOOPBACK_TEST = 1 ]; then mount_success; fi
@@ -126,12 +145,14 @@ case "$ACTION" in
     # get the key ID of the gnupg key we're going to use for mounting the
     # loopback device
     # TODO
+    # - add the option somehow to search the keyhosts folder by key ID instead
+    # of hostname
     # - add the key randomizer here if the init script requests it, or if it
     # requests a specific key ID, use that instead
     # - test for secring/pubring below specifcally, throw a warning if they're
     # not found; if you're using random keys, you'll copy the keys into
     # secring/pubring yourself prior to doing the test
-    MASTER_KEY=$(/usr/bin/gpg --homedir $KEY_MOUNT/$HOSTNAME \
+    MASTER_KEY=$(/usr/bin/gpg --homedir $KEY_MOUNT/$KEY_DIR \
         --list-secret-keys --lock-never --trust-model=always 2>/dev/null \
         | grep "^sec" | sed 's/^sec .*1024D\/\(.*\) .*$/\1/' | tr -d '\n')
      # get the path to the real root device which will be mounted to /dev/loop0
@@ -151,7 +172,7 @@ case "$ACTION" in
     # - add a thingy here where a random key is selected in order to unlock the
     # user disk key
     # - add getopts to take the key ID as an option
-    # - move the losetup command below to ant_functions, then create a stub
+    # - move the losetup command below to lack_functions, then create a stub
     # script that can be used directly from the initramfs image when you are
     # running from the initramfs image
     # - add a limit on the number of times the user can enter the correct
@@ -171,8 +192,8 @@ case "$ACTION" in
         colorize_nl $S_TIP "Running losetup to attach loopback device..."
         # echo the passphrase read in to STDIN of losetup
         LOSETUP_CMD=$(echo "${PASSPHRASE}" \
-            | /sbin/losetup -G ${KEY_MOUNT}/${HOSTNAME} \
-            -K ${KEY_MOUNT}/${HOSTNAME}/disk_key.gpg -p 0 \
+            | /sbin/losetup -G ${KEY_MOUNT}/${KEY_DIR} \
+            -K ${KEY_MOUNT}/${KEY_DIR}/disk_key.gpg -p 0 \
             -e AES${AESKEY} /dev/loop0 ${ROOT_DEV} 2>&1)
         # was 'losetup' successful?  break out of this while loop
         # FIXME this will pass regardless of whether or not a loopback mount

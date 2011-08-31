@@ -1,4 +1,4 @@
-# $Id: generate_recipe.sh,v 1.8 2009-07-31 23:47:23 brian Exp $
+# name: gtk2-engines-cleanice - 2.4.1-3
 # description: example package with comments
 # depends: _base otherpackage1 otherpackage2
 # helpcommand: /usr/bin/somebin --help
@@ -9,23 +9,28 @@
 # file <name> <source> <mode> <uid> <gid>
 # slink <new name> <original file> <mode> <uid> <gid>
 #
-# gtk2-engines-cleanice
+# gtk2-engines-cleanice - 2.4.1-3
+dir /usr 755 0 0
 dir /usr/lib 755 0 0
 dir /usr/lib/gtk-2.0 755 0 0
 dir /usr/lib/gtk-2.0/2.10.0 755 0 0
 dir /usr/lib/gtk-2.0/2.10.0/engines 755 0 0
 file /usr/lib/gtk-2.0/2.10.0/engines/libcleanice.so /usr/lib/gtk-2.0/2.10.0/engines/libcleanice.so 644 0 0
-file /usr/lib/gtk-2.0/2.10.0/engines/libcleanice.la /usr/lib/gtk-2.0/2.10.0/engines/libcleanice.la 644 0 0
+dir /usr/share 755 0 0
 dir /usr/share/themes 755 0 0
+dir /usr/share/themes/CleanIce 755 0 0
+dir /usr/share/themes/CleanIce/metacity-1 755 0 0
+file /usr/share/themes/CleanIce/metacity-1/metacity-theme-1.xml /usr/share/themes/CleanIce/metacity-1/metacity-theme-1.xml 644 0 0
+dir /usr/share/themes/CleanIce/gtk-2.0 755 0 0
+file /usr/share/themes/CleanIce/gtk-2.0/gtkrc /usr/share/themes/CleanIce/gtk-2.0/gtkrc 644 0 0
+dir /usr/share/themes/CleanIce-Marble 755 0 0
+dir /usr/share/themes/CleanIce-Marble/gtk-2.0 755 0 0
+file /usr/share/themes/CleanIce-Marble/gtk-2.0/gtkrc /usr/share/themes/CleanIce-Marble/gtk-2.0/gtkrc 644 0 0
+file /usr/share/themes/CleanIce-Marble/README /usr/share/themes/CleanIce-Marble/README 644 0 0
 dir /usr/share/themes/CleanIce-Debian 755 0 0
 dir /usr/share/themes/CleanIce-Debian/gtk-2.0 755 0 0
 file /usr/share/themes/CleanIce-Debian/gtk-2.0/gtkrc /usr/share/themes/CleanIce-Debian/gtk-2.0/gtkrc 644 0 0
 dir /usr/share/themes/CleanIce-Dark 755 0 0
 dir /usr/share/themes/CleanIce-Dark/gtk-2.0 755 0 0
 file /usr/share/themes/CleanIce-Dark/gtk-2.0/gtkrc /usr/share/themes/CleanIce-Dark/gtk-2.0/gtkrc 644 0 0
-dir /usr/share/themes/CleanIce 755 0 0
-dir /usr/share/themes/CleanIce/gtk-2.0 755 0 0
-file /usr/share/themes/CleanIce/gtk-2.0/gtkrc /usr/share/themes/CleanIce/gtk-2.0/gtkrc 644 0 0
-dir /usr/share/themes/CleanIce/metacity-1 755 0 0
-file /usr/share/themes/CleanIce/metacity-1/metacity-theme-1.xml /usr/share/themes/CleanIce/metacity-1/metacity-theme-1.xml 644 0 0
-# vi: set sw=4 ts=4 paste:
+# vi: set shiftwidth=4 tabstop=4 paste:

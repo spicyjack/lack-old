@@ -1,0 +1,43 @@
+# name: xinit - 1.2.0-2
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+# a fake tempfile for the X startup scripts
+dir /bin 0755 0 0
+file /bin/fake-tempfile.sh :BUILD_BASE:/common/scripts/fake-tempfile.sh 755 0 0
+slink /bin/tempfile /bin/fake-tempfile.sh 755 0 0
+# xinit - 1.2.0-2
+dir /usr 755 0 0
+#dir /usr/share 755 0 0
+dir /usr/bin 755 0 0
+# copied to :BUILD_BASE: due to the usage of 'mktemp --tmpdir' needing to be
+# changed so it can run with busybox
+#file /usr/bin/startx /usr/bin/startx 755 0 0
+file /usr/bin/startx :BUILD_BASE:/common/scripts/startx 755 0 0
+file /usr/bin/xinit /usr/bin/xinit 755 0 0
+dir /etc 755 0 0
+dir /etc/X11 755 0 0
+dir /etc/X11/xinit 755 0 0
+file /etc/X11/xinit/xinitrc /etc/X11/xinit/xinitrc 644 0 0
+file /etc/X11/xinit/xserverrc /etc/X11/xinit/xserverrc 755 0 0
+# xserver-xorg - 1:7.5+8
+dir /usr 755 0 0
+dir /usr/bin 755 0 0
+file /usr/bin/X /usr/bin/X 6755 0 0
+file /usr/bin/dexconf /usr/bin/dexconf 755 0 0
+#dir /usr/share 755 0 0
+#dir /usr/share/lintian 755 0 0
+#dir /usr/share/lintian/overrides 755 0 0
+#file /usr/share/lintian/overrides/xserver-xorg /usr/share/lintian/overrides/xserver-xorg 644 0 0
+# xauth - 1:1.0.4-1
+file /usr/bin/xauth /usr/bin/xauth 755 0 0
+# util-linux - 2.17.2-9
+file /usr/bin/mcookie /usr/bin/mcookie 755 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:
