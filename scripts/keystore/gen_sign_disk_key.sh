@@ -239,7 +239,7 @@ if [ $QUIET -gt 0 ]; then echo "- Writing keys to ${OUTPUT_DIR}"; fi
 # script to help sort keys
 if [ ! -d $OUTPUT_DIR ]; then
     mkdir -p $OUTPUT_DIR
-    if [ $? ­ne 0 ]; then
+    if [ $? -gt 0 ]; then
         echo "ERROR: could not create directory $OUTPUT_DIR"
         exit 1
     fi # if [ $? ­ne 0 ]
