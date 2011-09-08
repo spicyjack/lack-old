@@ -275,7 +275,18 @@ else
 	OUTDIR=$KEY_OUT_DIR
 fi
 
-if [ $QUIET -gt 0 ]; then echo "- Writing keys to ${OUTDIR}"; fi
+if [ $QUIET -gt 0 ]; then echo "- Writing keys to '${OUTDIR}'"; fi
+
+# script to help sort keys
+if [ ! -d $OUTDIR ]; then
+    if [ $QUIET -gt 0 ]; then echo "- Creating directory '${OUTDIR}'"; fi
+    mkdir -p $OUTDIR
+    RETVAL=$?
+    if [ $RETVAL -gt 0 ]; then
+        echo "ERROR: could not create directory '$OUTDIR'"
+        exit 1
+    fi # if [ $? ­ne 0 ]
+fi # if [ ! -d $OUTDIR ]
 
 # escape forward slashes for the later sed call
 SED_OUTDIR=$(echo $OUTDIR | sed 's/\//\\\//g')
