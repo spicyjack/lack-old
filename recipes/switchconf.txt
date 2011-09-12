@@ -1,0 +1,26 @@
+# name: switchconf - 0.0.9-2
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+dir /etc 755 0 0
+dir /etc/init.d 755 0 0
+file /etc/init.d/switchconf /etc/init.d/switchconf 755 0 0
+dir /etc/switchconf 755 0 0
+dir /etc/switchconf/before.d 755 0 0
+file /etc/switchconf/before.d/20pcmcia /etc/switchconf/before.d/20pcmcia 755 0 0
+dir /etc/switchconf/after.d 755 0 0
+file /etc/switchconf/after.d/20pcmcia /etc/switchconf/after.d/20pcmcia 755 0 0
+file /etc/switchconf/conf /etc/switchconf/conf 644 0 0
+#dir /etc/logrotate.d 755 0 0
+#file /etc/logrotate.d/switchconf /etc/logrotate.d/switchconf 644 0 0
+dir /usr 755 0 0
+dir /usr/sbin 755 0 0
+file /usr/sbin/switchconf /usr/sbin/switchconf 755 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:
