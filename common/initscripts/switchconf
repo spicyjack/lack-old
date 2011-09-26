@@ -14,11 +14,11 @@ fi # if ! [ -e $LACK_FUNCTIONS ]
 source $LACK_FUNCTIONS
 
 ACTION=$1
-BINARY=/bin/somebinary
+BINARY="/usr/sbin/switchconf"
 [ -x "$BINARY" ] || exit 1
 BASENAME=$(/usr/bin/basename $BINARY)
-DESC="binary program"
-BINARY_OPTS="-r -c"
+DESC="switchconf"
+BINARY_OPTS=""
 
 case "$ACTION" in
   vars)
