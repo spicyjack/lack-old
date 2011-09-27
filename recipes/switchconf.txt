@@ -20,7 +20,10 @@ dir /etc/switchconf/after.d 755 0 0
 file /etc/switchconf/conf /etc/switchconf/conf 644 0 0
 dir /usr 755 0 0
 dir /usr/sbin 755 0 0
-file /usr/sbin/switchconf /usr/sbin/switchconf 755 0 0
+# the stock version of switchconf uses the -v switch, which isn't supported by
+# the busybox version
+#file /usr/sbin/switchconf /usr/sbin/switchconf 755 0 0
+file /usr/sbin/switchconf :BUILD_BASE:/common/scripts/switchconf 755 0 0
 dir /usr/share 755 0 0
 # liblockfile1 - 1.08-4
 dir /usr/bin 755 0 0
