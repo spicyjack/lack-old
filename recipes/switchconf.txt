@@ -14,13 +14,19 @@ dir /etc/init.d 755 0 0
 file /etc/init.d/switchconf /etc/init.d/switchconf 755 0 0
 dir /etc/switchconf 755 0 0
 dir /etc/switchconf/before.d 755 0 0
-file /etc/switchconf/before.d/20pcmcia /etc/switchconf/before.d/20pcmcia 755 0 0
+#file /etc/switchconf/before.d/20pcmcia /etc/switchconf/before.d/20pcmcia 755 0 0
 dir /etc/switchconf/after.d 755 0 0
-file /etc/switchconf/after.d/20pcmcia /etc/switchconf/after.d/20pcmcia 755 0 0
+#file /etc/switchconf/after.d/20pcmcia /etc/switchconf/after.d/20pcmcia 755 0 0
 file /etc/switchconf/conf /etc/switchconf/conf 644 0 0
-#dir /etc/logrotate.d 755 0 0
-#file /etc/logrotate.d/switchconf /etc/logrotate.d/switchconf 644 0 0
 dir /usr 755 0 0
 dir /usr/sbin 755 0 0
 file /usr/sbin/switchconf /usr/sbin/switchconf 755 0 0
+dir /usr/share 755 0 0
+# liblockfile1 - 1.08-4
+dir /usr/bin 755 0 0
+file /usr/bin/dotlockfile /usr/bin/dotlockfile 2755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/liblockfile.so.1.0 /usr/lib/liblockfile.so.1.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/liblockfile.so.1 /usr/lib/liblockfile.so.1.0 777 0 0
 # vi: set shiftwidth=4 tabstop=4 paste:

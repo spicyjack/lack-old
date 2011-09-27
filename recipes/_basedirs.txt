@@ -36,6 +36,7 @@ dir /usr/share/locale 0755 0 0
 dir /tmp/ 1777 0 0
 dir /var 0755 0 0
 dir /var/lib 0755 0 0
+dir /var/lock/ 1777 0 0
 dir /var/log 0755 0 0
 dir /var/run 0755 0 0
 # for screen
