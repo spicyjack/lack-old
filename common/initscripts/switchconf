@@ -27,10 +27,20 @@ case "$ACTION" in
     exit 0
   ;;
   start)
-    colorize $S_TIP "${BASENAME}: Starting ${DESC}"
-    $BINARY $BINARY_OPTS
-    check_exit_status $? $BASENAME
-    colorize_nl $S_SUCCESS "$SUCCESS"
+    file_parse "/proc/cmdline" "switchconf"
+    SWITCHCONF_CFG=$PARSED
+    if [ "x${SWITCHCONF}" != "x" ]; then
+        colorize $S_TIP \
+            "${BASENAME}: Starting ${DESC} with config ${SWITCHCONF}"
+        $BINARY $SWITCHCONF_CFG
+        check_exit_status $? $BASENAME
+        colorize_nl $S_SUCCESS "$SUCCESS"
+    else
+        colorize_nl $S_FAILURE \
+            "${BASENAME}: 'switchconf' not set at boot prompt!"
+        colorize_nl $S_FAILURE \
+            "${BASENAME}: cannot run 'switchconf'"
+    fi
     ;;
   stop)
     colorize $S_TIP "${BASENAME}: Stopping ${DESC}"
