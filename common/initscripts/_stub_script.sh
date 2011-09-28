@@ -30,7 +30,6 @@ case "$ACTION" in
     colorize $S_TIP "${BASENAME}: Starting ${DESC}"
     $BINARY $BINARY_OPTS
     check_exit_status $? $BASENAME
-    colorize_nl $S_SUCCESS "$SUCCESS"
     ;;
   stop)
     colorize $S_TIP "${BASENAME}: Stopping ${DESC}"
