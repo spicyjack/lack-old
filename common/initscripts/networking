@@ -42,7 +42,7 @@ dhcp_up () {
     colorize $S_TIP "$BASENAME: Enabling ethernet interface '${NETDEV}'"
     /bin/ip link set ${NETDEV} up
     check_exit_status $? $BASENAME
-    colorize $S_TIP "$BASENAME: Starting $DESC in the background"
+    colorize $S_TIP "$BASENAME: Starting DHCP client on '${NETDEV}'"
     #$BINARY $BINARY_OPTS >> $DEBUG_LOG 2>&1
     #/sbin/udhcpc -i eth0 -p /var/run/udhcpc.eth0.pid >> $DEBUG_LOG 2>&1 &
     /sbin/dhclient -v -pf /var/run/udhcpc.${NETDEV}.pid ${NETDEV} \
