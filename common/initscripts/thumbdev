@@ -24,6 +24,16 @@ THUMB_DEV=$PARSED
 get_hostname # from ant_functions
 KEY_MOUNT="/mnt/flash/keyhosts"
 
+file_parse "/proc/cmdline" "prompt"
+PROMPT=$PARSED
+
+# allow for alternate key directories
+if [ "x${PROMPT}" != "x" ]; then
+    KEY_DIR=$PROMPT
+else
+    KEY_DIR=$HOSTNAME
+fi
+
 case "$ACTION" in
   vars)
     echo "${BASENAME}:"
@@ -41,7 +51,7 @@ case "$ACTION" in
     ;;
   stop)
     # unmount the thumbdrive if it's mounted
-    if [ -d $KEY_MOUNT/$HOSTNAME ]; then
+    if [ -d $KEY_MOUNT/$KEY_DIR ]; then
         colorize $S_TIP "$BASENAME: Unmounting Thumbdrive device"
         /bin/umount $THUMB_DEV
         check_exit_status $? "$BASENAME: unmounting Thumbdrive device"
@@ -52,9 +62,9 @@ case "$ACTION" in
                 "## Please remove the Thumbdrive from the USB port ##"
             colorize_nl $S_SUCCESS \
                 "####################################################"
-            sleep 1
-        fi # if [ $? -eq 0 ]; then
-    fi # if [ -d "/mnt/flash/keys" ]; then
+            sleep 2
+        fi
+    fi 
     ;;
   restart|force-reload)
     # noop

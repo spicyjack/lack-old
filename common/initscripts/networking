@@ -46,7 +46,7 @@ dhcp_up () {
     #$BINARY $BINARY_OPTS >> $DEBUG_LOG 2>&1
     #/sbin/udhcpc -i eth0 -p /var/run/udhcpc.eth0.pid >> $DEBUG_LOG 2>&1 &
     /sbin/dhclient -v -pf /var/run/udhcpc.${NETDEV}.pid ${NETDEV} \
-        >> $DEBUG_LOG 2>&1 &
+        >> $DEBUG_LOG 2>&1
     check_exit_status $? $BASENAME
 } # dhcp_up ()
 

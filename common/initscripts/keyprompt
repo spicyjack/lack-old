@@ -24,6 +24,7 @@ ACTION=$1
 # start the random key-picker and throbber unless
 # prompt is set to 'no'
 # BOOTCHEAT prompt=no - don't start the disk decryption toolchain
+# BOOTCHEAT prompt=KEY_ID - find key dir using key ID instead of the hostname
 file_parse "/proc/cmdline" "prompt"
 PROMPT=$PARSED
 
