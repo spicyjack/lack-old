@@ -37,7 +37,7 @@ case "$ACTION" in
     ;;
   stop)
     colorize $S_TIP "$BASENAME: Stopping $DESC"
-    STUNNEL_PID=$(cat /var/run/stunnel.pid >> ${DEBUG_LOG} 2>&1)
+    STUNNEL_PID=$(cat /var/run/stunnel.pid)
     /bin/kill -TERM $STUNNEL_PID
     check_exit_status $? $BASENAME
     ;;
