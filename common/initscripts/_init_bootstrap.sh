@@ -121,7 +121,6 @@ fi
 # system's init binary
 for INITSCRIPT in /etc/stop/*; do
     sh $INITSCRIPT stop
-    check_exit_status $? $INITSCRIPT
 done
 
 colorize_nl $S_INFO "=== End :PROJECT_NAME: /init script ==="
