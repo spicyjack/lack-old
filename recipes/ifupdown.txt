@@ -1,0 +1,30 @@
+# name: ifupdown - 0.6.10
+# description: example package with comments
+# depends: _base otherpackage1 otherpackage2
+# helpcommand: /usr/bin/somebin --help
+# versioncommand: /usr/bin/somebin --version
+# examplecommand: /usr/bin/somebin -x -y -z 10
+#
+# dir <name> <mode> <uid> <gid>
+# file <name> <source> <mode> <uid> <gid>
+# slink <new name> <original file> <mode> <uid> <gid>
+#
+dir /sbin 755 0 0
+file /sbin/ifup /sbin/ifup 755 0 0
+file /sbin/ifdown /sbin/ifdown 755 0 0
+#dir /usr 755 0 0
+#dir /usr/share 755 0 0
+#dir /usr/share/ifupdown 755 0 0
+#file /usr/share/ifupdown/upgrade-from-0.5.x.pl /usr/share/ifupdown/upgrade-from-0.5.x.pl 755 0 0
+dir /etc 755 0 0
+#dir /etc/init.d 755 0 0
+#file /etc/init.d/ifupdown /etc/init.d/ifupdown 755 0 0
+#file /etc/init.d/ifupdown-clean /etc/init.d/ifupdown-clean 755 0 0
+dir /etc/network 755 0 0
+dir /etc/network/if-up.d 755 0 0
+dir /etc/network/if-post-down.d 755 0 0
+dir /etc/network/if-down.d 755 0 0
+dir /etc/network/if-pre-up.d 755 0 0
+#dir /etc/default 755 0 0
+#file /etc/default/ifupdown /etc/default/ifupdown 644 0 0
+# vi: set shiftwidth=4 tabstop=4 paste:
