@@ -1,6 +1,6 @@
 # name: ifupdown - 0.6.10
 # description: example package with comments
-# depends: _base otherpackage1 otherpackage2
+# depends: run-parts
 # helpcommand: /usr/bin/somebin --help
 # versioncommand: /usr/bin/somebin --version
 # examplecommand: /usr/bin/somebin -x -y -z 10
