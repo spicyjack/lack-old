@@ -27,7 +27,9 @@ dir /etc/network/if-pre-up.d 0755 0 0
 dir /etc/network/if-up.d 0755 0 0
 file /etc/network/interfaces :PROJECT_DIR:/etcfiles/network.interfaces 0644 0 0
 dir /etc/network/run 0755 0 0
-file /etc/network/run/ifstate /etc/network/run/ifstate 0644 0 0
+# ifstate is the statefile for ifupdown; if you copy it, you could get
+# unexpected results from ifupdown
+#file /etc/network/run/ifstate /etc/network/run/ifstate 0644 0 0
 # /usr/share/udhcpc for udhcpc script
 dir /usr/share/udhcpc 0755 0 0
 file /usr/share/udhcpc/default.script :BUILD_BASE:/common/scripts/udhcpc.default.script 0755 0 0
