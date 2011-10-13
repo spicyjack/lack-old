@@ -108,11 +108,13 @@ want_shell () {
     if [ $DEBUG ]; then
         colorize $S_INFO "Execute debug shell? [Y/n] "
         read ANSWER
+        # if neither N nor n... (needs an 'and' -a)
         if [ "x${ANSWER}" != "xn" -a "x${ANSWER}" != "xN" ]; then
             $BB stty sane
             $BB echo; $BB echo
             colorize_nl $S_SUCCESS "Running /bin/sh (NetBSD ash Shell)"
-            exec /bin/sh
+            exec $BB ash
+            $BB echo "OOPS! We shouldn't have gotten here"
             exit 1 # shouldn't get here
         fi # if [ "${ANSWER}" = "y" -o "${ANSWER}" = "Y" ];
     fi # if [ $DEBUG ]
