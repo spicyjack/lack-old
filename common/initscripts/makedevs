@@ -18,7 +18,7 @@ BINARY=/sbin/makedevs
 [ -x "$BINARY" ] || exit 1
 BASENAME=$(/usr/bin/basename $BINARY)
 DESC="Creating device files in /dev"
-BINARY_OPTS="-d /etc/devs.txt / "
+BINARY_OPTS="-d /etc/devs.txt /"
 
 case "$ACTION" in
   vars)
@@ -33,11 +33,9 @@ case "$ACTION" in
 	;;
   stop)
     # noop
-    :
 	;;
   restart|force-reload)
     # noop
-    :
 	;;
   *)
 	echo "Usage: $SCRIPTNAME {start|stop|restart|force-reload}" >&2
