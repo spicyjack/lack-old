@@ -40,8 +40,6 @@ case "$ACTION" in
     exit 0
   ;;
   start)
-    colorize_nl $S_TIP "$BASENAME: 3 second sleep to allow interface to settle"
-    sleep 3
     colorize $S_TIP "$BASENAME: Running '${BINARY} ${BINARY_OPTS}'"
     $BINARY $BINARY_OPTS >> $DEBUG_LOG 2>&1
     check_exit_status $? $BASENAME
