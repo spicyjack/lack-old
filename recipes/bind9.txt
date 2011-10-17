@@ -42,11 +42,11 @@ file /etc/bind/db.127 /etc/bind/db.127 644 0 0
 #dir /etc/ufw/applications.d 755 0 0
 #file /etc/ufw/applications.d/bind9 /etc/ufw/applications.d/bind9 644 0 0
 dir /usr 755 0 0
-dir /usr/bin 755 0 0
-dir /usr/lib 755 0 0
-dir /usr/share 755 0 0
-dir /usr/share/bind9 755 0 0
-file /usr/share/bind9/bind9-default.md5sum /usr/share/bind9/bind9-default.md5sum 644 0 0
+#dir /usr/bin 755 0 0
+#dir /usr/lib 755 0 0
+#dir /usr/share 755 0 0
+#dir /usr/share/bind9 755 0 0
+#file /usr/share/bind9/bind9-default.md5sum /usr/share/bind9/bind9-default.md5sum 644 0 0
 dir /usr/sbin 755 0 0
 #file /usr/sbin/isc-hmac-fixup /usr/sbin/isc-hmac-fixup 755 0 0
 file /usr/sbin/named /usr/sbin/named 755 0 0
@@ -75,4 +75,77 @@ file /usr/sbin/dnssec-keygen /usr/sbin/dnssec-keygen 755 0 0
 file /usr/sbin/dnssec-signzone /usr/sbin/dnssec-signzone 755 0 0
 file /usr/sbin/rndc-confgen /usr/sbin/rndc-confgen 755 0 0
 slink /usr/sbin/named-compilezone /usr/sbin/named-checkzone 777 0 0
+# libbind9-60 - 1:9.7.3.dfsg-1~squeeze3
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libbind9.so.60.0.4 /usr/lib/libbind9.so.60.0.4 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libbind9.so.60 /usr/lib/libbind9.so.60.0.4 777 0 0
+# libcap2 - 1:2.19-3
+dir /usr 755 0 0
+dir /usr/share 755 0 0
+dir /lib 755 0 0
+file /lib/libcap.so.2.19 /lib/libcap.so.2.19 644 0 0
+slink /lib/libcap.so.2 /lib/libcap.so.2.19 777 0 0
+# libdb4.8 - 4.8.30-2
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libdb-4.8.so /usr/lib/libdb-4.8.so 644 0 0
+dir /usr/share 755 0 0
+# libdns69 - 1:9.7.3.dfsg-1~squeeze3
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libdns.so.69.1.2 /usr/lib/libdns.so.69.1.2 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libdns.so.69 /usr/lib/libdns.so.69.1.2 777 0 0
+# libgssapi-krb5-2 - 1.8.3+dfsg-4squeeze1
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libgssapi_krb5.so.2.2 /usr/lib/libgssapi_krb5.so.2.2 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libgssapi_krb5.so.2 /usr/lib/libgssapi_krb5.so.2.2 777 0 0
+# libisc62 - 1:9.7.3.dfsg-1~squeeze3
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libisc.so.62.1.1 /usr/lib/libisc.so.62.1.1 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libisc.so.62 /usr/lib/libisc.so.62.1.1 777 0 0
+# libisccc60 - 1:9.7.3.dfsg-1~squeeze3
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libisccc.so.60.0.0 /usr/lib/libisccc.so.60.0.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libisccc.so.60 /usr/lib/libisccc.so.60.0.0 777 0 0
+# libisccfg62 - 1:9.7.3.dfsg-1~squeeze3
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/libisccfg.so.62.0.0 /usr/lib/libisccfg.so.62.0.0 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/libisccfg.so.62 /usr/lib/libisccfg.so.62.0.0 777 0 0
+# libldap-2.4-2 - 2.4.23-7.2
+dir /etc 755 0 0
+dir /etc/ldap 755 0 0
+file /etc/ldap/ldap.conf /etc/ldap/ldap.conf 644 0 0
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/liblber-2.4.so.2.5.6 /usr/lib/liblber-2.4.so.2.5.6 644 0 0
+file /usr/lib/libldap_r-2.4.so.2.5.6 /usr/lib/libldap_r-2.4.so.2.5.6 644 0 0
+dir /usr/share 755 0 0
+dir /usr/share/lintian 755 0 0
+dir /usr/share/lintian/overrides 755 0 0
+file /usr/share/lintian/overrides/libldap-2.4-2 /usr/share/lintian/overrides/libldap-2.4-2 644 0 0
+slink /usr/lib/libldap-2.4.so.2 /usr/lib/libldap_r-2.4.so.2.5.6 777 0 0
+slink /usr/lib/libldap_r-2.4.so.2 /usr/lib/libldap_r-2.4.so.2.5.6 777 0 0
+slink /usr/lib/liblber-2.4.so.2 /usr/lib/liblber-2.4.so.2.5.6 777 0 0
+# liblwres60 - 1:9.7.3.dfsg-1~squeeze3
+dir /usr 755 0 0
+dir /usr/lib 755 0 0
+file /usr/lib/liblwres.so.60.0.1 /usr/lib/liblwres.so.60.0.1 644 0 0
+dir /usr/share 755 0 0
+slink /usr/lib/liblwres.so.60 /usr/lib/liblwres.so.60.0.1 777 0 0
+# bind9-host - 1:9.7.3.dfsg-1~squeeze3
+dir /usr 755 0 0
+dir /usr/bin 755 0 0
+file /usr/bin/host /usr/bin/host 755 0 0
+dir /usr/share 755 0 0
 # vi: set shiftwidth=4 tabstop=4 paste:
