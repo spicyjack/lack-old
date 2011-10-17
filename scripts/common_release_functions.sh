@@ -194,12 +194,12 @@ function _create_init_script {
 ## ERR:  '1' if copying the SSL PEM files failed
 ## DESC: Copy the *.pem files needed for SSL usage
 function copy_host_ssl_pem_files {
-    if [ -e ~/hostkeys/${PROJECT_NAME}.*key.pem.nopass ]; then
-        cp ~/hostkeys/${PROJECT_NAME}.*pem* $TEMP_DIR
+    if [ -e ~/host_ssl_keys/${PROJECT_NAME}.*key.pem.nopass ]; then
+        cp ~/host_ssl_keys/${PROJECT_NAME}.*pem* $TEMP_DIR
     else
-        echo "ERROR: missing ${PROJECT_NAME} SSL keys in ~/hostkeys"
+        echo "ERROR: missing ${PROJECT_NAME} SSL keys in ~/host_ssl_keys"
         return 1
-    fi # if [ -e ~/hostkeys/${PROJECT_NAME}.*key.pem.nopass ]
+    fi # if [ -e ~/host_ssl_keys/${PROJECT_NAME}.*key.pem.nopass ]
     return 0
 } # function copy_host_ssl_pem_files
 
@@ -210,13 +210,13 @@ function copy_host_ssl_pem_files {
 ## ERR:  '1' if copying the SSL PEM files failed
 ## DESC: Copy the LACK SSL PEM files needed for SSL usage
 function copy_lack_ssl_pem_file {
-    if [ -e ~/hostkeys/lack.googlecode.com.key-cert.pem ]; then
-        cp ~/hostkeys/lack.googlecode.com.key-cert.pem \
+    if [ -e ~/host_ssl_keys/lack.googlecode.com.key-cert.pem ]; then
+        cp ~/host_ssl_keys/lack.googlecode.com.key-cert.pem \
             $TEMP_DIR/certificate.pem
     else
-        echo "ERROR: missing LACK SSL key/cert file in ${HOME}/hostkeys"
+        echo "ERROR: missing LACK SSL key/cert file in ${HOME}/host_ssl_keys"
         return 1
-    fi # if [ -e ~/hostkeys/lack.googlecode.com.key-cert.pem ]
+    fi # if [ -e ~/host_ssl_keys/lack.googlecode.com.key-cert.pem ]
     return 0
 } # function copy_host_ssl_pem_file
 
