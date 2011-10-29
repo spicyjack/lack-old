@@ -697,7 +697,6 @@ do
             esac
         done # for LINE in $(echo $PKG_CONTENTS);
 
-
     ### SQUASHFS OUTPUT ###
     elif [ $OUTPUT_OPT == "squashfs" ]; then
         if [ "x$WORKDIR" == "x" ]; then
