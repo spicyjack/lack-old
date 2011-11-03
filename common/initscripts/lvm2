@@ -24,6 +24,7 @@ case "$ACTION" in
   ;;
   start)
     file_parse "/proc/cmdline" "volgrp"
+    VOL_GRP=$PARSED
     # pass the name of the volume back out for other scripts to use
     if [ "x$VOL_GRP" != "xno" -o "x$VOL_GRP" != "xNO" ]; then
         # scan for volumes first
