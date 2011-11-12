@@ -60,8 +60,8 @@ show_netdev_ip () {
         NETDEV=$PARSED
     fi
     colorize_nl $S_TIP "${BASENAME} - current IP address of ${NETDEV} is:"
-    colorize $S_TIP "${BASENAME} - "
     /bin/ip addr show
+    colorize_nl $S_TIP "${BASENAME} - end current IP address of ${NETDEV}"
 } # loopback_test
 
 case "$ACTION" in
