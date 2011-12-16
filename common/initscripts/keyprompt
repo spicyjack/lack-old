@@ -82,6 +82,9 @@ case "$ACTION" in
     #HOSTNAME=$(/bin/cat /etc/hostname | /usr/bin/tr -d '\n')
     get_hostname # from lack_functions
     # allow for alternate key directories
+    # FIXME change this to try for a directory with the same name as the
+    # volume group first, then use the hostname, then give up if neither are
+    # set
     if [ "x${PROMPT}" != "x" ]; then
         KEY_DIR=$PROMPT
     else
