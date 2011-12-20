@@ -28,9 +28,13 @@ case "$ACTION" in
   ;;
   start)
     colorize_nl $S_TIP "${BASENAME}: ${DESC}"
-    colorize $S_TIP "${BASENAME}: Using key ID ${PROMPT}"
     if [ -e /etc/fstab.${PROMPT} ]; then
+        colorize $S_TIP "${BASENAME}: Using key ID ${PROMPT}"
         /bin/ln /etc/fstab.${PROMPT} /etc/fstab
+        check_exit_status $? $BASENAME
+    elif [ -e /etc/fstab.initramfs ]; then
+        colorize $S_TIP "${BASENAME}: Using fstab.initramfs file"
+        /bin/ln /etc/fstab.initramfs /etc/fstab
         check_exit_status $? $BASENAME
     else
         echo
