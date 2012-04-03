@@ -8,10 +8,10 @@ dir /etc 0755 0 0
 file /etc/passwd :BUILD_BASE:/common/etcfiles/passwd 0644 0 0
 file /etc/nsswitch.conf :BUILD_BASE:/common/etcfiles/nsswitch.conf 0644 0 0
 dir /lib 0755 0 0
-file /lib/libnss_files-2.11.2.so /lib/libnss_files-2.11.2.so 0644 0 0
-slink /lib/libnss_files.so.2 /lib/libnss_files-2.11.2.so 0644 0 0  
-file /lib/libnss_dns-2.11.2.so /lib/libnss_dns-2.11.2.so 0644 0 0
-slink /lib/libnss_dns.so.2 /lib/libnss_dns-2.11.2.so 0644 0 0  
+file /lib/libnss_files-2.11.3.so /lib/libnss_files-2.11.3.so 0644 0 0
+slink /lib/libnss_files.so.2 /lib/libnss_files-2.11.3.so 0644 0 0  
+file /lib/libnss_dns-2.11.3.so /lib/libnss_dns-2.11.3.so 0644 0 0
+slink /lib/libnss_dns.so.2 /lib/libnss_dns-2.11.3.so 0644 0 0  
 dir /sbin 0755 0 0
 file /sbin/losetup /sbin/losetup 0755 0 0
 file /sbin/swapon /sbin/swapon 0755 0 0

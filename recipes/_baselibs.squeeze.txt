@@ -24,26 +24,26 @@ slink /usr/lib/libz.so.1 /usr/lib/libz.so.1.2.3.4 0644 0 0
 slink /usr/lib/libz.so /usr/lib/libz.so.1.2.3.4 0644 0 0
 # _baselibs GNU libc and friends
 dir /lib/tls 0755 0 0
-file /lib/ld-2.11.2.so /lib/ld-2.11.2.so 0755 0 0
-slink /lib/ld-linux.so.2 /lib/ld-2.11.2.so 0755 0 0
-file /lib/libc-2.11.2.so /lib/libc-2.11.2.so 0755 0 0
-slink /lib/libc.so.6 /lib/libc-2.11.2.so 0755 0 0
-file /lib/libcrypt-2.11.2.so /lib/libcrypt-2.11.2.so 0644 0 0
-slink /lib/libcrypt.so.1 /lib/libcrypt-2.11.2.so 0644 0 0
-file /lib/libdl-2.11.2.so /lib/libdl-2.11.2.so 0644 0 0
-slink /lib/libdl.so.2 /lib/libdl-2.11.2.so 0644 0 0
-file /lib/librt-2.11.2.so /lib/librt-2.11.2.so 0644 0 0
-slink /lib/librt.so.1 /lib/librt-2.11.2.so 0644 0 0
-file /lib/libm-2.11.2.so /lib/libm-2.11.2.so 0644 0 0
-slink /lib/libm.so.6 /lib/libm-2.11.2.so 0644 0 0
-file /lib/libnsl-2.11.2.so /lib/libnsl-2.11.2.so 0644 0 0
-slink /lib/libnsl.so.1 /lib/libnsl-2.11.2.so 0644 0 0
-file /lib/libpthread-2.11.2.so /lib/libpthread-2.11.2.so 0755 0 0
-slink /lib/libpthread.so.0 /lib/libpthread-2.11.2.so 0755 0 0
-file /lib/libresolv-2.11.2.so /lib/libresolv-2.11.2.so 0644 0 0
-slink /lib/libresolv.so.2 /lib/libresolv-2.11.2.so 0644 0 0
-file /lib/libutil-2.11.2.so /lib/libutil-2.11.2.so 0644 0 0
-slink /lib/libutil.so.1 /lib/libutil-2.11.2.so 0644 0 0
+file /lib/ld-2.11.3.so /lib/ld-2.11.3.so 0755 0 0
+slink /lib/ld-linux.so.2 /lib/ld-2.11.3.so 0755 0 0
+file /lib/libc-2.11.3.so /lib/libc-2.11.3.so 0755 0 0
+slink /lib/libc.so.6 /lib/libc-2.11.3.so 0755 0 0
+file /lib/libcrypt-2.11.3.so /lib/libcrypt-2.11.3.so 0644 0 0
+slink /lib/libcrypt.so.1 /lib/libcrypt-2.11.3.so 0644 0 0
+file /lib/libdl-2.11.3.so /lib/libdl-2.11.3.so 0644 0 0
+slink /lib/libdl.so.2 /lib/libdl-2.11.3.so 0644 0 0
+file /lib/librt-2.11.3.so /lib/librt-2.11.3.so 0644 0 0
+slink /lib/librt.so.1 /lib/librt-2.11.3.so 0644 0 0
+file /lib/libm-2.11.3.so /lib/libm-2.11.3.so 0644 0 0
+slink /lib/libm.so.6 /lib/libm-2.11.3.so 0644 0 0
+file /lib/libnsl-2.11.3.so /lib/libnsl-2.11.3.so 0644 0 0
+slink /lib/libnsl.so.1 /lib/libnsl-2.11.3.so 0644 0 0
+file /lib/libpthread-2.11.3.so /lib/libpthread-2.11.3.so 0755 0 0
+slink /lib/libpthread.so.0 /lib/libpthread-2.11.3.so 0755 0 0
+file /lib/libresolv-2.11.3.so /lib/libresolv-2.11.3.so 0644 0 0
+slink /lib/libresolv.so.2 /lib/libresolv-2.11.3.so 0644 0 0
+file /lib/libutil-2.11.3.so /lib/libutil-2.11.3.so 0644 0 0
+slink /lib/libutil.so.1 /lib/libutil-2.11.3.so 0644 0 0
 # _baselibs /lib/terminfo
 dir /lib/terminfo 0755 0 0
 dir /lib/terminfo/l 0755 0 0
