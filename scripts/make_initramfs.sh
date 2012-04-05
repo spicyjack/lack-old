@@ -422,10 +422,22 @@ echo "- Created temporary directory '${TEMP_DIR}'"
 # script
 export BUILD_BASE PROJECT_DIR TEMP_DIR FILELIST PROJECT_LIST LACK_WORK_DIR
 
-# SOURCE! call set_vars to source the project initramfs.cfg
+# build the header for the filelist
+echo "# Begin $FILELIST;" >> $TEMP_DIR/$FILELIST
+echo "# Filelist generated on $RFC_2822_DATE" >> $TEMP_DIR/$FILELIST
+echo "# This file can be changed by editing the '*.txt' file for a package," \
+    >> $TEMP_DIR/$FILELIST
+echo "# or editing the script function in common_init_scripts.sh" \
+    >> $TEMP_DIR/$FILELIST
+echo "# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" \
+    >> $TEMP_DIR/$FILELIST
+
+# SOURCE! call set_vars to source the project's initramfs.cfg file
+# this generates things like the busybox file entry, hostname file, /init
+# script entries in the output filelist file
 set_vars $PROJECT_DIR
 
-# verify the output file can be written to
+# verify the output initramfs file can be written to
 # $OUTPUT_FILE was either set in a profile or using --output
 if [ "x$OUTPUT_FILE" != "x" ]; then
     $TOUCH $OUTPUT_FILE
@@ -438,24 +450,6 @@ else
     show_vars
     exit 1
 fi # if [ -n $OUTPUT_FILE ]
-
-# create the project /init script and put it in the temporary directory
-echo "# Begin $FILELIST; to make changes to this list, " \
-    >> $TEMP_DIR/$FILELIST
-echo "# edit the source .txt file." >> $TEMP_DIR/$FILELIST
-echo "# Filelist generated on $RFC_2822_DATE" >> $TEMP_DIR/$FILELIST
-echo "# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=" \
-    >> $TEMP_DIR/$FILELIST
-
-# create the new init.sh script, which will be appended to
-# moved to the individual project files; some projects don't need the full
-# init script, since they run from ramdisk instead (don't need stop scripts,
-# switch_root, and need to exec /init)
-
-#$TOUCH /$TEMP_DIR/init.sh
-#sedify $BUILD_BASE/common/initscripts/_init.sh $TEMP_DIR/init.sh
-# add the init script to the filelist
-#echo "file /init /${TEMP_DIR}/init.sh 0755 0 0" >> $TEMP_DIR/$FILELIST
 
 # check that RECIPES is not zero length
 if [ -z "${RECIPES}" ]; then

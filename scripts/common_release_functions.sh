@@ -181,6 +181,8 @@ function _create_init_script {
         }" >> $TEMP_DIR/init.sh
     check_exit_status $? "Creating the init script in TEMP_DIR"
     # add the init script to the filelist
+    echo "# project-specific /init script, created in _create_init_script..." \
+        >> $TEMP_DIR/$FILELIST
     echo "file /init ${TEMP_DIR}/init.sh 0755 0 0" >> $TEMP_DIR/$FILELIST
     check_exit_status $? "Creating the init script in TEMP_DIR"
     return 0
@@ -228,9 +230,22 @@ function copy_lack_ssl_pem_file {
 ## DESC: Copies the Busybox binary to $TEMP_DIR
 ## DESC: Exits if it can't find the Busybox binary.
 function copy_busybox_binary {
-    echo "Copying Busybox binaries to ${TEMP_DIR}"
-    cp -v ~/busybox-* $TEMP_DIR
-    check_exit_status $? "copying busybox binaries to ${TEMP_DIR}"
+    BUSYBOX_COUNT=$(ls -1 ${HOME}/busybox-* | wc -l)
+    if [ $BUSYBOX_COUNT -ne 1 ]; then
+        echo "ERROR: Found multiple copies of busybox in $HOME;"
+        echo "ERROR: Please ensure only one busybox file is found in $HOME"
+        exit 1
+    fi
+    BUSYBOX_BINARY=$(ls ${HOME}/busybox-*)
+    echo "- Copying Busybox binary ${BUSYBOX_BINARY} to ${TEMP_DIR}"
+    cp -v $BUSYBOX_BINARY $TEMP_DIR/busybox
+    check_exit_status $? "copying busybox ${BUSYBOX_BINARY} to ${TEMP_DIR}"
+    echo "# busybox binary entry, created in copy_busybox_binary..." \
+        >> $TEMP_DIR/$FILELIST
+    echo "dir  /bin 0755 0 0" >> $TEMP_DIR/$FILELIST
+    echo "file /bin/busybox ${TEMP_DIR}/busybox 0755 0 0" >> $TEMP_DIR/$FILELIST
+    check_exit_status $? "Adding busybox filelist entry"
+
     return $?
 } # function copy_busybox_binary
 
