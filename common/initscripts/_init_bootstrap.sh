@@ -62,6 +62,10 @@ if [ $DEBUG ]; then
     # yep, we are;
     # set up enough of the environment (filesystems, mice, keyboards) so
     # that the user can respond to questions we ask of them :)
+    # FIXME abstract this into a loop by loading all of the names of the below
+    # scripts into a variable; the variable can also be used later on by
+    # grepping for the names of scripts that have already been run so that you
+    # don't run them again
     $BB sh /etc/init.d/loadfont start
     $BB sh /etc/init.d/remount-rootfs start
     $BB sh /etc/init.d/bb-install start
