@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 # loop-AES build options
-OPTIONS := KEYSCRUB=y PADLOCK=y EXTRA_CIPHERS=y
+OPTIONS := KEYSCRUB=y PADLOCK=y EXTRA_CIPHERS=y INTELAES=y
 
 PACKAGE	:= loop-aes
 MA_DIR  ?= /usr/share/modass
