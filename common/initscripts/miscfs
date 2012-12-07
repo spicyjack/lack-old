@@ -38,7 +38,7 @@ case "$ACTION" in
     check_exit_status $? "mount tmpfs /dev/shm -t tmpfs -o rw,nosuid,nodev"
 
     # /proc/bus/usb has been removed in kernel 3.6.6;
-    # it's replacement is /dev/usb; see
+    # it's replacement is /dev/bus/usb; see
     # $LINUX_SOURCE/Documentation/proc_usb_info.txt
     # and http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=360165
     # the usbfs block that was here has been removed, it's no longer needed
