@@ -37,29 +37,13 @@ case "$ACTION" in
     $BINARY tmpfs /dev/shm -t tmpfs -o rw,nosuid,nodev >> $DEBUG_LOG 2>&1
     check_exit_status $? "mount tmpfs /dev/shm -t tmpfs -o rw,nosuid,nodev"
 
-    colorize_nl $S_TIP "$BASENAME: Checking for /proc/bus/usb directory"
-    KEY_TIMER=0
-    # start a throbber loop
-    while [ ! -d /proc/bus/usb ];
-    do
-        # print a twizzler thingie while we wait for key insertion
-        KEY_TIMER=$(($KEY_TIMER + 1))
-        case $KEY_TIMER in
-            1) echo -ne "| \r";; 
-            2) echo -ne "/ \r";;
-            3) echo -ne "- \r";;
-            4) echo -ne "\\ \r"; KEY_TIMER=0;;
-        esac
-        sleep 1s
-    done # while [ ! -d /proc/bus ]
-    colorize $S_TIP "$BASENAME: Mounting usbfs on /proc/bus/usb"
-    $BINARY usbfs /proc/bus/usb -t usbfs -o rw >> $DEBUG_LOG 2>&1
-    check_exit_status $? "mount usbfs /proc/bus/usb -t usbfs -o rw"
+    # /proc/bus/usb has been removed in kernel 3.6.6;
+    # it's replacement is /dev/usb; see
+    # $LINUX_SOURCE/Documentation/proc_usb_info.txt
+    # and http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=360165
+    # the usbfs block that was here has been removed, it's no longer needed
     ;;
   stop)
-    colorize $S_TIP "$BASENAME: Unmounting /proc/bus/usb;"
-    /bin/umount /proc/bus/usb
-    check_exit_status $?
     colorize $S_TIP "$BASENAME: Unmounting /dev/pts;"
     /bin/umount /dev/pts
     check_exit_status $? "Unmounting /dev/pts"
