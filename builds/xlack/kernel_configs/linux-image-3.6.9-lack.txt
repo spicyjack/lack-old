@@ -1,4 +1,4 @@
-# name: linux-image-3.6.9-lack - 2012.343.1
+# name: linux-image-3.6.9-lack - 2012.344.1
 # description: example package with comments
 # depends: _base otherpackage1 otherpackage2
 # helpcommand: /usr/bin/somebin --help
@@ -2994,7 +2994,6 @@ dir /lib/modules/3.6.9-lack/kernel/drivers/media/video/saa7164 755 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/media/video/saa7164/saa7164.ko /lib/modules/3.6.9-lack/kernel/drivers/media/video/saa7164/saa7164.ko 644 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/media/video/cx2341x.ko /lib/modules/3.6.9-lack/kernel/drivers/media/video/cx2341x.ko 644 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/media/video/hexium_orion.ko /lib/modules/3.6.9-lack/kernel/drivers/media/video/hexium_orion.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/media/video/via-camera.ko /lib/modules/3.6.9-lack/kernel/drivers/media/video/via-camera.ko 644 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/media/video/c-qcam.ko /lib/modules/3.6.9-lack/kernel/drivers/media/video/c-qcam.ko 644 0 0
 dir /lib/modules/3.6.9-lack/kernel/drivers/media/video/tm6000 755 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/media/video/tm6000/tm6000-alsa.ko /lib/modules/3.6.9-lack/kernel/drivers/media/video/tm6000/tm6000-alsa.ko 644 0 0
@@ -3012,7 +3011,6 @@ file /lib/modules/3.6.9-lack/kernel/drivers/media/video/soc_camera_platform.ko /
 file /lib/modules/3.6.9-lack/kernel/drivers/media/video/videobuf2-core.ko /lib/modules/3.6.9-lack/kernel/drivers/media/video/videobuf2-core.ko 644 0 0
 dir /lib/modules/3.6.9-lack/kernel/drivers/media/video/ivtv 755 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/media/video/ivtv/ivtv.ko /lib/modules/3.6.9-lack/kernel/drivers/media/video/ivtv/ivtv.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/media/video/ivtv/ivtvfb.ko /lib/modules/3.6.9-lack/kernel/drivers/media/video/ivtv/ivtvfb.ko 644 0 0
 dir /lib/modules/3.6.9-lack/kernel/drivers/media/video/usbvision 755 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/media/video/usbvision/usbvision.ko /lib/modules/3.6.9-lack/kernel/drivers/media/video/usbvision/usbvision.ko 644 0 0
 dir /lib/modules/3.6.9-lack/kernel/drivers/media/video/au0828 755 0 0
@@ -3099,9 +3097,7 @@ file /lib/modules/3.6.9-lack/kernel/drivers/i2c/muxes/i2c-mux-pca954x.ko /lib/mo
 file /lib/modules/3.6.9-lack/kernel/drivers/i2c/i2c-smbus.ko /lib/modules/3.6.9-lack/kernel/drivers/i2c/i2c-smbus.ko 644 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/i2c/i2c-dev.ko /lib/modules/3.6.9-lack/kernel/drivers/i2c/i2c-dev.ko 644 0 0
 dir /lib/modules/3.6.9-lack/kernel/drivers/auxdisplay 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/auxdisplay/cfag12864b.ko /lib/modules/3.6.9-lack/kernel/drivers/auxdisplay/cfag12864b.ko 644 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/auxdisplay/ks0108.ko /lib/modules/3.6.9-lack/kernel/drivers/auxdisplay/ks0108.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/auxdisplay/cfag12864bfb.ko /lib/modules/3.6.9-lack/kernel/drivers/auxdisplay/cfag12864bfb.ko 644 0 0
 dir /lib/modules/3.6.9-lack/kernel/drivers/hwmon 755 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/hwmon/w83l786ng.ko /lib/modules/3.6.9-lack/kernel/drivers/hwmon/w83l786ng.ko 644 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/hwmon/ntc_thermistor.ko /lib/modules/3.6.9-lack/kernel/drivers/hwmon/ntc_thermistor.ko 644 0 0
@@ -3629,45 +3625,6 @@ file /lib/modules/3.6.9-lack/kernel/drivers/acpi/acpi_pad.ko /lib/modules/3.6.9-
 file /lib/modules/3.6.9-lack/kernel/drivers/acpi/ac.ko /lib/modules/3.6.9-lack/kernel/drivers/acpi/ac.ko 644 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/acpi/thermal.ko /lib/modules/3.6.9-lack/kernel/drivers/acpi/thermal.ko 644 0 0
 dir /lib/modules/3.6.9-lack/kernel/drivers/gpu 755 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm 755 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/gma500 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/gma500/gma500_gfx.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/gma500/gma500_gfx.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/tdfx 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/tdfx/tdfx.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/tdfx/tdfx.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/ttm 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/ttm/ttm.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/ttm/ttm.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/savage 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/savage/savage.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/savage/savage.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/sis 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/sis/sis.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/sis/sis.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/mgag200 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/mgag200/mgag200.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/mgag200/mgag200.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/via 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/via/via.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/via/via.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/i2c 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/i2c/sil164.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/i2c/sil164.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/i2c/ch7006.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/i2c/ch7006.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/mga 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/mga/mga.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/mga/mga.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/radeon 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/radeon/radeon.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/radeon/radeon.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/cirrus 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/cirrus/cirrus.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/cirrus/cirrus.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/udl 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/udl/udl.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/udl/udl.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/i915 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/i915/i915.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/i915/i915.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/vmwgfx 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/vmwgfx/vmwgfx.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/vmwgfx/vmwgfx.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/nouveau 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/nouveau/nouveau.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/nouveau/nouveau.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/drm.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/drm.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/r128 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/r128/r128.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/r128/r128.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/drm_kms_helper.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/drm_kms_helper.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/ast 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/ast/ast.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/ast/ast.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/drm_usb.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/drm/drm_usb.ko 644 0 0
 dir /lib/modules/3.6.9-lack/kernel/drivers/gpu/stub 755 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/gpu/stub/poulsbo.ko /lib/modules/3.6.9-lack/kernel/drivers/gpu/stub/poulsbo.ko 644 0 0
 dir /lib/modules/3.6.9-lack/kernel/drivers/pps 755 0 0
@@ -3684,19 +3641,6 @@ file /lib/modules/3.6.9-lack/kernel/drivers/virtio/virtio_ring.ko /lib/modules/3
 file /lib/modules/3.6.9-lack/kernel/drivers/virtio/virtio.ko /lib/modules/3.6.9-lack/kernel/drivers/virtio/virtio.ko 644 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/virtio/virtio_balloon.ko /lib/modules/3.6.9-lack/kernel/drivers/virtio/virtio_balloon.ko 644 0 0
 dir /lib/modules/3.6.9-lack/kernel/drivers/video 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/tmiofb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/tmiofb.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/video/vermilion 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/vermilion/crvml.ko /lib/modules/3.6.9-lack/kernel/drivers/video/vermilion/crvml.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/vermilion/vmlfb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/vermilion/vmlfb.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/video/geode 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/geode/gx1fb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/geode/gx1fb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/geode/lxfb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/geode/lxfb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/geode/gxfb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/geode/gxfb.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/video/aty 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/aty/aty128fb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/aty/aty128fb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/aty/radeonfb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/aty/radeonfb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/aty/atyfb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/aty/atyfb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/sm501fb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/sm501fb.ko 644 0 0
 dir /lib/modules/3.6.9-lack/kernel/drivers/video/backlight 755 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/ltv350qv.ko /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/ltv350qv.ko 644 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/vgg2432a4.ko /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/vgg2432a4.ko 644 0 0
@@ -3707,7 +3651,6 @@ file /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/lp855x_bl.ko /lib/mo
 file /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/wm831x_bl.ko /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/wm831x_bl.ko 644 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/ams369fg06.ko /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/ams369fg06.ko 644 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/generic_bl.ko /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/generic_bl.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/cr_bllcd.ko /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/cr_bllcd.ko 644 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/progear_bl.ko /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/progear_bl.ko 644 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/adp8860_bl.ko /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/adp8860_bl.ko 644 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/ot200_bl.ko /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/ot200_bl.ko 644 0 0
@@ -3723,79 +3666,8 @@ file /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/ld9040.ko /lib/modul
 file /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/adp8870_bl.ko /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/adp8870_bl.ko 644 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/kb3886_bl.ko /lib/modules/3.6.9-lack/kernel/drivers/video/backlight/kb3886_bl.ko 644 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/video/output.ko /lib/modules/3.6.9-lack/kernel/drivers/video/output.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/s1d13xxxfb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/s1d13xxxfb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/udlfb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/udlfb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/cyber2000fb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/cyber2000fb.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/video/savage 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/savage/savagefb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/savage/savagefb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/cirrusfb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/cirrusfb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/svgalib.ko /lib/modules/3.6.9-lack/kernel/drivers/video/svgalib.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/i740fb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/i740fb.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/video/kyro 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/kyro/kyrofb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/kyro/kyrofb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/fb_sys_fops.ko /lib/modules/3.6.9-lack/kernel/drivers/video/fb_sys_fops.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/vt8623fb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/vt8623fb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/arkfb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/arkfb.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/video/matrox 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/matrox/matroxfb_crtc2.ko /lib/modules/3.6.9-lack/kernel/drivers/video/matrox/matroxfb_crtc2.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/matrox/matroxfb_accel.ko /lib/modules/3.6.9-lack/kernel/drivers/video/matrox/matroxfb_accel.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/matrox/matroxfb_g450.ko /lib/modules/3.6.9-lack/kernel/drivers/video/matrox/matroxfb_g450.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/matrox/g450_pll.ko /lib/modules/3.6.9-lack/kernel/drivers/video/matrox/g450_pll.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/matrox/matroxfb_misc.ko /lib/modules/3.6.9-lack/kernel/drivers/video/matrox/matroxfb_misc.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/matrox/matroxfb_DAC1064.ko /lib/modules/3.6.9-lack/kernel/drivers/video/matrox/matroxfb_DAC1064.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/matrox/matroxfb_maven.ko /lib/modules/3.6.9-lack/kernel/drivers/video/matrox/matroxfb_maven.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/matrox/i2c-matroxfb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/matrox/i2c-matroxfb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/matrox/matroxfb_Ti3026.ko /lib/modules/3.6.9-lack/kernel/drivers/video/matrox/matroxfb_Ti3026.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/matrox/matroxfb_base.ko /lib/modules/3.6.9-lack/kernel/drivers/video/matrox/matroxfb_base.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/pm3fb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/pm3fb.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/video/sis 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/sis/sisfb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/sis/sisfb.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/video/via 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/via/viafb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/via/viafb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/syscopyarea.ko /lib/modules/3.6.9-lack/kernel/drivers/video/syscopyarea.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/hgafb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/hgafb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/sysfillrect.ko /lib/modules/3.6.9-lack/kernel/drivers/video/sysfillrect.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/video/mb862xx 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/mb862xx/mb862xxfb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/mb862xx/mb862xxfb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/tridentfb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/tridentfb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/pm2fb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/pm2fb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/tdfxfb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/tdfxfb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/fb_ddc.ko /lib/modules/3.6.9-lack/kernel/drivers/video/fb_ddc.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/metronomefb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/metronomefb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/carminefb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/carminefb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/uvesafb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/uvesafb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/auo_k1901fb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/auo_k1901fb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/hecubafb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/hecubafb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/neofb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/neofb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/macmodes.ko /lib/modules/3.6.9-lack/kernel/drivers/video/macmodes.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/smscufx.ko /lib/modules/3.6.9-lack/kernel/drivers/video/smscufx.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/n411.ko /lib/modules/3.6.9-lack/kernel/drivers/video/n411.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/video/riva 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/riva/rivafb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/riva/rivafb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/vfb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/vfb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/vga16fb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/vga16fb.ko 644 0 0
 dir /lib/modules/3.6.9-lack/kernel/drivers/video/console 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/console/fbcon_ccw.ko /lib/modules/3.6.9-lack/kernel/drivers/video/console/fbcon_ccw.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/console/fbcon_rotate.ko /lib/modules/3.6.9-lack/kernel/drivers/video/console/fbcon_rotate.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/console/tileblit.ko /lib/modules/3.6.9-lack/kernel/drivers/video/console/tileblit.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/console/softcursor.ko /lib/modules/3.6.9-lack/kernel/drivers/video/console/softcursor.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/console/fbcon_ud.ko /lib/modules/3.6.9-lack/kernel/drivers/video/console/fbcon_ud.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/console/fbcon_cw.ko /lib/modules/3.6.9-lack/kernel/drivers/video/console/fbcon_cw.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/console/bitblit.ko /lib/modules/3.6.9-lack/kernel/drivers/video/console/bitblit.ko 644 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/video/console/font.ko /lib/modules/3.6.9-lack/kernel/drivers/video/console/font.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/console/fbcon.ko /lib/modules/3.6.9-lack/kernel/drivers/video/console/fbcon.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/video/i810 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/i810/i810fb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/i810/i810fb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/broadsheetfb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/broadsheetfb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/auo_k190x.ko /lib/modules/3.6.9-lack/kernel/drivers/video/auo_k190x.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/auo_k1900fb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/auo_k1900fb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/sysimgblt.ko /lib/modules/3.6.9-lack/kernel/drivers/video/sysimgblt.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/s3fb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/s3fb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/sstfb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/sstfb.ko 644 0 0
-dir /lib/modules/3.6.9-lack/kernel/drivers/video/nvidia 755 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/nvidia/nvidiafb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/nvidia/nvidiafb.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/vgastate.ko /lib/modules/3.6.9-lack/kernel/drivers/video/vgastate.ko 644 0 0
-file /lib/modules/3.6.9-lack/kernel/drivers/video/arcfb.ko /lib/modules/3.6.9-lack/kernel/drivers/video/arcfb.ko 644 0 0
 dir /lib/modules/3.6.9-lack/kernel/drivers/firewire 755 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/firewire/firewire-net.ko /lib/modules/3.6.9-lack/kernel/drivers/firewire/firewire-net.ko 644 0 0
 file /lib/modules/3.6.9-lack/kernel/drivers/firewire/firewire-core.ko /lib/modules/3.6.9-lack/kernel/drivers/firewire/firewire-core.ko 644 0 0
@@ -4181,9 +4053,6 @@ file /lib/firmware/3.6.9-lack/cis/LA-PCM.cis /lib/firmware/3.6.9-lack/cis/LA-PCM
 file /lib/firmware/3.6.9-lack/cis/PE-200.cis /lib/firmware/3.6.9-lack/cis/PE-200.cis 644 0 0
 file /lib/firmware/3.6.9-lack/cis/SW_8xx_SER.cis /lib/firmware/3.6.9-lack/cis/SW_8xx_SER.cis 644 0 0
 file /lib/firmware/3.6.9-lack/cis/3CXEM556.cis /lib/firmware/3.6.9-lack/cis/3CXEM556.cis 644 0 0
-dir /lib/firmware/3.6.9-lack/matrox 755 0 0
-file /lib/firmware/3.6.9-lack/matrox/g200_warp.fw /lib/firmware/3.6.9-lack/matrox/g200_warp.fw 644 0 0
-file /lib/firmware/3.6.9-lack/matrox/g400_warp.fw /lib/firmware/3.6.9-lack/matrox/g400_warp.fw 644 0 0
 file /lib/firmware/3.6.9-lack/mts_cdma.fw /lib/firmware/3.6.9-lack/mts_cdma.fw 644 0 0
 file /lib/firmware/3.6.9-lack/whiteheat.fw /lib/firmware/3.6.9-lack/whiteheat.fw 644 0 0
 dir /lib/firmware/3.6.9-lack/3com 755 0 0
@@ -4191,34 +4060,6 @@ file /lib/firmware/3.6.9-lack/3com/typhoon.bin /lib/firmware/3.6.9-lack/3com/typ
 dir /lib/firmware/3.6.9-lack/adaptec 755 0 0
 file /lib/firmware/3.6.9-lack/adaptec/starfire_tx.bin /lib/firmware/3.6.9-lack/adaptec/starfire_tx.bin 644 0 0
 file /lib/firmware/3.6.9-lack/adaptec/starfire_rx.bin /lib/firmware/3.6.9-lack/adaptec/starfire_rx.bin 644 0 0
-dir /lib/firmware/3.6.9-lack/radeon 755 0 0
-file /lib/firmware/3.6.9-lack/radeon/RV670_me.bin /lib/firmware/3.6.9-lack/radeon/RV670_me.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/RV710_me.bin /lib/firmware/3.6.9-lack/radeon/RV710_me.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/RV635_me.bin /lib/firmware/3.6.9-lack/radeon/RV635_me.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/RV620_me.bin /lib/firmware/3.6.9-lack/radeon/RV620_me.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/RV630_me.bin /lib/firmware/3.6.9-lack/radeon/RV630_me.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/R100_cp.bin /lib/firmware/3.6.9-lack/radeon/R100_cp.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/RV610_me.bin /lib/firmware/3.6.9-lack/radeon/RV610_me.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/RV710_pfp.bin /lib/firmware/3.6.9-lack/radeon/RV710_pfp.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/R300_cp.bin /lib/firmware/3.6.9-lack/radeon/R300_cp.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/R520_cp.bin /lib/firmware/3.6.9-lack/radeon/R520_cp.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/RV635_pfp.bin /lib/firmware/3.6.9-lack/radeon/RV635_pfp.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/R200_cp.bin /lib/firmware/3.6.9-lack/radeon/R200_cp.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/R600_pfp.bin /lib/firmware/3.6.9-lack/radeon/R600_pfp.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/RV620_pfp.bin /lib/firmware/3.6.9-lack/radeon/RV620_pfp.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/RS780_me.bin /lib/firmware/3.6.9-lack/radeon/RS780_me.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/R600_me.bin /lib/firmware/3.6.9-lack/radeon/R600_me.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/RV630_pfp.bin /lib/firmware/3.6.9-lack/radeon/RV630_pfp.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/RV730_pfp.bin /lib/firmware/3.6.9-lack/radeon/RV730_pfp.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/RV610_pfp.bin /lib/firmware/3.6.9-lack/radeon/RV610_pfp.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/RV770_pfp.bin /lib/firmware/3.6.9-lack/radeon/RV770_pfp.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/RS690_cp.bin /lib/firmware/3.6.9-lack/radeon/RS690_cp.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/RS600_cp.bin /lib/firmware/3.6.9-lack/radeon/RS600_cp.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/R420_cp.bin /lib/firmware/3.6.9-lack/radeon/R420_cp.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/RV730_me.bin /lib/firmware/3.6.9-lack/radeon/RV730_me.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/RS780_pfp.bin /lib/firmware/3.6.9-lack/radeon/RS780_pfp.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/RV770_me.bin /lib/firmware/3.6.9-lack/radeon/RV770_me.bin 644 0 0
-file /lib/firmware/3.6.9-lack/radeon/RV670_pfp.bin /lib/firmware/3.6.9-lack/radeon/RV670_pfp.bin 644 0 0
 dir /lib/firmware/3.6.9-lack/sun 755 0 0
 file /lib/firmware/3.6.9-lack/sun/cassini.bin /lib/firmware/3.6.9-lack/sun/cassini.bin 644 0 0
 dir /lib/firmware/3.6.9-lack/yam 755 0 0
@@ -4249,8 +4090,6 @@ dir /lib/firmware/3.6.9-lack/bnx2x 755 0 0
 file /lib/firmware/3.6.9-lack/bnx2x/bnx2x-e2-6.2.9.0.fw /lib/firmware/3.6.9-lack/bnx2x/bnx2x-e2-6.2.9.0.fw 644 0 0
 file /lib/firmware/3.6.9-lack/bnx2x/bnx2x-e1h-6.2.9.0.fw /lib/firmware/3.6.9-lack/bnx2x/bnx2x-e1h-6.2.9.0.fw 644 0 0
 file /lib/firmware/3.6.9-lack/bnx2x/bnx2x-e1-6.2.9.0.fw /lib/firmware/3.6.9-lack/bnx2x/bnx2x-e1-6.2.9.0.fw 644 0 0
-dir /lib/firmware/3.6.9-lack/r128 755 0 0
-file /lib/firmware/3.6.9-lack/r128/r128_cce.bin /lib/firmware/3.6.9-lack/r128/r128_cce.bin 644 0 0
 dir /lib/firmware/3.6.9-lack/acenic 755 0 0
 file /lib/firmware/3.6.9-lack/acenic/tg2.bin /lib/firmware/3.6.9-lack/acenic/tg2.bin 644 0 0
 file /lib/firmware/3.6.9-lack/acenic/tg1.bin /lib/firmware/3.6.9-lack/acenic/tg1.bin 644 0 0
@@ -4285,7 +4124,7 @@ file /boot/System.map-3.6.9-lack /boot/System.map-3.6.9-lack 644 0 0
 file /boot/config-3.6.9-lack /boot/config-3.6.9-lack 644 0 0
 slink /lib/modules/3.6.9-lack/source /usr/src/linux-3.6.9 777 0 0
 slink /lib/modules/3.6.9-lack/build /usr/src/linux-3.6.9 777 0 0
-# loop-aes-modules-3.6.9-lack - 3.6g-0+2012.343.1
+# loop-aes-modules-3.6.9-lack - 3.6g-0+2012.344.1
 dir /usr 755 0 0
 dir /usr/share 755 0 0
 dir /lib 755 0 0
