@@ -1,5 +1,5 @@
 # What is LACK? #
-LACK stands for `L`inux `A`ppliance `C`onstruction `K`it.  LACK is a set of
+LACK stands for **Linux Appliance Construction Kit**.  LACK is a set of
 scripts written in Perl and Bash that will take an existing installation, and
 build minimized "packages" that can then be used on a system that runs off of
 `initramfs`.
@@ -107,4 +107,4 @@ Generating a kernel filelist:
     | grep -vf files_to_remove.txt \
     | tee linux-image-2.6.34-lack.txt
 
-# vim: filetype=markdown shiftwidth=2 tabstop=2
+vim: filetype=markdown shiftwidth=2 tabstop=2
