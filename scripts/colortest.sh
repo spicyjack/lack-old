@@ -2,7 +2,7 @@
 
 # gain the colorize() function, with colors
 # $1 foreground, $2 background, $3 text to colorize
-source ant_functions.sh
+source ../common/initscripts/lack_functions.sh
 
 # do some test text
 colorize "${BOLD};${F_YLW};${B_GRN}" "This is some test text"; echo
