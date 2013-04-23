@@ -255,14 +255,14 @@ cat <<EOU
     ${SCRIPTNAME} --package --listout -- linux-image > linux-image.txt
 
     # append to an existing package (no gen_init_cpio file header)
-    ${SCRIPTNAME} --append --package --listout \ 
+    ${SCRIPTNAME} --append --package --listout \\
         -- loop-aes-modules ndiswrapper-modules >> linux-image.txt
 
     # create a filelist from a directory of files
     ${SCRIPTNAME} --directory --listout /tmp/somedirectory > somepackage.txt
 
     # create a filelist, and mangle some of the filenames in the filelist
-    ${SCRIPTNAME} --directory --listout --regex 's!/some/path!/other/path!g' \
+    ${SCRIPTNAME} --directory --listout --regex 's!/some/path!/other/path!g' \\
         -- /tmp/somedirectory > somepackage.txt
 
 
@@ -270,14 +270,14 @@ cat <<EOU
     # create individual output squashfs files from installed Debian packages
     ${SCRIPTNAME} --package --squashfs --workdir /dev/shm -- perl perl-base
 
-    # create a single output squashfs file from an installed Debian package, 
+    # create a single output squashfs file from an installed Debian package,
     # output to --workdir
-    ${SCRIPTNAME} --package --squashfs --workdir /dev/shm \ 
+    ${SCRIPTNAME} --package --squashfs --workdir /dev/shm \\
         --output perl-combined.sfs -- perl perl-base
 
     # create a single output squashfs file from one or more filellists
-    ${SCRIPTNAME} --filelist --squashfs --workdir /dev/shm \ 
-        --basepath /path/to/recipesdir --output debug-tools.2010.362.1 \ 
+    ${SCRIPTNAME} --filelist --squashfs --workdir /dev/shm \\
+        --basepath /path/to/recipesdir --output debug-tools.2010.362.1 \\
         -- debug-tools lspci.lenny
 
     ### MISC EXAMPLES
