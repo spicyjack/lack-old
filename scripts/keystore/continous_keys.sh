@@ -12,7 +12,7 @@ do
     echo "Creating new GPG key folder in /dev/shm/${OUTDATE}";
     time bash ${KEYSTORE_DIR}/gnupg-batch.sh \
         --output ${HOME}/Docs/new_keys/${OUTDATE} \
-        --count 5 \
+        --count 500 \
         --dicepath ~/src/perl.git/diceware \
         --list ~/src/perl.git/diceware/diceware.wordlist.asc \
         --tempdir /dev/shm/${OUTDATE}
