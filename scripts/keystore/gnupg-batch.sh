@@ -23,7 +23,7 @@
 # Place, Suite 330, Boston, MA  02111-1307 USA
 
 # external programs used
-GPG=$(which gpg)
+GPG="/bin/gpg"
 TRUE=$(which true)
 GETOPT=$(which getopt)
 MV=$(which mv)
@@ -60,7 +60,7 @@ KEY_COUNT=0
 KEY_TEMP_NUM="1000"
 
 # helper functions
-function cmd_status () {
+cmd_status () {
     # check the status of the last run command; run a shell if it's anything
     # but 0
     COMMAND=$1
@@ -71,13 +71,13 @@ function cmd_status () {
     fi
 }
 
-function get_dice_passphrase () {
+get_dice_passphrase () {
     local KEY_SIZE=$1
     PASSPHRASE=$(perl ${DICEPATH}/diceparse.pl -r ${KEY_SIZE} -l ${WORDLIST})
     cmd_status "diceparse.pl" $?
 }
 
-function temp_key_move () {
+temp_key_move () {
     # move the generated keys from the temp directory to the --output directory
 
     # exit if there's no keylist file (empty directory?)
@@ -110,7 +110,7 @@ function temp_key_move () {
 
 }
 
-function rename_keys () {
+rename_keys () {
     # rename the keystore files to the name of their key ID
     if [ $QUIET -gt 0 ]; then
         echo "Renaming keystore.[sec|pub] to ${KEY_ID}.[sec|pub]"
@@ -121,7 +121,7 @@ function rename_keys () {
     cmd_status "(public key) mv" $?
 }
 
-function show_help () {
+show_help () {
     cat <<-EOF
 
     ${SCRIPTNAME} [options]
@@ -153,7 +153,7 @@ EOF
     exit 0
 }
 
-function show_examples () {
+show_examples () {
     cat <<-EOE
     # script examples
     sh ${SCRIPTNAME} -w diceware.en.txt
@@ -167,12 +167,12 @@ EOE
 ### BEGIN SCRIPT ###
 # BSD's getopt is simpler than the GNU getopt; we need to detect it
 OSDETECT=$($UNAME -s)
-if [ $OSDETECT == "Darwin" ]; then
+if [ $OSDETECT = "Darwin" ]; then
     # this is the BSD part
     echo "WARNING: BSD OS Detected; long switches will not work here..."
     TEMP=$(${GETOPT} hec:l:n:o:p:qt:vw:x $*)
     cmd_status $GETOPT $?
-elif [ $OSDETECT == "Linux" ]; then
+elif [ $OSDETECT = "Linux" ]; then
     # and this is the GNU part
     TEMP=$(${GETOPT} -o hec:l:n:o:p:qt:vw:x \
         --long help,examples,count:,dicepath:,list:,output:,overwrite \
@@ -312,7 +312,7 @@ while $TRUE; do
         | sed "s/#OUTDIR#/${SED_OUTDIR}/g" > batch.gnupg
 
     # now generate the key
-    time $GPG --batch --gen-key batch.gnupg
+    $GPG --batch --gen-key batch.gnupg
     cmd_status $GPG $?
 
     # grab it's ID so you can rename it
