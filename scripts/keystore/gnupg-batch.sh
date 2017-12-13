@@ -129,6 +129,11 @@ function show_help () {
     SCRIPT OPTIONS
     -h|--help      Show this help output
     -l|--list      Diceware wordlist to use
+    -q|--quiet     Don't output anything (unless there's an error)
+    -v|--verbose   Very noisy output
+    -e|--examples  Show script examples
+
+    OTHER OPTIONS
     -s|--dicesize  Size of password to generate using diceparse.pl (Default: 5)
     -p|--dicepath  Path to the 'diceparse.pl' script
     -o|--output    Directory to write keys and keylist to
@@ -142,8 +147,7 @@ function show_help () {
     -n|--tempnum   The 'X' number of keys to write to a temporary directory
                    Default is 1000 keys
     -x|--challenge Generate a Key ID/passphrase "challenge" file
-    -q|--quiet     Don't output anything (unless there's an error)
-    -v|--verbose   Very noisy output
+
 
 EOF
     exit 0
@@ -157,7 +161,7 @@ function show_examples () {
         --tempnum 2 --count 10
 
 EOE
-
+    exit 0
 }
 
 ### BEGIN SCRIPT ###
