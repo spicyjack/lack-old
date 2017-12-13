@@ -4,13 +4,16 @@
 # - grab stats from each gnupg key creation, so that you can come up with
 # performance metrics
 
+KEYSTORE_DIR=$(dirname $0)
+
 while /bin/true;
 do
     OUTDATE=$(date +%d%b%Y)
     echo "Creating new GPG key folder in /dev/shm/${OUTDATE}";
-    time sh ~/src/lack.hg/scripts/keystore/gnupg-batch.sh
-        --output /dev/shm/${OUTDATE} \
-        --count 500 \
+    time sh ${KEYSTORE_DIR}/gnupg-batch.sh \
+        --output ${HOME}/Docs/new_keys/${OUTDATE} \
+        --count 5 \
         --dicepath ~/src/perl.git/diceware \
-        --list ~/src/perl.git/diceware/diceware.wordlist.asc
+        --list ~/src/perl.git/diceware/diceware.wordlist.asc \
+        --tempdir /dev/shm/${OUTDATE}
 done
