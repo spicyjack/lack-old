@@ -312,7 +312,7 @@ while $TRUE; do
         | sed "s/#OUTDIR#/${SED_OUTDIR}/g" > batch.gnupg
 
     # now generate the key
-    $GPG --batch --gen-key batch.gnupg
+    time $GPG --batch --gen-key batch.gnupg
     cmd_status $GPG $?
 
     # grab it's ID so you can rename it
